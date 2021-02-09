@@ -29,7 +29,7 @@ public class CommandTest {
     @Test
     public void test_singleCommand_getOperationsAndValues(){
         Command l_command = new Command("editcontinent -remove continentID");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndValues();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
@@ -46,7 +46,7 @@ public class CommandTest {
     @Test
     public void test_multiCommand_getOperationsAndValues(){
         Command l_command = new Command("editcontinent -add continentID continentValue  -remove continentID");
-        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndValues();
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
 
         // Preparing Expected Value
         List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();

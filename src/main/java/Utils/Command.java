@@ -13,7 +13,7 @@ public class Command {
         return d_command.split(" ")[0];
     }
 
-    public List<Map<String , String>> getOperationsAndValues(){
+    public List<Map<String , String>> getOperationsAndArguments(){
         String l_rootCommand = getRootCommand();
         String l_operationsString =  d_command.replace(l_rootCommand, "").trim();
         String[] l_operations = l_operationsString.split("-");
@@ -21,14 +21,14 @@ public class Command {
 
         Arrays.stream(l_operations).forEach((operation) -> {
             if(operation.length() > 1) {
-                l_operations_list.add(getOperationsAndValuesMap(operation));
+                l_operations_list.add(getOperationAndArgumentsMap(operation));
             }
         });
 
         return l_operations_list;
     }
 
-    private Map<String, String>  getOperationsAndValuesMap(String p_operation){
+    private Map<String, String>  getOperationAndArgumentsMap(String p_operation){
        Map<String, String> l_operationMap = new HashMap<String, String>();
 
         String[] l_split_operation = p_operation.split(" ");
