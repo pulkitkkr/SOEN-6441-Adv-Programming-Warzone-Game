@@ -17,4 +17,11 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn clean install
+    - name: Run Junit Tests
+      run: mvn test
+    - name: Check JavaDoc
+      run: mvn checkstyle:checkstyle
+    - name: Generate JavaDoc
+      run: mvn javadoc:javadoc
+
