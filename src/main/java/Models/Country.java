@@ -5,7 +5,7 @@ import java.util.List;
 public class Country {
 	Integer d_armies;
 	Integer d_countryId;
-	Integer d_continentId;
+	String d_continentId;
 	List<Integer> d_edjacentCountryIds;
 	
 	public Integer getD_armies() {
@@ -20,10 +20,10 @@ public class Country {
 	public void setD_countryId(Integer d_countryId) {
 		this.d_countryId = d_countryId;
 	}
-	public Integer getD_continentId() {
+	public String getD_continentId() {
 		return d_continentId;
 	}
-	public void setD_continentId(Integer d_continentId) {
+	public void setD_continentId(String d_continentId) {
 		this.d_continentId = d_continentId;
 	}
 	public List<Integer> getD_edjacentCountryIds() {

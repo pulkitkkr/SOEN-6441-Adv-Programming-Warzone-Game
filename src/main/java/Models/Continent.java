@@ -3,14 +3,14 @@ package Models;
 import java.util.List;
 
 public class Continent {
-	Integer d_continentId;
+	String d_continentId;
 	Integer d_continentValue;
 	List<Country> d_countries;
 
-	public Integer getD_continentId() {
+	public String getD_continentId() {
 		return d_continentId;
 	}
-	public void setD_continentId(Integer d_continentId) {
+	public void setD_continentId(String d_continentId) {
 		this.d_continentId = d_continentId;
 	}
 	public Integer getD_continentValue() {
