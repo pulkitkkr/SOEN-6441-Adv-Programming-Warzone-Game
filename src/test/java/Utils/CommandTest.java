@@ -43,7 +43,7 @@ public class CommandTest {
     }
 
     @Test
-    public void test_singleCommand_getOperationsAndValues(){
+    public void test_singleCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -remove continentID");
         List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
 
@@ -60,7 +60,24 @@ public class CommandTest {
     }
 
     @Test
-    public void test_multiCommand_getOperationsAndValues(){
+    public void test_singleCommandWithExtraSpaces_getOperationsAndArguments(){
+        Command l_command = new Command("editcontinent      -remove continentID");
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
+
+        // Preparing Expected Value
+        List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
+
+        Map<String, String> l_expectedCommandTwo = new HashMap<String, String>() {{
+            put("arguments", "continentID");
+            put("operation", "remove");
+        }};
+        l_expectedOperationsAndValues.add(l_expectedCommandTwo);
+
+        assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
+    }
+
+    @Test
+    public void test_multiCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -add continentID continentValue  -remove continentID");
         List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
 
@@ -82,8 +99,25 @@ public class CommandTest {
     }
 
     @Test
-    public void test_noFlagCommand_getOperationsAndValues(){
+    public void test_noFlagCommand_getOperationsAndArguments(){
         Command l_command = new Command("loadmap abc.txt");
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
+
+        // Preparing Expected Value
+        List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
+
+        Map<String, String> l_expectedCommandOne = new HashMap<String, String>() {{
+            put("arguments", "abc.txt");
+            put("operation", "filename");
+        }};
+        l_expectedOperationsAndValues.add(l_expectedCommandOne);
+
+        assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
+    }
+
+    @Test
+    public void test_noFlagCommandWithExtraSpaces_getOperationsAndArguments(){
+        Command l_command = new Command("loadmap         abc.txt");
         List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
 
         // Preparing Expected Value
