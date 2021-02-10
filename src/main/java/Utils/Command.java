@@ -16,8 +16,15 @@ public class Command {
     public List<Map<String , String>> getOperationsAndArguments(){
         String l_rootCommand = getRootCommand();
         String l_operationsString =  d_command.replace(l_rootCommand, "").trim();
-        String[] l_operations = l_operationsString.split("-");
+        boolean l_isFlagLessCommand = !l_operationsString.contains("-") && !l_operationsString.contains(" ");
+
+        // handle commands to load files, ex: loadmap filename
+        if(l_isFlagLessCommand){
+            l_operationsString = "-filename "+l_operationsString;
+        }
+
         List<Map<String , String>> l_operations_list  = new ArrayList<Map<String,String>>();
+        String[] l_operations = l_operationsString.split("-");
 
         Arrays.stream(l_operations).forEach((operation) -> {
             if(operation.length() > 1) {
