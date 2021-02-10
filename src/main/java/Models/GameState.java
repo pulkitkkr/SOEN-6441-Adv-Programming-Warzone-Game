@@ -11,23 +11,23 @@ public class GameState {
 		return d_map;
 	}
 
-	public void setD_map(Map d_map) {
-		this.d_map = d_map;
+	public void setD_map(Map p_map) {
+		this.d_map = p_map;
 	}
 
 	public List<Player> getD_players() {
 		return d_players;
 	}
 
-	public void setD_players(List<Player> d_players) {
-		this.d_players = d_players;
+	public void setD_players(List<Player> p_players) {
+		this.d_players = p_players;
 	}
 
 	public List<Order> getD_unexecutedOrders() {
 		return d_unexecutedOrders;
 	}
 
-	public void setD_unexecutedOrders(List<Order> d_unexecutedOrders) {
-		this.d_unexecutedOrders = d_unexecutedOrders;
+	public void setD_unexecutedOrders(List<Order> p_unexecutedOrders) {
+		this.d_unexecutedOrders = p_unexecutedOrders;
 	}
 }
