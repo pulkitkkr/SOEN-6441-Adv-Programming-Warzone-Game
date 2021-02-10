@@ -27,6 +27,22 @@ public class CommandTest {
     }
 
     @Test
+    public void test_singleWord_getRootCommand(){
+        Command l_command = new Command("validatemap");
+        String l_rootCommand = l_command.getRootCommand();
+
+        assertEquals("validatemap", l_rootCommand);
+    }
+
+    @Test
+    public void test_noFlagCommand_getRootCommand(){
+        Command l_command = new Command("loadmap abc.txt");
+        String l_rootCommand = l_command.getRootCommand();
+
+        assertEquals("loadmap", l_rootCommand);
+    }
+
+    @Test
     public void test_singleCommand_getOperationsAndValues(){
         Command l_command = new Command("editcontinent -remove continentID");
         List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
@@ -61,6 +77,23 @@ public class CommandTest {
         }};
         l_expectedOperationsAndValues.add(l_expectedCommandOne);
         l_expectedOperationsAndValues.add(l_expectedCommandTwo);
+
+        assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
+    }
+
+    @Test
+    public void test_noFlagCommand_getOperationsAndValues(){
+        Command l_command = new Command("loadmap abc.txt");
+        List<Map<String , String>> l_actualOperationsAndValues = l_command.getOperationsAndArguments();
+
+        // Preparing Expected Value
+        List<Map<String , String>> l_expectedOperationsAndValues = new ArrayList<Map<String, String>>();
+
+        Map<String, String> l_expectedCommandOne = new HashMap<String, String>() {{
+            put("arguments", "abc.txt");
+            put("operation", "filename");
+        }};
+        l_expectedOperationsAndValues.add(l_expectedCommandOne);
 
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
