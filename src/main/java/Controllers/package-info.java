@@ -1,6 +1,6 @@
 /**
  * 
- * This package consists of all Controller classes
+ * This package consists of all Controller classes.
  * 
  */
 package Controllers;

@@ -1,6 +1,6 @@
 /**
  * 
- * This package consists of all Constant classes tests
+ * This package consists of all Constant classes tests.
  * 
  */
 package Constants;

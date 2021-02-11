@@ -1,6 +1,6 @@
 /**
  * 
- *  This package consists of all Constant classes
+ *  This package consists of all Constant classes.
  *  
  *  {@link https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#packagecomment}
  *  
