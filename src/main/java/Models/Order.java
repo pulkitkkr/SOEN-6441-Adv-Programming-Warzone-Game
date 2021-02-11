@@ -9,25 +9,25 @@ public class Order {
 	public String getD_orderAction() {
 		return d_orderAction;
 	}
-	public void setD_orderAction(String d_orderAction) {
-		this.d_orderAction = d_orderAction;
+	public void setD_orderAction(String p_orderAction) {
+		this.d_orderAction = p_orderAction;
 	}
 	public Integer getD_targetCountryId() {
 		return d_targetCountryId;
 	}
-	public void setD_targetCountryId(Integer d_targetCountryId) {
-		this.d_targetCountryId = d_targetCountryId;
+	public void setD_targetCountryId(Integer p_targetCountryId) {
+		this.d_targetCountryId = p_targetCountryId;
 	}
 	public Integer getD_sourceCountryId() {
 		return d_sourceCountryId;
 	}
-	public void setD_sourceCountryId(Integer d_sourceCountryId) {
-		this.d_sourceCountryId = d_sourceCountryId;
+	public void setD_sourceCountryId(Integer p_sourceCountryId) {
+		this.d_sourceCountryId = p_sourceCountryId;
 	}
 	public Integer getD_numberOfArmiesToMove() {
 		return d_numberOfArmiesToMove;
 	}
-	public void setD_numberOfArmiesToMove(Integer d_numberOfArmiesToMove) {
-		this.d_numberOfArmiesToMove = d_numberOfArmiesToMove;
+	public void setD_numberOfArmiesToMove(Integer p_numberOfArmiesToMove) {
+		this.d_numberOfArmiesToMove = p_numberOfArmiesToMove;
 	}
 }
