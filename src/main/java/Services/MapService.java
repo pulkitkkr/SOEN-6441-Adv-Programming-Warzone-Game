@@ -1,5 +1,9 @@
 package Services;
 
+import Models.Continent;
+import Models.Map;
+import Models.Country;
+
 import java.io.BufferedReader;
 
 import java.io.File;
@@ -17,68 +21,78 @@ import static Constants.ApplicationConstants.BORDERS;
 
 public class MapService {
 
-	HashMap<Integer, Integer> countrydata = new HashMap<Integer, Integer>();
+	Map m;
+	public Map constructMap(String p_loadFilePath) {
+		m= new Map();
+		List<String> l_listString = loadFile(p_loadFilePath);
+		List<String> l_continentData = l_listString.subList(l_listString.indexOf(CONTINENTS) + 1, l_listString.indexOf(COUNTRIES) - 1);
+		List<Continent> l_continentObjects = parseContinentsMetaData(l_continentData);
+		m.setD_continents(l_continentObjects);
+		List<String> l_countryData = l_listString.subList(l_listString.indexOf(COUNTRIES) + 1, l_listString.indexOf(BORDERS) - 1);
+		List<String> l_bordersMetaData = l_listString.subList(l_listString.indexOf(BORDERS) + 1, l_listString.size());
+		List<Country> l_countryObjects = parseCountriesMetaData(l_countryData,l_bordersMetaData );
+		m.setD_countries(l_countryObjects);
+		return m;
+	}
+	public List<String> loadFile(String p_loadFilePath) {
+		//p_loadFilePath = "C:/Users/ishaa/Downloads/europe/europe.map";
+		File l_mapFile = new File(p_loadFilePath);
+		List<String> l_lineList = new ArrayList<>();
 
-	public void loadFile(String p_loadFilePath) {
-		p_loadFilePath = "/Users/Avneetpannu/Documents/Concordia/SOEN 6441/CheckingFunctionality/MapFiles/canada.map";
-		File file = new File(p_loadFilePath);
-		List<String> list = new ArrayList<>();
-
-		BufferedReader br;
+		BufferedReader l_reader;
 		try {
-			br = new BufferedReader(new FileReader(file));
-			list = br.lines().collect(Collectors.toList());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			l_reader = new BufferedReader(new FileReader(l_mapFile));
+			l_lineList = l_reader.lines().collect(Collectors.toList());
+		} catch (FileNotFoundException l_e) {
+			l_e.printStackTrace();
 		}
-		extractDataFromFile(list);
+		//extractDataFromFile(list);
+		return l_lineList;
 	}
-
-	public static void extractDataFromFile(List<String> list) {
-		List<String> l_continentData = list.subList(list.indexOf(CONTINENTS) + 1, list.indexOf(COUNTRIES) - 1);
-		parseContinentsMetaData(l_continentData);
-
-		List<String> l_countryData = list.subList(list.indexOf(COUNTRIES) + 1, list.indexOf(BORDERS) - 1);
-		parseCountriesMetaData(l_countryData);
-
-		List<String> l_bordersMetaData = list.subList(list.indexOf(BORDERS) + 1, list.size());
-		parseNeighborsMetaData(l_bordersMetaData);
-
-	}
-
-	static void parseContinentsMetaData(List<String> continentList) {
-		LinkedHashMap<String, Integer> continentdata = new LinkedHashMap<String, Integer>();
-
-		for (String cont : continentList) {
-			String[] metaData = cont.split(" ");
-			continentdata.put(metaData[0], Integer.parseInt(metaData[1]));
+	public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
+		//LinkedHashMap<String, Integer> l_continentData = new LinkedHashMap<String, Integer>();
+		List<Continent> l_continents = new ArrayList<Continent>();
+		for (String cont : p_continentList) {
+			String[] l_metaData = cont.split(" ");
+			//continentdata.put(l_metaData[0], Integer.parseInt(l_metaData[1]));
+			l_continents.add(new Continent(l_metaData[0], Integer.parseInt(l_metaData[1])));
 		}
-
-//		continentdata.entrySet().forEach(entry -> {
-//			System.out.println(entry.getKey() + " " + entry.getValue());
-//		});
-
+		return l_continents;
 	}
 
-	static void parseCountriesMetaData(List<String> countriesList) {
+	public List<Country> parseCountriesMetaData(List<String> p_countriesList, List<String> p_bordersList) {
 
-		LinkedHashMap<Integer, Integer> countryData = new LinkedHashMap<Integer, Integer>();
+		LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+		List<Country> l_countriesList = new ArrayList<Country>();
 
-		for (String country : countriesList) {
-			String[] metaDataCountries = country.split(" ");
-			countryData.put(Integer.parseInt(metaDataCountries[0]), Integer.parseInt(metaDataCountries[2]));
+		for (String country : p_countriesList) {
+			String[] l_metaDataCountries = country.split(" ");
+			l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), Integer.parseInt(l_metaDataCountries[2])));
 		}
+		for(String b : p_bordersList) {
+			ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
 
-//		countryData.entrySet().forEach(entry -> {
-//			System.out.println(entry.getKey() + " " + entry.getValue());
-//		});
+			String[] l_splitString = b.split(" ");
+			int l_countryId = Integer.parseInt(l_splitString[0]);
+			for ( int i=1;i<=l_splitString.length-1;i++) {
+				l_neighbours.add(Integer.parseInt(l_splitString[i]));
 
+			}
+			l_countryNeighbors.put(Integer.parseInt(l_splitString[0]), l_neighbours);
+		}
+		for(Country c: l_countriesList) {
+			List<Integer> l_adjacentCountries = l_countryNeighbors.get(c.getD_countryId());
+			c.setD_adjacentCountryIds(l_adjacentCountries);
+		}
+		return l_countriesList;
 	}
 
-	static void parseNeighborsMetaData(List<String> borders) {
-		LinkedHashMap<Integer, List<Integer>> neighbors = new LinkedHashMap<Integer, List<Integer>>();
-		ArrayList<Integer> n = new ArrayList<Integer>();
-		// TO-DO
+	public static void main(String[] p_args) {
+		MapService l_ms=new MapService();
+		Map l_map= l_ms.constructMap("C:/Users/ishaa/Downloads/france/france.map");
+		l_map.checkContinents();
+		l_map.checkCountries();
+		System.out.println(l_map.checkCountryConnectivity());
 	}
 
 }

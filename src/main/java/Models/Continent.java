@@ -7,6 +7,11 @@ public class Continent {
 	Integer d_continentValue;
 	List<Country> d_countries;
 
+	public Continent(String p_continentId, int p_continentValue) {
+		this.d_continentId=p_continentId;
+		this.d_continentValue=p_continentValue;
+	}
+
 	public String getD_continentId() {
 		return d_continentId;
 	}
