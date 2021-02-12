@@ -3,8 +3,15 @@ package Models;
 import java.util.List;
 
 public class Map {
+	String d_mapFile;
 	List<Continent> d_continents;
 	List<Country> d_countries;
+	public String getD_mapFile() {
+		return d_mapFile;
+	}
+	public void setD_mapFile(String p_mapFile) {
+		this.d_mapFile = p_mapFile;
+	}
 	public List<Continent> getD_continents() {
 		return d_continents;
 	}

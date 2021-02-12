@@ -3,15 +3,22 @@ package Models;
 import java.util.List;
 
 public class Continent {
-	String d_continentId;
+	Integer d_continentId;
+	String d_continentName;
 	Integer d_continentValue;
 	List<Country> d_countries;
 
-	public String getD_continentId() {
+	public Integer getD_continentId() {
 		return d_continentId;
 	}
-	public void setD_continentId(String p_continentId) {
+	public void setD_continentId(Integer p_continentId) {
 		this.d_continentId = p_continentId;
+	}
+	public String getD_continentName() {
+		return d_continentName;
+	}
+	public void setD_continentName(String d_continentName) {
+		this.d_continentName = d_continentName;
 	}
 	public Integer getD_continentValue() {
 		return d_continentValue;
@@ -24,5 +31,14 @@ public class Continent {
 	}
 	public void setD_countries(List<Country> p_countries) {
 		this.d_countries = p_countries;
+	}
+	public Continent(Integer p_continentId, String p_continentName, Integer p_continentValue) {
+		super();
+		this.d_continentId = p_continentId;
+		this.d_continentName = p_continentName;
+		this.d_continentValue = p_continentValue;
+	}
+	public Continent() {
+		super();
 	}
 }

@@ -6,6 +6,7 @@ public class GameState {
 	Map d_map;
 	List<Player> d_players;
 	List<Order> d_unexecutedOrders;
+	String d_error;
 
 	public Map getD_map() {
 		return d_map;
@@ -29,5 +30,13 @@ public class GameState {
 
 	public void setD_unexecutedOrders(List<Order> p_unexecutedOrders) {
 		this.d_unexecutedOrders = p_unexecutedOrders;
+	}
+
+	public String getError() {
+		return d_error;
+	}
+
+	public void setError(String p_error) {
+		this.d_error = p_error;
 	}
 }
