@@ -3,17 +3,19 @@ package Services;
 import Models.Continent;
 import Models.Map;
 import Models.Country;
+import Exceptions.InvalidMap;
 
 import java.io.BufferedReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 import static Constants.ApplicationConstants.CONTINENTS;
 import static Constants.ApplicationConstants.COUNTRIES;
@@ -27,10 +29,11 @@ public class MapService {
 		List<String> l_listString = loadFile(p_loadFilePath);
 		List<String> l_continentData = l_listString.subList(l_listString.indexOf(CONTINENTS) + 1, l_listString.indexOf(COUNTRIES) - 1);
 		List<Continent> l_continentObjects = parseContinentsMetaData(l_continentData);
-		m.setD_continents(l_continentObjects);
 		List<String> l_countryData = l_listString.subList(l_listString.indexOf(COUNTRIES) + 1, l_listString.indexOf(BORDERS) - 1);
 		List<String> l_bordersMetaData = l_listString.subList(l_listString.indexOf(BORDERS) + 1, l_listString.size());
-		List<Country> l_countryObjects = parseCountriesMetaData(l_countryData,l_bordersMetaData );
+		List<Country> l_countryObjects = parseCountriesMetaData(l_countryData,l_bordersMetaData);
+		l_continentObjects=linkCountryContinents(l_countryObjects, l_continentObjects);
+		m.setD_continents(l_continentObjects);
 		m.setD_countries(l_countryObjects);
 		return m;
 	}
@@ -52,10 +55,12 @@ public class MapService {
 	public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
 		//LinkedHashMap<String, Integer> l_continentData = new LinkedHashMap<String, Integer>();
 		List<Continent> l_continents = new ArrayList<Continent>();
+		int count=1;
 		for (String cont : p_continentList) {
 			String[] l_metaData = cont.split(" ");
 			//continentdata.put(l_metaData[0], Integer.parseInt(l_metaData[1]));
-			l_continents.add(new Continent(l_metaData[0], Integer.parseInt(l_metaData[1])));
+			l_continents.add(new Continent(count, l_metaData[0], Integer.parseInt(l_metaData[1])));
+			count++;
 		}
 		return l_continents;
 	}
@@ -87,12 +92,26 @@ public class MapService {
 		return l_countriesList;
 	}
 
-	public static void main(String[] p_args) {
+	public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents){
+		for (Country c: p_countries){
+			System.out.println(c.getD_countryId());
+			for (Continent cont: p_continents){
+				System.out.println(cont.getD_continentId());
+				if (cont.getD_continentID().equals(c.getD_continentId())) {
+					System.out.println("Matched");
+					cont.addCountry(c);
+				}
+			}
+		}
+		return p_continents;
+	}
+
+	public static void main(String[] p_args) throws InvalidMap {
 		MapService l_ms=new MapService();
-		Map l_map= l_ms.constructMap("C:/Users/ishaa/Downloads/france/france.map");
+		Map l_map= l_ms.constructMap("C:/Users/ishaa/Downloads/europe/europe.map");
 		l_map.checkContinents();
 		l_map.checkCountries();
-		System.out.println(l_map.checkCountryConnectivity());
+		System.out.println(l_map.Validate());
 	}
 
 }
