@@ -7,12 +7,17 @@ import Exceptions.InvalidMap;
 import java.util.Map.Entry;
 
 public class Map {
+	String d_mapFile;
 	List<Continent> d_continents;
 	List<Country> d_countries;
-	int d_countryId;
-	int d_continentId;
 	HashMap<Integer, Boolean> d_countryReach = new HashMap<Integer, Boolean>();
 
+	public String getD_mapFile() {
+		return d_mapFile;
+	}
+	public void setD_mapFile(String p_mapFile) {
+		this.d_mapFile = p_mapFile;
+	}
 	public List<Continent> getD_continents() {
 		return d_continents;
 	}
@@ -25,15 +30,10 @@ public class Map {
 	public void setD_countries(List<Country> p_countries) {
 		this.d_countries = p_countries;
 	}
-	public void insertCountryData(int p_countryId, int p_continentValue) {
-		this.d_countryId = p_countryId;
-		this.d_continentId = p_continentValue;	
-	}
-
 
 	public void checkContinents() {
 		for(Continent c: d_continents) {
-			System.out.println(c.getD_continentId());
+			System.out.println(c.getD_continentID());
 		}
 	}
 	public void checkCountries() {
@@ -62,16 +62,16 @@ public class Map {
 	 * @throws InvalidMap if any continent is not Connected
 	 */
 	public Boolean checkContinentConnectivity() throws InvalidMap {
-		boolean p_flagConnectivity=true;
+		boolean l_flagConnectivity=true;
 		for (Continent c:d_continents){
 			if (c.getD_countries().size()<1){
-				throw new InvalidMap(c.getD_continentId()+" has no countries, it must possess atleast 1 country");
+				throw new InvalidMap(c.getD_continentID()+" has no countries, it must possess atleast 1 country");
 			}
 			if(!subGraphConnectivity(c)){
-				p_flagConnectivity=false;
+				l_flagConnectivity=false;
 			}
 		}
-		return p_flagConnectivity;
+		return l_flagConnectivity;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Map {
 		dfsSubgraph(p_c.getD_countries().get(0), l_continentCountry, p_c);
 		for (Entry<Integer, Boolean> entry: l_continentCountry.entrySet()){
 			if(!entry.getValue()){
-				String l_messageException= entry.getKey()+" in Continent"+ p_c.getD_continentId()+" is not reachable";
+				String l_messageException= entry.getKey()+" in Continent"+ p_c.getD_continentID()+" is not reachable";
 				throw new InvalidMap(l_messageException);
 			}
 		}

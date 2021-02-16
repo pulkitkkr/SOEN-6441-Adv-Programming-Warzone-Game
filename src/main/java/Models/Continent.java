@@ -1,19 +1,21 @@
 package Models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Continent {
 	Integer d_continentID;
-	String d_continentId;
+	String d_continentName;
 	Integer d_continentValue;
 	List<Country> d_countries;
 
-	public Continent(Integer p_continentID, String p_continentId, int p_continentValue) {
+	public Continent(Integer p_continentID, String p_continentName, int p_continentValue) {
 		this.d_continentID=p_continentID;
-		this.d_continentId=p_continentId;
+		this.d_continentName=p_continentName;
 		this.d_continentValue=p_continentValue;
+	}
+	public Continent(){
+
 	}
 	public Integer getD_continentID() {
 		return d_continentID;
@@ -21,11 +23,11 @@ public class Continent {
 	public void setD_continentID(Integer p_continentID) {
 		this.d_continentID = p_continentID;
 	}
-	public String getD_continentId() {
-		return d_continentId;
+	public String getD_continentName() {
+		return d_continentName;
 	}
-	public void setD_continentId(String p_continentId) {
-		this.d_continentId = p_continentId;
+	public void setD_continentName(String p_continentName) {
+		this.d_continentName = p_continentName;
 	}
 	public Integer getD_continentValue() {
 		return d_continentValue;
@@ -39,24 +41,24 @@ public class Continent {
 	public void setD_countries(List<Country> p_countries) {
 		this.d_countries = p_countries;
 	}
-	public void addCountry(Country c){
+	public void addCountry(Country p_c){
 		if (d_countries!=null){
-			d_countries.add(c);
+			d_countries.add(p_c);
 		}
 		else{
 			d_countries=new ArrayList<Country>();
-			d_countries.add(c);
+			d_countries.add(p_c);
 		}
 	}
 	public Boolean checkCountry(Integer p_countryId){
-		boolean flag=false;
+		boolean l_flag=false;
 		for (Country c: d_countries){
 			if (c.getD_countryId().equals(p_countryId)) {
-				flag = true;
+				l_flag = true;
 				break;
 			}
 		}
-		return flag;
+		return l_flag;
 	}
 
 }
