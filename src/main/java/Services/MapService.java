@@ -173,11 +173,9 @@ public class MapService {
 	 */
 	public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
 		for (Country c : p_countries) {
-			System.out.println(c.getD_countryId());
 			for (Continent cont : p_continents) {
 				System.out.println(cont.getD_continentID());
 				if (cont.getD_continentID().equals(c.getD_continentId())) {
-					System.out.println("Matched");
 					cont.addCountry(c);
 				}
 			}

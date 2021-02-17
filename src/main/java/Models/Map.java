@@ -30,6 +30,12 @@ public class Map {
 	public void setD_countries(List<Country> p_countries) {
 		this.d_countries = p_countries;
 	}
+	public void addContinent(Continent p_continent){
+		d_continents.add(p_continent);
+	}
+	public void addCountry(Country p_country){
+		d_countries.add(p_country);
+	}
 
 	public void checkContinents() {
 		for(Continent c: d_continents) {
