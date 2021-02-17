@@ -186,10 +186,8 @@ public class MapService {
 					l_continet -> l_continet.getD_continentID().equals(Integer.parseInt(p_argument.split(" ")[0])))
 					.findFirst().orElse(null);
 			if (l_existingContinent == null) {
-				Continent l_continentToBeAdded = new Continent();
-				l_continentToBeAdded.setD_continentID(Integer.parseInt(p_argument.split(" ")[0]));
-				l_continentToBeAdded.setD_continentName("Continent");
-				l_continentToBeAdded.setD_continentValue(Integer.parseInt(p_argument.split(" ")[1]));
+				Continent l_continentToBeAdded = new Continent(Integer.parseInt(p_argument.split(" ")[0]), "Continent",
+						Integer.parseInt(p_argument.split(" ")[1]));
 				l_updatedContinents.add(l_continentToBeAdded);
 			} else {
 				System.out.println("Continent with continent id : " + Integer.parseInt(p_argument.split(" ")[0])
