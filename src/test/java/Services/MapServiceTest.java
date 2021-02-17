@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import Models.Continent;
@@ -15,24 +16,27 @@ import Models.GameState;
 import Utils.CommonUtil;
 
 public class MapServiceTest {
+	MapService d_mapservice;
+
+	@Before
+	public void setup() {
+		d_mapservice = new MapService();
+	}
 	@Test
 	public void editMap() throws IOException {
-		MapService l_mapService = new MapService();
-		l_mapService.editMap(new GameState(), "testeditmap.map");
+		d_mapservice.editMap(new GameState(), "testeditmap.map");
 		File l_file = new File(CommonUtil.getMapFilePath("testeditmap.map"));
 		assertTrue(l_file.exists());
 	}
 	@Test
 	public void test_editContinentAdd() throws IOException {
-		MapService l_mapService = new MapService();
-		List<Continent> l_updatedContinents = l_mapService.addRemoveContinents(new ArrayList<>(), "Add", "Asia 10");
+		List<Continent> l_updatedContinents = d_mapservice.addRemoveContinents(new ArrayList<>(), "Add", "Asia 10");
 		assertEquals(l_updatedContinents.size(), 1);
 		assertEquals(l_updatedContinents.get(0).getD_continentName(), "Asia");
 		assertEquals(l_updatedContinents.get(0).getD_continentValue().toString(), "10");
 	}
 	@Test
 	public void test_editContinentRemove() throws IOException {
-		MapService l_mapService = new MapService();
 		
 		List<Continent> l_continents = new ArrayList<>();
 		Continent c1 = new Continent();
@@ -48,7 +52,7 @@ public class MapServiceTest {
 		l_continents.add(c1);
 		l_continents.add(c2);
 		
-		List<Continent> l_updatedContinents = l_mapService.addRemoveContinents(l_continents, "Remove", "Asia");
+		List<Continent> l_updatedContinents = d_mapservice.addRemoveContinents(l_continents, "Remove", "Asia");
 		assertEquals(l_updatedContinents.size(), 1);
 		assertEquals(l_updatedContinents.get(0).getD_continentName(), "Europe");
 		assertEquals(l_updatedContinents.get(0).getD_continentValue().toString(), "20");
