@@ -130,7 +130,8 @@ public class MapService {
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
 		String l_filePath = p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (null == p_gameState.getD_map().getD_continents()
-				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(p_gameState, l_filePath) : p_gameState.getD_map();
+				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(p_gameState, l_filePath)
+						: p_gameState.getD_map();
 		List<Continent> l_updatedContinents = this.addRemoveContinents(l_mapToBeUpdated.getD_continents(), p_operation,
 				p_argument);
 		if (null != l_updatedContinents && !l_updatedContinents.isEmpty()) {

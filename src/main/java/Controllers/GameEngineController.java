@@ -54,7 +54,9 @@ public class GameEngineController {
 			}
 		}
 	}
-	private static void performMapEdit(Command p_command, MapService p_mapservice, GameState p_gameState) throws IOException {
+
+	private static void performMapEdit(Command p_command, MapService p_mapservice, GameState p_gameState)
+			throws IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -69,7 +71,9 @@ public class GameEngineController {
 			}
 		}
 	}
-	private static void performEditContinent(Command p_command, MapService p_mapservice, GameState p_gameState) throws IOException {
+
+	private static void performEditContinent(Command p_command, MapService p_mapservice, GameState p_gameState)
+			throws IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
 			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
@@ -86,6 +90,7 @@ public class GameEngineController {
 			}
 		}
 	}
+
 	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapservice) {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -106,6 +111,7 @@ public class GameEngineController {
 			}
 		}
 	}
+
 	private static void performLoadMap(GameState p_gameState, Command p_command, MapService p_mapservice) {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
