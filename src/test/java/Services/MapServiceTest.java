@@ -49,18 +49,18 @@ public class MapServiceTest {
 	public void testEditContinentRemove() throws IOException {
 		
 		List<Continent> l_continents = new ArrayList<>();
-		Continent c1 = new Continent();
-		c1.setD_continentID(1);
-		c1.setD_continentName("Asia");
-		c1.setD_continentValue(10);
+		Continent l_c1 = new Continent();
+		l_c1.setD_continentID(1);
+		l_c1.setD_continentName("Asia");
+		l_c1.setD_continentValue(10);
 		
-		Continent c2 = new Continent();
-		c2.setD_continentID(2);
-		c2.setD_continentName("Europe");
-		c2.setD_continentValue(20);
+		Continent l_c2 = new Continent();
+		l_c2.setD_continentID(2);
+		l_c2.setD_continentName("Europe");
+		l_c2.setD_continentValue(20);
 		
-		l_continents.add(c1);
-		l_continents.add(c2);
+		l_continents.add(l_c1);
+		l_continents.add(l_c2);
 		
 		List<Continent> l_updatedContinents = d_mapservice.addRemoveContinents(l_continents, "Remove", "Asia");
 		assertEquals(l_updatedContinents.size(), 1);

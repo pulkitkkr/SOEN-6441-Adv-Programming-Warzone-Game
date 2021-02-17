@@ -370,13 +370,4 @@ public class MapService {
 		}
 	}
 
-//	public static void main(String[] p_args) throws InvalidMap {
-//		MapService l_ms = new MapService();
-//		GameState l_gameState = new GameState();
-//		Map l_map = l_ms.loadMap(l_gameState, "C:/Users/ishaa/Downloads/europe/europe.map");
-//		l_map.checkContinents();
-//		l_map.checkCountries();
-//		System.out.println(l_map.Validate());
-//	}
-
 }
