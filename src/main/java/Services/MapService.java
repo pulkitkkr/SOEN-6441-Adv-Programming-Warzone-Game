@@ -174,7 +174,7 @@ public class MapService {
 		return l_updatedContinents;
 	}
 
-	public boolean writeDataToFile(GameState p_gameState, String p_filePath) {
+	public boolean saveMap(GameState p_gameState, String p_filePath) {
 		try {
 			if (!p_filePath.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");

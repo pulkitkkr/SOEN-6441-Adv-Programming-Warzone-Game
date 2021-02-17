@@ -27,77 +27,22 @@ public class GameEngineController {
 
 			switch (l_rootCommand) {
 			case "editmap": {
-				List<Map<String, String>> l_operations_list = l_command.getOperationsAndArguments();
-
-				if (null == l_operations_list || l_operations_list.isEmpty()) {
-					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
-				} else {
-					for (Map<String, String> l_map : l_operations_list) {
-						if (l_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-							l_mapservice.editMap(l_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-						} else {
-							System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
-						}
-					}
-				}
+				performMapEdit(l_command, l_mapservice, l_gameState);
 				break;
 			}
 			case "editcontinent": {
-				List<Map<String, String>> l_operations_list = l_command.getOperationsAndArguments();
-				if (null == l_operations_list || l_operations_list.isEmpty()) {
-					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
-				} else {
-					for (Map<String, String> l_map : l_operations_list) {
-						if (l_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-								&& l_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-							System.out.println("Valid args received");
-							l_mapservice.editContinent(l_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
-									l_map.get(ApplicationConstants.OPERATION));
-						} else {
-							System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
-						}
-					}
-				}
+				performEditContinent(l_command, l_mapservice, l_gameState);
 				break;
 			}
 			case "savemap": {
-				List<Map<String, String>> l_operations_list = l_command.getOperationsAndArguments();
-
-				if (null == l_operations_list || l_operations_list.isEmpty()) {
-					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
-				} else {
-					for (Map<String, String> l_map : l_operations_list) {
-						if (l_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-							boolean l_fileUpdateStatus = l_mapservice.writeDataToFile(l_gameState,
-									l_map.get(ApplicationConstants.ARGUMENTS));
-							if (l_fileUpdateStatus)
-								System.out.println("Required changes has been done in map file");
-							else
-								System.out.println(l_gameState.getError());
-						} else {
-							System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
-						}
-					}
-				}
+				performSaveMap(l_command, l_gameState, l_mapservice);
 				break;
 			}
 			case "loadmap": {
-				List<Map<String, String>> l_operations_list = l_command.getOperationsAndArguments();
-
-				if (null == l_operations_list || l_operations_list.isEmpty()) {
-					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
-				} else {
-					for (Map<String, String> l_map : l_operations_list) {
-						if (l_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-							l_mapservice.loadMap(l_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-						} else {
-							System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
-						}
-					}
-				}
+				performLoadMap(l_gameState, l_command, l_mapservice);
 				break;
 			}
-			case "Exit": {
+			case "exit": {
 				System.out.println("Exit Command Entered");
 				System.exit(0);
 				break;
@@ -106,6 +51,73 @@ public class GameEngineController {
 				System.out.println("Invalid Command");
 				break;
 			}
+			}
+		}
+	}
+	private static void performMapEdit(Command p_command, MapService p_mapservice, GameState p_gameState) throws IOException {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					p_mapservice.editMap(p_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+				}
+			}
+		}
+	}
+	private static void performEditContinent(Command p_command, MapService p_mapservice, GameState p_gameState) throws IOException {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					System.out.println("Valid args received");
+					p_mapservice.editContinent(p_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
+							l_map.get(ApplicationConstants.OPERATION));
+				} else {
+					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+				}
+			}
+		}
+	}
+	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapservice) {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					boolean l_fileUpdateStatus = p_mapservice.saveMap(p_gameState,
+							l_map.get(ApplicationConstants.ARGUMENTS));
+					if (l_fileUpdateStatus)
+						System.out.println("Required changes has been done in map file");
+					else
+						System.out.println(p_gameState.getError());
+				} else {
+					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+				}
+			}
+		}
+	}
+	private static void performLoadMap(GameState p_gameState, Command p_command, MapService p_mapservice) {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					p_mapservice.loadMap(p_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+				}
 			}
 		}
 	}
