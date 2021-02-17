@@ -1,43 +1,42 @@
 package Services;
 
-import Models.Continent;
-import Models.Map;
-import Models.Country;
-import Exceptions.InvalidMap;
-
 import java.io.BufferedReader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
-
-import static Constants.ApplicationConstants.CONTINENTS;
-import static Constants.ApplicationConstants.COUNTRIES;
-import static Constants.ApplicationConstants.BORDERS;
 import Constants.ApplicationConstants;
+import Exceptions.InvalidMap;
+import Models.Continent;
+import Models.Country;
 import Models.GameState;
-
+import Models.Map;
 
 public class MapService {
 
-	Map m;
 	public Map loadMap(String p_loadFilePath) {
-		Map l_map= new Map();
+		Map l_map = new Map();
 		List<String> l_linesOfFile = loadFile(p_loadFilePath);
+
 		if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
-			List<String> l_continentData = l_linesOfFile.subList(l_linesOfFile.indexOf(CONTINENTS) + 1, l_linesOfFile.indexOf(COUNTRIES) - 1);
+			List<String> l_continentData = l_linesOfFile.subList(
+					l_linesOfFile.indexOf(ApplicationConstants.CONTINENTS) + 1,
+					l_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) - 1);
 			List<Continent> l_continentObjects = parseContinentsMetaData(l_continentData);
-			List<String> l_countryData = l_linesOfFile.subList(l_linesOfFile.indexOf(COUNTRIES) + 1, l_linesOfFile.indexOf(BORDERS) - 1);
-			List<String> l_bordersMetaData = l_linesOfFile.subList(l_linesOfFile.indexOf(BORDERS) + 1, l_linesOfFile.size());
+
+			List<String> l_countryData = l_linesOfFile.subList(
+					l_linesOfFile.indexOf(ApplicationConstants.COUNTRIES) + 1,
+					l_linesOfFile.indexOf(ApplicationConstants.BORDERS) - 1);
+			List<String> l_bordersMetaData = l_linesOfFile
+					.subList(l_linesOfFile.indexOf(ApplicationConstants.BORDERS) + 1, l_linesOfFile.size());
 			List<Country> l_countryObjects = parseCountriesMetaData(l_countryData, l_bordersMetaData);
 			l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
 			l_map.setD_continents(l_continentObjects);
@@ -45,6 +44,7 @@ public class MapService {
 		}
 		return l_map;
 	}
+
 	public List<String> loadFile(String p_loadFilePath) {
 		File l_mapFile = new File(p_loadFilePath);
 		List<String> l_lineList = new ArrayList<>();
@@ -53,21 +53,22 @@ public class MapService {
 		try {
 			l_reader = new BufferedReader(new FileReader(l_mapFile));
 			l_lineList = l_reader.lines().collect(Collectors.toList());
+			l_reader.close();
 		} catch (FileNotFoundException l_e) {
 			l_e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//extractDataFromFile(list);
 		return l_lineList;
 	}
+
 	public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
-		//LinkedHashMap<String, Integer> l_continentData = new LinkedHashMap<String, Integer>();
+		int l_continentId = 1;
 		List<Continent> l_continents = new ArrayList<Continent>();
-		int l_count=1;
 		for (String cont : p_continentList) {
 			String[] l_metaData = cont.split(" ");
-			//continentdata.put(l_metaData[0], Integer.parseInt(l_metaData[1]));
-			l_continents.add(new Continent(l_count, l_metaData[0], Integer.parseInt(l_metaData[1])));
-			l_count++;
+			l_continents.add(new Continent(l_continentId, l_metaData[0], Integer.parseInt(l_metaData[1])));
+			l_continentId++;
 		}
 		return l_continents;
 	}
@@ -79,30 +80,31 @@ public class MapService {
 
 		for (String country : p_countriesList) {
 			String[] l_metaDataCountries = country.split(" ");
-			l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), Integer.parseInt(l_metaDataCountries[2])));
+			l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), l_metaDataCountries[1],
+					Integer.parseInt(l_metaDataCountries[2])));
 		}
-		for(String b : p_bordersList) {
-			ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
+		for (String l_border : p_bordersList) {
+			if (null != l_border && !l_border.isEmpty()) {
+				ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
+				String[] l_splitString = l_border.split(" ");
+				for (int i = 1; i <= l_splitString.length - 1; i++) {
+					l_neighbours.add(Integer.parseInt(l_splitString[i]));
 
-			String[] l_splitString = b.split(" ");
-			int l_countryId = Integer.parseInt(l_splitString[0]);
-			for ( int i=1;i<=l_splitString.length-1;i++) {
-				l_neighbours.add(Integer.parseInt(l_splitString[i]));
-
+				}
+				l_countryNeighbors.put(Integer.parseInt(l_splitString[0]), l_neighbours);
 			}
-			l_countryNeighbors.put(Integer.parseInt(l_splitString[0]), l_neighbours);
 		}
-		for(Country c: l_countriesList) {
+		for (Country c : l_countriesList) {
 			List<Integer> l_adjacentCountries = l_countryNeighbors.get(c.getD_countryId());
 			c.setD_adjacentCountryIds(l_adjacentCountries);
 		}
 		return l_countriesList;
 	}
 
-	public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents){
-		for (Country c: p_countries){
+	public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
+		for (Country c : p_countries) {
 			System.out.println(c.getD_countryId());
-			for (Continent cont: p_continents){
+			for (Continent cont : p_continents) {
 				System.out.println(cont.getD_continentID());
 				if (cont.getD_continentID().equals(c.getD_continentId())) {
 					System.out.println("Matched");
@@ -139,7 +141,7 @@ public class MapService {
 	}
 
 	private List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
-												String p_argument) {
+			String p_argument) {
 		List<Continent> l_updatedContinents = new ArrayList<>();
 		if (null != p_continentData && !p_continentData.isEmpty())
 			l_updatedContinents.addAll(p_continentData);
@@ -184,8 +186,8 @@ public class MapService {
 
 					FileWriter l_writer = new FileWriter(p_filePath);
 
-					String l_countryMetaData=new String();
-					String l_bordersMetaData=new String();
+					String l_countryMetaData = new String();
+					String l_bordersMetaData = new String();
 					List<String> l_bordersList = new ArrayList<>();
 					if (null != p_gameState.getD_map().getD_continents()
 							&& !p_gameState.getD_map().getD_continents().isEmpty()) {
@@ -239,8 +241,8 @@ public class MapService {
 	}
 
 	public static void main(String[] p_args) throws InvalidMap {
-		MapService l_ms=new MapService();
-		Map l_map= l_ms.loadMap("C:/Users/ishaa/Downloads/europe/europe.map");
+		MapService l_ms = new MapService();
+		Map l_map = l_ms.loadMap("C:/Users/ishaa/Downloads/europe/europe.map");
 		l_map.checkContinents();
 		l_map.checkCountries();
 		System.out.println(l_map.Validate());
