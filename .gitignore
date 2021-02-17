@@ -1,5 +1,6 @@
-# IDE Files
+# Ignore all IDE Files with few exceptions
 ./.idea
+!.idea/inspectionProfiles
 
 # MAVEN GIT-IGNORE: https://github.com/github/gitignore/blob/master/Maven.gitignore
 target
