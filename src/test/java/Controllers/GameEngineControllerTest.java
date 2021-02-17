@@ -28,19 +28,19 @@ public class GameEngineControllerTest {
 	}
 
 	@Test(expected = InvalidCommand.class)
-	public void test_InvalidCommand_performEditMap() throws IOException, InvalidCommand, InvalidMap {
+	public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
 		Command l_command = new Command("editmap");
 		GameEngineController.performMapEdit(l_command, d_mapservice, d_state);
 	}
 
 	@Test(expected = InvalidCommand.class)
-	public void test_InvalidCommand_performEditContinent() throws IOException, InvalidCommand {
+	public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand {
 		Command l_command = new Command("editcontinent -add");
 		GameEngineController.performEditContinent(l_command, d_mapservice, d_state);
 	}
 
 	@Test
-	public void test_validCommand_performEditContinent() throws IOException, InvalidCommand {
+	public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand {
 		d_map.setD_mapFile("testeditmap.map");
 		d_state.setD_map(d_map);
 		Command l_addCommand = new Command("editcontinent -add Europe 10 -add America 20");
@@ -57,7 +57,7 @@ public class GameEngineControllerTest {
 	}
 
 	@Test(expected = InvalidCommand.class)
-	public void test_InvalidCommand_performSaveMap() throws IOException, InvalidCommand, InvalidMap {
+	public void testPerformSaveMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
 		Command l_command = new Command("savemap");
 		GameEngineController.performSaveMap(l_command, d_state, d_mapservice);
 	}
