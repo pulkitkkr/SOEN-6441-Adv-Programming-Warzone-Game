@@ -12,6 +12,8 @@ public final class ApplicationConstants {
 	public static final String ARGUMENTS = "arguments";
 	public static final String OPERATION = "operation";
 
+	public static final String MAPFILEEXTENSION = ".map";
+
 	public static final String CONTINENTS = "[continents]";
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";

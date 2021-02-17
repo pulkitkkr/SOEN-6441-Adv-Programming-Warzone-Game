@@ -45,19 +45,21 @@ public class MapService {
 		return l_map;
 	}
 
-	public List<String> loadFile(String p_loadFilePath) {
-		File l_mapFile = new File(p_loadFilePath);
+	public List<String> loadFile(String p_loadFileName) {
+		String l_absolutePath = new File("").getAbsolutePath();
+		String l_filePath = l_absolutePath + File.separator + p_loadFileName + ApplicationConstants.MAPFILEEXTENSION;
+
 		List<String> l_lineList = new ArrayList<>();
 
 		BufferedReader l_reader;
 		try {
-			l_reader = new BufferedReader(new FileReader(l_mapFile));
+			l_reader = new BufferedReader(new FileReader(l_filePath));
 			l_lineList = l_reader.lines().collect(Collectors.toList());
 			l_reader.close();
-		} catch (FileNotFoundException l_e) {
-			l_e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException l_e1) {
+			l_e1.printStackTrace();
+		} catch (IOException l_e2) {
+			l_e2.printStackTrace();
 		}
 		return l_lineList;
 	}
