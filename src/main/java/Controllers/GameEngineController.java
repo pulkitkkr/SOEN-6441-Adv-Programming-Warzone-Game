@@ -29,38 +29,39 @@ public class GameEngineController {
 				String l_rootCommand = l_command.getRootCommand();
 
 				switch (l_rootCommand) {
-					case "editmap": {
-						performMapEdit(l_command, l_mapService, l_gameState);
-						break;
-					}
-					case "editcontinent": {
-						performEditContinent(l_command, l_mapService, l_gameState);
-						break;
-					}
-					case "savemap": {
-						performSaveMap(l_command, l_gameState, l_mapService);
-						break;
-					}
-					case "loadmap": {
-						performLoadMap(l_gameState, l_command, l_mapService);
-						break;
-					}
-					case "validatemap": {
-						performValidateMap(l_gameState, l_command);
-					}
-					case "exit": {
-						System.out.println("Exit Command Entered");
-						System.exit(0);
-						break;
-					}
-					default: {
-						System.out.println("Invalid Command");
-						break;
-					}
+				case "editmap": {
+					performMapEdit(l_command, l_mapService, l_gameState);
+					break;
+				}
+				case "editcontinent": {
+					performEditContinent(l_command, l_mapService, l_gameState);
+					break;
+				}
+				case "savemap": {
+					performSaveMap(l_command, l_gameState, l_mapService);
+					break;
+				}
+				case "loadmap": {
+					performLoadMap(l_gameState, l_command, l_mapService);
+					break;
+				}
+				case "validatemap": {
+					performValidateMap(l_gameState, l_command);
+					break;
+				}
+				case "exit": {
+					System.out.println("Exit Command Entered");
+					System.exit(0);
+					break;
+				}
+				default: {
+					System.out.println("Invalid Command");
+					break;
+				}
 				}
 			} catch (InvalidCommand | InvalidMap l_exception) {
 				System.out.println(l_exception.getMessage());
-			} catch (IOException l_ioException){
+			} catch (IOException l_ioException) {
 				l_ioException.printStackTrace();
 			}
 		}
@@ -102,7 +103,8 @@ public class GameEngineController {
 		}
 	}
 
-	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapService) throws InvalidCommand, IOException{
+	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapService)
+			throws InvalidCommand, IOException, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -123,7 +125,8 @@ public class GameEngineController {
 		}
 	}
 
-	private static void performLoadMap(GameState p_gameState, Command p_command, MapService p_mapService) throws InvalidCommand{
+	private static void performLoadMap(GameState p_gameState, Command p_command, MapService p_mapService)
+			throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -142,17 +145,16 @@ public class GameEngineController {
 	private static void performValidateMap(GameState p_gameState, Command p_command) throws InvalidMap, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
-			Models.Map l_currentMap= p_gameState.getD_map();
-			if(l_currentMap == null){
+			Models.Map l_currentMap = p_gameState.getD_map();
+			if (l_currentMap == null) {
 				throw new InvalidMap(ApplicationConstants.INVALID_MAP_ERROR_EMPTY);
-			}
-			else{
-				if(l_currentMap.Validate()){
+			} else {
+				if (l_currentMap.Validate()) {
 					System.out.println(ApplicationConstants.VALID_MAP);
 				}
 			}
 
-		} else{
+		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
 		}
 	}

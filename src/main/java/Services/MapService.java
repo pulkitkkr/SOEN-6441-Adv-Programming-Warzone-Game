@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Constants.ApplicationConstants;
+import Exceptions.InvalidMap;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
@@ -48,7 +49,7 @@ public class MapService {
 	public List<String> loadFile(String p_loadFileName) {
 		String l_absolutePath = new File("").getAbsolutePath();
 		String l_filePath = l_absolutePath + File.separator + p_loadFileName + ApplicationConstants.MAPFILEEXTENSION;
-
+		//String l_filePath = p_loadFileName;
 		List<String> l_lineList = new ArrayList<>();
 
 		BufferedReader l_reader;
@@ -121,12 +122,14 @@ public class MapService {
 		File l_fileToBeEdited = new File(p_editFilePath);
 		if (l_fileToBeEdited.createNewFile()) {
 			System.out.println("File has been created.");
+			Map l_map = new Map();
+			l_map.setD_mapFile(p_editFilePath);
+			p_gameState.setD_map(l_map);
 		} else {
 			System.out.println("File already exists.");
+			this.loadMap(p_gameState, p_editFilePath);
+			p_gameState.getD_map().setD_mapFile(p_editFilePath);		
 		}
-		Map l_map = new Map();
-		l_map.setD_mapFile(p_editFilePath);
-		p_gameState.setD_map(l_map);
 	}
 
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
@@ -150,87 +153,94 @@ public class MapService {
 			l_updatedContinents.addAll(p_continentData);
 
 		if (p_operation.equalsIgnoreCase("add")) {
-			Continent l_existingContinent = l_updatedContinents.stream().filter(
-					l_continet -> l_continet.getD_continentID().equals(Integer.parseInt(p_argument.split(" ")[0])))
+			Continent l_existingContinent = l_updatedContinents.stream()
+					.filter(l_continent -> l_continent.getD_continentName().equals(p_argument.split(" ")[0]))
 					.findFirst().orElse(null);
 			if (l_existingContinent == null) {
-				Continent l_continentToBeAdded = new Continent(Integer.parseInt(p_argument.split(" ")[0]), "Continent",
+				Continent l_continentToBeAdded = new Continent(l_updatedContinents.size() + 1, p_argument.split(" ")[0],
 						Integer.parseInt(p_argument.split(" ")[1]));
 				l_updatedContinents.add(l_continentToBeAdded);
 			} else {
-				System.out.println("Continent with continent id : " + Integer.parseInt(p_argument.split(" ")[0])
+				System.out.println("Continent with continent name : " + p_argument.split(" ")[0]
 						+ " already Exists. Changes are not made");
 			}
 		} else if (p_operation.equalsIgnoreCase("remove")) {
-			Continent l_existingContinent = l_updatedContinents.stream().filter(
-					l_continet -> l_continet.getD_continentID().equals(Integer.parseInt(p_argument.split(" ")[0])))
+			Continent l_existingContinent = l_updatedContinents.stream()
+					.filter(l_continent -> l_continent.getD_continentName().equals(p_argument.split(" ")[0]))
 					.findFirst().orElse(null);
 			if (null != l_existingContinent) {
 				l_updatedContinents.remove(l_existingContinent);
 			} else {
-				System.out.println("Continent with continent id : " + Integer.parseInt(p_argument.split(" ")[0])
+				System.out.println("Continent with continent name : " + Integer.parseInt(p_argument.split(" ")[0])
 						+ " does not Exist. Changes are not made");
 			}
 		}
 		return l_updatedContinents;
 	}
 
-	public boolean saveMap(GameState p_gameState, String p_filePath) {
+	public boolean saveMap(GameState p_gameState, String p_filePath) throws InvalidMap {
 		try {
 			if (!p_filePath.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");
 				return false;
 			} else {
 				if (null != p_gameState.getD_map()) {
+					
+					Models.Map l_currentMap= p_gameState.getD_map();
+					boolean l_mapValidationStatus = l_currentMap.Validate();
+					if(l_mapValidationStatus) {
+						Files.deleteIfExists(Paths.get(p_filePath));
 
-					Files.deleteIfExists(Paths.get(p_filePath));
+						FileWriter l_writer = new FileWriter(p_filePath);
 
-					FileWriter l_writer = new FileWriter(p_filePath);
-
-					String l_countryMetaData = new String();
-					String l_bordersMetaData = new String();
-					List<String> l_bordersList = new ArrayList<>();
-					if (null != p_gameState.getD_map().getD_continents()
-							&& !p_gameState.getD_map().getD_continents().isEmpty()) {
-						l_writer.write(
-								System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
-						for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
-							l_writer.write(l_continent.getD_continentName().concat(" ")
-									.concat(l_continent.getD_continentValue().toString()) + System.lineSeparator());
-						}
-					}
-					if (null != p_gameState.getD_map().getD_countries()
-							&& !p_gameState.getD_map().getD_countries().isEmpty()) {
-
-						l_writer.write(
-								System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
-						for (Country l_country : p_gameState.getD_map().getD_countries()) {
-							l_countryMetaData = new String();
-							l_countryMetaData = l_country.getD_countryId().toString().concat(" ")
-									.concat(l_country.getD_countryName()).concat(" ")
-									.concat(l_country.getD_continentId().toString());
-							l_writer.write(l_countryMetaData + System.lineSeparator());
-
-							if (null != l_country.getD_adjacentCountryIds()
-									&& !l_country.getD_adjacentCountryIds().isEmpty()) {
-								l_bordersMetaData = new String();
-								l_bordersMetaData = l_country.getD_countryId().toString();
-								for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
-									l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
-								}
-								l_bordersList.add(l_bordersMetaData);
-							}
-						}
-						if (null != l_bordersList && !l_bordersList.isEmpty()) {
+						String l_countryMetaData = new String();
+						String l_bordersMetaData = new String();
+						List<String> l_bordersList = new ArrayList<>();
+						if (null != p_gameState.getD_map().getD_continents()
+								&& !p_gameState.getD_map().getD_continents().isEmpty()) {
 							l_writer.write(
-									System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
-							for (String l_borderStr : l_bordersList) {
-								l_writer.write(l_borderStr + System.lineSeparator());
+									System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
+							for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
+								l_writer.write(l_continent.getD_continentName().concat(" ")
+										.concat(l_continent.getD_continentValue().toString()) + System.lineSeparator());
 							}
 						}
-					}
+						if (null != p_gameState.getD_map().getD_countries()
+								&& !p_gameState.getD_map().getD_countries().isEmpty()) {
 
-					l_writer.close();
+							l_writer.write(
+									System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
+							for (Country l_country : p_gameState.getD_map().getD_countries()) {
+								l_countryMetaData = new String();
+								l_countryMetaData = l_country.getD_countryId().toString().concat(" ")
+										.concat(l_country.getD_countryName()).concat(" ")
+										.concat(l_country.getD_continentId().toString());
+								l_writer.write(l_countryMetaData + System.lineSeparator());
+
+								if (null != l_country.getD_adjacentCountryIds()
+										&& !l_country.getD_adjacentCountryIds().isEmpty()) {
+									l_bordersMetaData = new String();
+									l_bordersMetaData = l_country.getD_countryId().toString();
+									for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
+										l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
+									}
+									l_bordersList.add(l_bordersMetaData);
+								}
+							}
+							if (null != l_bordersList && !l_bordersList.isEmpty()) {
+								l_writer.write(
+										System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
+								for (String l_borderStr : l_bordersList) {
+									l_writer.write(l_borderStr + System.lineSeparator());
+								}
+							}
+						}
+
+						l_writer.close();
+					}
+				} else {
+					p_gameState.setError("Validation Failed");
+					return false;
 				}
 			}
 			return true;

@@ -53,7 +53,7 @@ public class Map {
 	 * @throws InvalidMap
 	 */
 	public Boolean Validate() throws InvalidMap{
-		return(d_continents.size()>1 && checkContinentConnectivity() && checkCountryConnectivity());
+		return(d_continents != null && checkContinentConnectivity() && checkCountryConnectivity());
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class Map {
 	public Boolean checkContinentConnectivity() throws InvalidMap {
 		boolean l_flagConnectivity=true;
 		for (Continent c:d_continents){
-			if (c.getD_countries().size()<1){
-				throw new InvalidMap(c.getD_continentID()+" has no countries, it must possess atleast 1 country");
+			if (null == c.getD_countries() || c.getD_countries().size()<1){
+				throw new InvalidMap(c.getD_continentName()+" has no countries, it must possess atleast 1 country");
 			}
 			if(!subGraphConnectivity(c)){
 				l_flagConnectivity=false;
@@ -89,7 +89,8 @@ public class Map {
 		dfsSubgraph(p_c.getD_countries().get(0), l_continentCountry, p_c);
 		for (Entry<Integer, Boolean> entry: l_continentCountry.entrySet()){
 			if(!entry.getValue()){
-				String l_messageException= entry.getKey()+" in Continent"+ p_c.getD_continentID()+" is not reachable";
+				Country l_country = getCountry(entry.getKey());
+				String l_messageException= l_country.getD_countryName()+" in Continent"+ p_c.getD_continentID()+" is not reachable";
 				throw new InvalidMap(l_messageException);
 			}
 		}
@@ -107,6 +108,7 @@ public class Map {
 		for(Country c: p_continent.getD_countries()){
 			if (p_c.getD_adjacentCountryIds().contains(c.getD_countryId())){
 				if(!p_continentCountry.get(c.getD_countryId())){
+					System.out.println("Country id " + c.getD_countryId() + " continent : " + p_continent.getD_continentID());
 					dfsSubgraph(c, p_continentCountry, p_continent);
 				}
 			}
