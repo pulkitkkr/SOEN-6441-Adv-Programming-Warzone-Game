@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Constants.ApplicationConstants;
-import Exceptions.InvalidMap;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
@@ -22,9 +21,9 @@ import Models.Map;
 
 public class MapService {
 
-	public Map loadMap(String p_loadFilePath) {
+	public Map loadMap(GameState p_gameState, String p_loadFileName) {
 		Map l_map = new Map();
-		List<String> l_linesOfFile = loadFile(p_loadFilePath);
+		List<String> l_linesOfFile = loadFile(p_loadFileName);
 
 		if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
 			List<String> l_continentData = l_linesOfFile.subList(
@@ -41,6 +40,7 @@ public class MapService {
 			l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
 			l_map.setD_continents(l_continentObjects);
 			l_map.setD_countries(l_countryObjects);
+			p_gameState.setD_map(l_map);
 		}
 		return l_map;
 	}
@@ -130,7 +130,7 @@ public class MapService {
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
 		String l_filePath = p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (null == p_gameState.getD_map().getD_continents()
-				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(l_filePath) : p_gameState.getD_map();
+				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(p_gameState, l_filePath) : p_gameState.getD_map();
 		List<Continent> l_updatedContinents = this.addRemoveContinents(l_mapToBeUpdated.getD_continents(), p_operation,
 				p_argument);
 		if (null != l_updatedContinents && !l_updatedContinents.isEmpty()) {
@@ -240,12 +240,13 @@ public class MapService {
 		}
 	}
 
-	public static void main(String[] p_args) throws InvalidMap {
-		MapService l_ms = new MapService();
-		Map l_map = l_ms.loadMap("C:/Users/ishaa/Downloads/europe/europe.map");
-		l_map.checkContinents();
-		l_map.checkCountries();
-		System.out.println(l_map.Validate());
-	}
+//	public static void main(String[] p_args) throws InvalidMap {
+//		MapService l_ms = new MapService();
+//		GameState l_gameState = new GameState();
+//		Map l_map = l_ms.loadMap(l_gameState, "C:/Users/ishaa/Downloads/europe/europe.map");
+//		l_map.checkContinents();
+//		l_map.checkCountries();
+//		System.out.println(l_map.Validate());
+//	}
 
 }

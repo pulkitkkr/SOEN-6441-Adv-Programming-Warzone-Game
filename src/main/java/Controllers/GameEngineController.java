@@ -81,6 +81,22 @@ public class GameEngineController {
 				}
 				break;
 			}
+			case "loadmap": {
+				List<Map<String, String>> l_operations_list = l_command.getOperationsAndArguments();
+
+				if (null == l_operations_list || l_operations_list.isEmpty()) {
+					System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+				} else {
+					for (Map<String, String> l_map : l_operations_list) {
+						if (l_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+							l_mapservice.loadMap(l_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+						} else {
+							System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+						}
+					}
+				}
+				break;
+			}
 			case "Exit": {
 				System.out.println("Exit Command Entered");
 				System.exit(0);
