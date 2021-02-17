@@ -85,7 +85,7 @@ public class GameEngineController {
 	 * @throws IOException
 	 * @throws InvalidCommand
 	 */
-	private static void performMapEdit(Command p_command, MapService p_mapService, GameState p_gameState)
+	public static void performMapEdit(Command p_command, MapService p_mapService, GameState p_gameState)
 			throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -112,7 +112,7 @@ public class GameEngineController {
 	 * @throws IOException
 	 * @throws InvalidCommand
 	 */
-	private static void performEditContinent(Command p_command, MapService p_mapService, GameState p_gameState)
+	public static void performEditContinent(Command p_command, MapService p_mapService, GameState p_gameState)
 			throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -142,7 +142,7 @@ public class GameEngineController {
 	 * @throws IOException
 	 * @throws InvalidMap
 	 */
-	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapService)
+	public static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapService)
 			throws InvalidCommand, IOException, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 

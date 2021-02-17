@@ -169,7 +169,6 @@ public class MapService {
 	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
 
 		String l_filePath = CommonUtil.getMapFilePath(p_editFilePath);
-
 		File l_fileToBeEdited = new File(l_filePath);
 		if (l_fileToBeEdited.createNewFile()) {
 			System.out.println("File has been created.");
@@ -179,7 +178,8 @@ public class MapService {
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
-			p_gameState.getD_map().setD_mapFile(p_editFilePath);
+			if(null != p_gameState.getD_map())
+				p_gameState.getD_map().setD_mapFile(p_editFilePath);
 		}
 	}
 
@@ -215,7 +215,7 @@ public class MapService {
 	 * @param p_argument
 	 * @return List of updated continents
 	 */
-	private List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
+	public List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
 			String p_argument) {
 		List<Continent> l_updatedContinents = new ArrayList<>();
 		if (null != p_continentData && !p_continentData.isEmpty())
