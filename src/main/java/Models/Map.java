@@ -90,7 +90,7 @@ public class Map {
 		for (Entry<Integer, Boolean> entry: l_continentCountry.entrySet()){
 			if(!entry.getValue()){
 				Country l_country = getCountry(entry.getKey());
-				String l_messageException= l_country.getD_countryName()+" in Continent"+ p_c.getD_continentID()+" is not reachable";
+				String l_messageException= l_country.getD_countryName()+" in Continent "+ p_c.getD_continentID()+" is not reachable";
 				throw new InvalidMap(l_messageException);
 			}
 		}
@@ -105,10 +105,10 @@ public class Map {
 	 */
 	public void dfsSubgraph(Country p_c, HashMap<Integer , Boolean> p_continentCountry, Continent p_continent){
 		p_continentCountry.put(p_c.getD_countryId(), true);
+        System.out.println("Country id " + p_c.getD_countryId() + " continent : " + p_continent.getD_continentID());
 		for(Country c: p_continent.getD_countries()){
 			if (p_c.getD_adjacentCountryIds().contains(c.getD_countryId())){
 				if(!p_continentCountry.get(c.getD_countryId())){
-					System.out.println("Country id " + c.getD_countryId() + " continent : " + p_continent.getD_continentID());
 					dfsSubgraph(c, p_continentCountry, p_continent);
 				}
 			}
