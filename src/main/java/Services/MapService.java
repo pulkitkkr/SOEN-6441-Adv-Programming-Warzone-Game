@@ -20,6 +20,7 @@ import Models.Continent;
 import Models.Country;
 import Models.GameState;
 import Models.Map;
+import Utils.CommonUtil;
 
 /**
  * The MapService class load, read, parse, edit, and save map file.
@@ -65,7 +66,7 @@ public class MapService {
 	 */
 	public List<String> loadFile(String p_loadFileName) {
 
-		String l_filePath = this.getMapFilePath(p_loadFileName);
+		String l_filePath = CommonUtil.getMapFilePath(p_loadFileName);
 		List<String> l_lineList = new ArrayList<>();
 
 		BufferedReader l_reader;
@@ -167,7 +168,7 @@ public class MapService {
 	 */
 	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
 
-		String l_filePath = this.getMapFilePath(p_editFilePath);
+		String l_filePath = CommonUtil.getMapFilePath(p_editFilePath);
 
 		File l_fileToBeEdited = new File(l_filePath);
 		if (l_fileToBeEdited.createNewFile()) {
@@ -261,58 +262,20 @@ public class MapService {
 				return false;
 			} else {
 				if (null != p_gameState.getD_map()) {
-
 					Models.Map l_currentMap = p_gameState.getD_map();
 					boolean l_mapValidationStatus = l_currentMap.Validate();
 					if (l_mapValidationStatus) {
-						Files.deleteIfExists(Paths.get(this.getMapFilePath(p_fileName)));
+						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
+						FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
 
-						FileWriter l_writer = new FileWriter(this.getMapFilePath(p_fileName));
-
-						String l_countryMetaData = new String();
-						String l_bordersMetaData = new String();
-						List<String> l_bordersList = new ArrayList<>();
 						if (null != p_gameState.getD_map().getD_continents()
 								&& !p_gameState.getD_map().getD_continents().isEmpty()) {
-							l_writer.write(
-									System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
-							for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
-								l_writer.write(l_continent.getD_continentName().concat(" ")
-										.concat(l_continent.getD_continentValue().toString()) + System.lineSeparator());
-							}
+							writeContinentMetadata(p_gameState, l_writer);
 						}
 						if (null != p_gameState.getD_map().getD_countries()
 								&& !p_gameState.getD_map().getD_countries().isEmpty()) {
-
-							l_writer.write(
-									System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
-							for (Country l_country : p_gameState.getD_map().getD_countries()) {
-								l_countryMetaData = new String();
-								l_countryMetaData = l_country.getD_countryId().toString().concat(" ")
-										.concat(l_country.getD_countryName()).concat(" ")
-										.concat(l_country.getD_continentId().toString());
-								l_writer.write(l_countryMetaData + System.lineSeparator());
-
-								if (null != l_country.getD_adjacentCountryIds()
-										&& !l_country.getD_adjacentCountryIds().isEmpty()) {
-									l_bordersMetaData = new String();
-									l_bordersMetaData = l_country.getD_countryId().toString();
-									for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
-										l_bordersMetaData = l_bordersMetaData.concat(" ")
-												.concat(l_adjCountry.toString());
-									}
-									l_bordersList.add(l_bordersMetaData);
-								}
-							}
-							if (null != l_bordersList && !l_bordersList.isEmpty()) {
-								l_writer.write(
-										System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
-								for (String l_borderStr : l_bordersList) {
-									l_writer.write(l_borderStr + System.lineSeparator());
-								}
-							}
+							writeCountryAndBoarderMetaData(p_gameState, l_writer);
 						}
-
 						l_writer.close();
 					}
 				} else {
@@ -328,6 +291,58 @@ public class MapService {
 		}
 	}
 
+	/**
+	 * Retrieves country and boarder data from game state and writes it to file
+	 * writer
+	 * 
+	 * @param p_gameState
+	 * @param p_writer
+	 * @throws IOException
+	 */
+	private void writeCountryAndBoarderMetaData(GameState p_gameState, FileWriter p_writer) throws IOException {
+		String l_countryMetaData = new String();
+		String l_bordersMetaData = new String();
+		List<String> l_bordersList = new ArrayList<>();
+		p_writer.write(System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
+		for (Country l_country : p_gameState.getD_map().getD_countries()) {
+			l_countryMetaData = new String();
+			l_countryMetaData = l_country.getD_countryId().toString().concat(" ").concat(l_country.getD_countryName())
+					.concat(" ").concat(l_country.getD_continentId().toString());
+			p_writer.write(l_countryMetaData + System.lineSeparator());
+
+			if (null != l_country.getD_adjacentCountryIds() && !l_country.getD_adjacentCountryIds().isEmpty()) {
+				l_bordersMetaData = new String();
+				l_bordersMetaData = l_country.getD_countryId().toString();
+				for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
+					l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
+				}
+				l_bordersList.add(l_bordersMetaData);
+			}
+		}
+		if (null != l_bordersList && !l_bordersList.isEmpty()) {
+			p_writer.write(System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
+			for (String l_borderStr : l_bordersList) {
+				p_writer.write(l_borderStr + System.lineSeparator());
+			}
+		}
+	}
+
+	/**
+	 * Retrieves continents' data from game state and writes it to file w
+	 * 
+	 * @param p_gameState
+	 * @param p_writer
+	 * @throws IOException
+	 */
+	private void writeContinentMetadata(GameState p_gameState, FileWriter p_writer) throws IOException {
+		p_writer.write(System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
+		for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
+			p_writer.write(
+					l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
+							+ System.lineSeparator());
+		}
+	}
+
 //	public static void main(String[] p_args) throws InvalidMap {
 //		MapService l_ms = new MapService();
 //		GameState l_gameState = new GameState();
@@ -336,11 +351,5 @@ public class MapService {
 //		l_map.checkCountries();
 //		System.out.println(l_map.Validate());
 //	}
-	private String getMapFilePath(String p_fileName) {
-		String l_absolutePath = new File("").getAbsolutePath();
-		// String l_filePath = l_absolutePath + File.separator + p_loadFileName +
-		// ApplicationConstants.MAPFILEEXTENSION;
-		return l_absolutePath + File.separator + ApplicationConstants.SRC_MAIN_RESOURCES + File.separator + p_fileName;
-	}
 
 }

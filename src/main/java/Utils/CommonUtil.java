@@ -1,7 +1,10 @@
 package Utils;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
+
+import Constants.ApplicationConstants;
 
 /**
  * Common utility class to check null/empty collections, string, and object
@@ -52,5 +55,14 @@ public class CommonUtil {
 	public static boolean isMapEmpty(Map<?, ?> map) {
 		return (map == null || map.isEmpty());
 	}
-
+	
+	/**
+	 * Generates absolute file path from the given map file
+	 * @param p_fileName
+	 * @return map file along with its path
+	 */
+	public static String getMapFilePath(String p_fileName) {
+		String l_absolutePath = new File("").getAbsolutePath();
+		return l_absolutePath + File.separator + ApplicationConstants.SRC_MAIN_RESOURCES + File.separator + p_fileName;
+	}
 }
