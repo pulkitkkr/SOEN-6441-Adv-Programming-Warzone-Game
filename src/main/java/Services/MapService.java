@@ -1,6 +1,7 @@
 package Services;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,8 +21,18 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 
+/**
+ * The MapService class load, read, parse, edit, and save map file.
+ */
 public class MapService {
 
+	/**
+	 * The loadmap method process map file.
+	 * 
+	 * @param p_gameState    current state of game.
+	 * @param p_loadFileName map file name.
+	 * @return map object after processing map file.
+	 */
 	public Map loadMap(GameState p_gameState, String p_loadFileName) {
 		Map l_map = new Map();
 		List<String> l_linesOfFile = loadFile(p_loadFileName);
@@ -46,6 +57,12 @@ public class MapService {
 		return l_map;
 	}
 
+	/**
+	 * The loadFile method load and read map file.
+	 * 
+	 * @param p_loadFileName map file name to load.
+	 * @return list of lines from map file.
+	 */
 	public List<String> loadFile(String p_loadFileName) {
 		String l_absolutePath = new File("").getAbsolutePath();
 		String l_filePath = l_absolutePath + File.separator + p_loadFileName + ApplicationConstants.MAPFILEEXTENSION;
@@ -65,6 +82,13 @@ public class MapService {
 		return l_lineList;
 	}
 
+	/**
+	 * The parseContinentsMetaData method parse extracted continent data of map
+	 * file.
+	 * 
+	 * @param p_continentList includes continent data in list from map file.
+	 * @return return list of processed continent meta data.
+	 */
 	public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
 		int l_continentId = 1;
 		List<Continent> l_continents = new ArrayList<Continent>();
@@ -76,6 +100,14 @@ public class MapService {
 		return l_continents;
 	}
 
+	/**
+	 * The parseCountriesMetaData method parse extracted country and border data of
+	 * map file.
+	 * 
+	 * @param p_countriesList includes country data in list from map file.
+	 * @param p_bordersList   includes border data in list from map file.
+	 * @return list of processed country meta data.
+	 */
 	public List<Country> parseCountriesMetaData(List<String> p_countriesList, List<String> p_bordersList) {
 
 		LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
