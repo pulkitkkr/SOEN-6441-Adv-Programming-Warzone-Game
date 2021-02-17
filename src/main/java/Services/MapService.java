@@ -251,7 +251,7 @@ public class MapService {
 	 * Parses the updated map to .map file and stores it at required location
 	 * 
 	 * @param p_gameState
-	 * @param p_filePath
+	 * @param p_fileName
 	 * @return true/false based on successful save operation of map to file
 	 * @throws InvalidMap
 	 */
