@@ -14,6 +14,14 @@ import Services.MapService;
 import Utils.Command;
 
 public class GameEngineController {
+	/**
+	 * main method responsible for accepting command from users and redirecting
+	 * those to corresponding logical flows
+	 * 
+	 * @param p_args
+	 * @throws IOException
+	 * @throws InvalidMap
+	 */
 	public static void main(String[] p_args) throws IOException, InvalidMap {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		GameState l_gameState = new GameState();
@@ -67,6 +75,16 @@ public class GameEngineController {
 		}
 	}
 
+	/**
+	 * Basic validation of editmap command for checking required arguments and
+	 * redirecting control to model for actual processing
+	 * 
+	 * @param p_command
+	 * @param p_mapService
+	 * @param p_gameState
+	 * @throws IOException
+	 * @throws InvalidCommand
+	 */
 	private static void performMapEdit(Command p_command, MapService p_mapService, GameState p_gameState)
 			throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -84,6 +102,16 @@ public class GameEngineController {
 		}
 	}
 
+	/**
+	 * Basic validation of editcontinent command for checking required arguments and
+	 * redirecting control to model for actual processing
+	 * 
+	 * @param p_command
+	 * @param p_mapService
+	 * @param p_gameState
+	 * @throws IOException
+	 * @throws InvalidCommand
+	 */
 	private static void performEditContinent(Command p_command, MapService p_mapService, GameState p_gameState)
 			throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -103,6 +131,17 @@ public class GameEngineController {
 		}
 	}
 
+	/**
+	 * Basic validation of savemap command for checking required arguments and
+	 * redirecting control to model for actual processing
+	 * 
+	 * @param p_command
+	 * @param p_gameState
+	 * @param p_mapService
+	 * @throws InvalidCommand
+	 * @throws IOException
+	 * @throws InvalidMap
+	 */
 	private static void performSaveMap(Command p_command, GameState p_gameState, MapService p_mapService)
 			throws InvalidCommand, IOException, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -125,6 +164,15 @@ public class GameEngineController {
 		}
 	}
 
+	/**
+	 * Basic validation of loadmap command for checking required arguments and
+	 * redirecting control to model for actual processing
+	 * 
+	 * @param p_gameState
+	 * @param p_command
+	 * @param p_mapService
+	 * @throws InvalidCommand
+	 */
 	private static void performLoadMap(GameState p_gameState, Command p_command, MapService p_mapService)
 			throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -142,6 +190,15 @@ public class GameEngineController {
 		}
 	}
 
+	/**
+	 * Basic validation of validatemap command for checking required arguments and
+	 * redirecting control to model for actual processing
+	 * 
+	 * @param p_gameState
+	 * @param p_command
+	 * @throws InvalidMap
+	 * @throws InvalidCommand
+	 */
 	private static void performValidateMap(GameState p_gameState, Command p_command) throws InvalidMap, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {

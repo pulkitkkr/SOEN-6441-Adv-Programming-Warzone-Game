@@ -21,7 +21,7 @@ public final class ApplicationConstants {
 	public static final String CONTINENTS = "[continents]";
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
-
+	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
 	/**
 	 * private constructor to prevent caller from constructing objects of this class
 	 */
