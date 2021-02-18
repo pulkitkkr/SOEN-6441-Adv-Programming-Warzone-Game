@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/.name
+/compiler.xml
+/jarRepositories.xml
+/libraries/Maven__junit_junit_4_13_1.xml
+/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml
+/misc.xml
+/modules.xml
+/uiDesigner.xml
+/vcs.xml
+
