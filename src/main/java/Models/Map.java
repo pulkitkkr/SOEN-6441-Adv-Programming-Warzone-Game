@@ -46,10 +46,10 @@ public class Map {
 		for (Country c: d_countries) {
 			System.out.println("Country Id "+ c.getD_countryId());
 			System.out.println("Continent Id "+c.getD_continentId());
-			System.out.println("Neighbours:");
-			for (int i: c.getD_adjacentCountryIds()) {
-				System.out.println(i);
-			}
+//			System.out.println("Neighbours:");
+//			for (int i: c.getD_adjacentCountryIds()) {
+//				System.out.println(i);
+//			}
 		}
 	}
 

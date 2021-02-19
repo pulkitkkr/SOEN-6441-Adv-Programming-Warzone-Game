@@ -43,11 +43,18 @@ public class Continent {
 	}
 	public void addCountry(Country p_c){
 		if (d_countries!=null){
-			d_countries.add(p_c);
+			this.d_countries.add(p_c);
 		}
 		else{
-			d_countries=new ArrayList<Country>();
-			d_countries.add(p_c);
+			this.d_countries=new ArrayList<Country>();
+			this.d_countries.add(p_c);
+		}
+	}
+	public void removeCountry(Country p_c){
+		if(d_countries==null){
+			System.out.println("No such Country Exists");
+		}else {
+			this.d_countries.remove(p_c);
 		}
 	}
 	public Boolean checkCountry(Integer p_countryId){

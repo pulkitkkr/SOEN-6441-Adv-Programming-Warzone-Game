@@ -174,7 +174,7 @@ public class MapService {
 	public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
 		for (Country c : p_countries) {
 			for (Continent cont : p_continents) {
-				System.out.println(cont.getD_continentID());
+				//System.out.println(cont.getD_continentID());
 				if (cont.getD_continentID().equals(c.getD_continentId())) {
 					cont.addCountry(c);
 				}
@@ -272,6 +272,68 @@ public class MapService {
 		return l_updatedContinents;
 	}
 
+	public void editCountry(GameState p_GameState, String p_operation, String p_argument){
+		Map l_mapToBeUpdated= p_GameState.getD_map();
+		List<Country> l_existingCountries = l_mapToBeUpdated.getD_countries();
+		Map l_updatedMap = addRemoveCountry(l_mapToBeUpdated,p_operation, p_argument);
+		p_GameState.setD_map(l_updatedMap);
+	}
+
+	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument){
+		List<Country> l_countryList = p_mapToBeUpdated.getD_countries();
+		List<Country> l_updatedCountryList = new ArrayList<Country>();
+		Map l_updatedContinents;
+		if (null != l_countryList && !l_countryList.isEmpty())
+			l_updatedCountryList.addAll(l_countryList);
+		if (p_operation.toLowerCase().equals("add")){
+			Country l_country = l_updatedCountryList.stream().filter(country -> country.getD_countryId().equals(Integer.parseInt(p_argument.split(" ")[0]))).findFirst().orElse(null);
+			if (l_country==null){
+				l_country= new Country(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
+				l_updatedCountryList.add(l_country);
+				l_updatedContinents= updateContinent(Integer.parseInt(p_argument.split(" ")[1]), l_country, p_mapToBeUpdated, 0);
+			} else{
+				System.out.println(" The country with ID "+ Integer.parseInt(p_argument.split(" ")[0])+ " exists!");
+				l_updatedContinents=p_mapToBeUpdated;
+			}
+		}else if(p_operation.toLowerCase().equals("remove")){
+			Country l_country = l_updatedCountryList.stream().filter(country -> country.getD_countryId().equals(Integer.parseInt(p_argument.split(" ")[0]))).findFirst().orElse(null);
+			if(l_country!=null){
+				l_updatedCountryList.remove(l_country);
+				l_updatedContinents=updateContinent(Integer.parseInt(p_argument.split(" ")[0]), l_country, p_mapToBeUpdated, 1);
+			} else {
+				System.out.println("No Such Country Exists!");
+				l_updatedContinents=p_mapToBeUpdated;
+			}
+		}else{
+			l_updatedContinents= p_mapToBeUpdated;
+			System.out.println("Couldn't Save your changes");
+		}
+		l_updatedContinents.setD_countries(l_updatedCountryList);
+		return l_updatedContinents;
+	}
+
+	public Map updateContinent(Integer p_continentID, Country p_country, Map p_mapToBeUpdated, Integer p_switch){
+		List<Continent> l_updatedContinents = new ArrayList<Continent>();
+		Map l_updatedMap = p_mapToBeUpdated;
+		if(p_switch.equals(0)){
+			for(Continent c: p_mapToBeUpdated.getD_continents()){
+				if(c.getD_continentID()==p_continentID){
+					c.addCountry(p_country);
+				}
+				l_updatedContinents.add(c);
+			}
+		}else{
+			for(Continent c: p_mapToBeUpdated.getD_continents()){
+				if(c.getD_continentID()==p_continentID){
+					c.removeCountry(p_country);
+				}
+				l_updatedContinents.add(c);
+			}
+		}
+		l_updatedMap.setD_continents(l_updatedContinents);
+		return l_updatedMap;
+	}
+
 	/**
 	 * Parses the updated map to .map file and stores it at required location
 	 * 
@@ -366,6 +428,17 @@ public class MapService {
 					l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
 							+ System.lineSeparator());
 		}
+	}
+
+	public static void main(String[] args) {
+		MapService ms = new MapService();
+		GameState gs = new GameState();
+		Map l_map = ms.loadMap(gs,"canada.map");
+		ms.editCountry(gs, "add", "32 1");
+		ms.editCountry(gs, "remove", "32");
+		Map t_map = gs.getD_map();
+		t_map.checkContinents();
+		t_map.checkCountries();
 	}
 
 }
