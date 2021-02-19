@@ -1,5 +1,10 @@
 package Models;
 
+/**
+ * 
+ * This is the Order Class.
+ * 
+ */
 public class Order {
 	String d_orderAction;
 	Integer d_targetCountryId;

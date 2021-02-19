@@ -10,6 +10,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * This is the MapTest Class.
+ * 
+ */
 public class MapTest {
 
     Map l_map;
@@ -23,7 +28,7 @@ public class MapTest {
         l_ms= new MapService();
     }
 
-    @Test (expected = InvalidMap.class)
+    @Test
     public void validateNoContinent() throws InvalidMap{
         assertEquals(l_map.Validate(), false);
     }

@@ -1,10 +1,5 @@
 package Constants;
-
-/**
- * ApplicationConstants class to wrap constants for general utility.
- */
 public final class ApplicationConstants {
-
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 	public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";
 	public static final String INVALID_COMMAND_ERROR_SAVEMAP = "Invalid command. Kindly provide command in Format of : savemap filename";
@@ -22,9 +17,4 @@ public final class ApplicationConstants {
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
 	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
-	/**
-	 * private constructor to prevent caller from constructing objects of this class
-	 */
-	private ApplicationConstants() {
-	}
 }
