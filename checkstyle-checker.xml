@@ -15,9 +15,9 @@
     <module name="TreeWalker">
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
-<!--    <module name="JavadocType"/> 
+        <module name="JavadocType"/> 
         <module name="JavadocVariable"/> 
-        <module name="JavadocStyle"/> -->
+        <module name="JavadocStyle"/>
         <module name="MissingJavadocMethod"/>
     </module>
 </module>
