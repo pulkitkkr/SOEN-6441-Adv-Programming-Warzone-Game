@@ -1,7 +1,6 @@
 package Services;
 
 import java.io.BufferedReader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -44,7 +43,7 @@ public class MapService {
 			List<String> l_countryData = getMetaData(l_linesOfFile, "country");
 			List<String> l_bordersMetaData = getMetaData(l_linesOfFile, "border");
 			List<Country> l_countryObjects = parseCountriesMetaData(l_countryData);
-			l_countryObjects=parseBorderMetaData(l_countryObjects,l_bordersMetaData);
+			l_countryObjects = parseBorderMetaData(l_countryObjects, l_bordersMetaData);
 			l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
 			l_map.setD_continents(l_continentObjects);
 			l_map.setD_countries(l_countryObjects);
@@ -79,23 +78,28 @@ public class MapService {
 
 	/**
 	 * Returns the corresponding map file lines
-	 * @param p_fileLines All Lines in the map document
+	 * 
+	 * @param p_fileLines       All Lines in the map document
 	 * @param p_switchParameter Type of lines needed : country, continent, borders
 	 * @return required set of lines
 	 */
-	public List<String> getMetaData(List<String> p_fileLines, String p_switchParameter){
-		switch (p_switchParameter){
-			case "continent":
-				List<String> l_continentLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.CONTINENTS) + 1, p_fileLines.indexOf(ApplicationConstants.COUNTRIES) - 1);
-				return l_continentLines;
-			case "country":
-				List<String> l_countryLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.COUNTRIES) + 1, p_fileLines.indexOf(ApplicationConstants.BORDERS) - 1);
-				return l_countryLines;
-			case "border":
-				List<String> l_bordersLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.BORDERS) + 1, p_fileLines.size());
-				return l_bordersLines;
-			default:
-				return null;
+	public List<String> getMetaData(List<String> p_fileLines, String p_switchParameter) {
+		switch (p_switchParameter) {
+		case "continent":
+			List<String> l_continentLines = p_fileLines.subList(
+					p_fileLines.indexOf(ApplicationConstants.CONTINENTS) + 1,
+					p_fileLines.indexOf(ApplicationConstants.COUNTRIES) - 1);
+			return l_continentLines;
+		case "country":
+			List<String> l_countryLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.COUNTRIES) + 1,
+					p_fileLines.indexOf(ApplicationConstants.BORDERS) - 1);
+			return l_countryLines;
+		case "border":
+			List<String> l_bordersLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.BORDERS) + 1,
+					p_fileLines.size());
+			return l_bordersLines;
+		default:
+			return null;
 		}
 	}
 
@@ -139,11 +143,12 @@ public class MapService {
 
 	/**
 	 * Links the Country Objects to their respective neighbours
+	 * 
 	 * @param p_countriesList Total Country Objects Initialized
-	 * @param p_bordersList Border Data Lines
+	 * @param p_bordersList   Border Data Lines
 	 * @return Updated Country Objects
 	 */
-	public List<Country> parseBorderMetaData(List<Country> p_countriesList, List<String> p_bordersList){
+	public List<Country> parseBorderMetaData(List<Country> p_countriesList, List<String> p_bordersList) {
 		LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
 		for (String l_border : p_bordersList) {
 			if (null != l_border && !l_border.isEmpty()) {
@@ -167,7 +172,7 @@ public class MapService {
 	 * Links countries to corresponding continents and sets them in object of
 	 * content
 	 * 
-	 * @param p_countries Total Country Objects
+	 * @param p_countries  Total Country Objects
 	 * @param p_continents Total Continent Objects
 	 * @return list of updated continents
 	 */
@@ -203,7 +208,7 @@ public class MapService {
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
-			if(null != p_gameState.getD_map())
+			if (null != p_gameState.getD_map())
 				p_gameState.getD_map().setD_mapFile(p_editFilePath);
 		}
 	}
@@ -224,7 +229,7 @@ public class MapService {
 						: p_gameState.getD_map();
 		List<Continent> l_updatedContinents = this.addRemoveContinents(l_mapToBeUpdated.getD_continents(), p_operation,
 				p_argument);
-		if (null != l_updatedContinents && !l_updatedContinents.isEmpty()) {
+		if (!CommonUtil.isNull(l_updatedContinents)) {
 			l_mapToBeUpdated.setD_mapFile(l_mapFileName);
 			l_mapToBeUpdated.setD_continents(l_updatedContinents);
 			p_gameState.setD_map(l_mapToBeUpdated);
@@ -240,8 +245,7 @@ public class MapService {
 	 * @param p_argument
 	 * @return List of updated continents
 	 */
-	public List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
-			String p_argument) {
+	public List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation, String p_argument) {
 		List<Continent> l_updatedContinents = new ArrayList<>();
 		if (null != p_continentData && !p_continentData.isEmpty())
 			l_updatedContinents.addAll(p_continentData);

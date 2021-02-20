@@ -10,8 +10,10 @@ import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
+import Models.Player;
 import Services.MapService;
 import Utils.Command;
+import Utils.CommonUtil;
 
 public class GameEngineController {
 	/**
@@ -34,6 +36,7 @@ public class GameEngineController {
 
 				Command l_command = new Command(l_commandEntered);
 				MapService l_mapService = new MapService();
+				Player l_PlayerService = new Player();
 				String l_rootCommand = l_command.getRootCommand();
 
 				switch (l_rootCommand) {
@@ -55,6 +58,10 @@ public class GameEngineController {
 				}
 				case "validatemap": {
 					performValidateMap(l_gameState, l_command);
+					break;
+				}
+				case "gameplayer": {
+					createPlayers(l_command, l_gameState, l_PlayerService);
 					break;
 				}
 				case "exit": {
@@ -215,4 +222,25 @@ public class GameEngineController {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
 		}
 	}
+
+	private static void createPlayers(Command p_command, GameState p_gameState, Player p_playerService)
+			throws InvalidCommand {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					p_playerService.playerInfo(p_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+				}
+			}
+
+		}
+
+	}
+
 }
