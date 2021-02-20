@@ -187,9 +187,9 @@ public class MapService {
 	 * Method is responsible for creating a new map if map to be edited does not
 	 * exists, and if it exists it parses the map file to game state object
 	 * 
-	 * @param p_gameState
-	 * @param p_editFilePath
-	 * @throws IOException
+	 * @param p_gameState Current GameState
+	 * @param p_editFilePath Path of the File to Edit
+	 * @throws IOException handles I/O
 	 */
 	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
 
@@ -212,10 +212,10 @@ public class MapService {
 	 * Processing of Continents given in commands which are to be added or removed
 	 * from selected map though editmapF
 	 * 
-	 * @param p_gameState
-	 * @param p_argument
-	 * @param p_operation
-	 * @throws IOException
+	 * @param p_gameState Current GameState
+	 * @param p_argument Arguments pertaining to the operation
+	 * @param p_operation Operation to be performed on continents
+	 * @throws IOException handles I/0
 	 */
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
 		String l_mapFileName = p_gameState.getD_map().getD_mapFile();
@@ -235,9 +235,9 @@ public class MapService {
 	 * Constructs updated Continents list based on passed operations - Add/Remove
 	 * and Arguments
 	 * 
-	 * @param p_continentData
-	 * @param p_operation
-	 * @param p_argument
+	 * @param p_continentData List of Continents to Update
+	 * @param p_operation Operation to perform on Continents
+	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
 	 */
 	public List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
@@ -361,10 +361,10 @@ public class MapService {
 	/**
 	 * Parses the updated map to .map file and stores it at required location
 	 * 
-	 * @param p_gameState
-	 * @param p_fileName
+	 * @param p_gameState Current GameState
+	 * @param p_fileName filename to save things in
 	 * @return true/false based on successful save operation of map to file
-	 * @throws InvalidMap
+	 * @throws InvalidMap handles InvalidMap
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
@@ -406,9 +406,9 @@ public class MapService {
 	 * Retrieves country and boarder data from game state and writes it to file
 	 * writer
 	 * 
-	 * @param p_gameState
-	 * @param p_writer
-	 * @throws IOException
+	 * @param p_gameState Current GameState Object
+	 * @param p_writer Writer object for file
+	 * @throws IOException handles I/0
 	 */
 	private void writeCountryAndBoarderMetaData(GameState p_gameState, FileWriter p_writer) throws IOException {
 		String l_countryMetaData = new String();
@@ -441,9 +441,9 @@ public class MapService {
 	/**
 	 * Retrieves continents' data from game state and writes it to file w
 	 * 
-	 * @param p_gameState
-	 * @param p_writer
-	 * @throws IOException
+	 * @param p_gameState Current GameState
+	 * @param p_writer Writer Object for file
+	 * @throws IOException handles I/O
 	 */
 	private void writeContinentMetadata(GameState p_gameState, FileWriter p_writer) throws IOException {
 		p_writer.write(System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
