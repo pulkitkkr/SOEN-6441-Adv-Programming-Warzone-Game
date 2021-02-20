@@ -54,7 +54,7 @@ public class Continent {
 		if(d_countries==null){
 			System.out.println("No such Country Exists");
 		}else {
-			this.d_countries.remove(p_c);
+			d_countries.remove(d_countries.indexOf(p_c));
 		}
 	}
 	public Boolean checkCountry(Integer p_countryId){
