@@ -280,10 +280,10 @@ public class MapService {
 	 */
 	public void editCountry(GameState p_gameState, String p_operation, String p_argument){
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
-		Map l_mapToBeUpdated = (null == p_gameState.getD_map().getD_continents()
-				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(p_gameState, l_mapFileName)
+		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
+				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
 				: p_gameState.getD_map();
-		if(l_mapToBeUpdated!=null) {
+		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
 		}
@@ -300,11 +300,11 @@ public class MapService {
 		List<Country> l_countryList = p_mapToBeUpdated.getD_countries();
 		List<Country> l_updatedCountryList = new ArrayList<Country>();
 		Map l_updatedContinents;
-		if (null != l_countryList && !l_countryList.isEmpty())
+		if (!CommonUtil.isNull(l_countryList) && !l_countryList.isEmpty())
 			l_updatedCountryList.addAll(l_countryList);
-		if (p_operation.toLowerCase().equals("add")){
+		if (p_operation.equalsIgnoreCase("add")){
 			Country l_country =p_mapToBeUpdated.getCountry(Integer.parseInt(p_argument.split(" ")[0]));
-			if (l_country==null){
+			if (CommonUtil.isNull(l_country)){
 				l_country= new Country(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
 				l_updatedCountryList.add(l_country);
 				l_updatedContinents= updateContinent(Integer.parseInt(p_argument.split(" ")[1]), l_country, p_mapToBeUpdated, 0);
@@ -312,9 +312,9 @@ public class MapService {
 				System.out.println(" The country with ID "+ Integer.parseInt(p_argument.split(" ")[0])+ " exists!");
 				l_updatedContinents=p_mapToBeUpdated;
 			}
-		}else if(p_operation.toLowerCase().equals("remove")){
+		}else if(p_operation.equalsIgnoreCase("remove")){
 			Country l_country = p_mapToBeUpdated.getCountry(Integer.parseInt(p_argument.split(" ")[0]));
-			if(l_country!=null){
+			if(!CommonUtil.isNull(l_country)){
 				l_updatedCountryList.remove(l_country);
 				l_updatedContinents=updateContinent(l_country.getD_continentId(), l_country, p_mapToBeUpdated, 1);
 			} else {

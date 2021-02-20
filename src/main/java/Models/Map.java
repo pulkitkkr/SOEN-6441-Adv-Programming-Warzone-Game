@@ -107,7 +107,7 @@ public class Map {
         for (Entry<Integer, Boolean> entry : l_continentCountry.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = getCountry(entry.getKey());
-                String l_messageException = l_country.getD_countryName() + " in Continent " + p_c.getD_continentID() + " is not reachable";
+                String l_messageException = l_country.getD_countryId() + " in Continent " + p_c.getD_continentID() + " is not reachable";
                 throw new InvalidMap(l_messageException);
             }
         }
