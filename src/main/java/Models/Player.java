@@ -12,9 +12,25 @@ import Utils.CommonUtil;
  */
 public class Player {
 	private String name;
+	
+	/**
+	 * List of countries owned by player.
+	 */
 	List<Country> d_coutriesOwned;
+	
+	/**
+	 * List of Continents owned by player.
+	 */
 	List<Continent> d_continentsOwned;
+	
+	/**
+	 * List of orders of player.
+	 */
 	List<Order> d_ordersToExecute;
+	
+	/**
+	 * Number of armies allocated to player.
+	 */
 	Integer d_noOfUnallocatedArmies;
 
 	/**

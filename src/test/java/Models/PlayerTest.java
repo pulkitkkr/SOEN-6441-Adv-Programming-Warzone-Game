@@ -25,18 +25,18 @@ public class PlayerTest {
 	/**
 	 * Existing Player List.
 	 */
-	List<Player> l_exisitingPlayerList = new ArrayList<Player>();
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	List<Player> d_exisitingPlayerList = new ArrayList<Player>();
+	private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
 	/**
 	 * The setup is called before each test case of this class is executed.
 	 */
 	@Before
 	public void setup() {
-		System.setOut(new PrintStream(outContent));
+		System.setOut(new PrintStream(d_outContent));
 		d_playerInfo = new Player();
-		l_exisitingPlayerList.add(new Player("Avneet"));
-		l_exisitingPlayerList.add(new Player("Zalak"));
+		d_exisitingPlayerList.add(new Player("Avneet"));
+		d_exisitingPlayerList.add(new Player("Zalak"));
 	}
 
 	/**
@@ -45,10 +45,10 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testAddPlayers() {
-		List<Player> l_updatedPlayers = d_playerInfo.addRemovePlayers(l_exisitingPlayerList, "add", "Jhanvi");
+		List<Player> l_updatedPlayers = d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "add", "Jhanvi");
 		assertEquals("Jhanvi", l_updatedPlayers.get(2).getPlayerName());
-		d_playerInfo.addRemovePlayers(l_exisitingPlayerList, "add", "Avneet");
-		assertEquals("Player with name : Avneet already Exists. Changes are not made", outContent.toString());
+		d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "add", "Avneet");
+		assertEquals("Player with name : Avneet already Exists. Changes are not made", d_outContent.toString());
 	}
 
 	/**
@@ -57,9 +57,9 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testRemovePlayers() {
-		List<Player> l_updatedPlayers = d_playerInfo.addRemovePlayers(l_exisitingPlayerList, "remove", "Avneet");
+		List<Player> l_updatedPlayers = d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "remove", "Avneet");
 		assertEquals(1, l_updatedPlayers.size());
-		d_playerInfo.addRemovePlayers(l_exisitingPlayerList, "remove", "Bhoomi");
-		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made", outContent.toString());
+		d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
+		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made", d_outContent.toString());
 	}
 }
