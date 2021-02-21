@@ -244,12 +244,10 @@ public class Map {
 
     public void removeContinent(String p_continentName){
         if(!CommonUtil.isNull(getContinent(p_continentName))){
-            System.out.println("Deleting Country Data");
             for(Country c: getContinent(p_continentName).getD_countries()){
-                d_countries.remove(c);
                 removeCountryNeighbours(c.getD_countryId());
                 updateNeighboursCont(c.getD_countryId());
-                System.out.println("Deleted Country "+ c.getD_countryId());
+                d_countries.remove(c);
             }
             d_continents.remove(getContinent(p_continentName));
         }else{
@@ -298,8 +296,10 @@ public class Map {
 
     public void removeCountryNeighbours(Integer p_countryID){
         for (Country c: d_countries) {
-            if (c.getD_adjacentCountryIds().contains(p_countryID)) {
-                c.removeNeighbour(p_countryID);
+            if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
+                if (c.getD_adjacentCountryIds().contains(p_countryID)) {
+                    c.removeNeighbour(p_countryID);
+                }
             }
         }
     }

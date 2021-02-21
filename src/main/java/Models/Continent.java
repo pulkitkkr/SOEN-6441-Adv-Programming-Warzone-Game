@@ -1,5 +1,7 @@
 package Models;
 
+import Utils.CommonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,9 +61,13 @@ public class Continent {
 	}
 
 	public void removeCountryNeighbours(Integer p_countryId){
-		for (Country c: d_countries){
-			if (c.getD_adjacentCountryIds().contains(p_countryId)){
-				c.removeNeighbour(p_countryId);
+		if (null!=d_countries && !d_countries.isEmpty()) {
+			for (Country c: d_countries){
+				if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {
+					if (c.getD_adjacentCountryIds().contains(p_countryId)){
+						c.removeNeighbour(p_countryId);
+					}
+				}
 			}
 		}
 	}

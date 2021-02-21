@@ -219,15 +219,12 @@ public class MapService {
 	 */
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
 		String l_mapFileName = p_gameState.getD_map().getD_mapFile();
-		Map l_mapToBeUpdated = (null == p_gameState.getD_map().getD_continents()
-				&& null == p_gameState.getD_map().getD_countries()) ? this.loadMap(p_gameState, l_mapFileName)
-						: p_gameState.getD_map();
-		List<Continent> l_updatedContinents = this.addRemoveContinents(l_mapToBeUpdated.getD_continents(), p_operation,
-				p_argument);
-		if (null != l_updatedContinents && !l_updatedContinents.isEmpty()) {
-			l_mapToBeUpdated.setD_mapFile(l_mapFileName);
-			l_mapToBeUpdated.setD_continents(l_updatedContinents);
-			p_gameState.setD_map(l_mapToBeUpdated);
+		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
+				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
+				: p_gameState.getD_map();
+		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
+			Map l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
+			p_gameState.setD_map(l_updatedMap);
 		}
 	}
 
@@ -240,36 +237,19 @@ public class MapService {
 	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
 	 */
-	public List<Continent> addRemoveContinents(List<Continent> p_continentData, String p_operation,
+	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation,
 			String p_argument) {
-		List<Continent> l_updatedContinents = new ArrayList<>();
-		if (null != p_continentData && !p_continentData.isEmpty())
-			l_updatedContinents.addAll(p_continentData);
 
 		if (p_operation.equalsIgnoreCase("add")) {
-			Continent l_existingContinent = l_updatedContinents.stream()
-					.filter(l_continent -> l_continent.getD_continentName().equals(p_argument.split(" ")[0]))
-					.findFirst().orElse(null);
-			if (l_existingContinent == null) {
-				Continent l_continentToBeAdded = new Continent(l_updatedContinents.size() + 1, p_argument.split(" ")[0],
-						Integer.parseInt(p_argument.split(" ")[1]));
-				l_updatedContinents.add(l_continentToBeAdded);
-			} else {
-				System.out.println("Continent with continent name : " + p_argument.split(" ")[0]
-						+ " already Exists. Changes are not made");
-			}
+			p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
 		} else if (p_operation.equalsIgnoreCase("remove")) {
-			Continent l_existingContinent = l_updatedContinents.stream()
-					.filter(l_continent -> l_continent.getD_continentName().equals(p_argument.split(" ")[0]))
-					.findFirst().orElse(null);
-			if (null != l_existingContinent) {
-				l_updatedContinents.remove(l_existingContinent);
-			} else {
-				System.out.println("Continent with continent name : " + Integer.parseInt(p_argument.split(" ")[0])
+			p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
+		} else {
+			System.out.println("Continent with continent name : " + Integer.parseInt(p_argument.split(" ")[0])
 						+ " does not Exist. Changes are not made");
-			}
 		}
-		return l_updatedContinents;
+
+		return p_mapToBeUpdated;
 	}
 
 	/**
@@ -419,5 +399,18 @@ public class MapService {
 					l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
 							+ System.lineSeparator());
 		}
+	}
+	public static void main(String[] args) throws IOException {
+		MapService ms = new MapService();
+		GameState gs = new GameState();
+		ms.loadMap(gs, "canada.map");
+		ms.editCountry(gs, "remove", "31");
+		ms.editCountry(gs, "add", "34 1");
+		ms.editContinent(gs, "Asia 10", "add");
+		ms.editContinent(gs, "Western_Provinces-North", "remove");
+		Map t = gs.getD_map();
+		t.checkCountries();
+		t.checkContinents();
+
 	}
 }
