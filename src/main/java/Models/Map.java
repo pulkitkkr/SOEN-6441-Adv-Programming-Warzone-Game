@@ -231,31 +231,46 @@ public class Map {
      * @return matching continent object
      */
     public Continent getContinent(String p_continentID){
+        //System.out.println(CommonUtil.isNull(this));
        return d_continents.stream().filter(l_continent -> l_continent.getD_continentName().equals(p_continentID)).findFirst().orElse(null);
     }
 
     public void addContinent(String p_continentName, Integer p_controlValue){
-        if(CommonUtil.isNull(getContinent(p_continentName))){
-            d_continents.add(new Continent(d_continents.size()+1, p_continentName, p_controlValue));
-        }else{
-            System.out.println("Continent cannot be added! It already exists!");
+        if (d_continents!=null) {
+            if(CommonUtil.isNull(getContinent(p_continentName))){
+                d_continents.add(new Continent(d_continents.size()+1, p_continentName, p_controlValue));
+            }else{
+                System.out.println("Continent cannot be added! It already exists!");
+            }
+        } else{
+            d_continents= new ArrayList<Continent>();
+            d_continents.add(new Continent(1, p_continentName, p_controlValue));
         }
     }
 
     public void removeContinent(String p_continentName){
-        if(!CommonUtil.isNull(getContinent(p_continentName))){
-            for(Country c: getContinent(p_continentName).getD_countries()){
-                removeCountryNeighbours(c.getD_countryId());
-                updateNeighboursCont(c.getD_countryId());
-                d_countries.remove(c);
+        if (d_continents!=null) {
+            if(!CommonUtil.isNull(getContinent(p_continentName))){
+                if (getContinent(p_continentName).getD_countries()!=null) {
+                    for(Country c: getContinent(p_continentName).getD_countries()){
+                        removeCountryNeighbours(c.getD_countryId());
+                        updateNeighboursCont(c.getD_countryId());
+                        d_countries.remove(c);
+                    }
+                }
+                d_continents.remove(getContinent(p_continentName));
+            }else{
+                System.out.println("No such Continent exists!");
             }
-            d_continents.remove(getContinent(p_continentName));
-        }else{
-            System.out.println("No such Continent exists!");
+        } else{
+            System.out.println("No continents in the Map to remove!");
         }
     }
 
     public void addCountry(Integer p_countryId, Integer p_continentId){
+        if(d_countries==null){
+            d_countries= new ArrayList<Country>();
+        }
         if(CommonUtil.isNull(getCountry(p_countryId))){
             d_countries.add(new Country(p_countryId, p_continentId));
             if(getContinentIDs().contains(p_continentId)){
@@ -273,7 +288,7 @@ public class Map {
     }
 
     public void removeCountry(Integer p_countryId){
-        if(!CommonUtil.isNull(getCountry(p_countryId))) {
+        if(!CommonUtil.isNull(getCountry(p_countryId)) && d_countries!=null) {
             for(Continent c: d_continents){
                 if(c.getD_continentID().equals(getCountry(p_countryId).getD_continentId())){
                     c.removeCountry(getCountry(p_countryId));
@@ -302,17 +317,5 @@ public class Map {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        MapService ms = new MapService();
-        GameState gs = new GameState();
-        ms.loadMap(gs, "canada.map");
-        Map m = gs.getD_map();
-        m.removeCountry(31);
-        m.removeContinent("Western_Provinces-North");
-        m.addCountry(34, 4);
-        m.checkContinents();
-        m.checkCountries();
     }
 }

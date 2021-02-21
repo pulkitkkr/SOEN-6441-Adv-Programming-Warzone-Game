@@ -200,11 +200,16 @@ public class MapService {
 			Map l_map = new Map();
 			l_map.setD_mapFile(p_editFilePath);
 			p_gameState.setD_map(l_map);
+			System.out.println("Map Set!");
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
-			if(null != p_gameState.getD_map())
+			if(null != p_gameState.getD_map()) {
 				p_gameState.getD_map().setD_mapFile(p_editFilePath);
+			}else{
+				p_gameState.setD_map(new Map());
+				p_gameState.getD_map().setD_mapFile(p_editFilePath);
+			}
 		}
 	}
 
