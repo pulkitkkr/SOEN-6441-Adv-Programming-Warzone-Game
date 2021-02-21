@@ -164,7 +164,7 @@ public class Player {
 
 		if (p_operation.equalsIgnoreCase("add")) {
 			if (l_playerNameAlreadyExist) {
-				System.out.println(
+				System.out.print(
 						"Player with name : " + p_argument.split(" ")[0] + " already Exists. Changes are not made");
 			} else {
 				Player l_addNewPlayer = new Player(l_enteredPlayerName);
@@ -178,7 +178,7 @@ public class Player {
 					}
 				}
 			} else {
-				System.out.println(
+				System.out.print(
 						"Player with name : " + p_argument.split(" ")[0] + " does not Exist. Changes are not made");
 			}
 		}
