@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.List;
 import Exceptions.InvalidMap;
 import Services.MapService;
 import Utils.CommonUtil;
-
+import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 
@@ -94,7 +95,7 @@ public class Map {
      * Validates the complete map
      *
      * @return Bool Value if map is valid
-     * @throws InvalidMap
+     * @throws InvalidMap Exception
      */
     public Boolean Validate() throws InvalidMap {
         return (d_continents != null && checkContinentConnectivity() && checkCountryConnectivity());
@@ -186,6 +187,7 @@ public class Map {
      * Iteratively applies the DFS search from the entered node
      *
      * @param p_c Country visited first
+     * @throws InvalidMap Exception
      */
     public void dfsCountry(Country p_c) throws InvalidMap {
         d_countryReach.put(p_c.getD_countryId(), true);
@@ -201,6 +203,7 @@ public class Map {
      *
      * @param p_c Country
      * @return list of Adjacent Country Objects
+     * @throws InvalidMap Exception
      */
     public List<Country> getAdjacentCountry(Country p_c) throws InvalidMap {
         List<Country> l_adjCountries = new ArrayList<Country>();
@@ -238,7 +241,7 @@ public class Map {
     public void addContinent(String p_continentName, Integer p_controlValue){
         if (d_continents!=null) {
             if(CommonUtil.isNull(getContinent(p_continentName))){
-                d_continents.add(new Continent(d_continents.size()+1, p_continentName, p_controlValue));
+                d_continents.add(new Continent(Collections.max(getContinentIDs())+1, p_continentName, p_controlValue));
             }else{
                 System.out.println("Continent cannot be added! It already exists!");
             }

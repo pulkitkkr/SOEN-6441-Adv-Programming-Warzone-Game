@@ -237,7 +237,7 @@ public class MapService {
 	 * Constructs updated Continents list based on passed operations - Add/Remove
 	 * and Arguments
 	 * 
-	 * @param p_continentData List of Continents to Update
+	 * @param p_mapToBeUpdated Map Object to be Updated
 	 * @param p_operation Operation to perform on Continents
 	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
