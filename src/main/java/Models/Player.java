@@ -2,6 +2,7 @@ package Models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Utils.CommonUtil;
 
@@ -201,4 +202,89 @@ public class Player {
 		return l_updatedPlayers;
 	}
 
+	/**
+	 * This method is used to assign countries randomly among players
+	 * 
+	 * @param p_gameState current game state with map and player information
+	 * @return returns whether country assignment is done successfully or not
+	 */
+	public void assignCountries(GameState p_gameState) {
+		if (this.checkPlayersAvailability(p_gameState)) {
+			List<Country> l_countries = p_gameState.getD_map().getD_countries();
+			int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
+			this.randomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
+			this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
+			System.out.println("Armies have been assigned to Players");
+		}
+	}
+
+	/**
+	 * Check whether players are loaded or not
+	 * 
+	 * @param p_gameState current game state with map and player information
+	 * @return players exists or not
+	 */
+	private boolean checkPlayersAvailability(GameState p_gameState) {
+		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
+			System.out.println("Kindly add players before assigning countries");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Performs random country assignment to all players
+	 * 
+	 * @param p_countriesPerPlayer countries which are to be assigned to each player
+	 * @param p_countries          list of all countries present in map
+	 * @param p_players            list of all available players
+	 */
+	private void randomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries, List<Player> p_players) {
+		List<Country> l_unassignedCountries = new ArrayList<>();
+		l_unassignedCountries.addAll(p_countries);
+
+		for (Player l_pl : p_players) {
+			for (int i = 0; i < p_countriesPerPlayer; i++) {
+				Random l_random = new Random();
+				int l_randomIndex = l_random.nextInt(l_unassignedCountries.size());
+				Country l_randomCountry = l_unassignedCountries.get(l_randomIndex);
+
+				if (l_pl.getD_coutriesOwned() == null)
+					l_pl.setD_coutriesOwned(new ArrayList<Country>());
+				l_pl.getD_coutriesOwned().add(l_randomCountry);
+				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : " + l_randomCountry.getD_countryName());
+				l_unassignedCountries.remove(l_randomCountry);
+			}
+			if(l_unassignedCountries.isEmpty())
+				break;
+		}
+		if (!l_unassignedCountries.isEmpty()) {
+			randomCountryAssignment(1, l_unassignedCountries, p_players);
+		}
+	}
+
+	/**
+	 * Checks if player is having any continent as a result of random country
+	 * assignment
+	 * 
+	 * @param p_players    list of all available players
+	 * @param l_continents list of continents in map
+	 */
+	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
+		for (Player l_pl : p_players) {
+			List<String> l_countriesOwned = new ArrayList<>();
+			l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
+			for (Continent l_cont : p_continents) {
+				List<String> l_countriesOfContinent = new ArrayList<>();
+				l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
+
+				if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
+					if (l_pl.getD_continentsOwned() == null)
+						l_pl.setD_continentsOwned(new ArrayList<>());
+					l_pl.getD_continentsOwned().add(l_cont);
+					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : " + l_cont.getD_continentName());
+				}
+			}
+		}
+	}
 }

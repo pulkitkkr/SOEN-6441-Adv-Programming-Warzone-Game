@@ -371,5 +371,12 @@ public class MapService {
 							+ System.lineSeparator());
 		}
 	}
-
+	/**
+	 * Resets Game State's Map
+	 * @param p_gameState
+	 */
+	public void resetMap(GameState p_gameState) {
+		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
+		p_gameState.setD_map(new Models.Map());
+	}
 }
