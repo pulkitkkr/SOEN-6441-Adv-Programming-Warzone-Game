@@ -55,6 +55,7 @@ public class GameEngineController {
 	private void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
 		Command l_command = new Command(p_enteredCommand);
 		String l_rootCommand = l_command.getRootCommand();
+		boolean l_isMapLoaded = d_gameState.getD_map() != null;
 
 		switch (l_rootCommand) {
 			case "editmap": {
@@ -62,10 +63,20 @@ public class GameEngineController {
 				break;
 			}
 			case "editcontinent": {
+				if(!l_isMapLoaded) {
+					System.out.println("Can not Edit Continent, please perform `loadmap` or `editmap` first");
+					break;
+				}
+
 				performEditContinent(l_command);
 				break;
 			}
 			case "savemap": {
+				if(!l_isMapLoaded) {
+					System.out.println("No map found to save, Please `loadmap` & `editmap` first");
+					break;
+				}
+
 				performSaveMap(l_command);
 				break;
 			}
@@ -74,6 +85,10 @@ public class GameEngineController {
 				break;
 			}
 			case "validatemap": {
+				if(!l_isMapLoaded) {
+					System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+					break;
+				}
 				performValidateMap(l_command);
 				break;
 			}
