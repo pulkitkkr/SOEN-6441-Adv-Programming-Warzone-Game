@@ -210,7 +210,7 @@ public class MapService {
 
 	/**
 	 * Processing of Continents given in commands which are to be added or removed
-	 * from selected map though editmapF
+	 * from selected map though editmap
 	 * 
 	 * @param p_gameState Current GameState
 	 * @param p_argument Arguments pertaining to the operation
@@ -297,67 +297,34 @@ public class MapService {
 	 * @return Updated Map Object
 	 */
 	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument){
-		List<Country> l_countryList = p_mapToBeUpdated.getD_countries();
-		List<Country> l_updatedCountryList = new ArrayList<Country>();
-		Map l_updatedContinents;
-		if (!CommonUtil.isNull(l_countryList) && !l_countryList.isEmpty())
-			l_updatedCountryList.addAll(l_countryList);
 		if (p_operation.equalsIgnoreCase("add")){
-			Country l_country =p_mapToBeUpdated.getCountry(Integer.parseInt(p_argument.split(" ")[0]));
-			if (CommonUtil.isNull(l_country)){
-				l_country= new Country(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
-				l_updatedCountryList.add(l_country);
-				l_updatedContinents= updateContinent(Integer.parseInt(p_argument.split(" ")[1]), l_country, p_mapToBeUpdated, 0);
-			} else{
-				System.out.println(" The country with ID "+ Integer.parseInt(p_argument.split(" ")[0])+ " exists!");
-				l_updatedContinents=p_mapToBeUpdated;
-			}
+			p_mapToBeUpdated.addCountry(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
 		}else if(p_operation.equalsIgnoreCase("remove")){
-			Country l_country = p_mapToBeUpdated.getCountry(Integer.parseInt(p_argument.split(" ")[0]));
-			if(!CommonUtil.isNull(l_country)){
-				l_updatedCountryList.remove(l_country);
-				l_updatedContinents=updateContinent(l_country.getD_continentId(), l_country, p_mapToBeUpdated, 1);
-			} else {
-				System.out.println("No Such Country Exists!");
-				l_updatedContinents=p_mapToBeUpdated;
-			}
+			p_mapToBeUpdated.removeCountry(Integer.parseInt(p_argument.split(" ")[0]));
 		}else{
-			l_updatedContinents= p_mapToBeUpdated;
 			System.out.println("Couldn't Save your changes");
 		}
-		l_updatedContinents.setD_countries(l_updatedCountryList);
-		return l_updatedContinents;
-	}
-
-	/**
-	 * Updates the Continent with added country Data
-	 * @param p_continentID Continent ID to be updated
-	 * @param p_country Country object to be added to the Continent
-	 * @param p_mapToBeUpdated Map Object to be Updated
-	 * @param p_switch Add/remove operation to be performed
-	 * @return Updated Map Object
-	 */
-	public Map updateContinent(Integer p_continentID, Country p_country, Map p_mapToBeUpdated, Integer p_switch){
-		List<Continent> l_updatedContinents = new ArrayList<Continent>();
-		if(p_switch.equals(0)){
-			for(Continent c: p_mapToBeUpdated.getD_continents()){
-				if(c.getD_continentID().equals(p_continentID)){
-					c.addCountry(p_country);
-				}
-				l_updatedContinents.add(c);
-			}
-		}else{
-			for(Continent c: p_mapToBeUpdated.getD_continents()){
-				if(c.getD_continentID().equals(p_continentID)){
-					c.removeCountry(p_country);
-				}
-				l_updatedContinents.add(c);
-			}
-		}
-		p_mapToBeUpdated.setD_continents(l_updatedContinents);
 		return p_mapToBeUpdated;
 	}
 
+	public Country removeCountryNeighbour(Integer p_countryIDToRemove, Country p_countryObject){
+		for(Integer l_cid: p_countryObject.getD_adjacentCountryIds()){
+			if(l_cid.equals(p_countryIDToRemove)){
+				p_countryObject.removeNeighbour(p_countryIDToRemove);
+			}
+		}
+		return p_countryObject;
+	}
+
+	public Country addCountryNeighbour(Integer p_countryIDToAdd, Country p_countryObject){
+		if(!p_countryObject.getD_adjacentCountryIds().contains(p_countryIDToAdd)){
+			p_countryObject.addNeighbour(p_countryIDToAdd);
+		}
+		else{
+			System.out.println("Country ID "+ p_countryIDToAdd+" is already a neighbour for Country ID "+p_countryObject.getD_countryId());
+		}
+		return p_countryObject;
+	}
 	/**
 	 * Parses the updated map to .map file and stores it at required location
 	 * 

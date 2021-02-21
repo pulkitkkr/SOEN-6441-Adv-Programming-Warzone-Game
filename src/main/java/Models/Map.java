@@ -1,10 +1,15 @@
 package Models;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import Exceptions.InvalidMap;
+import Services.MapService;
+import Utils.CommonUtil;
+
 import java.util.Map.Entry;
+import java.util.SortedMap;
 
 public class Map {
     String d_mapFile;
@@ -36,20 +41,38 @@ public class Map {
         this.d_countries = p_countries;
     }
 
-    public void addContinent(Continent p_continent) {
-        d_continents.add(p_continent);
+    public List<Integer> getContinentIDs(){
+        List<Integer> l_continentIDs = new ArrayList<Integer>();
+        if (!d_continents.isEmpty()) {
+            for(Continent c: d_continents){
+                l_continentIDs.add(c.getD_continentID());
+            }
+        }
+        return l_continentIDs;
     }
 
-    public void addCountry(Country p_country) {
-        d_countries.add(p_country);
+    public List<Integer> getCountryIDs(){
+        List<Integer> l_countryIDs = new ArrayList<Integer>();
+        if(!d_countries.isEmpty()){
+            for(Country c: d_countries){
+                l_countryIDs.add(c.getD_countryId());
+            }
+        }
+        return l_countryIDs;
     }
 
     public void checkContinents() {
         for (Continent c : d_continents) {
-            System.out.println(c.getD_continentID());
-            System.out.println("Corresponding Country IDs");
+            System.out.println("Continent ID "+ c.getD_continentID());
+            System.out.println("Corresponding Countries");
             for (Country country: c.getD_countries()){
-                System.out.println(country.getD_countryId());
+                System.out.println("Country : "+ country.getD_countryId());
+                System.out.println("Neighbours in Continent:");
+                if (!CommonUtil.isNull(country.getD_adjacentCountryIds())) {
+                    for(Integer i: country.getD_adjacentCountryIds()){
+                        System.out.println(i);
+                    }
+                }
             }
         }
     }
@@ -58,6 +81,12 @@ public class Map {
         for (Country c : d_countries) {
             System.out.println("Country Id " + c.getD_countryId());
             System.out.println("Continent Id " + c.getD_continentId());
+            System.out.println("Neighbours in Map:");
+            if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
+                for (Integer i: c.d_adjacentCountryIds){
+                    System.out.println(i);
+                }
+            }
         }
     }
 
@@ -193,12 +222,7 @@ public class Map {
      * @return matching country object
      */
     public Country getCountry(Integer p_countryId) {
-        for (Country c : d_countries) {
-            if (c.getD_countryId().equals(p_countryId)) {
-                return c;
-            }
-        }
-        return null;
+        return d_countries.stream().filter(l_country -> l_country.getD_countryId().equals(p_countryId)).findFirst().orElse(null);
     }
 
     /**
@@ -206,12 +230,89 @@ public class Map {
      * @param p_continentID Continent ID to be found
      * @return matching continent object
      */
-    public Continent getContinent(Integer p_continentID){
-        for (Continent c : d_continents){
-            if(c.getD_continentID().equals(p_continentID)){
-                return c;
+    public Continent getContinent(String p_continentID){
+       return d_continents.stream().filter(l_continent -> l_continent.getD_continentName().equals(p_continentID)).findFirst().orElse(null);
+    }
+
+    public void addContinent(String p_continentName, Integer p_controlValue){
+        if(CommonUtil.isNull(getContinent(p_continentName))){
+            d_continents.add(new Continent(d_continents.size()+1, p_continentName, p_controlValue));
+        }else{
+            System.out.println("Continent cannot be added! It already exists!");
+        }
+    }
+
+    public void removeContinent(String p_continentName){
+        if(!CommonUtil.isNull(getContinent(p_continentName))){
+            System.out.println("Deleting Country Data");
+            for(Country c: getContinent(p_continentName).getD_countries()){
+                d_countries.remove(c);
+                removeCountryNeighbours(c.getD_countryId());
+                updateNeighboursCont(c.getD_countryId());
+                System.out.println("Deleted Country "+ c.getD_countryId());
+            }
+            d_continents.remove(getContinent(p_continentName));
+        }else{
+            System.out.println("No such Continent exists!");
+        }
+    }
+
+    public void addCountry(Integer p_countryId, Integer p_continentId){
+        if(CommonUtil.isNull(getCountry(p_countryId))){
+            d_countries.add(new Country(p_countryId, p_continentId));
+            if(getContinentIDs().contains(p_continentId)){
+                for (Continent c: d_continents) {
+                    if (c.getD_continentID().equals(p_continentId)) {
+                        c.addCountry(new Country(p_countryId, p_continentId));
+                    }
+                }
+            } else{
+                System.out.println("Cannot add Country to a Continent that doesn't exist!");
+            }
+        }else{
+            System.out.println("Country with "+ p_countryId+" already Exists!");
+        }
+    }
+
+    public void removeCountry(Integer p_countryId){
+        if(!CommonUtil.isNull(getCountry(p_countryId))) {
+            for(Continent c: d_continents){
+                if(c.getD_continentID().equals(getCountry(p_countryId).getD_continentId())){
+                    c.removeCountry(getCountry(p_countryId));
+                }
+                c.removeCountryNeighbours(p_countryId);
+            }
+            d_countries.remove(getCountry(p_countryId));
+            removeCountryNeighbours(p_countryId);
+
+        }else{
+            System.out.println("Country ID "+ p_countryId+" does not exist!");
+        }
+    }
+
+    public void updateNeighboursCont(Integer p_countryId){
+        for(Continent c: d_continents){
+            c.removeCountryNeighbours(p_countryId);
+        }
+    }
+
+    public void removeCountryNeighbours(Integer p_countryID){
+        for (Country c: d_countries) {
+            if (c.getD_adjacentCountryIds().contains(p_countryID)) {
+                c.removeNeighbour(p_countryID);
             }
         }
-        return null;
+    }
+
+    public static void main(String[] args) {
+        MapService ms = new MapService();
+        GameState gs = new GameState();
+        ms.loadMap(gs, "canada.map");
+        Map m = gs.getD_map();
+        m.removeCountry(31);
+        m.removeContinent("Western_Provinces-North");
+        m.addCountry(34, 4);
+        m.checkContinents();
+        m.checkCountries();
     }
 }

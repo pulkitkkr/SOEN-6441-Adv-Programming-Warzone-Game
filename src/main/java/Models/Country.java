@@ -1,5 +1,6 @@
 package Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
@@ -50,5 +51,17 @@ public class Country {
 	public void setD_countryName(String p_countryName) {
 		this.d_countryName = p_countryName;
 	}
-
+	public void addNeighbour(Integer p_countryId){
+		if (d_adjacentCountryIds == null) {
+			d_adjacentCountryIds = new ArrayList<Integer>();
+		}
+		d_adjacentCountryIds.add(p_countryId);
+	}
+	public void removeNeighbour(Integer p_countryId){
+		if(d_adjacentCountryIds.contains(p_countryId)){
+			d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
+		}else{
+			System.out.println("No Such Neighbour Exists");
+		}
+	}
 }

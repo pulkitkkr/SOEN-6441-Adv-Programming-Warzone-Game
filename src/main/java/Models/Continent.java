@@ -54,9 +54,26 @@ public class Continent {
 		if(d_countries==null){
 			System.out.println("No such Country Exists");
 		}else {
-			d_countries.remove(d_countries.indexOf(p_c));
+			d_countries.remove(p_c);
 		}
 	}
+
+	public void removeCountryNeighbours(Integer p_countryId){
+		for (Country c: d_countries){
+			if (c.getD_adjacentCountryIds().contains(p_countryId)){
+				c.removeNeighbour(p_countryId);
+			}
+		}
+	}
+
+	public void addCountryNeighbours(Integer p_countryInContinent, Integer p_neighbourCountry){
+		for (Country c: d_countries){
+			if (c.getD_countryId().equals(p_countryInContinent)){
+				c.addNeighbour(p_neighbourCountry);
+			}
+		}
+	}
+
 	public Boolean checkCountry(Integer p_countryId){
 		boolean l_flag=false;
 		for (Country c: d_countries){
