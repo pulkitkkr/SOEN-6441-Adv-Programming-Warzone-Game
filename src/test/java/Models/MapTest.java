@@ -28,7 +28,7 @@ public class MapTest {
         l_ms= new MapService();
     }
 
-    @Test
+    @Test (expected = InvalidMap.class)
     public void validateNoContinent() throws InvalidMap{
         assertEquals(l_map.Validate(), false);
     }
