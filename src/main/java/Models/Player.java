@@ -13,22 +13,22 @@ import Utils.CommonUtil;
  */
 public class Player {
 	private String name;
-	
+
 	/**
 	 * List of countries owned by player.
 	 */
 	List<Country> d_coutriesOwned;
-	
+
 	/**
 	 * List of Continents owned by player.
 	 */
 	List<Continent> d_continentsOwned;
-	
+
 	/**
 	 * List of orders of player.
 	 */
 	List<Order> d_ordersToExecute;
-	
+
 	/**
 	 * Number of armies allocated to player.
 	 */
@@ -221,7 +221,7 @@ public class Player {
 	 * Check whether players are loaded or not
 	 * 
 	 * @param p_gameState current game state with map and player information
-	 * @return players exists or not
+	 * @return boolean players exists or not
 	 */
 	public boolean checkPlayersAvailability(GameState p_gameState) {
 		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
@@ -251,10 +251,11 @@ public class Player {
 				if (l_pl.getD_coutriesOwned() == null)
 					l_pl.setD_coutriesOwned(new ArrayList<Country>());
 				l_pl.getD_coutriesOwned().add(l_randomCountry);
-				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : " + l_randomCountry.getD_countryName());
+				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
+						+ l_randomCountry.getD_countryName());
 				l_unassignedCountries.remove(l_randomCountry);
 			}
-			if(l_unassignedCountries.isEmpty())
+			if (l_unassignedCountries.isEmpty())
 				break;
 		}
 		if (!l_unassignedCountries.isEmpty()) {
@@ -281,9 +282,45 @@ public class Player {
 					if (l_pl.getD_continentsOwned() == null)
 						l_pl.setD_continentsOwned(new ArrayList<>());
 					l_pl.getD_continentsOwned().add(l_cont);
-					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : " + l_cont.getD_continentName());
+					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
+							+ l_cont.getD_continentName());
 				}
 			}
 		}
+	}
+
+	/**
+	 * Assigns armies to each player of the game
+	 * 
+	 * @param p_gameState current game state with map and player information
+	 */
+	public void assignArmies(GameState p_gameState) {
+		for (Player l_pl : p_gameState.getD_players()) {
+			Integer l_armies = this.calculateArmiesForPlayer(l_pl);
+			System.out.println("Player : " +l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
+			l_pl.setD_noOfUnallocatedArmies(l_armies);
+		}
+		System.out.println("Armies have been assigned successfully to players");
+	}
+
+	/**
+	 * Calculates armies of player based on countries and continents owned
+	 * 
+	 * @param p_player player for which armies have to be calculated
+	 * @return Integer armies to be assigned to player
+	 */
+	private Integer calculateArmiesForPlayer(Player p_player) {
+		Integer l_armies = 0;
+		if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
+			l_armies = l_armies + Math.round((p_player.getD_coutriesOwned().size()) / 3);
+		}
+		if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
+			Integer l_continentCtrlValue = 0;
+			for (Continent l_continent : p_player.getD_continentsOwned()) {
+				l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
+			}
+			l_armies = l_armies + l_continentCtrlValue;
+		}
+		return l_armies > 3 ? l_armies : 3;
 	}
 }

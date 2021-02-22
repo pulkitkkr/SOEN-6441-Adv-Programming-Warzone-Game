@@ -309,6 +309,9 @@ public class GameEngineController {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
+			d_playerService.assignArmies(d_gameState);
+			//issue order call
+			
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 		}
