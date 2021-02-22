@@ -206,7 +206,6 @@ public class Player {
 	 * This method is used to assign countries randomly among players
 	 * 
 	 * @param p_gameState current game state with map and player information
-	 * @return returns whether country assignment is done successfully or not
 	 */
 	public void assignCountries(GameState p_gameState) {
 		if (this.checkPlayersAvailability(p_gameState)) {
@@ -214,7 +213,7 @@ public class Player {
 			int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
 			this.randomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
 			this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
-			System.out.println("Armies have been assigned to Players");
+			System.out.println("Countries have been assigned to Players");
 		}
 	}
 
@@ -224,7 +223,7 @@ public class Player {
 	 * @param p_gameState current game state with map and player information
 	 * @return players exists or not
 	 */
-	private boolean checkPlayersAvailability(GameState p_gameState) {
+	public boolean checkPlayersAvailability(GameState p_gameState) {
 		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
 			System.out.println("Kindly add players before assigning countries");
 			return false;

@@ -1,6 +1,8 @@
 package Models;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -9,6 +11,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Services.MapService;
 
 /**
  * 
@@ -21,11 +25,26 @@ public class PlayerTest {
 	 * Player class reference.
 	 */
 	Player d_playerInfo;
+	/**
+	 * Map reference to store its object.
+	 */
+	Map d_map;
 
+	/**
+	 * GameState reference to store its object.
+	 */
+	GameState d_state;
+	
+	/**
+	 * MapService reference to store its object.
+	 */
+	MapService d_mapservice;
+	
 	/**
 	 * Existing Player List.
 	 */
 	List<Player> d_exisitingPlayerList = new ArrayList<Player>();
+	
 	private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
 	/**
@@ -61,5 +80,35 @@ public class PlayerTest {
 		assertEquals(1, l_updatedPlayers.size());
 		d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
 		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made", d_outContent.toString());
+	}
+	
+	/**
+	 * Used for checking whether players have been added or not
+	 */
+	@Test
+	public void testPlayersAvailability() {
+		GameState l_gameState = new GameState();		
+		Boolean l_playersExists = d_playerInfo.checkPlayersAvailability(l_gameState);
+		assertFalse(l_playersExists);
+	}
+	/**
+	 * Used for checking whether players have been assigned with countries
+	 */
+	@Test
+	public void testPlayerCountryAssignment() {	
+		d_mapservice = new MapService();
+		d_map = new Map();
+		d_state = new GameState();
+		d_map = d_mapservice.loadMap(d_state, "canada.map");
+		d_state.setD_map(d_map);
+		d_state.setD_players(d_exisitingPlayerList);
+		d_playerInfo.assignCountries(d_state);
+		
+		int l_assignedCountriesSize = 0;
+		for(Player l_pl : d_state.getD_players()) {
+			assertNotNull(l_pl.getD_coutriesOwned());
+			l_assignedCountriesSize = l_assignedCountriesSize + l_pl.getD_coutriesOwned().size();
+		}
+		assertEquals(l_assignedCountriesSize, d_state.getD_map().getD_countries().size());
 	}
 }
