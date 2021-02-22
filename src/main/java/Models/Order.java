@@ -35,4 +35,8 @@ public class Order {
 	public void setD_numberOfArmiesToMove(Integer p_numberOfArmiesToMove) {
 		this.d_numberOfArmiesToMove = p_numberOfArmiesToMove;
 	}
+	
+	public void execute() {
+		
+	}
 }

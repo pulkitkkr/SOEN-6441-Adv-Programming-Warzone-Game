@@ -339,7 +339,7 @@ public class Player {
 	/**
 	 * Retrieves total number of orders given through out the game
 	 * 
-	 * @param p_player players involved in game
+	 * @param p_playersList players involved in game
 	 * @return int number of total un-executed orders
 	 */
 	public int getUnexecutedOrdersOfGame(List<Player> p_playersList) {

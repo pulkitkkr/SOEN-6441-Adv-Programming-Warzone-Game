@@ -317,6 +317,7 @@ public class GameEngineController {
 			for (int i = 0; i < l_unexecutedOrders; i++) {
 				for (Player l_player : d_gameState.getD_players()) {
 					l_player.next_order();
+					//execute order
 				}
 			}
 		} else {
