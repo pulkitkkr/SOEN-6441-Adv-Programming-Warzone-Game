@@ -40,6 +40,9 @@ public class Country {
 		this.d_continentId = p_continentId;
 	}
 	public List<Integer> getD_adjacentCountryIds() {
+		if(d_adjacentCountryIds==null){
+			d_adjacentCountryIds=new ArrayList<Integer>();
+		}
 		return d_adjacentCountryIds;
 	}
 	public void setD_adjacentCountryIds(List<Integer> p_adjacentCountryIds) {

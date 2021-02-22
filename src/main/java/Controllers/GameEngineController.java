@@ -216,6 +216,8 @@ public class GameEngineController {
 			} else {
 				if (l_currentMap.Validate()) {
 					System.out.println(ApplicationConstants.VALID_MAP);
+				}else{
+					System.out.println("Failed to Validate map!");
 				}
 			}
 

@@ -1,0 +1,11 @@
+
+[continents]
+Asia 1
+
+[countries]
+1 India 1
+2 Pakistan 1
+
+[borders]
+1 2
+2 1

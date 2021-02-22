@@ -204,12 +204,10 @@ public class MapService {
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
-			if(null != p_gameState.getD_map()) {
-				p_gameState.getD_map().setD_mapFile(p_editFilePath);
-			}else{
+			if (null == p_gameState.getD_map()) {
 				p_gameState.setD_map(new Map());
-				p_gameState.getD_map().setD_mapFile(p_editFilePath);
 			}
+			p_gameState.getD_map().setD_mapFile(p_editFilePath);
 		}
 	}
 
@@ -230,6 +228,7 @@ public class MapService {
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
+			p_gameState.getD_map().setD_mapFile(l_mapFileName);
 		}
 	}
 
@@ -271,6 +270,7 @@ public class MapService {
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
+			p_gameState.getD_map().setD_mapFile(l_mapFileName);
 		}
 	}
 
@@ -283,9 +283,9 @@ public class MapService {
 	 */
 	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument){
 		if (p_operation.equalsIgnoreCase("add")){
-			p_mapToBeUpdated.addCountry(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
+			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
 		}else if(p_operation.equalsIgnoreCase("remove")){
-			p_mapToBeUpdated.removeCountry(Integer.parseInt(p_argument.split(" ")[0]));
+			p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
 		}else{
 			System.out.println("Couldn't Save your changes");
 		}
@@ -300,6 +300,7 @@ public class MapService {
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
+			p_gameState.getD_map().setD_mapFile(l_mapFileName);
 		}
 	}
 
@@ -324,6 +325,7 @@ public class MapService {
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
+			System.out.println(p_gameState.getD_map().getD_mapFile());
 			if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");
 				return false;
