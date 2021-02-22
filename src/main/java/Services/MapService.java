@@ -292,24 +292,28 @@ public class MapService {
 		return p_mapToBeUpdated;
 	}
 
-	public Country removeCountryNeighbour(Integer p_countryIDToRemove, Country p_countryObject){
-		for(Integer l_cid: p_countryObject.getD_adjacentCountryIds()){
-			if(l_cid.equals(p_countryIDToRemove)){
-				p_countryObject.removeNeighbour(p_countryIDToRemove);
-			}
+	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument){
+		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
+		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
+				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
+				: p_gameState.getD_map();
+		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
+			Map l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
+			p_gameState.setD_map(l_updatedMap);
 		}
-		return p_countryObject;
 	}
 
-	public Country addCountryNeighbour(Integer p_countryIDToAdd, Country p_countryObject){
-		if(!p_countryObject.getD_adjacentCountryIds().contains(p_countryIDToAdd)){
-			p_countryObject.addNeighbour(p_countryIDToAdd);
+	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument){
+		if (p_operation.equalsIgnoreCase("add")){
+			p_mapToBeUpdated.addCountryNeighbour(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
+		}else if(p_operation.equalsIgnoreCase("remove")){
+			p_mapToBeUpdated.removeCountryNeighbour(Integer.parseInt(p_argument.split(" ")[0]),Integer.parseInt(p_argument.split(" ")[1]));
+		}else{
+			System.out.println("Couldn't Save your changes");
 		}
-		else{
-			System.out.println("Country ID "+ p_countryIDToAdd+" is already a neighbour for Country ID "+p_countryObject.getD_countryId());
-		}
-		return p_countryObject;
+		return p_mapToBeUpdated;
 	}
+
 	/**
 	 * Parses the updated map to .map file and stores it at required location
 	 * 

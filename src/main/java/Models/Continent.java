@@ -60,7 +60,7 @@ public class Continent {
 		}
 	}
 
-	public void removeCountryNeighbours(Integer p_countryId){
+	public void removeCountryNeighboursFromAll(Integer p_countryId){
 		if (null!=d_countries && !d_countries.isEmpty()) {
 			for (Country c: d_countries){
 				if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {
@@ -76,6 +76,14 @@ public class Continent {
 		for (Country c: d_countries){
 			if (c.getD_countryId().equals(p_countryInContinent)){
 				c.addNeighbour(p_neighbourCountry);
+			}
+		}
+	}
+
+	public void removeSpecificNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+		for (Country c:d_countries){
+			if (c.getD_countryId().equals(p_countryId)){
+				c.removeNeighbour(p_neighbourCountryId);
 			}
 		}
 	}

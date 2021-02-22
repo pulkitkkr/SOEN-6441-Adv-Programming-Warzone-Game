@@ -55,7 +55,8 @@ public class Country {
 		if (d_adjacentCountryIds == null) {
 			d_adjacentCountryIds = new ArrayList<Integer>();
 		}
-		d_adjacentCountryIds.add(p_countryId);
+		if(!d_adjacentCountryIds.contains(p_countryId))
+			d_adjacentCountryIds.add(p_countryId);
 	}
 	public void removeNeighbour(Integer p_countryId){
 		if(d_adjacentCountryIds.contains(p_countryId)){

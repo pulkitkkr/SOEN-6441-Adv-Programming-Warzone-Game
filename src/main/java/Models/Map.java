@@ -66,12 +66,14 @@ public class Map {
         for (Continent c : d_continents) {
             System.out.println("Continent ID "+ c.getD_continentID());
             System.out.println("Corresponding Countries");
-            for (Country country: c.getD_countries()){
-                System.out.println("Country : "+ country.getD_countryId());
-                System.out.println("Neighbours in Continent:");
-                if (!CommonUtil.isNull(country.getD_adjacentCountryIds())) {
-                    for(Integer i: country.getD_adjacentCountryIds()){
-                        System.out.println(i);
+            if (c.getD_countries()!=null) {
+                for (Country country: c.getD_countries()){
+                    System.out.println("Country : "+ country.getD_countryId());
+                    System.out.println("Neighbours in Continent:");
+                    if (!CommonUtil.isNull(country.getD_adjacentCountryIds())) {
+                        for(Integer i: country.getD_adjacentCountryIds()){
+                            System.out.println(i);
+                        }
                     }
                 }
             }
@@ -230,12 +232,15 @@ public class Map {
 
     /**
      * Returns Continent Object for given continent Id
-     * @param p_continentID Continent ID to be found
+     * @param p_continentName Continent Name to be found
      * @return matching continent object
      */
-    public Continent getContinent(String p_continentID){
-        //System.out.println(CommonUtil.isNull(this));
-       return d_continents.stream().filter(l_continent -> l_continent.getD_continentName().equals(p_continentID)).findFirst().orElse(null);
+    public Continent getContinent(String p_continentName){
+       return d_continents.stream().filter(l_continent -> l_continent.getD_continentName().equals(p_continentName)).findFirst().orElse(null);
+    }
+
+    public Continent getContinentByID(Integer p_continentID){
+        return d_continents.stream().filter(l_continent -> l_continent.getD_continentID().equals(p_continentID)).findFirst().orElse(null);
     }
 
     public void addContinent(String p_continentName, Integer p_controlValue){
@@ -256,7 +261,7 @@ public class Map {
             if(!CommonUtil.isNull(getContinent(p_continentName))){
                 if (getContinent(p_continentName).getD_countries()!=null) {
                     for(Country c: getContinent(p_continentName).getD_countries()){
-                        removeCountryNeighbours(c.getD_countryId());
+                        removeCountryNeighboursFromAll(c.getD_countryId());
                         updateNeighboursCont(c.getD_countryId());
                         d_countries.remove(c);
                     }
@@ -275,8 +280,8 @@ public class Map {
             d_countries= new ArrayList<Country>();
         }
         if(CommonUtil.isNull(getCountry(p_countryId))){
-            d_countries.add(new Country(p_countryId, p_continentId));
-            if(getContinentIDs().contains(p_continentId)){
+            if(d_continents!=null && getContinentIDs().contains(p_continentId)){
+                d_countries.add(new Country(p_countryId, p_continentId));
                 for (Continent c: d_continents) {
                     if (c.getD_continentID().equals(p_continentId)) {
                         c.addCountry(new Country(p_countryId, p_continentId));
@@ -291,28 +296,49 @@ public class Map {
     }
 
     public void removeCountry(Integer p_countryId){
-        if(!CommonUtil.isNull(getCountry(p_countryId)) && d_countries!=null) {
+        if(d_countries!=null && !CommonUtil.isNull(getCountry(p_countryId))) {
             for(Continent c: d_continents){
                 if(c.getD_continentID().equals(getCountry(p_countryId).getD_continentId())){
                     c.removeCountry(getCountry(p_countryId));
                 }
-                c.removeCountryNeighbours(p_countryId);
+                c.removeCountryNeighboursFromAll(p_countryId);
             }
             d_countries.remove(getCountry(p_countryId));
-            removeCountryNeighbours(p_countryId);
+            removeCountryNeighboursFromAll(p_countryId);
 
         }else{
             System.out.println("Country ID "+ p_countryId+" does not exist!");
         }
     }
 
-    public void updateNeighboursCont(Integer p_countryId){
-        for(Continent c: d_continents){
-            c.removeCountryNeighbours(p_countryId);
+    public void addCountryNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+        if(d_countries!=null){
+            if(!CommonUtil.isNull(getCountry(p_countryId)) && !CommonUtil.isNull(getCountry(p_neighbourCountryId))){
+                d_countries.get(d_countries.indexOf(getCountry(p_countryId))).addNeighbour(p_neighbourCountryId);
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountry(p_countryId).getD_continentId()))).addCountryNeighbours(p_countryId, p_neighbourCountryId);
+            } else{
+                System.out.println("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+            }
         }
     }
 
-    public void removeCountryNeighbours(Integer p_countryID){
+    public void removeCountryNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+        if(d_countries!=null){
+            if(!CommonUtil.isNull(getCountry(p_countryId)) && !CommonUtil.isNull(getCountry(p_neighbourCountryId))) {
+                d_countries.get(d_countries.indexOf(getCountry(p_countryId))).removeNeighbour(p_neighbourCountryId);
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountry(p_countryId).getD_continentId()))).removeSpecificNeighbour(p_countryId, p_neighbourCountryId);
+            } else{
+                System.out.println("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+            }
+        }
+    }
+    public void updateNeighboursCont(Integer p_countryId){
+        for(Continent c: d_continents){
+            c.removeCountryNeighboursFromAll(p_countryId);
+        }
+    }
+
+    public void removeCountryNeighboursFromAll(Integer p_countryID){
         for (Country c: d_countries) {
             if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
                 if (c.getD_adjacentCountryIds().contains(p_countryID)) {

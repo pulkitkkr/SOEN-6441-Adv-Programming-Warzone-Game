@@ -61,6 +61,10 @@ public class GameEngineController {
 					performEditCountry(l_command, l_mapService, l_gameState);
 					break;
 				}
+				case "editneighbor" : {
+						performEditNeighbour(l_command, l_mapService, l_gameState);
+						break;
+				}
 				case "exit": {
 					System.out.println("Exit Command Entered");
 					System.exit(0);
@@ -239,6 +243,25 @@ public class GameEngineController {
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
 					System.out.println("Valid args received");
 					p_mapService.editCountry(p_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+				}
+			}
+		}
+	}
+
+	public static void performEditNeighbour(Command p_command, MapService p_mapService, GameState p_gameState)
+			throws IOException, InvalidCommand {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					System.out.println("Valid args received");
+					p_mapService.editNeighbour(p_gameState, l_map.get(ApplicationConstants.OPERATION),
 							l_map.get(ApplicationConstants.ARGUMENTS));
 				} else {
 					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
