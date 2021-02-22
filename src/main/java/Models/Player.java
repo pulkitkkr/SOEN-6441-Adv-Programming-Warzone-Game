@@ -297,7 +297,7 @@ public class Player {
 	public void assignArmies(GameState p_gameState) {
 		for (Player l_pl : p_gameState.getD_players()) {
 			Integer l_armies = this.calculateArmiesForPlayer(l_pl);
-			System.out.println("Player : " +l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
+			System.out.println("Player : " + l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
 			l_pl.setD_noOfUnallocatedArmies(l_armies);
 		}
 		System.out.println("Armies have been assigned successfully to players");
@@ -322,5 +322,31 @@ public class Player {
 			l_armies = l_armies + l_continentCtrlValue;
 		}
 		return l_armies > 3 ? l_armies : 3;
+	}
+
+	/**
+	 * Gives the first order in the player’s list of orders, then removes it from
+	 * the list.
+	 * 
+	 * @return Order first order from the list of player's order
+	 */
+	public Order next_order() {
+		Order l_order = this.d_ordersToExecute.get(0);
+		this.d_ordersToExecute.remove(l_order);
+		return l_order;
+	}
+
+	/**
+	 * Retrieves total number of orders given through out the game
+	 * 
+	 * @param p_player players involved in game
+	 * @return int number of total un-executed orders
+	 */
+	public int getUnexecutedOrdersOfGame(List<Player> p_playersList) {
+		int l_totalUnexecutedOrders = 0;
+		for (Player l_player : p_playersList) {
+			l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_ordersToExecute().size();
+		}
+		return l_totalUnexecutedOrders;
 	}
 }
