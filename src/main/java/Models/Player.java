@@ -325,7 +325,7 @@ public class Player {
 	}
 
 	/**
-	 * Gives the first order in the player’s list of orders, then removes it from
+	 * Gives the first order in the players list of orders, then removes it from
 	 * the list.
 	 * 
 	 * @return Order first order from the list of player's order
