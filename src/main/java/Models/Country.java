@@ -16,11 +16,6 @@ public class Country {
 		this.d_countryName=p_countryName;
 		this.d_continentId=p_continentId;
 	}
-	public Country(int p_countryId, int p_continentId) {
-		this.d_countryId=p_countryId;
-		this.d_continentId=p_continentId;
-	}
-
 	public Integer getD_armies() {
 		return d_armies;
 	}
@@ -54,6 +49,11 @@ public class Country {
 	public void setD_countryName(String p_countryName) {
 		this.d_countryName = p_countryName;
 	}
+
+	/**
+	 * Adds country Id to the neighbor list
+	 * @param p_countryId Id of country to be added
+	 */
 	public void addNeighbour(Integer p_countryId){
 		if (d_adjacentCountryIds == null) {
 			d_adjacentCountryIds = new ArrayList<Integer>();
@@ -61,6 +61,11 @@ public class Country {
 		if(!d_adjacentCountryIds.contains(p_countryId))
 			d_adjacentCountryIds.add(p_countryId);
 	}
+
+	/**
+	 * removes country Id from  neighbor list
+	 * @param p_countryId Id of country to be removed
+	 */
 	public void removeNeighbour(Integer p_countryId){
 		if(d_adjacentCountryIds.contains(p_countryId)){
 			d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
