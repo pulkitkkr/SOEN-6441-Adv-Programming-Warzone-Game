@@ -59,7 +59,7 @@ public class GameEngineController {
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
 	 */
-	private void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
+	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
 		Command l_command = new Command(p_enteredCommand);
 		String l_rootCommand = l_command.getRootCommand();
 		boolean l_isMapLoaded = d_gameState.getD_map() != null;
@@ -105,10 +105,6 @@ public class GameEngineController {
 		}
 		case "assigncountries": {
 			assignCountries(l_command);
-			break;
-		}
-		case "deploy": {
-			createDeployOrder(l_command);
 			break;
 		}
 		case "exit": {
@@ -317,6 +313,7 @@ public class GameEngineController {
 			d_playerService.assignCountries(d_gameState);
 			d_playerService.assignArmies(d_gameState);
 			// issue order call
+			d_playerService.issue_order();
 			int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
 
 			for (int i = 0; i < l_unexecutedOrders; i++) {
@@ -327,30 +324,6 @@ public class GameEngineController {
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
-		}
-	}
-
-	// deploy countryID num (until all reinforcements have been placed)
-	private void createDeployOrder(Command p_command) throws InvalidCommand {
-		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-
-		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
-		} else {
-			for (Map<String, String> l_map : l_operations_list) {
-				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
-					String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
-					Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
-					Order l_orderInstance = new Order("deploy", l_countryIDName, l_noOfArmies);
-					d_playerService.issue_order();
-
-				} else {
-					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
-				}
-			}
-
 		}
 	}
 

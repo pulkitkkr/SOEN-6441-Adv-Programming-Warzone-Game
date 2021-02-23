@@ -1,9 +1,19 @@
 package Models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
+import Constants.ApplicationConstants;
+import Controllers.GameEngineController;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+import Utils.Command;
 import Utils.CommonUtil;
 
 /**
@@ -289,40 +299,53 @@ public class Player {
 		}
 	}
 
-//	“issue_order()” (no parameters, no return value) whose function is to add an order
-//	to the list of orders held by the player when the game engine calls
-//	it during the issue orders phase. The player class must also 
-//	have a “next_order()” (no parameters) method that is called
-//	by the GameEngine during the execute orders phase and returns the 
-//	first order in the player’s list of orders, then removes it from the list.
-	// deploy countryID num (until all reinforcements have been placed)
 	public void issue_order() {
-		Order l_orderInstance = Order.getInstance();
-		
-		//ask for deploy command;
-		String l_orderAction= l_orderInstance.getD_orderAction();
-		String l_coountryNameID = l_orderInstance.getD_countryName();
-		Integer l_numberOfArmiesToAdd = l_orderInstance.getD_numberOfArmiesToPlace();
-		System.out.println("Order action "+l_orderAction);
-		System.out.println("CountryIDName "+l_coountryNameID);
-		System.out.println("Armies "+l_numberOfArmiesToAdd);
+		Scanner l_reader = new Scanner(System.in);
+		char l_option;
+		do {
+			String l_commandEntered;
+			try {
+				System.out.println("Please enter command to deploy all the reinforcement armies on the map. ");
+				l_commandEntered = l_reader.nextLine();
+				Command l_command = new Command(l_commandEntered);
+				createDeployOrder(l_command);
+			} catch (InvalidCommand e) {
+				e.printStackTrace();
+			}
+			System.out.println("Do you want to continue to issue order? Enter Y or N");
+			l_option = l_reader.next().charAt(0);
 
-//		System.out.println(ord.getD_orderAction());
-//		System.out.println(ord.d_numberOfArmiesToMove);
-//		System.err.println(ord.d_sourceCountryId);
-
-		//Order l_order = new Order(l_orderAction, l_targetCountryId, l_numberOfArmiesToAdd);
-
-		// player will create order
-		// wait for user to type deploy command
-		// after deploy command -> put order in order list
-		// create deploy order object
-		// object have type of order , taregtcountryID, number of armies
-		// d_ordersToExecute.add(e);
+		} while (l_option == 'y' || l_option == 'Y');
 
 	}
 
-	
+	// deploy countryID num (until all reinforcements have been placed)
+	private void createDeployOrder(Command p_command) throws InvalidCommand {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		List<Order> l = new ArrayList<Order>();
+
+		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					System.out.println("Valid args received");
+					String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
+					Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
+					Order l_orderObject = new Order("deploy", l_countryIDName, l_noOfArmies);
+
+					l.add(l_orderObject);
+
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
+				}
+			}
+
+		}
+
+	}
+
 	/**
 	 * Assigns armies to each player of the game
 	 * 
@@ -359,8 +382,8 @@ public class Player {
 	}
 
 	/**
-	 * Gives the first order in the players list of orders, then removes it from
-	 * the list.
+	 * Gives the first order in the players list of orders, then removes it from the
+	 * list.
 	 * 
 	 * @return Order first order from the list of player's order
 	 */

@@ -6,23 +6,24 @@ package Models;
  * 
  */
 public class Order {
-	public static String d_orderAction;
-	public static Integer d_targetCountryId;
-	public static Integer d_sourceCountryId;
-	public static Integer d_numberOfArmiesToPlace;
-	public static String d_countryName;
-	private static Order orderObj;
-	
-	public static Order getInstance() {
-		if(orderObj==null){
-			orderObj = new Order();
-		}
-		return orderObj;
-	}
+	String d_orderAction;
+	Integer d_targetCountryId;
+	Integer d_sourceCountryId;
+	Integer d_numberOfArmiesToPlace;
+	String d_countryName;
+	Order orderObj;
+
+//	public static Order getInstance() {
+//		if (orderObj == null) {
+//			orderObj = new Order();
+//		}
+//		return orderObj;
+//	}
 
 	public Order() {
-		
+
 	}
+
 	public Order(String p_orderAction, String p_countryName, Integer p_numberOfArmiesToPlace) {
 		this.d_orderAction = p_orderAction;
 		this.d_countryName = p_countryName;
@@ -61,16 +62,15 @@ public class Order {
 		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
 	}
 
-	public static String getD_countryName() {
+	public String getD_countryName() {
 		return d_countryName;
 	}
 
 	public void setD_countryName(String p_countryName) {
 		this.d_countryName = p_countryName;
 	}
-	
-	
+
 	public void execute() {
-		
+
 	}
 }
