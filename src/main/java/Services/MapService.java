@@ -283,7 +283,7 @@ public class MapService {
 	 */
 	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument){
 		if (p_operation.equalsIgnoreCase("add")){
-			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
+			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove")){
 			p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
 		}else{
@@ -306,9 +306,9 @@ public class MapService {
 
 	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument){
 		if (p_operation.equalsIgnoreCase("add")){
-			p_mapToBeUpdated.addCountryNeighbour(Integer.parseInt(p_argument.split(" ")[0]), Integer.parseInt(p_argument.split(" ")[1]));
+			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove")){
-			p_mapToBeUpdated.removeCountryNeighbour(Integer.parseInt(p_argument.split(" ")[0]),Integer.parseInt(p_argument.split(" ")[1]));
+			p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else{
 			System.out.println("Couldn't Save your changes");
 		}
@@ -325,7 +325,6 @@ public class MapService {
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
-			System.out.println(p_gameState.getD_map().getD_mapFile());
 			if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");
 				return false;
@@ -410,18 +409,5 @@ public class MapService {
 					l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
 							+ System.lineSeparator());
 		}
-	}
-	public static void main(String[] args) throws IOException {
-		MapService ms = new MapService();
-		GameState gs = new GameState();
-		ms.loadMap(gs, "canada.map");
-		ms.editCountry(gs, "remove", "31");
-		ms.editCountry(gs, "add", "34 1");
-		ms.editContinent(gs, "Asia 10", "add");
-		ms.editContinent(gs, "Western_Provinces-North", "remove");
-		Map t = gs.getD_map();
-		t.checkCountries();
-		t.checkContinents();
-
 	}
 }

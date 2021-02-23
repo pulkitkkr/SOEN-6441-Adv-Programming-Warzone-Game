@@ -154,7 +154,7 @@ public class Map {
         for (Entry<Integer, Boolean> entry : l_continentCountry.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = getCountry(entry.getKey());
-                String l_messageException = l_country.getD_countryId() + " in Continent " + p_c.getD_continentID() + " is not reachable";
+                String l_messageException = l_country.getD_countryName() + " in Continent " + p_c.getD_continentName() + " is not reachable";
                 throw new InvalidMap(l_messageException);
             }
         }
@@ -170,7 +170,6 @@ public class Map {
      */
     public void dfsSubgraph(Country p_c, HashMap<Integer, Boolean> p_continentCountry, Continent p_continent) {
         p_continentCountry.put(p_c.getD_countryId(), true);
-        System.out.println("Country id " + p_c.getD_countryId() + " continent : " + p_continent.getD_continentID());
         for (Country c : p_continent.getD_countries()) {
             if (p_c.getD_adjacentCountryIds().contains(c.getD_countryId())) {
                 if (!p_continentCountry.get(c.getD_countryId())) {
@@ -193,7 +192,7 @@ public class Map {
         dfsCountry(d_countries.get(0));
         for (Entry<Integer, Boolean> entry : d_countryReach.entrySet()) {
             if (!entry.getValue()) {
-                String l_exceptionMessage = entry.getKey() + " country is not reachable";
+                String l_exceptionMessage = getCountry(entry.getKey()).getD_countryName() + " country is not reachable";
                 throw new InvalidMap(l_exceptionMessage);
             }
         }
@@ -296,25 +295,25 @@ public class Map {
         }
     }
 
-    public void addCountry(String p_countryId, Integer p_continentId){
+    public void addCountry(String p_countryId, String p_continentId){
         int l_countryId;
         if(d_countries==null){
             d_countries= new ArrayList<Country>();
         }
         if(CommonUtil.isNull(getCountryByName(p_countryId))){
             l_countryId=d_countries.size()>0? Collections.max(getCountryIDs())+1:1;
-            if(d_continents!=null && getContinentIDs().contains(p_continentId)){
-                d_countries.add(new Country(l_countryId,p_countryId, p_continentId));
+            if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentId).getD_continentID())){
+                d_countries.add(new Country(l_countryId,p_countryId,getContinent(p_continentId).getD_continentID()));
                 for (Continent c: d_continents) {
-                    if (c.getD_continentID().equals(p_continentId)) {
-                        c.addCountry(new Country(l_countryId, p_countryId, p_continentId));
+                    if (c.getD_continentName().equals(p_continentId)) {
+                        c.addCountry(new Country(l_countryId, p_countryId, getContinent(p_continentId).getD_continentID()));
                     }
                 }
             } else{
                 System.out.println("Cannot add Country to a Continent that doesn't exist!");
             }
         }else{
-            System.out.println("Country with "+ p_countryId+" already Exists!");
+            System.out.println("Country with name "+ p_countryId+" already Exists!");
         }
     }
 
@@ -330,26 +329,26 @@ public class Map {
             removeCountryNeighboursFromAll(getCountryByName(p_countryId).getD_countryId());
 
         }else{
-            System.out.println("Country ID "+ p_countryId+" does not exist!");
+            System.out.println("Country:  "+ p_countryId+" does not exist!");
         }
     }
 
-    public void addCountryNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+    public void addCountryNeighbour(String p_countryId, String p_neighbourCountryId){
         if(d_countries!=null){
-            if(!CommonUtil.isNull(getCountry(p_countryId)) && !CommonUtil.isNull(getCountry(p_neighbourCountryId))){
-                d_countries.get(d_countries.indexOf(getCountry(p_countryId))).addNeighbour(p_neighbourCountryId);
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountry(p_countryId).getD_continentId()))).addCountryNeighbours(p_countryId, p_neighbourCountryId);
+            if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))){
+                d_countries.get(d_countries.indexOf(getCountryByName(p_countryId))).addNeighbour(getCountryByName(p_neighbourCountryId).getD_countryId());
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryId).getD_continentId()))).addCountryNeighbours(getCountryByName(p_countryId).getD_countryId(), getCountryByName(p_neighbourCountryId).getD_countryId());
             } else{
                 System.out.println("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
         }
     }
 
-    public void removeCountryNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+    public void removeCountryNeighbour(String p_countryId, String p_neighbourCountryId){
         if(d_countries!=null){
-            if(!CommonUtil.isNull(getCountry(p_countryId)) && !CommonUtil.isNull(getCountry(p_neighbourCountryId))) {
-                d_countries.get(d_countries.indexOf(getCountry(p_countryId))).removeNeighbour(p_neighbourCountryId);
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountry(p_countryId).getD_continentId()))).removeSpecificNeighbour(p_countryId, p_neighbourCountryId);
+            if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))) {
+                d_countries.get(d_countries.indexOf(getCountryByName(p_countryId))).removeNeighbour(getCountryByName(p_neighbourCountryId).getD_countryId());
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryId).getD_continentId()))).removeSpecificNeighbour(getCountryByName(p_countryId).getD_countryId(), getCountryByName(p_neighbourCountryId).getD_countryId());
             } else{
                 System.out.println("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
