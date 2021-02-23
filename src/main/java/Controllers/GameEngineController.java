@@ -315,11 +315,21 @@ public class GameEngineController {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
+			d_playerService.assignArmies(d_gameState);
+			// issue order call
+			int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
+
+			for (int i = 0; i < l_unexecutedOrders; i++) {
+				for (Player l_player : d_gameState.getD_players()) {
+					l_player.next_order();
+					// execute order
+				}
+			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 		}
 	}
-	
+
 	// deploy countryID num (until all reinforcements have been placed)
 	private void createDeployOrder(Command p_command) throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -329,20 +339,19 @@ public class GameEngineController {
 		} else {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-					&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-				System.out.println("Valid args received");
-				String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
-				Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
-				Order l_orderInstance = new Order("deploy", l_countryIDName, l_noOfArmies);
-				d_playerService.issue_order();
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					System.out.println("Valid args received");
+					String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
+					Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
+					Order l_orderInstance = new Order("deploy", l_countryIDName, l_noOfArmies);
+					d_playerService.issue_order();
 
-			} else {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
-			}
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
+				}
 			}
 
 		}
 	}
-
 
 }

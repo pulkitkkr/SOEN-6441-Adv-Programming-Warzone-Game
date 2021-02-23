@@ -221,7 +221,7 @@ public class Player {
 	 * Check whether players are loaded or not
 	 * 
 	 * @param p_gameState current game state with map and player information
-	 * @return players exists or not
+	 * @return boolean players exists or not
 	 */
 	public boolean checkPlayersAvailability(GameState p_gameState) {
 		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
@@ -322,7 +322,65 @@ public class Player {
 
 	}
 
-	public void next_order() {
+	
+	/**
+	 * Assigns armies to each player of the game
+	 * 
+	 * @param p_gameState current game state with map and player information
+	 */
+	public void assignArmies(GameState p_gameState) {
+		for (Player l_pl : p_gameState.getD_players()) {
+			Integer l_armies = this.calculateArmiesForPlayer(l_pl);
+			System.out.println("Player : " + l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
+			l_pl.setD_noOfUnallocatedArmies(l_armies);
+		}
+		System.out.println("Armies have been assigned successfully to players");
+	}
 
+	/**
+	 * Calculates armies of player based on countries and continents owned
+	 * 
+	 * @param p_player player for which armies have to be calculated
+	 * @return Integer armies to be assigned to player
+	 */
+	private Integer calculateArmiesForPlayer(Player p_player) {
+		Integer l_armies = 0;
+		if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
+			l_armies = l_armies + Math.round((p_player.getD_coutriesOwned().size()) / 3);
+		}
+		if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
+			Integer l_continentCtrlValue = 0;
+			for (Continent l_continent : p_player.getD_continentsOwned()) {
+				l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
+			}
+			l_armies = l_armies + l_continentCtrlValue;
+		}
+		return l_armies > 3 ? l_armies : 3;
+	}
+
+	/**
+	 * Gives the first order in the players list of orders, then removes it from
+	 * the list.
+	 * 
+	 * @return Order first order from the list of player's order
+	 */
+	public Order next_order() {
+		Order l_order = this.d_ordersToExecute.get(0);
+		this.d_ordersToExecute.remove(l_order);
+		return l_order;
+	}
+
+	/**
+	 * Retrieves total number of orders given through out the game
+	 * 
+	 * @param p_playersList players involved in game
+	 * @return int number of total un-executed orders
+	 */
+	public int getUnexecutedOrdersOfGame(List<Player> p_playersList) {
+		int l_totalUnexecutedOrders = 0;
+		for (Player l_player : p_playersList) {
+			l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_ordersToExecute().size();
+		}
+		return l_totalUnexecutedOrders;
 	}
 }

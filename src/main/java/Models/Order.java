@@ -69,4 +69,8 @@ public class Order {
 		this.d_countryName = p_countryName;
 	}
 	
+	
+	public void execute() {
+		
+	}
 }
