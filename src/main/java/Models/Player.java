@@ -13,22 +13,22 @@ import Utils.CommonUtil;
  */
 public class Player {
 	private String name;
-	
+
 	/**
 	 * List of countries owned by player.
 	 */
 	List<Country> d_coutriesOwned;
-	
+
 	/**
 	 * List of Continents owned by player.
 	 */
 	List<Continent> d_continentsOwned;
-	
+
 	/**
 	 * List of orders of player.
 	 */
 	List<Order> d_ordersToExecute;
-	
+
 	/**
 	 * Number of armies allocated to player.
 	 */
@@ -251,10 +251,11 @@ public class Player {
 				if (l_pl.getD_coutriesOwned() == null)
 					l_pl.setD_coutriesOwned(new ArrayList<Country>());
 				l_pl.getD_coutriesOwned().add(l_randomCountry);
-				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : " + l_randomCountry.getD_countryName());
+				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
+						+ l_randomCountry.getD_countryName());
 				l_unassignedCountries.remove(l_randomCountry);
 			}
-			if(l_unassignedCountries.isEmpty())
+			if (l_unassignedCountries.isEmpty())
 				break;
 		}
 		if (!l_unassignedCountries.isEmpty()) {
@@ -281,9 +282,47 @@ public class Player {
 					if (l_pl.getD_continentsOwned() == null)
 						l_pl.setD_continentsOwned(new ArrayList<>());
 					l_pl.getD_continentsOwned().add(l_cont);
-					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : " + l_cont.getD_continentName());
+					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
+							+ l_cont.getD_continentName());
 				}
 			}
 		}
+	}
+
+//	“issue_order()” (no parameters, no return value) whose function is to add an order
+//	to the list of orders held by the player when the game engine calls
+//	it during the issue orders phase. The player class must also 
+//	have a “next_order()” (no parameters) method that is called
+//	by the GameEngine during the execute orders phase and returns the 
+//	first order in the player’s list of orders, then removes it from the list.
+	// deploy countryID num (until all reinforcements have been placed)
+	public void issue_order() {
+		Order l_orderInstance = Order.getInstance();
+		
+		//ask for deploy command;
+		String l_orderAction= l_orderInstance.getD_orderAction();
+		String l_coountryNameID = l_orderInstance.getD_countryName();
+		Integer l_numberOfArmiesToAdd = l_orderInstance.getD_numberOfArmiesToPlace();
+		System.out.println("Order action "+l_orderAction);
+		System.out.println("CountryIDName "+l_coountryNameID);
+		System.out.println("Armies "+l_numberOfArmiesToAdd);
+
+//		System.out.println(ord.getD_orderAction());
+//		System.out.println(ord.d_numberOfArmiesToMove);
+//		System.err.println(ord.d_sourceCountryId);
+
+		//Order l_order = new Order(l_orderAction, l_targetCountryId, l_numberOfArmiesToAdd);
+
+		// player will create order
+		// wait for user to type deploy command
+		// after deploy command -> put order in order list
+		// create deploy order object
+		// object have type of order , taregtcountryID, number of armies
+		// d_ordersToExecute.add(e);
+
+	}
+
+	public void next_order() {
+
 	}
 }
