@@ -34,13 +34,13 @@ public class GameEngineControllerTest {
 	}
 
 	@Test(expected = InvalidCommand.class)
-	public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand {
+	public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
 		Command l_command = new Command("editcontinent -add");
 		GameEngineController.performEditContinent(l_command, d_mapservice, d_state);
 	}
 
 	@Test
-	public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand {
+	public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
 		d_map.setD_mapFile("testeditmap.map");
 		d_state.setD_map(d_map);
 		Command l_addCommand = new Command("editcontinent -add Europe 10 -add America 20");

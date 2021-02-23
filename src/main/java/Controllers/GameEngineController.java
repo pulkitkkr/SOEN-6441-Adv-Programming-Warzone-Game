@@ -121,7 +121,7 @@ public class GameEngineController {
 	 * @throws InvalidCommand handles Invalid Command
 	 */
 	public static void performEditContinent(Command p_command, MapService p_mapService, GameState p_gameState)
-			throws IOException, InvalidCommand {
+			throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
@@ -235,7 +235,7 @@ public class GameEngineController {
 	 * @throws InvalidCommand Handles Invalid Commands
 	 */
 	public static void performEditCountry(Command p_command, MapService p_mapService, GameState p_gameState)
-			throws IOException, InvalidCommand {
+			throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
@@ -254,7 +254,7 @@ public class GameEngineController {
 	}
 
 	public static void performEditNeighbour(Command p_command, MapService p_mapService, GameState p_gameState)
-			throws IOException, InvalidCommand {
+			throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);

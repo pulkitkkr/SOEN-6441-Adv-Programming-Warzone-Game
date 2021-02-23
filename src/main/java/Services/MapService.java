@@ -220,7 +220,7 @@ public class MapService {
 	 * @param p_operation Operation to be performed on continents
 	 * @throws IOException handles I/0
 	 */
-	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException {
+	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap {
 		String l_mapFileName = p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
@@ -242,7 +242,7 @@ public class MapService {
 	 * @return List of updated continents
 	 */
 	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation,
-			String p_argument) {
+			String p_argument) throws InvalidMap {
 
 		if (p_operation.equalsIgnoreCase("add")) {
 			p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
@@ -262,7 +262,7 @@ public class MapService {
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
 	 */
-	public void editCountry(GameState p_gameState, String p_operation, String p_argument){
+	public void editCountry(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
@@ -281,7 +281,7 @@ public class MapService {
 	 * @param p_argument Arguments for the pertaining command operation
 	 * @return Updated Map Object
 	 */
-	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument){
+	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add")){
 			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove")){
@@ -292,7 +292,7 @@ public class MapService {
 		return p_mapToBeUpdated;
 	}
 
-	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument){
+	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
@@ -304,7 +304,7 @@ public class MapService {
 		}
 	}
 
-	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument){
+	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add")){
 			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove")){

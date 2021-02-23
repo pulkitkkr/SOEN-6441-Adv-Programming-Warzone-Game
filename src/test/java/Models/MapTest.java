@@ -29,7 +29,7 @@ public class MapTest {
     }
 
     @Test (expected = InvalidMap.class)
-    public void validateNoContinent() throws InvalidMap{
+    public void testValidateNoContinent() throws InvalidMap{
         assertEquals(l_map.Validate(), false);
     }
 
@@ -42,7 +42,7 @@ public class MapTest {
     }
 
     @Test (expected = InvalidMap.class)
-    public void validateNoCountry() throws InvalidMap{
+    public void testValidateNoCountry() throws InvalidMap{
         Continent l_continent = new Continent();
         List <Continent> l_continents = new ArrayList<Continent>();
         l_continents.add(l_continent);
@@ -51,9 +51,20 @@ public class MapTest {
     }
 
     @Test (expected = InvalidMap.class)
-    public void testCheckContinentConnectivity() throws  InvalidMap{
+    public void testContinentConnectivity() throws  InvalidMap{
           l_map= l_ms.loadMap(l_gameState, "continentConnectivity.map");
           l_map.Validate();
     }
 
+    @Test(expected = InvalidMap.class)
+    public void testCountryConnectivity() throws InvalidMap{
+        l_map.addContinent("Asia", 10);
+        l_map.addCountry("India", "Asia");
+        l_map.addCountry("China", "Asia");
+        l_map.addCountry("Maldives", "Asia");
+        l_map.addCountryNeighbour("India", "China");
+        l_map.addCountryNeighbour("China", "India");
+        l_map.addCountry("India", "Maldives");
+        l_map.checkCountryConnectivity();
+    }
 }
