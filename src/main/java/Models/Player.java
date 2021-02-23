@@ -1,8 +1,5 @@
 package Models;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import Constants.ApplicationConstants;
-import Controllers.GameEngineController;
 import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
 import Utils.Command;
 import Utils.CommonUtil;
 
@@ -303,24 +298,28 @@ public class Player {
 		Scanner l_reader = new Scanner(System.in);
 		char l_option;
 		do {
-			String l_commandEntered;
 			try {
 				System.out.println("Please enter command to deploy all the reinforcement armies on the map. ");
-				l_commandEntered = l_reader.nextLine();
+				String l_commandEntered = l_reader.nextLine();
 				Command l_command = new Command(l_commandEntered);
-				createDeployOrder(l_command);
+				List<Order> l = createDeployOrder(l_command);
+				if (this.getD_ordersToExecute() == null) {
+					this.setD_ordersToExecute(new ArrayList<Order>());
+				}
+				this.getD_ordersToExecute().addAll(l);
 			} catch (InvalidCommand e) {
 				e.printStackTrace();
 			}
 			System.out.println("Do you want to continue to issue order? Enter Y or N");
 			l_option = l_reader.next().charAt(0);
+			l_reader.nextLine();
 
 		} while (l_option == 'y' || l_option == 'Y');
 
 	}
 
 	// deploy countryID num (until all reinforcements have been placed)
-	private void createDeployOrder(Command p_command) throws InvalidCommand {
+	private List<Order> createDeployOrder(Command p_command) throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		List<Order> l = new ArrayList<Order>();
 
@@ -334,16 +333,13 @@ public class Player {
 					String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
 					Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
 					Order l_orderObject = new Order("deploy", l_countryIDName, l_noOfArmies);
-
 					l.add(l_orderObject);
-
 				} else {
 					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 				}
 			}
-
 		}
-
+		return l;
 	}
 
 	/**
