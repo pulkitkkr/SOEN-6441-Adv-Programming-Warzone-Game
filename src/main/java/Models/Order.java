@@ -7,26 +7,18 @@ package Models;
  */
 public class Order {
 	String d_orderAction;
-	Integer d_targetCountryId;
-	Integer d_sourceCountryId;
+	String d_targetCountryName;
+	String d_sourceCountryName;
 	Integer d_numberOfArmiesToPlace;
-	String d_countryName;
 	Order orderObj;
-
-//	public static Order getInstance() {
-//		if (orderObj == null) {
-//			orderObj = new Order();
-//		}
-//		return orderObj;
-//	}
 
 	public Order() {
 
 	}
 
-	public Order(String p_orderAction, String p_countryName, Integer p_numberOfArmiesToPlace) {
+	public Order(String p_orderAction, String p_targetCountryName, Integer p_numberOfArmiesToPlace) {
 		this.d_orderAction = p_orderAction;
-		this.d_countryName = p_countryName;
+		this.d_targetCountryName = p_targetCountryName;
 		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
 	}
 
@@ -38,20 +30,20 @@ public class Order {
 		this.d_orderAction = p_orderAction;
 	}
 
-	public Integer getD_targetCountryId() {
-		return d_targetCountryId;
+	public String getD_targetCountryName() {
+		return d_targetCountryName;
 	}
 
-	public void setD_targetCountryId(Integer p_targetCountryId) {
-		this.d_targetCountryId = p_targetCountryId;
+	public void setD_targetCountryName(String p_targetCountryName) {
+		this.d_targetCountryName = p_targetCountryName;
 	}
 
-	public Integer getD_sourceCountryId() {
-		return d_sourceCountryId;
+	public String getD_sourceCountryName() {
+		return d_sourceCountryName;
 	}
 
-	public void setD_sourceCountryId(Integer p_sourceCountryId) {
-		this.d_sourceCountryId = p_sourceCountryId;
+	public void setD_sourceCountryName(String p_sourceCountryName) {
+		this.d_sourceCountryName = p_sourceCountryName;
 	}
 
 	public Integer getD_numberOfArmiesToPlace() {
@@ -62,15 +54,69 @@ public class Order {
 		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
 	}
 
-	public String getD_countryName() {
-		return d_countryName;
+	/**
+	 * Enacts the order object and makes necessary changes in game state
+	 * 
+	 * @param p_gameState current state of the game
+	 * @param p_player    player whos order is being executed
+	 */
+	public void execute(GameState p_gameState, Player p_player) {
+		switch (this.d_orderAction) {
+		case "deploy": {
+			if (p_player.getD_noOfUnallocatedArmies() < this.d_numberOfArmiesToPlace) {
+				System.out.println(
+						"Order is not executed as number of armies given to deploy : " + d_numberOfArmiesToPlace
+								+ " exceeds player's unallocated armies : " + p_player.getD_noOfUnallocatedArmies());
+			} else {
+				if (this.validateDeployOrderCountry(p_player, this)) {
+					this.executeDeployOrder(this, p_gameState, p_player);
+				} else {
+					System.out.println(
+							"Order is not executed as target country given in deploy command doesnt belongs to player : "
+									+ p_player.getPlayerName());
+				}
+			}
+			break;
+		}
+		default: {
+			System.out.println("Order was not executed due to invalid Order Command");
+		}
+		}
+
 	}
 
-	public void setD_countryName(String p_countryName) {
-		this.d_countryName = p_countryName;
+	/**
+	 * Validates whether country given for deploy belongs to players countries or
+	 * not
+	 * 
+	 * @param p_player player whos order is being executed
+	 * @param p_order  order which is being executed
+	 * @return
+	 */
+	private boolean validateDeployOrderCountry(Player p_player, Order p_order) {
+		Country l_country = p_player.getD_coutriesOwned().stream()
+				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())).findFirst()
+				.orElse(null);
+		return l_country != null;
 	}
 
-	public void execute() {
+	/**
+	 * Executes deploy order and updates game state with latest map
+	 * 
+	 * @param p_order     order which is being executed
+	 * @param p_gameState current state of the game
+	 * @param p_player    player whos order is being executed
+	 */
+	private void executeDeployOrder(Order p_order, GameState p_gameState, Player p_player) {
+		for (Country l_country : p_gameState.getD_map().getD_countries()) {
+			if (l_country.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())) {
+				Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
+						: l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
+				l_country.setD_armies(l_armiesToUpdate);
 
+				Integer l_armiesOfPlayer = p_player.getD_noOfUnallocatedArmies() - p_order.getD_numberOfArmiesToPlace();
+				p_player.setD_noOfUnallocatedArmies(l_armiesOfPlayer);
+			}
+		}
 	}
 }

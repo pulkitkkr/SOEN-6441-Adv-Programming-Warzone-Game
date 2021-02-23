@@ -123,14 +123,14 @@ public class PlayerTest {
 		Order l_order1 = new Order();
 		l_order1.setD_orderAction("deploy");
 		l_order1.setD_numberOfArmiesToPlace(5);
-		l_order1.setD_sourceCountryId(null);
-		l_order1.setD_targetCountryId(1);
+		l_order1.setD_sourceCountryName(null);
+		l_order1.setD_targetCountryName("India");
 
 		Order l_order2 = new Order();
 		l_order1.setD_orderAction("airlift");
 		l_order2.setD_numberOfArmiesToPlace(6);
-		l_order2.setD_sourceCountryId(5);
-		l_order2.setD_targetCountryId(2);
+		l_order2.setD_sourceCountryName("Canada");
+		l_order2.setD_targetCountryName("Finland");
 
 		List<Order> l_orderlist = new ArrayList<>();
 		l_orderlist.add(l_order1);
