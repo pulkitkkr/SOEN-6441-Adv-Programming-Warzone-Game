@@ -292,6 +292,13 @@ public class MapService {
 		return p_mapToBeUpdated;
 	}
 
+	/**
+	 * Performs the add/remove operation on countries in map
+	 * @param p_gameState Current GameState Object
+	 * @param p_operation Operation to be Performed: add/remove
+	 * @param p_argument Arguments for the pertaining command operation
+	 * @throws InvalidMap
+	 */
 	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
@@ -304,6 +311,14 @@ public class MapService {
 		}
 	}
 
+	/**
+	 * Performs the add/remove operation on Map Object
+	 * @param p_mapToBeUpdated The Map to be updated
+	 * @param p_operation Add/Remove operation to be performed
+	 * @param p_argument Arguments for the pertaining command operation
+	 * @return
+	 * @throws InvalidMap
+	 */
 	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add")){
 			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);

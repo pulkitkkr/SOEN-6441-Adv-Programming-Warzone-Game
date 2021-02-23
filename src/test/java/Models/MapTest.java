@@ -17,54 +17,77 @@ import java.util.List;
  */
 public class MapTest {
 
-    Map l_map;
-    MapService l_ms;
-    GameState l_gameState;
+    Map d_map;
+    MapService d_ms;
+    GameState d_gameState;
 
+    /**
+     * Checking Map Model Operations
+     */
     @Before
     public void beforeValidateTest(){
-        l_map=new Map();
-        l_gameState=new GameState();
-        l_ms= new MapService();
+        d_map=new Map();
+        d_gameState=new GameState();
+        d_ms= new MapService();
     }
 
+    /**
+     * Checking {@link InvalidMap} for no continent in Map
+     * @throws InvalidMap Exception
+     */
     @Test (expected = InvalidMap.class)
     public void testValidateNoContinent() throws InvalidMap{
-        assertEquals(l_map.Validate(), false);
+        assertEquals(d_map.Validate(), false);
     }
 
+    /**
+     * Tests a valid and invalid Map for Validate function
+     * @throws InvalidMap
+     */
     @Test (expected = InvalidMap.class)
     public void testValidate() throws InvalidMap {
-        l_map= l_ms.loadMap(l_gameState, "canada.map");
-        assertEquals(l_map.Validate(), true);
-        l_map= l_ms.loadMap(l_gameState, "swiss.map");
-        l_map.Validate();
+        d_map= d_ms.loadMap(d_gameState, "canada.map");
+        assertEquals(d_map.Validate(), true);
+        d_map= d_ms.loadMap(d_gameState, "swiss.map");
+        d_map.Validate();
     }
 
+    /**
+     * Checking {@link InvalidMap} for no country in Map
+     * @throws InvalidMap Exception
+     */
     @Test (expected = InvalidMap.class)
     public void testValidateNoCountry() throws InvalidMap{
         Continent l_continent = new Continent();
         List <Continent> l_continents = new ArrayList<Continent>();
         l_continents.add(l_continent);
-        l_map.setD_continents(l_continents);
-        l_map.Validate();
+        d_map.setD_continents(l_continents);
+        d_map.Validate();
     }
 
+    /**
+     * Checks Continent connectivity of an unconnected continent
+     * @throws InvalidMap Exception
+     */
     @Test (expected = InvalidMap.class)
     public void testContinentConnectivity() throws  InvalidMap{
-          l_map= l_ms.loadMap(l_gameState, "continentConnectivity.map");
-          l_map.Validate();
+          d_map= d_ms.loadMap(d_gameState, "continentConnectivity.map");
+          d_map.Validate();
     }
 
+    /**
+     * Checks Country Connectivity for not connected countries
+     * @throws InvalidMap Exception
+     */
     @Test(expected = InvalidMap.class)
     public void testCountryConnectivity() throws InvalidMap{
-        l_map.addContinent("Asia", 10);
-        l_map.addCountry("India", "Asia");
-        l_map.addCountry("China", "Asia");
-        l_map.addCountry("Maldives", "Asia");
-        l_map.addCountryNeighbour("India", "China");
-        l_map.addCountryNeighbour("China", "India");
-        l_map.addCountry("India", "Maldives");
-        l_map.checkCountryConnectivity();
+        d_map.addContinent("Asia", 10);
+        d_map.addCountry("India", "Asia");
+        d_map.addCountry("China", "Asia");
+        d_map.addCountry("Maldives", "Asia");
+        d_map.addCountryNeighbour("India", "China");
+        d_map.addCountryNeighbour("China", "India");
+        d_map.addCountry("India", "Maldives");
+        d_map.checkCountryConnectivity();
     }
 }

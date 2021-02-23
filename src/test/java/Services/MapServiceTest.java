@@ -26,6 +26,9 @@ public class MapServiceTest {
 	Map d_map;
 	GameState d_state;
 
+	/**
+	 * Setup before MapService Operations
+	 */
 	@Before
 	public void setup() {
 		d_mapservice = new MapService();
@@ -33,12 +36,23 @@ public class MapServiceTest {
 		d_state = new GameState();
 		d_map = d_mapservice.loadMap(d_state, "europe.map");
 	}
+
+	/**
+	 * editmap Service test for a new map file
+	 * @throws IOException
+	 */
 	@Test
 	public void testEditMap() throws IOException {
 		d_mapservice.editMap(d_state, "test.map");
 		File l_file = new File(CommonUtil.getMapFilePath("test.map"));
 		assertTrue(l_file.exists());
 	}
+
+	/**
+	 * tests addition of continent via editcontinent operation
+	 * @throws IOException Exceptions
+	 * @throws InvalidMap Exception
+	 */
 	@Test
 	public void testEditContinentAdd() throws IOException, InvalidMap {
 		d_state.setD_map(new Map());
@@ -47,6 +61,12 @@ public class MapServiceTest {
 		assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Asia");
 		assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "10");
 	}
+
+	/**
+	 * tests removal of continent via editcontinent operation
+	 * @throws IOException Exceptions
+	 * @throws InvalidMap Exception
+	 */
 	@Test
 	public void testEditContinentRemove() throws IOException, InvalidMap {
 
@@ -72,6 +92,9 @@ public class MapServiceTest {
 		assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "20");
 	}
 
+	/**
+	 * Checks the loaded map Continent objects via the loadmap operation
+	 */
 	@Test
 	public void testContinentIdAndValues() {
 		List<Integer> l_actualContinentIdList = new ArrayList<Integer>();
@@ -92,6 +115,9 @@ public class MapServiceTest {
 		assertEquals(l_expectedContinentValueList, l_actualContinentValueList);
 	}
 
+	/**
+	 * Checks the loaded map Country objects via the loadMap operation
+	 */
 	@Test
 	public void testCountryIdAndNeighbors() {
 		List<Integer> l_actualCountryIdList = new ArrayList<Integer>();
@@ -119,6 +145,11 @@ public class MapServiceTest {
 		assertEquals(l_expectedCountryIdList, l_actualCountryIdList);
 		assertEquals(l_expectedCountryNeighbors, l_actualCountryNeighbors);
 	}
+
+	/**
+	 * Tests the savemap operation on an Invalid Map
+	 * @throws InvalidMap Exception
+	 */
 	@Test(expected = InvalidMap.class)
 	public void testSaveInvalidMap() throws InvalidMap {
 		d_map.setD_mapFile("europe.map");
@@ -126,6 +157,11 @@ public class MapServiceTest {
 		d_mapservice.saveMap(d_state, "europe.map");		
 	}
 
+	/**
+	 * Tests the add country operation via editCountry
+	 * @throws IOException Exception
+	 * @throws InvalidMap Exception
+	 */
 	@Test
 	public void testEditCountryAdd() throws IOException, InvalidMap {
 		d_mapservice.loadMap(d_state, "test.map");
@@ -133,12 +169,21 @@ public class MapServiceTest {
 		assertEquals(d_state.getD_map().getCountryByName("China").getD_countryName(), "China");
 	}
 
+	/**
+	 * Tests the Remove Country Operation via editcountry
+	 * @throws InvalidMap Exception
+	 */
 	@Test(expected = InvalidMap.class)
 	public void testEditCountryRemove() throws InvalidMap{
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editCountry(d_state, "remove", "Ukraine");
 	}
 
+	/**
+	 * Tests the add neighbor operation via editneighbor
+	 * @throws InvalidMap Exception
+	 * @throws IOException Exception
+	 */
 	@Test
 	public void testEditNeighborAdd() throws InvalidMap, IOException {
 		d_mapservice.loadMap(d_state, "test.map");
@@ -149,6 +194,11 @@ public class MapServiceTest {
 		assertEquals(d_state.getD_map().getCountryByName("Canada").getD_adjacentCountryIds().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
 	}
 
+	/**
+	 * Tests the remove neighbor operation via editneighbor
+	 * @throws InvalidMap Exception
+	 * @throws IOException Exception
+	 */
 	@Test(expected = InvalidMap.class)
 	public void testEditNeighborRemove() throws InvalidMap, IOException{
 		d_mapservice.editMap(d_state, "testedit.map");

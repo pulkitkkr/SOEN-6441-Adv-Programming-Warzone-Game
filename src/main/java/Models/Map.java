@@ -42,6 +42,10 @@ public class Map {
         this.d_countries = p_countries;
     }
 
+    /**
+     * Get a List of all Ids of continents in Map
+     * @return List of Continent Ids
+     */
     public List<Integer> getContinentIDs(){
         List<Integer> l_continentIDs = new ArrayList<Integer>();
         if (!d_continents.isEmpty()) {
@@ -52,6 +56,10 @@ public class Map {
         return l_continentIDs;
     }
 
+    /**
+     * Get a list of all Ids of countries in Map
+     * @return List of Country Ids
+     */
     public List<Integer> getCountryIDs(){
         List<Integer> l_countryIDs = new ArrayList<Integer>();
         if(!d_countries.isEmpty()){
@@ -103,6 +111,11 @@ public class Map {
         return (!checkForNullObjects() && checkContinentConnectivity() && checkCountryConnectivity());
     }
 
+    /** Performs Null Check on Objects in Map
+     *
+     * @return Boolean if it is false
+     * @throws InvalidMap for corresponding Invalid conditions
+     */
     public Boolean checkForNullObjects() throws InvalidMap{
         if(d_continents==null || d_continents.isEmpty()){
             throw new InvalidMap("Map must possess atleast one continent!");
@@ -244,12 +257,17 @@ public class Map {
         return d_countries.stream().filter(l_country -> l_country.getD_countryId().equals(p_countryId)).findFirst().orElse(null);
     }
 
+    /**
+     * Finds the Country object for the given country Name
+     * @param p_countryName Name of the country object to be found
+     * @return matching country object
+     */
     public Country getCountryByName(String p_countryName){
         return d_countries.stream().filter(l_country -> l_country.getD_countryName().equals(p_countryName)).findFirst().orElse(null);
     }
 
     /**
-     * Returns Continent Object for given continent Id
+     * Returns Continent Object for given continent Name
      * @param p_continentName Continent Name to be found
      * @return matching continent object
      */
@@ -257,10 +275,21 @@ public class Map {
        return d_continents.stream().filter(l_continent -> l_continent.getD_continentName().equals(p_continentName)).findFirst().orElse(null);
     }
 
+    /**
+     * Returns Continent Object for a continent ID
+     * @param p_continentID Continent Id to be found
+     * @return continent object
+     */
     public Continent getContinentByID(Integer p_continentID){
         return d_continents.stream().filter(l_continent -> l_continent.getD_continentID().equals(p_continentID)).findFirst().orElse(null);
     }
 
+    /**
+     * Performs Add Continent operation on Map
+     * @param p_continentName Name of the Continent to be Added
+     * @param p_controlValue Control value of the continent to be added
+     * @throws InvalidMap to handle Invalid addition
+     */
     public void addContinent(String p_continentName, Integer p_controlValue) throws InvalidMap{
         int l_continentId;
         if (d_continents!=null) {
@@ -276,6 +305,15 @@ public class Map {
         }
     }
 
+    /**
+     * Performs the remove continent operation on Map:
+     * <ul>
+     *     <li> Deletes Specified Continent</li>
+     *     <li>Deletes Countries in Continents and their associated data in the Map</li>
+     * </ul>
+     * @param p_continentName Continent Name to be found
+     * @throws InvalidMap Exception
+     */
     public void removeContinent(String p_continentName) throws InvalidMap{
         if (d_continents!=null) {
             if(!CommonUtil.isNull(getContinent(p_continentName))){
@@ -295,6 +333,12 @@ public class Map {
         }
     }
 
+    /**
+     * Performs the add country operation on the Map
+     * @param p_countryId Name of Country to be Added
+     * @param p_continentId Name of Continent to be added in
+     * @throws InvalidMap Exception
+     */
     public void addCountry(String p_countryId, String p_continentId) throws InvalidMap{
         int l_countryId;
         if(d_countries==null){
@@ -317,6 +361,11 @@ public class Map {
         }
     }
 
+    /**
+     * Performs the remove country operation on Map
+     * @param p_countryId Name of country to be Added
+     * @throws InvalidMap Exception
+     */
     public void removeCountry(String p_countryId) throws InvalidMap{
         if(d_countries!=null && !CommonUtil.isNull(getCountryByName(p_countryId))) {
             for(Continent c: d_continents){
@@ -333,6 +382,12 @@ public class Map {
         }
     }
 
+    /**
+     * Performs the Add Neighbour Operation
+     * @param p_countryId Country whose neighbours are to be updated
+     * @param p_neighbourCountryId Country to be added as neighbour
+     * @throws InvalidMap Exception
+     */
     public void addCountryNeighbour(String p_countryId, String p_neighbourCountryId) throws InvalidMap{
         if(d_countries!=null){
             if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))){
@@ -344,6 +399,12 @@ public class Map {
         }
     }
 
+    /**
+     * Performs the Remove Neighbor Operation
+     * @param p_countryId Country whose neighbors are to be updated
+     * @param p_neighbourCountryId Country to be removed as neighbor
+     * @throws InvalidMap Exception
+     */
     public void removeCountryNeighbour(String p_countryId, String p_neighbourCountryId) throws InvalidMap{
         if(d_countries!=null){
             if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))) {
@@ -354,12 +415,23 @@ public class Map {
             }
         }
     }
+
+    /**
+     * Remove Particular Country as Neighbor from all associated countries (in continent Objects)
+     * Used while deletion of a country object
+     * @param p_countryId Country to be removed
+     */
     public void updateNeighboursCont(Integer p_countryId){
         for(Continent c: d_continents){
             c.removeCountryNeighboursFromAll(p_countryId);
         }
     }
 
+    /**
+     * Remove Particular Country as Neighbor from all associated countries (in Map CountryList)
+     * Used while deletion of country object
+     * @param p_countryID Country to be removed
+     */
     public void removeCountryNeighboursFromAll(Integer p_countryID){
         for (Country c: d_countries) {
             if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
@@ -368,11 +440,5 @@ public class Map {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        MapService ms = new MapService();
-        GameState gs = new GameState();
-        ms.loadMap(gs, "europe.map");
     }
 }
