@@ -335,64 +335,64 @@ public class Map {
 
     /**
      * Performs the add country operation on the Map
-     * @param p_countryId Name of Country to be Added
-     * @param p_continentId Name of Continent to be added in
+     * @param p_countryName Name of Country to be Added
+     * @param p_continentName Name of Continent to be added in
      * @throws InvalidMap Exception
      */
-    public void addCountry(String p_countryId, String p_continentId) throws InvalidMap{
+    public void addCountry(String p_countryName, String p_continentName) throws InvalidMap{
         int l_countryId;
         if(d_countries==null){
             d_countries= new ArrayList<Country>();
         }
-        if(CommonUtil.isNull(getCountryByName(p_countryId))){
+        if(CommonUtil.isNull(getCountryByName(p_countryName))){
             l_countryId=d_countries.size()>0? Collections.max(getCountryIDs())+1:1;
-            if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentId).getD_continentID())){
-                d_countries.add(new Country(l_countryId,p_countryId,getContinent(p_continentId).getD_continentID()));
+            if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
+                d_countries.add(new Country(l_countryId,p_countryName,getContinent(p_continentName).getD_continentID()));
                 for (Continent c: d_continents) {
-                    if (c.getD_continentName().equals(p_continentId)) {
-                        c.addCountry(new Country(l_countryId, p_countryId, getContinent(p_continentId).getD_continentID()));
+                    if (c.getD_continentName().equals(p_continentName)) {
+                        c.addCountry(new Country(l_countryId, p_countryName, getContinent(p_continentName).getD_continentID()));
                     }
                 }
             } else{
                 throw new InvalidMap("Cannot add Country to a Continent that doesn't exist!");
             }
         }else{
-            throw new InvalidMap("Country with name "+ p_countryId+" already Exists!");
+            throw new InvalidMap("Country with name "+ p_countryName+" already Exists!");
         }
     }
 
     /**
      * Performs the remove country operation on Map
-     * @param p_countryId Name of country to be Added
+     * @param p_countryName Name of country to be Added
      * @throws InvalidMap Exception
      */
-    public void removeCountry(String p_countryId) throws InvalidMap{
-        if(d_countries!=null && !CommonUtil.isNull(getCountryByName(p_countryId))) {
+    public void removeCountry(String p_countryName) throws InvalidMap{
+        if(d_countries!=null && !CommonUtil.isNull(getCountryByName(p_countryName))) {
             for(Continent c: d_continents){
-                if(c.getD_continentID().equals(getCountryByName(p_countryId).getD_continentId())){
-                    c.removeCountry(getCountryByName(p_countryId));
+                if(c.getD_continentID().equals(getCountryByName(p_countryName).getD_continentId())){
+                    c.removeCountry(getCountryByName(p_countryName));
                 }
-                c.removeCountryNeighboursFromAll(getCountryByName(p_countryId).getD_countryId());
+                c.removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
             }
-            d_countries.remove(getCountryByName(p_countryId));
-            removeCountryNeighboursFromAll(getCountryByName(p_countryId).getD_countryId());
+            d_countries.remove(getCountryByName(p_countryName));
+            removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
 
         }else{
-           throw new InvalidMap("Country:  "+ p_countryId+" does not exist!");
+           throw new InvalidMap("Country:  "+ p_countryName+" does not exist!");
         }
     }
 
     /**
      * Performs the Add Neighbour Operation
-     * @param p_countryId Country whose neighbours are to be updated
-     * @param p_neighbourCountryId Country to be added as neighbour
+     * @param p_countryName Country whose neighbours are to be updated
+     * @param p_neighbourName Country to be added as neighbour
      * @throws InvalidMap Exception
      */
-    public void addCountryNeighbour(String p_countryId, String p_neighbourCountryId) throws InvalidMap{
+    public void addCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap{
         if(d_countries!=null){
-            if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))){
-                d_countries.get(d_countries.indexOf(getCountryByName(p_countryId))).addNeighbour(getCountryByName(p_neighbourCountryId).getD_countryId());
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryId).getD_continentId()))).addCountryNeighbours(getCountryByName(p_countryId).getD_countryId(), getCountryByName(p_neighbourCountryId).getD_countryId());
+            if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))){
+                d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).addNeighbour(getCountryByName(p_neighbourName).getD_countryId());
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryName).getD_continentId()))).addCountryNeighbours(getCountryByName(p_countryName).getD_countryId(), getCountryByName(p_neighbourName).getD_countryId());
             } else{
                 throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
@@ -401,15 +401,15 @@ public class Map {
 
     /**
      * Performs the Remove Neighbor Operation
-     * @param p_countryId Country whose neighbors are to be updated
-     * @param p_neighbourCountryId Country to be removed as neighbor
+     * @param p_countryName Country whose neighbors are to be updated
+     * @param p_neighbourName Country to be removed as neighbor
      * @throws InvalidMap Exception
      */
-    public void removeCountryNeighbour(String p_countryId, String p_neighbourCountryId) throws InvalidMap{
+    public void removeCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap{
         if(d_countries!=null){
-            if(!CommonUtil.isNull(getCountryByName(p_countryId)) && !CommonUtil.isNull(getCountryByName(p_neighbourCountryId))) {
-                d_countries.get(d_countries.indexOf(getCountryByName(p_countryId))).removeNeighbour(getCountryByName(p_neighbourCountryId).getD_countryId());
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryId).getD_continentId()))).removeSpecificNeighbour(getCountryByName(p_countryId).getD_countryId(), getCountryByName(p_neighbourCountryId).getD_countryId());
+            if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))) {
+                d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbour(getCountryByName(p_neighbourName).getD_countryId());
+                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryName).getD_continentId()))).removeSpecificNeighbour(getCountryByName(p_countryName).getD_countryId(), getCountryByName(p_neighbourName).getD_countryId());
             } else{
                 throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }

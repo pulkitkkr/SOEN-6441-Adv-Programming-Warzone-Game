@@ -1,7 +1,5 @@
 package Models;
-
 import Utils.CommonUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
