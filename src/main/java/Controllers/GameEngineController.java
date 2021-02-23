@@ -314,7 +314,14 @@ public class GameEngineController {
 
 			while (true) {
 				d_playerService.assignArmies(d_gameState);
-				d_playerService.issue_order();
+
+				do {
+					for (Player l_player : d_gameState.getD_players()) {
+						if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
+							l_player.issue_order();
+					}
+				} while (d_playerService.unassignedArmiesExists(d_gameState.getD_players()));
+
 				int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
 
 				for (int i = 0; i < l_unexecutedOrders; i++) {

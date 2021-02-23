@@ -45,12 +45,14 @@ public class Player {
 	Integer d_noOfUnallocatedArmies;
 
 	/**
-	 * This parameterized constructor is used to create player with name.
+	 * This parameterized constructor is used to create player with name and default
+	 * armies
 	 * 
 	 * @param p_playerName player name.
 	 */
 	public Player(String p_playerName) {
 		this.name = p_playerName;
+		this.d_noOfUnallocatedArmies = 0;
 	}
 
 	/**
@@ -299,47 +301,52 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Issue order which takes order as an input and add it to players unassigned
+	 * orders pool
+	 */
 	public void issue_order() {
 		Scanner l_reader = new Scanner(System.in);
-		char l_option;
-		do {
-			String l_commandEntered;
-			try {
-				System.out.println("Please enter command to deploy all the reinforcement armies on the map. ");
-				l_commandEntered = l_reader.nextLine();
-				Command l_command = new Command(l_commandEntered);
-				createDeployOrder(l_command);
-			} catch (InvalidCommand e) {
-				e.printStackTrace();
+		String l_commandEntered;
+		try {
+			System.out.println("Please enter command to deploy reinforcement armies on the map for player : "
+					+ this.getPlayerName());
+			l_commandEntered = l_reader.nextLine();
+			Command l_command = new Command(l_commandEntered);
+			if (l_command.getRootCommand().equalsIgnoreCase("deploy")) {
+				createDeployOrder(l_commandEntered, this);
+			} else {
+				l_reader.close();
+				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 			}
-			System.out.println("Do you want to continue to issue order? Enter Y or N");
-			l_option = l_reader.next().charAt(0);
-
-		} while (l_option == 'y' || l_option == 'Y');
-
+		} catch (InvalidCommand e) {
+			e.printStackTrace();
+		}
+		l_reader.close();
 	}
 
-	// deploy countryID num (until all reinforcements have been placed)
-	private void createDeployOrder(Command p_command) throws InvalidCommand {
-		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-		List<Order> l = new ArrayList<Order>();
+	/**
+	 * @param p_command
+	 * @throws InvalidCommand
+	 */
+	private void createDeployOrder(String p_commandEntered, Player p_player) throws InvalidCommand {
+		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
+				: p_player.getD_ordersToExecute();
 
-		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+		if (p_commandEntered.split(" ").length != 3) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 		} else {
-			for (Map<String, String> l_map : l_operations_list) {
-				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
-					String l_countryIDName = l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[0];
-					Integer l_noOfArmies = Integer.parseInt(l_map.get(ApplicationConstants.ARGUMENTS).split(" ")[1]);
-					Order l_orderObject = new Order("deploy", l_countryIDName, l_noOfArmies);
+			String l_countryName = p_commandEntered.split(" ")[1];
+			String l_noOfArmies = p_commandEntered.split(" ")[2];
 
-					l.add(l_orderObject);
-
-				} else {
-					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
-				}
+			if (!CommonUtil.isEmpty(l_countryName) && !CommonUtil.isEmpty(l_noOfArmies)) {
+				System.out.println("Valid args received");
+				Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
+						Integer.parseInt(l_noOfArmies));
+				l_orders.add(l_orderObject);
+				p_player.setD_ordersToExecute(l_orders);
+			} else {
+				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 			}
 
 		}
@@ -405,5 +412,20 @@ public class Player {
 			l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_ordersToExecute().size();
 		}
 		return l_totalUnexecutedOrders;
+	}
+
+	/**
+	 * Check if any of the players have unassigned armies
+	 * 
+	 * @param p_playersList players involved in game
+	 * @return true if unassigned armies exists with any of the players or else
+	 *         false
+	 */
+	public boolean unassignedArmiesExists(List<Player> p_playersList) {
+		Integer l_unassignedArmies = 0;
+		for (Player l_player : p_playersList) {
+			l_unassignedArmies = l_unassignedArmies + l_player.getD_noOfUnallocatedArmies();
+		}
+		return l_unassignedArmies != 0;
 	}
 }

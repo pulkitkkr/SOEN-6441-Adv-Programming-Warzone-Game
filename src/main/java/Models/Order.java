@@ -63,18 +63,12 @@ public class Order {
 	public void execute(GameState p_gameState, Player p_player) {
 		switch (this.d_orderAction) {
 		case "deploy": {
-			if (p_player.getD_noOfUnallocatedArmies() < this.d_numberOfArmiesToPlace) {
-				System.out.println(
-						"Order is not executed as number of armies given to deploy : " + d_numberOfArmiesToPlace
-								+ " exceeds player's unallocated armies : " + p_player.getD_noOfUnallocatedArmies());
+			if (this.validateDeployOrderCountry(p_player, this)) {
+				this.executeDeployOrder(this, p_gameState, p_player);
 			} else {
-				if (this.validateDeployOrderCountry(p_player, this)) {
-					this.executeDeployOrder(this, p_gameState, p_player);
-				} else {
-					System.out.println(
-							"Order is not executed as target country given in deploy command doesnt belongs to player : "
-									+ p_player.getPlayerName());
-				}
+				System.out.println(
+						"Order is not executed as target country given in deploy command doesnt belongs to player : "
+								+ p_player.getPlayerName());
 			}
 			break;
 		}
@@ -113,9 +107,6 @@ public class Order {
 				Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
 						: l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
 				l_country.setD_armies(l_armiesToUpdate);
-
-				Integer l_armiesOfPlayer = p_player.getD_noOfUnallocatedArmies() - p_order.getD_numberOfArmiesToPlace();
-				p_player.setD_noOfUnallocatedArmies(l_armiesOfPlayer);
 			}
 		}
 	}
