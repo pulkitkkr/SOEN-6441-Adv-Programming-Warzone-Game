@@ -9,7 +9,18 @@ public class Order {
 	String d_orderAction;
 	String d_targetCountryName;
 	String d_sourceCountryName;
-	Integer d_numberOfArmiesToMove;
+	Integer d_numberOfArmiesToPlace;
+	Order orderObj;
+
+	public Order() {
+
+	}
+
+	public Order(String p_orderAction, String p_targetCountryName, Integer p_numberOfArmiesToPlace) {
+		this.d_orderAction = p_orderAction;
+		this.d_targetCountryName = p_targetCountryName;
+		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
+	}
 
 	public String getD_orderAction() {
 		return d_orderAction;
@@ -35,12 +46,12 @@ public class Order {
 		this.d_sourceCountryName = p_sourceCountryName;
 	}
 
-	public Integer getD_numberOfArmiesToMove() {
-		return d_numberOfArmiesToMove;
+	public Integer getD_numberOfArmiesToPlace() {
+		return d_numberOfArmiesToPlace;
 	}
 
-	public void setD_numberOfArmiesToMove(Integer p_numberOfArmiesToMove) {
-		this.d_numberOfArmiesToMove = p_numberOfArmiesToMove;
+	public void setD_numberOfArmiesToPlace(Integer p_numberOfArmiesToPlace) {
+		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
 	}
 
 	/**
@@ -52,9 +63,9 @@ public class Order {
 	public void execute(GameState p_gameState, Player p_player) {
 		switch (this.d_orderAction) {
 		case "deploy": {
-			if (p_player.getD_noOfUnallocatedArmies() < this.d_numberOfArmiesToMove) {
-				System.out
-						.println("Order is not executed as number of armies given to deploy : " + d_numberOfArmiesToMove
+			if (p_player.getD_noOfUnallocatedArmies() < this.d_numberOfArmiesToPlace) {
+				System.out.println(
+						"Order is not executed as number of armies given to deploy : " + d_numberOfArmiesToPlace
 								+ " exceeds player's unallocated armies : " + p_player.getD_noOfUnallocatedArmies());
 			} else {
 				if (this.validateDeployOrderCountry(p_player, this)) {
@@ -99,11 +110,11 @@ public class Order {
 	private void executeDeployOrder(Order p_order, GameState p_gameState, Player p_player) {
 		for (Country l_country : p_gameState.getD_map().getD_countries()) {
 			if (l_country.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())) {
-				Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToMove()
-						: l_country.getD_armies() + p_order.getD_numberOfArmiesToMove();
+				Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
+						: l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
 				l_country.setD_armies(l_armiesToUpdate);
 
-				Integer l_armiesOfPlayer = p_player.getD_noOfUnallocatedArmies() - p_order.getD_numberOfArmiesToMove();
+				Integer l_armiesOfPlayer = p_player.getD_noOfUnallocatedArmies() - p_order.getD_numberOfArmiesToPlace();
 				p_player.setD_noOfUnallocatedArmies(l_armiesOfPlayer);
 			}
 		}

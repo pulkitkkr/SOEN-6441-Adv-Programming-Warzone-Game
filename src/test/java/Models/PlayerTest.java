@@ -114,7 +114,7 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Tests first order in the player’s list of orders, then check if its removed
+	 * Tests first order in the playerï¿½s list of orders, then check if its removed
 	 * from the list.
 	 */
 	@Test
@@ -122,13 +122,13 @@ public class PlayerTest {
 
 		Order l_order1 = new Order();
 		l_order1.setD_orderAction("deploy");
-		l_order1.setD_numberOfArmiesToMove(5);
+		l_order1.setD_numberOfArmiesToPlace(5);
 		l_order1.setD_sourceCountryName(null);
 		l_order1.setD_targetCountryName("India");
 
 		Order l_order2 = new Order();
 		l_order1.setD_orderAction("airlift");
-		l_order2.setD_numberOfArmiesToMove(6);
+		l_order2.setD_numberOfArmiesToPlace(6);
 		l_order2.setD_sourceCountryName("Canada");
 		l_order2.setD_targetCountryName("Finland");
 

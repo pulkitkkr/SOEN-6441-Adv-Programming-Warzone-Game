@@ -59,7 +59,7 @@ public class GameEngineController {
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
 	 */
-	private void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
+	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
 		Command l_command = new Command(p_enteredCommand);
 		String l_rootCommand = l_command.getRootCommand();
 		boolean l_isMapLoaded = d_gameState.getD_map() != null;
@@ -314,7 +314,7 @@ public class GameEngineController {
 
 			while (true) {
 				d_playerService.assignArmies(d_gameState);
-				// issue order call
+				d_playerService.issue_order();
 				int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
 
 				for (int i = 0; i < l_unexecutedOrders; i++) {
