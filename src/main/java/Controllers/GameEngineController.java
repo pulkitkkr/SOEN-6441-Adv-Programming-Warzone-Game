@@ -10,6 +10,7 @@ import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
+import Models.Order;
 import Models.Player;
 import Services.MapService;
 import Utils.Command;
@@ -310,14 +311,17 @@ public class GameEngineController {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
-			d_playerService.assignArmies(d_gameState);
-			// issue order call
-			int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
 
-			for (int i = 0; i < l_unexecutedOrders; i++) {
-				for (Player l_player : d_gameState.getD_players()) {
-					l_player.next_order();
-					//execute order
+			while (true) {
+				d_playerService.assignArmies(d_gameState);
+				// issue order call
+				int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
+
+				for (int i = 0; i < l_unexecutedOrders; i++) {
+					for (Player l_player : d_gameState.getD_players()) {
+						Order l_order = l_player.next_order();
+						l_order.execute(d_gameState, l_player);
+					}
 				}
 			}
 		} else {

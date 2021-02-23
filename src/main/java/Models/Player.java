@@ -312,7 +312,7 @@ public class Player {
 	private Integer calculateArmiesForPlayer(Player p_player) {
 		Integer l_armies = 0;
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
-			l_armies = l_armies + Math.round((p_player.getD_coutriesOwned().size()) / 3);
+			l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
 		}
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
 			Integer l_continentCtrlValue = 0;
@@ -321,7 +321,7 @@ public class Player {
 			}
 			l_armies = l_armies + l_continentCtrlValue;
 		}
-		return l_armies > 3 ? l_armies : 3;
+		return l_armies;
 	}
 
 	/**
