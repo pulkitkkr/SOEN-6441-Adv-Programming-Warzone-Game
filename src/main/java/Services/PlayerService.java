@@ -190,7 +190,7 @@ public class PlayerService {
 			String l_noOfArmies = p_commandEntered.split(" ")[2];
 
 			if (!CommonUtil.isEmpty(l_countryName) && !CommonUtil.isEmpty(l_noOfArmies)) {
-				if (p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(l_noOfArmies)) {
+				if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
 					System.out.println(
 							"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
 				} else {
@@ -209,6 +209,14 @@ public class PlayerService {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 			}
 		}
+	}
+
+	/**
+	 * Used to test number of armies entered in deploy command to check that player
+	 * cannot deploy more armies that there is in their reinforcement pool.
+	 */
+	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
+		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
 	}
 
 	/**

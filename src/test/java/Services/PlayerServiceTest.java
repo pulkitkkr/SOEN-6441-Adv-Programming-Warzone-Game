@@ -148,4 +148,13 @@ public class PlayerServiceTest {
 		Integer l_expectedresult = 8;
 		assertEquals(l_expectedresult, l_actualResult);
 	}
+	
+	@Test
+	public void testValidateDeployOrderArmies() {
+		d_playerInfo.setD_noOfUnallocatedArmies(10);
+		String l_noOfArmies = "4";
+		boolean l_bool = d_playerService.validateDeployOrderArmies(d_playerInfo, l_noOfArmies);
+		assertFalse(l_bool);
+		
+	}
 }
