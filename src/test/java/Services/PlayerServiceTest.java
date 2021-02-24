@@ -124,7 +124,8 @@ public class PlayerServiceTest {
 	}
 
 	/**
-	 * The testCalculateArmiesForPlayer is used to calculate number of reinforcement armies
+	 * The testCalculateArmiesForPlayer is used to calculate number of reinforcement
+	 * armies
 	 */
 	@Test
 	public void testCalculateArmiesForPlayer() {
@@ -148,13 +149,17 @@ public class PlayerServiceTest {
 		Integer l_expectedresult = 8;
 		assertEquals(l_expectedresult, l_actualResult);
 	}
-	
+
+	/**
+	 * Used to check that player cannot deploy more armies than there is in their
+	 * reinforcement pool.
+	 */
 	@Test
 	public void testValidateDeployOrderArmies() {
 		d_playerInfo.setD_noOfUnallocatedArmies(10);
 		String l_noOfArmies = "4";
 		boolean l_bool = d_playerService.validateDeployOrderArmies(d_playerInfo, l_noOfArmies);
 		assertFalse(l_bool);
-		
+
 	}
 }

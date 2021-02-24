@@ -212,8 +212,13 @@ public class PlayerService {
 	}
 
 	/**
+	 * 
 	 * Used to test number of armies entered in deploy command to check that player
 	 * cannot deploy more armies that there is in their reinforcement pool.
+	 *
+	 * @param p_player     player to create deploy order
+	 * @param p_noOfArmies number of armies to deploy
+	 * @return boolean to validate armies to deploy
 	 */
 	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
 		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
