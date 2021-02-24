@@ -1,16 +1,12 @@
 package Models;
 
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import Exceptions.InvalidMap;
-import Services.MapService;
 import Utils.CommonUtil;
 import java.util.Collections;
 import java.util.Map.Entry;
-import java.util.SortedMap;
 
 public class Map {
     String d_mapFile;

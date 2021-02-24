@@ -1,5 +1,8 @@
 package Constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class ApplicationConstants {
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 	public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";
@@ -20,9 +23,18 @@ public final class ApplicationConstants {
 
 	public static final String MAPFILEEXTENSION = ".map";
 
+	public static final String RED = "\033[0;31m";     // RED
+	public static final String GREEN = "\033[0;32m";   // GREEN
+	public static final String YELLOW = "\033[0;33m";  // YELLOW
+	public static final String BLUE = "\033[0;34m";    // BLUE
+	public static final String PURPLE = "\033[0;35m";  // PURPLE
+	public static final String CYAN = "\033[0;36m";    // CYAN
+
 	public static final String CONTINENTS = "[continents]";
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
 	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
 	public static final int CONSOLE_WIDTH = 80;
+
+	public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
 }

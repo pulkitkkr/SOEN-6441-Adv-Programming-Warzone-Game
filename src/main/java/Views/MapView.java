@@ -19,8 +19,11 @@ public class MapView {
 	Player d_player;
 	GameState d_gameState;
 	Map d_map;
+	String d_color;
 	List<Country> d_countries;
 	List<Continent> d_continents;
+
+	public static final String ANSI_RESET = "\u001B[0m";
 
 	public MapView(GameState p_gameState){
 		d_gameState = p_gameState;
@@ -36,10 +39,17 @@ public class MapView {
 		d_map = p_gameState.getD_map();
 		d_countries = d_map.getD_countries();
 		d_continents = d_map.getD_continents();
+		d_color = p_player.getD_color();
 	}
 
 	private boolean isPlayerView(){
 		return d_player != null;
+	}
+
+	private String getColorizedString(String p_s) {
+		if(d_color == null) return p_s;
+
+		return d_color + p_s + ANSI_RESET;
 	}
 
 	private void renderCenteredString (int p_width, String p_s) {
@@ -66,7 +76,7 @@ public class MapView {
 	private String getFormattedCountryName(int p_index, String p_countryName){
 		String l_indexedString = String.format("%02d. %s", p_index, p_countryName);
 
-		return String.format("%-30s", l_indexedString);
+		return getColorizedString(String.format("%-30s", l_indexedString));
 	}
 
 	private void renderFormattedAdjacentCountryName(List<Country> p_adjCountries){

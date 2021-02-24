@@ -17,6 +17,13 @@ import Utils.CommonUtil;
  *
  */
 public class Player {
+	/**
+	 * color to show details with on map
+	 */
+	private String d_color;
+	/**
+	 * Name of the player
+	 */
 	private String d_name;
 
 	/**
@@ -74,6 +81,21 @@ public class Player {
 	 */
 	public void setPlayerName(String p_name) {
 		this.d_name = p_name;
+	}
+
+	/**
+	 * This getter is used to get color code for player
+	 */
+	public String getD_color() {
+		return d_color;
+	}
+
+	/**
+	 *
+	 * @param p_color ANSI color code
+	 */
+	public void setD_color(String p_color) {
+		d_color = p_color;
 	}
 
 	/**

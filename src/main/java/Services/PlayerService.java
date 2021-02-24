@@ -4,6 +4,7 @@ import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Models.*;
 import Utils.CommonUtil;
+import Constants.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class PlayerService {
 			} else {
 				Player l_addNewPlayer = new Player(l_enteredPlayerName);
 				l_updatedPlayers.add(l_addNewPlayer);
+
 				System.out.println("Player with name : " + l_enteredPlayerName + " has been added successfully.");
 			}
 			break;
@@ -87,6 +89,16 @@ public class PlayerService {
 			return false;
 		}
 		return true;
+	}
+
+	public void assignColors(GameState p_gameState){
+		if (!checkPlayersAvailability(p_gameState)) return;
+
+		List<Player> l_players = p_gameState.getD_players();
+
+		for(int i = 0; i< l_players.size(); i++){
+			l_players.get(i).setD_color(ApplicationConstants.COLORS.get(i));
+		}
 	}
 
 	/**
@@ -303,6 +315,7 @@ public class PlayerService {
 		}
 
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
+		this.assignColors(p_gameState);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
 			p_gameState.setD_players(l_updatedPlayers);
