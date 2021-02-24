@@ -310,7 +310,7 @@ public class GameEngineController {
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	private void assignCountries(Command p_command) throws InvalidCommand, IOException {
+	public void assignCountries(Command p_command) throws InvalidCommand, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);

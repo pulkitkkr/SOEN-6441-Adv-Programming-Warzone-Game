@@ -65,4 +65,9 @@ public class GameEngineControllerTest {
 		Command l_command = new Command("savemap");
 		d_gameEngine.performSaveMap(l_command);
 	}
+	@Test(expected = InvalidCommand.class)
+	public void testAssignCountriesInvalidCommand() throws InvalidCommand, IOException {
+		Command l_command = new Command("assigncountries -add india");
+		d_gameEngine.assignCountries(l_command);
+	}
 }
