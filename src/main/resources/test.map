@@ -1,0 +1,16 @@
+
+[continents]
+Asia 1
+Europe 20
+
+[countries]
+1 India 1
+2 Pakistan 1
+3 France 2
+4 Belgium 2
+
+[borders]
+1 2 3
+2 1
+3 4
+4 2
