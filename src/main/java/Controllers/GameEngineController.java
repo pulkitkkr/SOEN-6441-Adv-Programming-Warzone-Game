@@ -14,6 +14,7 @@ import Models.GameState;
 import Models.Order;
 import Models.Player;
 import Services.MapService;
+import Services.PlayerService;
 import Utils.Command;
 import Utils.CommonUtil;
 
@@ -32,7 +33,7 @@ public class GameEngineController {
 	/**
 	 * Player Service instance to edit players and issue orders
 	 */
-	Player d_playerService = new Player();
+	PlayerService d_playerService = new PlayerService();
 
 	/**
 	 * getD_gameState is a getter method to get current game state
@@ -243,7 +244,7 @@ public class GameEngineController {
 						} else {
 							d_mapService.resetMap(d_gameState);
 						}
-					} catch (InvalidMap e) {
+					} catch (InvalidMap l_e) {
 						d_mapService.resetMap(d_gameState);
 					}
 				} else {
@@ -292,7 +293,7 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					d_playerService.playerInfo(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+					d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
 							l_map.get(ApplicationConstants.ARGUMENTS));
 				} else {
 					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
