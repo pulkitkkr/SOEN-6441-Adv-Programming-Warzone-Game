@@ -23,7 +23,7 @@ public class GameEngineController {
 	GameState d_gameState = new GameState();
 	
 	/**
-	 * d_mapService instance is used to handle load, read, parse, edit, and save map file
+	 * d_mapService instance is used to handle load, read, parse, edit, and save map file.
 	 */
 	MapService d_mapService = new MapService();
 

@@ -70,6 +70,7 @@ public class Map {
 	
 	/**
 	 * setter method to set the countries.
+	 * 
 	 * @param p_countries list of countries
 	 */
 	public void setD_countries(List<Country> p_countries) {
@@ -95,7 +96,7 @@ public class Map {
 	}
 
 	/**
-	 * check the existing continents
+	 * check the existing continents.
 	 */
 	public void checkContinents() {
 		for(Continent c: d_continents) {
@@ -104,7 +105,7 @@ public class Map {
 	}
 	
 	/**
-	 * check the existing countries
+	 * check the existing countries.
 	 */
 	public void checkCountries() {
 		for (Country c: d_countries) {

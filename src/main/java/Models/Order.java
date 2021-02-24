@@ -16,7 +16,7 @@ public class Order {
 	Integer d_targetCountryId;
 	
 	/**
-	 * ID of source country
+	 * ID of source country.
 	 */
 	Integer d_sourceCountryId;
 	
@@ -44,7 +44,7 @@ public class Order {
 	}
 	
 	/**
-	 * getter method to get the target country ID
+	 * getter method to get the target country ID.
 	 * 
 	 * @return target country ID
 	 */
@@ -53,7 +53,7 @@ public class Order {
 	}
 	
 	/**
-	 * setter method to set the target country ID
+	 * setter method to set the target country ID.
 	 * 
 	 * @param p_targetCountryId target country ID
 	 */
@@ -62,7 +62,7 @@ public class Order {
 	}
 	
 	/**
-	 * getter method to get the source country ID
+	 * getter method to get the source country ID.
 	 * 
 	 * @return source country ID
 	 */
@@ -71,7 +71,7 @@ public class Order {
 	}
 	
 	/**
-	 * setter method to set the source country ID
+	 * setter method to set the source country ID.
 	 * 
 	 * @param p_sourceCountryId source country ID
 	 */

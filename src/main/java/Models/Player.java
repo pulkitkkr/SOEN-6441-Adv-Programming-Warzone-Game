@@ -33,7 +33,7 @@ public class Player {
 	String d_playerName;
 	
 	/**
-	 * getter method to get the countries owned by the player
+	 * getter method to get the countries owned by the player.
 	 * 
 	 * @return List of countries
 	 */
@@ -42,7 +42,7 @@ public class Player {
 	}
 	
 	/**
-	 * setter method to store the countries owned by the player
+	 * setter method to store the countries owned by the player.
 	 * 
 	 * @param p_coutriesOwned the list of countries player owns
 	 */
@@ -51,7 +51,7 @@ public class Player {
 	}
 	
 	/**
-	 * getter method to get the continents owned by the player
+	 * getter method to get the continents owned by the player.
 	 * 
 	 * @return List of continents
 	 */

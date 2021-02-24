@@ -7,7 +7,7 @@ import java.util.Map;
 import Constants.ApplicationConstants;
 
 /**
- * Common utility class to check null/empty collections, string, and object
+ * Common utility class to check null/empty collections, string, and object.
  */
 public class CommonUtil {
 
