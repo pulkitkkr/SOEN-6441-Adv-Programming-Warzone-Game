@@ -7,6 +7,7 @@ public class Player {
 	List<Continent> d_continentsOwned;
 	List<Order> d_ordersToExecute;
 	Integer d_noOfUnallocatedArmies;
+	String d_playerName;
 	
 	public List<Country> getD_coutriesOwned() {
 		return d_coutriesOwned;
@@ -25,6 +26,12 @@ public class Player {
 	}
 	public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
 		this.d_ordersToExecute = p_ordersToExecute;
+	}
+	public String getD_playerName() {
+		return d_playerName;
+	}
+	public void setD_playerName(String p_playerName) {
+		this.d_playerName = p_playerName;
 	}
 	public Integer getD_noOfUnallocatedArmies() {
 		return d_noOfUnallocatedArmies;

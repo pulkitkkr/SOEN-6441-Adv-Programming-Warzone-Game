@@ -92,6 +92,10 @@ public class GameEngineController {
 				performValidateMap(l_command);
 				break;
 			}
+			case "showmap": {
+				System.out.println();
+				break;
+			}	
 			case "exit": {
 				System.out.println("Exit Command Entered");
 				System.exit(0);
