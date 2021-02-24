@@ -9,15 +9,16 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import Services.PlayerService;
 import org.junit.Before;
 import org.junit.Test;
 
 import Services.MapService;
 
 /**
- * 
+ *
  * This is the PlayerTest Class.
- * 
+ *
  */
 public class PlayerTest {
 
@@ -25,6 +26,12 @@ public class PlayerTest {
 	 * Player class reference.
 	 */
 	Player d_playerInfo;
+
+	/**
+	 * Player Service reference.
+	 */
+	PlayerService d_playerService;
+
 	/**
 	 * Map reference to store its object.
 	 */
@@ -78,11 +85,11 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testRemovePlayers() {
-		List<Player> l_updatedPlayers = d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "remove", "Avneet");
+		List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Avneet");
 		assertEquals(1, l_updatedPlayers.size());
 
 		System.setOut(new PrintStream(d_outContent));
-		d_playerInfo.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
+		d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
 		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made.", d_outContent.toString());
 	}
 
@@ -92,7 +99,7 @@ public class PlayerTest {
 	@Test
 	public void testPlayersAvailability() {
 		GameState l_gameState = new GameState();
-		Boolean l_playersExists = d_playerInfo.checkPlayersAvailability(l_gameState);
+		Boolean l_playersExists = d_playerService.checkPlayersAvailability(l_gameState);
 		assertFalse(l_playersExists);
 	}
 
@@ -107,7 +114,7 @@ public class PlayerTest {
 		d_map = d_mapservice.loadMap(d_state, "canada.map");
 		d_state.setD_map(d_map);
 		d_state.setD_players(d_exisitingPlayerList);
-		d_playerInfo.assignCountries(d_state);
+		d_playerService.assignCountries(d_state);
 
 		int l_assignedCountriesSize = 0;
 		for (Player l_pl : d_state.getD_players()) {
