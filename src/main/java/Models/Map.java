@@ -173,7 +173,7 @@ public class Map {
 	/**
 	 * DFS Applied to the Continent Subgraph.
 	 * 
-	 * @param p_country country visited
+	 * @param p_c country visited
 	 * @param p_continentCountry Hashmap of Visited Boolean Values
 	 * @param p_continent continent being checked for connectivity
 	 */

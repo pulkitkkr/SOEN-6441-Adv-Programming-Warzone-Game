@@ -30,8 +30,8 @@ public class MapService {
 	/**
 	 * The loadmap method process map file.
 	 * 
-	 * @param p_game State current state of game.
-	 * @param p_load FileName map file name.
+	 * @param p_gameState current state of game.
+	 * @param p_loadFileName map file name.
 	 * @return Map object after processing map file.
 	 */
 	public Map loadMap(GameState p_gameState, String p_loadFileName) {
