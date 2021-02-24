@@ -191,23 +191,23 @@ public class Player {
 		if (p_operation.equalsIgnoreCase("add")) {
 			if (l_playerNameAlreadyExist) {
 				System.out.print(
-						"Player with name : " + p_argument.split(" ")[0] + " already Exists. Changes are not made. \n");
+						"Player with name : " + p_argument.split(" ")[0] + " already Exists. Changes are not made.");
 			} else {
 				Player l_addNewPlayer = new Player(l_enteredPlayerName);
 				l_updatedPlayers.add(l_addNewPlayer);
-				System.out.println("Player with name : " + l_enteredPlayerName + " has been added successfully. \n");
+				System.out.println("Player with name : " + l_enteredPlayerName + " has been added successfully.");
 			}
 		} else if (p_operation.equalsIgnoreCase("remove")) {
 			if (l_playerNameAlreadyExist) {
 				for (Player l_player : p_existingPlayerList) {
 					if (l_player.getPlayerName().equalsIgnoreCase(l_enteredPlayerName)) {
 						l_updatedPlayers.remove(l_player);
-						System.out.println("Player with name : " + l_enteredPlayerName + " has been removed successfully. \n");
+						System.out.println("Player with name : " + l_enteredPlayerName + " has been removed successfully.");
 					}
 				}
 			} else {
 				System.out.print(
-						"Player with name : " + p_argument.split(" ")[0] + " does not Exist. Changes are not made. \n");
+						"Player with name : " + p_argument.split(" ")[0] + " does not Exist. Changes are not made.");
 			}
 		}
 		return l_updatedPlayers;
