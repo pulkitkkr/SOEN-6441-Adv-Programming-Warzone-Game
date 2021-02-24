@@ -157,17 +157,17 @@ public class Map {
      * @return Bool Value if Continent is Connected
      * @throws InvalidMap Which country is not connected
      */
-    public boolean subGraphConnectivity(Continent p_c) throws InvalidMap {
+    public boolean subGraphConnectivity(Continent p_continent) throws InvalidMap {
         HashMap<Integer, Boolean> l_continentCountry = new HashMap<Integer, Boolean>();
 
-        for (Country c : p_c.getD_countries()) {
+        for (Country c : p_continent.getD_countries()) {
             l_continentCountry.put(c.getD_countryId(), false);
         }
-        dfsSubgraph(p_c.getD_countries().get(0), l_continentCountry, p_c);
+        dfsSubgraph(p_continent.getD_countries().get(0), l_continentCountry, p_continent);
         for (Entry<Integer, Boolean> entry : l_continentCountry.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = getCountry(entry.getKey());
-                String l_messageException = l_country.getD_countryName() + " in Continent " + p_c.getD_continentName() + " is not reachable";
+                String l_messageException = l_country.getD_countryName() + " in Continent " + p_continent.getD_continentName() + " is not reachable";
                 throw new InvalidMap(l_messageException);
             }
         }
@@ -374,8 +374,8 @@ public class Map {
                 }
                 c.removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
             }
-            d_countries.remove(getCountryByName(p_countryName));
             removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
+            d_countries.remove(getCountryByName(p_countryName));
 
         }else{
            throw new InvalidMap("Country:  "+ p_countryName+" does not exist!");

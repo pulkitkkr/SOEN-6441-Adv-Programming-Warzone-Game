@@ -174,7 +174,6 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
 					d_mapService.editContinent(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
 							l_map.get(ApplicationConstants.OPERATION));
 				} else {
@@ -279,7 +278,6 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
 					d_mapService.editCountry(d_gameState, l_map.get(ApplicationConstants.OPERATION),
 							l_map.get(ApplicationConstants.ARGUMENTS));
 				} else {
@@ -304,7 +302,6 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
 					d_mapService.editNeighbour(d_gameState, l_map.get(ApplicationConstants.OPERATION),
 							l_map.get(ApplicationConstants.ARGUMENTS));
 				} else {
