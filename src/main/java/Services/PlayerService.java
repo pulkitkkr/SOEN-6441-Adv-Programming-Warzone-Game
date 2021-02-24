@@ -75,10 +75,6 @@ public class PlayerService {
 		return l_updatedPlayers;
 	}
 
-	public boolean isMapLoaded(GameState p_gameState) {
-		return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
-	}
-
 	/**
 	 * Check whether players are loaded or not
 	 *
@@ -298,5 +294,15 @@ public class PlayerService {
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
 			p_gameState.setD_players(l_updatedPlayers);
 		}
+	}
+
+	/**
+	 * Check whether map is loaded or not.
+	 * 
+	 * @param p_gameState current game state with map and player information
+	 * @return boolean map is loaded or not
+	 */
+	public boolean isMapLoaded(GameState p_gameState) {
+		return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
 	}
 }
