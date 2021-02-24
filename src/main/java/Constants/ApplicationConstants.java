@@ -17,4 +17,5 @@ public final class ApplicationConstants {
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
 	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
+	public static final int CONSOLE_WIDTH = 80;
 }

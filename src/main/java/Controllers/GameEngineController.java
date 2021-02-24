@@ -12,6 +12,7 @@ import Exceptions.InvalidMap;
 import Models.GameState;
 import Services.MapService;
 import Utils.Command;
+import Views.MapView;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game State
@@ -93,7 +94,8 @@ public class GameEngineController {
 				break;
 			}
 			case "showmap": {
-				System.out.println();
+				MapView l_mapView = new MapView(d_gameState);
+				l_mapView.showMap();
 				break;
 			}	
 			case "exit": {
