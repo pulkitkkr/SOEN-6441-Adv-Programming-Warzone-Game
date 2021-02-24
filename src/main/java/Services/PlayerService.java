@@ -40,7 +40,7 @@ public class PlayerService {
             l_updatedPlayers.addAll(p_existingPlayerList);
 
         String l_enteredPlayerName = p_argument.split(" ")[0];
-        boolean l_playerNameAlreadyExist = isPlayerNameUnique(p_existingPlayerList, l_enteredPlayerName);
+        boolean l_playerNameAlreadyExist = !isPlayerNameUnique(p_existingPlayerList, l_enteredPlayerName);
 
         switch(p_operation.toLowerCase()){
             case "add":
@@ -114,10 +114,6 @@ public class PlayerService {
     private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries, List<Player> p_players) {
         List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
 
-        if (!l_unassignedCountries.isEmpty()) {
-            performRandomCountryAssignment(1, l_unassignedCountries, p_players);
-        }
-
         for (Player l_pl : p_players) {
             if (l_unassignedCountries.isEmpty()) break;
 
@@ -135,6 +131,11 @@ public class PlayerService {
 
                 l_unassignedCountries.remove(l_randomCountry);
             }
+        }
+
+        if (!l_unassignedCountries.isEmpty()) {
+            System.out.println(l_unassignedCountries);
+            performRandomCountryAssignment(1, l_unassignedCountries, p_players);
         }
     }
 
@@ -212,13 +213,13 @@ public class PlayerService {
      * @param p_player player for which armies have to be calculated
      * @return Integer armies to be assigned to player
      */
-    private Integer calculateArmiesForPlayer(Player p_player) {
-        Integer l_armies = 0;
+    private int calculateArmiesForPlayer(Player p_player) {
+        int l_armies = 0;
         if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
             l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
         }
         if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
-            Integer l_continentCtrlValue = 0;
+            int l_continentCtrlValue = 0;
             for (Continent l_continent : p_player.getD_continentsOwned()) {
                 l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
             }
@@ -265,7 +266,7 @@ public class PlayerService {
      *         else false
      */
     public boolean unassignedArmiesExists(List<Player> p_playersList) {
-        Integer l_unassignedArmies = 0;
+        int l_unassignedArmies = 0;
         for (Player l_player : p_playersList) {
             l_unassignedArmies = l_unassignedArmies + l_player.getD_noOfUnallocatedArmies();
         }
