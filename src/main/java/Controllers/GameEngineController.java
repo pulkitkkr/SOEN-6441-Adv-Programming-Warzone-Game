@@ -9,6 +9,7 @@ import java.util.Map;
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Models.Country;
 import Models.GameState;
 import Models.Order;
 import Models.Player;
@@ -238,7 +239,7 @@ public class GameEngineController {
 						Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
 								l_map.get(ApplicationConstants.ARGUMENTS));
 						if (l_mapToLoad.Validate()) {
-							System.out.println("Map has been loaded successfully");
+							System.out.println("Map has been loaded successfully. \n");
 						} else {
 							d_mapService.resetMap(d_gameState);
 						}
@@ -280,8 +281,8 @@ public class GameEngineController {
 	 * Basic validation of create game player command for checking required
 	 * arguments and redirecting control to model for adding or removing players
 	 * 
-	 * @param p_command
-	 * @throws InvalidCommand
+	 * @param p_command command entered by the user on CLI
+	 * @throws InvalidCommand indicates command is invalid
 	 */
 	private void createPlayers(Command p_command) throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -304,35 +305,47 @@ public class GameEngineController {
 	 * Basic validation of assign countries for checking required arguments and
 	 * redirecting control to model for assigning countries to players
 	 * 
-	 * @param p_command
-	 * @throws InvalidCommand
+	 * @param p_command command entered by the user on CLI
+	 * @throws InvalidCommand indicates command is invalid
+	 * @throws IOException    indicates failure in I/O operation
 	 */
-	private void assignCountries(Command p_command) throws InvalidCommand {
+	private void assignCountries(Command p_command) throws InvalidCommand, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
 
-			while (true) {
+			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+				System.out.println("\n********Starting Main Game Loop***********\n");
 				d_playerService.assignArmies(d_gameState);
 
-				do {
+				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
 						if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
 							l_player.issue_order();
 					}
-				} while (d_playerService.unassignedArmiesExists(d_gameState.getD_players()));
-
-				int l_unexecutedOrders = d_playerService.getUnexecutedOrdersOfGame(d_gameState.getD_players());
-
-				for (int i = 0; i < l_unexecutedOrders; i++) {
+				}
+				while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
 						Order l_order = l_player.next_order();
-						l_order.execute(d_gameState, l_player);
+						if (l_order != null)
+							l_order.execute(d_gameState, l_player);
 					}
 				}
+				this.printMap();
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+		}
+	}
+
+	/**
+	 * temp method added for testing main game loop changes
+	 */
+	private void printMap() {
+		System.out.println("\n*******Updated Map**********\n");
+		for (Country p_cont : d_gameState.getD_map().getD_countries()) {
+			System.out.println("Country : " + p_cont.getD_countryName() + " is assigned with "
+					+ (p_cont.getD_armies() == null ? 0 : p_cont.getD_armies()) + " armies");
 		}
 	}
 
