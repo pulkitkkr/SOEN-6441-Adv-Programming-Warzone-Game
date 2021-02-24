@@ -213,7 +213,7 @@ public class PlayerService {
      * @param p_player player for which armies have to be calculated
      * @return Integer armies to be assigned to player
      */
-    private int calculateArmiesForPlayer(Player p_player) {
+    public int calculateArmiesForPlayer(Player p_player) {
         int l_armies = 0;
         if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
             l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));

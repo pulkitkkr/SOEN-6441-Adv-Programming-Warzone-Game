@@ -17,6 +17,9 @@ public class Continent {
 	public Continent(){
 
 	}
+	public Continent(String p_continentName) {
+		this.d_continentName = p_continentName;
+	}
 	public Integer getD_continentID() {
 		return d_continentID;
 	}

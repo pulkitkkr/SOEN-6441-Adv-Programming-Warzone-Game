@@ -90,7 +90,7 @@ public class Order {
 	 * @param p_order  order which is being executed
 	 * @return
 	 */
-	private boolean validateDeployOrderCountry(Player p_player, Order p_order) {
+	public boolean validateDeployOrderCountry(Player p_player, Order p_order) {
 		Country l_country = p_player.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())).findFirst()
 				.orElse(null);
