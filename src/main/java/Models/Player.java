@@ -154,13 +154,13 @@ public class Player {
 	 * orders pool
 	 * 
 	 * @throws IOException exception in reading inputs from user
+	 * @throws InvalidCommand exception if invalid deploy command is given
 	 */
-	public void issue_order() throws IOException {
+	public void issue_order() throws IOException, InvalidCommand {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		PlayerService l_playerService = new PlayerService();
 
 		String l_commandEntered;
-		try {
 			System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
 					+ this.getPlayerName());
 			l_commandEntered = l_reader.readLine();
@@ -170,10 +170,6 @@ public class Player {
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 			}
-
-		} catch (InvalidCommand l_e) {
-			l_e.printStackTrace();
-		}
 	}
 
 	/**

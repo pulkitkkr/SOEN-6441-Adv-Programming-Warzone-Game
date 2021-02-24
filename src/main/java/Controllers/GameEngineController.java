@@ -9,7 +9,6 @@ import java.util.Map;
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
-import Models.Country;
 import Models.GameState;
 import Models.Order;
 import Models.Player;
@@ -73,16 +72,15 @@ public class GameEngineController {
 			}
 			case "editcontinent": {
 				if (!l_isMapLoaded) {
-					System.out.println("Can not Edit Continent, please perform `loadmap` or `editmap` first");
+					System.out.println("Can not Edit Continent, please perform `editmap` first");
 					break;
 				}
-
 				performEditContinent(l_command);
 				break;
 			}
 			case "savemap": {
 				if (!l_isMapLoaded) {
-					System.out.println("No map found to save, Please `loadmap` & `editmap` first");
+					System.out.println("No map found to save, Please `editmap` first");
 					break;
 				}
 
@@ -102,14 +100,26 @@ public class GameEngineController {
 				break;
 			}
 			case "editcountry" : {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Country, please perform `editmap` first");
+					break;
+				}
 				performEditCountry(l_command);
 				break;
 			}
 			case "editneighbor" : {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Neighbors, please perform `editmap` first");
+					break;
+				}
 				performEditNeighbour(l_command);
 				break;
 			}
 			case "gameplayer": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found, Please `loadmap` before adding game players");
+					break;
+				}
 				createPlayers(l_command);
 				break;
 			}
@@ -391,7 +401,11 @@ public class GameEngineController {
 							l_order.execute(d_gameState, l_player);
 					}
 				}
-//				TODO: Add Print Map Here
+				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+				String l_continue = l_reader.readLine();
+				if(l_continue.equalsIgnoreCase("N")) 
+					break;
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
