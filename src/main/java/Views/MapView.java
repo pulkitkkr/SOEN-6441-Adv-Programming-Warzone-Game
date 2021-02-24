@@ -81,6 +81,11 @@ public class MapView {
 				"+--------------+----------------+----------------------------+------------------+---------------+---------------+%n");
 	}	
 	
+	/**
+	 * main method is used here for testing.
+	 * 
+	 * @param args default arguments are not used
+	 */
 	public static void main(String[] args) {
 		MapView l_mp = new MapView();
 //		l_mp.showMap(null, null, null);

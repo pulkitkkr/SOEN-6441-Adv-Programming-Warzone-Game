@@ -14,20 +14,21 @@ import Services.MapService;
 import Utils.Command;
 
 /**
- * This is the entry point of the Game and keeps the track of current Game State
+ * This is the entry point of the Game and keeps the track of current Game State.
  */
 public class GameEngineController {
 	/**
-	 * gameState stores the information about current GamePlay
+	 * d_gameState stores the information about current GamePlay.
 	 */
 	GameState d_gameState = new GameState();
+	
 	/**
-	 * Map Service instance to handle load, read, parse, edit, and save map file
+	 * d_mapService instance is used to handle load, read, parse, edit, and save map file
 	 */
 	MapService d_mapService = new MapService();
 
 	/**
-	 * getD_gameState is a getter method to get current game state
+	 * getD_gameState is a getter method to get current game state.
 	 *
 	 * @return the current game state
 	 */
@@ -36,10 +37,10 @@ public class GameEngineController {
 	}
 
 	/**
-	 * main method responsible for accepting command from users and redirecting
-	 * those to corresponding logical flows
+	 * This method is responsible for accepting command from users and redirecting
+	 * those to corresponding logical flows.
 	 *
-	 * @param p_args the program doesn't use command line arguments
+	 * @param p_args the program doesn't use default command line arguments
 	 */
 	public static void main(String[] p_args){
 		GameEngineController l_game = new GameEngineController();
@@ -48,9 +49,11 @@ public class GameEngineController {
 	}
 
 	/**
+	 * Handles the main commands loop of the application.
+	 * 
 	 * @param p_enteredCommand command entered by the user in CLI
-	 * @throws InvalidMap indicates map is invalid
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidMap indicates when map is invalid
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	private void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
 		Command l_command = new Command(p_enteredCommand);
@@ -109,11 +112,11 @@ public class GameEngineController {
 	}
 
 	/**
-	 * initGamePlay method initiates the CLI to accept commands from user and maps them to corresponding action handler
-	 *
+	 * This method initiates the CLI to accept commands from user and maps them to corresponding action handler.
 	 */
 	private void initGamePlay(){
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		
 		while(true){
 			try {
 				System.out.println("Enter Game Commands or type 'exit' for quitting");
@@ -129,12 +132,12 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of editmap command for checking required arguments and
-	 * redirecting control to model for actual processing
+	 * Basic validation of <strong>editmap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException indicates failure in I/O operation
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws IOException indicates when failure in I/O operation
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -153,8 +156,8 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of editcontinent command for checking required arguments and
-	 * redirecting control to model for actual processing
+	 * Basic validation of <strong>editcontinent</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws IOException indicates failure in I/O operation
@@ -180,12 +183,12 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of savemap command for checking required arguments and
-	 * redirecting control to model for actual processing
+	 * Basic validation of <strong>savemap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidMap indicates map is invalid
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidMap indicates when map is invalid
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -209,11 +212,11 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of loadmap command for checking required arguments and
-	 * redirecting control to model for actual processing
+	 * Basic validation of <strong>loadmap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	private void performLoadMap(Command p_command)
 			throws InvalidCommand {
@@ -233,12 +236,12 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of validatemap command for checking required arguments and
-	 * redirecting control to model for actual processing
+	 * Basic validation of <strong>validatemap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap indicates map is invalid
+	 * @throws InvalidCommand indicates when command is invalid
+	 * @throws InvalidMap indicates when map is invalid
 	 */
 	private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();

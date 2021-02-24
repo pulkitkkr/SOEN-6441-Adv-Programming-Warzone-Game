@@ -1,4 +1,8 @@
 package Constants;
+
+/**
+ * This class initializes all the constants that are going to be used throughout the application.
+ */
 public final class ApplicationConstants {
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 	public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";

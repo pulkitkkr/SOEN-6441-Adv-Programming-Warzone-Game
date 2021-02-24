@@ -1,6 +1,5 @@
 package Exceptions;
 
-
 /**
  * Command Exceptions are thrown by this class
  */
