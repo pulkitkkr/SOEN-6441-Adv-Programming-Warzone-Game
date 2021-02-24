@@ -58,7 +58,7 @@ public class CommonUtil {
 	
 	/**
 	 * Generates absolute file path from the given map file
-	 * @param p_fileName name of the file
+	 * @param p_fileName MainFile's name without rootpath
 	 * @return map file along with its path
 	 */
 	public static String getMapFilePath(String p_fileName) {

@@ -1,5 +1,5 @@
 package Models;
-
+import Utils.CommonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,24 +44,73 @@ public class Continent {
 	public void setD_countries(List<Country> p_countries) {
 		this.d_countries = p_countries;
 	}
-	public void addCountry(Country p_c){
+
+	/**
+	 * Adds country to the continent
+	 * @param p_country country to be added
+	 */
+	public void addCountry(Country p_country){
 		if (d_countries!=null){
-			d_countries.add(p_c);
+			d_countries.add(p_country);
 		}
 		else{
 			d_countries=new ArrayList<Country>();
-			d_countries.add(p_c);
+			d_countries.add(p_country);
 		}
 	}
-	public Boolean checkCountry(Integer p_countryId){
-		boolean l_flag=false;
-		for (Country c: d_countries){
-			if (c.getD_countryId().equals(p_countryId)) {
-				l_flag = true;
-				break;
+
+	/**
+	 * removes Country from Continent
+	 * @param p_country country to be removed
+	 */
+	public void removeCountry(Country p_country){
+		if(d_countries==null){
+			System.out.println("No such Country Exists");
+		}else {
+			d_countries.remove(p_country);
+		}
+	}
+
+	/**
+	 * Removes particular country ID from the neighbor list of all countries in continent
+	 * @param p_countryId ID of country to be removed
+	 */
+	public void removeCountryNeighboursFromAll(Integer p_countryId){
+		if (null!=d_countries && !d_countries.isEmpty()) {
+			for (Country c: d_countries){
+				if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {
+					if (c.getD_adjacentCountryIds().contains(p_countryId)){
+						c.removeNeighbour(p_countryId);
+					}
+				}
 			}
 		}
-		return l_flag;
+	}
+
+	/**
+	 * Add a neighbor to particular country in continent
+	 * @param p_countryInContinent ID of country to be added to
+	 * @param p_neighbourCountry ID of neighbour to be added
+	 */
+	public void addCountryNeighbours(Integer p_countryInContinent, Integer p_neighbourCountry){
+		for (Country c: d_countries){
+			if (c.getD_countryId().equals(p_countryInContinent)){
+				c.addNeighbour(p_neighbourCountry);
+			}
+		}
+	}
+
+	/**
+	 * Removes the specified neighbor from given country in continent
+	 * @param p_countryId ID of country to be updated
+	 * @param p_neighbourCountryId neighbor ID to be removed
+	 */
+	public void removeSpecificNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
+		for (Country c:d_countries){
+			if (c.getD_countryId().equals(p_countryId)){
+				c.removeNeighbour(p_neighbourCountryId);
+			}
+		}
 	}
 
 }

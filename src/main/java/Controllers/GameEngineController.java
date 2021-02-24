@@ -58,7 +58,7 @@ public class GameEngineController {
 
 	/**
 	 * @param p_enteredCommand command entered by the user in CLI
-	 * @throws InvalidMap     indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
 	 */
 	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
@@ -101,6 +101,14 @@ public class GameEngineController {
 				performValidateMap(l_command);
 				break;
 			}
+			case "editcountry" : {
+				performEditCountry(l_command);
+				break;
+			}
+			case "editneighbor" : {
+				performEditNeighbour(l_command);
+				break;
+			}
 			case "gameplayer": {
 				createPlayers(l_command);
 				break;
@@ -132,6 +140,7 @@ public class GameEngineController {
 			try {
 				System.out.println("Enter Game Commands or type 'exit' for quitting");
 				String l_commandEntered = l_reader.readLine();
+
 				handleCommand(l_commandEntered);
 			} catch (InvalidCommand | InvalidMap l_exception) {
 				System.out.println(l_exception.getMessage());
@@ -146,7 +155,7 @@ public class GameEngineController {
 	 * redirecting control to model for actual processing
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException    indicates failure in I/O operation
+	 * @throws IOException indicates failure in I/O operation
 	 * @throws InvalidCommand indicates command is invalid
 	 */
 	public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
@@ -170,10 +179,11 @@ public class GameEngineController {
 	 * redirecting control to model for actual processing
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException    indicates failure in I/O operation
+	 * @throws IOException indicates failure in I/O operation
 	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 */
-	public void performEditContinent(Command p_command) throws IOException, InvalidCommand {
+	public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		if (l_operations_list == null || l_operations_list.isEmpty()) {
@@ -182,7 +192,6 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
 						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					System.out.println("Valid args received");
 					d_mapService.editContinent(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
 							l_map.get(ApplicationConstants.OPERATION));
 				} else {
@@ -197,7 +206,7 @@ public class GameEngineController {
 	 * redirecting control to model for actual processing
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidMap     indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
 	 */
 	public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
@@ -271,6 +280,8 @@ public class GameEngineController {
 			} else {
 				if (l_currentMap.Validate()) {
 					System.out.println(ApplicationConstants.VALID_MAP);
+				} else{
+					System.out.println("Failed to Validate map!");
 				}
 			}
 		} else {
@@ -279,9 +290,57 @@ public class GameEngineController {
 	}
 
 	/**
+	 * Control Logic for Edit Map performed by MapService
+	 *
+	 * @param p_command command entered by the user on CLI
+	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidMap indicates map is invalid
+	 */
+	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_mapService.editCountry(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Control Logic for Edit Map performed by MapService
+	 *
+	 * @param p_command command entered by the user on CLI
+	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidMap indicates map is invalid
+	 */
+	public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
+		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_mapService.editNeighbour(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Basic validation of create game player command for checking required
 	 * arguments and redirecting control to model for adding or removing players
-	 * 
+	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
 	 */
@@ -305,7 +364,7 @@ public class GameEngineController {
 	/**
 	 * Basic validation of assign countries for checking required arguments and
 	 * redirecting control to model for assigning countries to players
-	 * 
+	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws IOException    indicates failure in I/O operation
@@ -332,22 +391,10 @@ public class GameEngineController {
 							l_order.execute(d_gameState, l_player);
 					}
 				}
-				this.printMap();
+//				TODO: Add Print Map Here
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 		}
 	}
-
-	/**
-	 * temp method added for testing main game loop changes
-	 */
-	private void printMap() {
-		System.out.println("\n*******Updated Map**********\n");
-		for (Country p_cont : d_gameState.getD_map().getD_countries()) {
-			System.out.println("Country : " + p_cont.getD_countryName() + " is assigned with "
-					+ (p_cont.getD_armies() == null ? 0 : p_cont.getD_armies()) + " armies");
-		}
-	}
-
 }
