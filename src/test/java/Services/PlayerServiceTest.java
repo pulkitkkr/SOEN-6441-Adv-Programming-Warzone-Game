@@ -7,11 +7,13 @@ import static org.junit.Assert.assertNotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import Exceptions.InvalidCommand;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
@@ -137,14 +139,9 @@ public class PlayerServiceTest {
 		l_countryList.add(new Country("Geneve"));
 		l_playerInfo.setD_coutriesOwned(l_countryList);
 		List<Continent> l_continentList = new ArrayList<Continent>();
-		l_continentList.add(new Continent("Asia"));
+		l_continentList.add(new Continent(1, "Asia", 5));
 		l_playerInfo.setD_continentsOwned(l_continentList);
 		l_playerInfo.setD_noOfUnallocatedArmies(10);
-		Continent l_continent = new Continent();
-		l_continent.setD_continentValue(5);
-		for (Continent l_cont : l_playerInfo.getD_continentsOwned()) {
-			l_cont.setD_continentValue(5);
-		}
 		Integer l_actualResult = d_playerService.calculateArmiesForPlayer(l_playerInfo);
 		Integer l_expectedresult = 8;
 		assertEquals(l_expectedresult, l_actualResult);
@@ -161,5 +158,50 @@ public class PlayerServiceTest {
 		boolean l_bool = d_playerService.validateDeployOrderArmies(d_playerInfo, l_noOfArmies);
 		assertFalse(l_bool);
 
+	}
+
+	/**
+	 * Used to check if invalid deploy command is given
+	 * 
+	 * @throws InvalidCommand if given command is invalid
+	 */
+	@Test(expected = InvalidCommand.class)
+	public void testCreateDeployOrderNegative() throws InvalidCommand {
+		d_playerService.createDeployOrder("deploy Canada", new Player());
+
+	}
+
+	/**
+	 * Tests if armies given to deploy is more than players unassigned armies
+	 * 
+	 * @throws InvalidCommand if given command is invalid
+	 */
+	@Test
+	public void testInvalidDeployArmies() throws InvalidCommand {
+		System.setOut(new PrintStream(d_outContent));
+		d_playerService.createDeployOrder("deploy Canada 10", new Player("test player 1"));
+		assertEquals(
+				"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies\r\n",
+				d_outContent.toString());
+	}
+
+	/**
+	 * Tests deploy order logic to see if required order is created and armies are
+	 * re-calculated
+	 * 
+	 * @throws InvalidCommand if given command is invalid
+	 */
+	@Test
+	public void testDeployOrder() throws InvalidCommand {
+		Player l_player = new Player("Maze");
+		l_player.setD_noOfUnallocatedArmies(10);
+		Country l_country = new Country(1, "Japan", 1);
+		l_player.setD_coutriesOwned(Arrays.asList(l_country));
+		d_playerService.createDeployOrder("deploy Japan 4", l_player);
+
+		assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
+		assertEquals(l_player.getD_ordersToExecute().size(), 1);
+		assertEquals(l_player.getD_ordersToExecute().get(0).getD_targetCountryName(), "Japan");
+		assertEquals(l_player.getD_ordersToExecute().get(0).getD_numberOfArmiesToPlace().toString(), "4");
 	}
 }
