@@ -66,57 +66,57 @@ public class GameEngineController {
 		boolean l_isMapLoaded = d_gameState.getD_map() != null;
 
 		switch (l_rootCommand) {
-		case "editmap": {
-			performMapEdit(l_command);
-			break;
-		}
-		case "editcontinent": {
-			if (!l_isMapLoaded) {
-				System.out.println("Can not Edit Continent, please perform `loadmap` or `editmap` first");
+			case "editmap": {
+				performMapEdit(l_command);
 				break;
 			}
+			case "editcontinent": {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Continent, please perform `loadmap` or `editmap` first");
+					break;
+				}
 
-			performEditContinent(l_command);
-			break;
-		}
-		case "savemap": {
-			if (!l_isMapLoaded) {
-				System.out.println("No map found to save, Please `loadmap` & `editmap` first");
+				performEditContinent(l_command);
 				break;
 			}
+			case "savemap": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found to save, Please `loadmap` & `editmap` first");
+					break;
+				}
 
-			performSaveMap(l_command);
-			break;
-		}
-		case "loadmap": {
-			performLoadMap(l_command);
-			break;
-		}
-		case "validatemap": {
-			if (!l_isMapLoaded) {
-				System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+				performSaveMap(l_command);
 				break;
 			}
-			performValidateMap(l_command);
-			break;
-		}
-		case "gameplayer": {
-			createPlayers(l_command);
-			break;
-		}
-		case "assigncountries": {
-			assignCountries(l_command);
-			break;
-		}
-		case "exit": {
-			System.out.println("Exit Command Entered");
-			System.exit(0);
-			break;
-		}
-		default: {
-			System.out.println("Invalid Command");
-			break;
-		}
+			case "loadmap": {
+				performLoadMap(l_command);
+				break;
+			}
+			case "validatemap": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+					break;
+				}
+				performValidateMap(l_command);
+				break;
+			}
+			case "gameplayer": {
+				createPlayers(l_command);
+				break;
+			}
+			case "assigncountries": {
+				assignCountries(l_command);
+				break;
+			}
+			case "exit": {
+				System.out.println("Exit Command Entered");
+				System.exit(0);
+				break;
+			}
+			default: {
+				System.out.println("Invalid Command");
+				break;
+			}
 		}
 	}
 
