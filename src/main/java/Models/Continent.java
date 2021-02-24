@@ -42,6 +42,12 @@ public class Continent {
 	}
 	
 	/**
+	 * contructor to this class.
+	 */
+	public Continent(){
+	}
+	
+	/**
 	 * getter method to get the continent ID.
 	 * 
 	 * @return continent ID
