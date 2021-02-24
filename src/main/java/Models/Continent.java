@@ -44,27 +44,27 @@ public class Continent {
 
 	/**
 	 * Adds country to the continent
-	 * @param p_c country to be added
+	 * @param p_country country to be added
 	 */
-	public void addCountry(Country p_c){
+	public void addCountry(Country p_country){
 		if (d_countries!=null){
-			this.d_countries.add(p_c);
+			d_countries.add(p_country);
 		}
 		else{
-			this.d_countries=new ArrayList<Country>();
-			this.d_countries.add(p_c);
+			d_countries=new ArrayList<Country>();
+			d_countries.add(p_country);
 		}
 	}
 
 	/**
 	 * removes Country from Continent
-	 * @param p_c country to be removed
+	 * @param p_country country to be removed
 	 */
-	public void removeCountry(Country p_c){
+	public void removeCountry(Country p_country){
 		if(d_countries==null){
 			System.out.println("No such Country Exists");
 		}else {
-			d_countries.remove(p_c);
+			d_countries.remove(p_country);
 		}
 	}
 

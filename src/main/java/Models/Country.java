@@ -8,7 +8,7 @@ public class Country {
 	Integer d_countryId;
 	Integer d_continentId;
 	String d_countryName;
-	List<Integer> d_adjacentCountryIds;
+	List<Integer> d_adjacentCountryIds=new ArrayList<Integer>();
 
 
 	public Country(int p_countryId, String p_countryName, int p_continentId) {
@@ -55,9 +55,6 @@ public class Country {
 	 * @param p_countryId Id of country to be added
 	 */
 	public void addNeighbour(Integer p_countryId){
-		if (d_adjacentCountryIds == null) {
-			d_adjacentCountryIds = new ArrayList<Integer>();
-		}
 		if(!d_adjacentCountryIds.contains(p_countryId))
 			d_adjacentCountryIds.add(p_countryId);
 	}

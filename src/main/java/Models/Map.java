@@ -70,37 +70,6 @@ public class Map {
         return l_countryIDs;
     }
 
-    public void checkContinents() {
-        for (Continent c : d_continents) {
-            System.out.println("Continent ID "+ c.getD_continentID());
-            System.out.println("Corresponding Countries");
-            if (c.getD_countries()!=null) {
-                for (Country country: c.getD_countries()){
-                    System.out.println("Country : "+ country.getD_countryId());
-                    System.out.println("Neighbours in Continent:");
-                    if (!CommonUtil.isNull(country.getD_adjacentCountryIds())) {
-                        for(Integer i: country.getD_adjacentCountryIds()){
-                            System.out.println(i);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void checkCountries() {
-        for (Country c : d_countries) {
-            System.out.println("Country Id " + c.getD_countryId());
-            System.out.println("Continent Id " + c.getD_continentId());
-            System.out.println("Neighbours in Map:");
-            if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
-                for (Integer i: c.d_adjacentCountryIds){
-                    System.out.println(i);
-                }
-            }
-        }
-    }
-
     /**
      * Validates the complete map
      *
@@ -153,21 +122,21 @@ public class Map {
     /**
      * Checks Inner Connectivity of a Continent
      *
-     * @param p_c Continent being checked
+     * @param p_continent Continent being checked
      * @return Bool Value if Continent is Connected
      * @throws InvalidMap Which country is not connected
      */
-    public boolean subGraphConnectivity(Continent p_c) throws InvalidMap {
+    public boolean subGraphConnectivity(Continent p_continent) throws InvalidMap {
         HashMap<Integer, Boolean> l_continentCountry = new HashMap<Integer, Boolean>();
 
-        for (Country c : p_c.getD_countries()) {
+        for (Country c : p_continent.getD_countries()) {
             l_continentCountry.put(c.getD_countryId(), false);
         }
-        dfsSubgraph(p_c.getD_countries().get(0), l_continentCountry, p_c);
+        dfsSubgraph(p_continent.getD_countries().get(0), l_continentCountry, p_continent);
         for (Entry<Integer, Boolean> entry : l_continentCountry.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = getCountry(entry.getKey());
-                String l_messageException = l_country.getD_countryName() + " in Continent " + p_c.getD_continentName() + " is not reachable";
+                String l_messageException = l_country.getD_countryName() + " in Continent " + p_continent.getD_continentName() + " is not reachable";
                 throw new InvalidMap(l_messageException);
             }
         }
@@ -347,10 +316,11 @@ public class Map {
         if(CommonUtil.isNull(getCountryByName(p_countryName))){
             l_countryId=d_countries.size()>0? Collections.max(getCountryIDs())+1:1;
             if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
-                d_countries.add(new Country(l_countryId,p_countryName,getContinent(p_continentName).getD_continentID()));
+                Country l_country= new Country(l_countryId, p_countryName, getContinent(p_continentName).getD_continentID());
+                d_countries.add(l_country);
                 for (Continent c: d_continents) {
                     if (c.getD_continentName().equals(p_continentName)) {
-                        c.addCountry(new Country(l_countryId, p_countryName, getContinent(p_continentName).getD_continentID()));
+                        c.addCountry(l_country);
                     }
                 }
             } else{
@@ -374,8 +344,8 @@ public class Map {
                 }
                 c.removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
             }
-            d_countries.remove(getCountryByName(p_countryName));
             removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
+            d_countries.remove(getCountryByName(p_countryName));
 
         }else{
            throw new InvalidMap("Country:  "+ p_countryName+" does not exist!");
@@ -392,7 +362,6 @@ public class Map {
         if(d_countries!=null){
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))){
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).addNeighbour(getCountryByName(p_neighbourName).getD_countryId());
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryName).getD_continentId()))).addCountryNeighbours(getCountryByName(p_countryName).getD_countryId(), getCountryByName(p_neighbourName).getD_countryId());
             } else{
                 throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
@@ -409,7 +378,6 @@ public class Map {
         if(d_countries!=null){
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))) {
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbour(getCountryByName(p_neighbourName).getD_countryId());
-                d_continents.get(d_continents.indexOf(getContinentByID(getCountryByName(p_countryName).getD_continentId()))).removeSpecificNeighbour(getCountryByName(p_countryName).getD_countryId(), getCountryByName(p_neighbourName).getD_countryId());
             } else{
                 throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
