@@ -13,47 +13,47 @@ public class CommonUtil {
 
 	/**
 	 * 
-	 * @param str to check string
+	 * @param p_str to check string
 	 * @return true if String is empty else false
 	 */
-	public static boolean isEmpty(String str) {
-		return (str == null || str.trim().isEmpty());
+	public static boolean isEmpty(String p_str) {
+		return (p_str == null || p_str.trim().isEmpty());
 	}
 
 	/**
 	 * 
-	 * @param str to check string
+	 * @param p_str to check string
 	 * @return true if string is not empty else false
 	 */
-	public static boolean isNotEmpty(String str) {
-		return !isEmpty(str);
+	public static boolean isNotEmpty(String p_str) {
+		return !isEmpty(p_str);
 	}
 
 	/**
 	 * 
-	 * @param object to check object
+	 * @param p_object to check object
 	 * @return true if object is null else false
 	 */
-	public static boolean isNull(Object object) {
-		return (object == null);
+	public static boolean isNull(Object p_object) {
+		return (p_object == null);
 	}
 
 	/**
 	 * 
-	 * @param collection to check collection
+	 * @param p_collection to check collection
 	 * @return true if collection is empty else false
 	 */
-	public static boolean isCollectionEmpty(Collection<?> collection) {
-		return (collection == null || collection.isEmpty());
+	public static boolean isCollectionEmpty(Collection<?> p_collection) {
+		return (p_collection == null || p_collection.isEmpty());
 	}
 
 	/**
 	 * 
-	 * @param map to check Map
+	 * @param p_map to check Map
 	 * @return true if map is empty else false
 	 */
-	public static boolean isMapEmpty(Map<?, ?> map) {
-		return (map == null || map.isEmpty());
+	public static boolean isMapEmpty(Map<?, ?> p_map) {
+		return (p_map == null || p_map.isEmpty());
 	}
 	
 	/**
