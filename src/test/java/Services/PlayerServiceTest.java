@@ -172,20 +172,6 @@ public class PlayerServiceTest {
 	}
 
 	/**
-	 * Tests if armies given to deploy is more than players unassigned armies
-	 * 
-	 * @throws InvalidCommand if given command is invalid
-	 */
-	@Test
-	public void testInvalidDeployArmies() throws InvalidCommand {
-		System.setOut(new PrintStream(d_outContent));
-		d_playerService.createDeployOrder("deploy Canada 10", new Player("test player 1"));
-		assertEquals(
-				"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies\r\n",
-				d_outContent.toString());
-	}
-
-	/**
 	 * Tests deploy order logic to see if required order is created and armies are
 	 * re-calculated
 	 * 
