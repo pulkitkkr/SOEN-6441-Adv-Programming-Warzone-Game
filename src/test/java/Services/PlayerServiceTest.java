@@ -123,6 +123,9 @@ public class PlayerServiceTest {
 		assertEquals(l_assignedCountriesSize, d_gameState.getD_map().getD_countries().size());
 	}
 
+	/**
+	 * The testCalculateArmiesForPlayer is used to calculate number of reinforcement armies
+	 */
 	@Test
 	public void testCalculateArmiesForPlayer() {
 		Player l_playerInfo = new Player();
