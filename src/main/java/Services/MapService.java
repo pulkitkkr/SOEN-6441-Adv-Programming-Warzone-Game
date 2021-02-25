@@ -268,7 +268,8 @@ public class MapService {
 	}
 
 	/**
-	 * Controls the Flow of Edit Country Command : Adds/removes a country
+	 * Controls the Flow of Edit Country Command : Adds/removes a country.
+	 * 
 	 * @param p_gameState Current GameState
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
@@ -287,7 +288,8 @@ public class MapService {
 	}
 
 	/**
-	 * Performs the add/remove operation on the countries in map
+	 * Performs the add/remove operation on the countries in map.
+	 * 
 	 * @param p_mapToBeUpdated The Map to be updated
 	 * @param p_operation Operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
@@ -305,11 +307,12 @@ public class MapService {
 	}
 
 	/**
-	 * Performs the add/remove operation on countries in map
+	 * Performs the add/remove operation on countries in map.
+	 * 
 	 * @param p_gameState Current GameState Object
 	 * @param p_operation Operation to be Performed: add/remove
 	 * @param p_argument Arguments for the pertaining command operation
-	 * @throws InvalidMap
+	 * @throws InvalidMap handles InvalidMap exception
 	 */
 	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
@@ -325,12 +328,13 @@ public class MapService {
 	}
 
 	/**
-	 * Performs the add/remove operation on Map Object
+	 * Performs the add/remove operation on Map Object.
+	 * 
 	 * @param p_mapToBeUpdated The Map to be updated
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
-	 * @return
-	 * @throws InvalidMap
+	 * @return map to be updated
+	 * @throws InvalidMap handles invalidmap exception
 	 */
 	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add")){
@@ -349,7 +353,7 @@ public class MapService {
 	 * @param p_gameState Current GameState
 	 * @param p_fileName filename to save things in
 	 * @return true/false based on successful save operation of map to file
-	 * @throws InvalidMap handles InvalidMap
+	 * @throws InvalidMap handles InvalidMap exception
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
@@ -447,9 +451,9 @@ public class MapService {
 		}
 	}
 	/**
-	 * Resets Game State's Map
+	 * Resets Game State's Map.
 	 *
-	 * @param p_gameState
+	 * @param p_gameState object of GameState class
 	 */
 	public void resetMap(GameState p_gameState) {
 		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");

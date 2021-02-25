@@ -148,7 +148,7 @@ public class Map {
 	}
 
     /**
-     * Validates the complete map
+     * Validates the complete map.
      *
      * @return Bool Value if map is valid
      * @throws InvalidMap Exception
@@ -157,7 +157,7 @@ public class Map {
         return (!checkForNullObjects() && checkContinentConnectivity() && checkCountryConnectivity());
     }
 
-    /** Performs Null Check on Objects in Map
+    /** Performs Null Check on Objects in Map.
      *
      * @return Boolean if it is false
      * @throws InvalidMap for corresponding Invalid conditions
@@ -197,7 +197,7 @@ public class Map {
 	}
 
     /**
-     * Checks Inner Connectivity of a Continent
+     * Checks Inner Connectivity of a Continent.
      *
      * @param p_continent Continent being checked
      * @return Bool Value if Continent is Connected
@@ -225,9 +225,9 @@ public class Map {
     /**
      * DFS Applied to the Continent Subgraph.
 	 *
-	 * @param p_c                country visited
+	 * @param p_c country visited
      * @param p_continentCountry Hashmap of Visited Boolean Values
-     * @param p_continent        continent being checked for connectivity
+     * @param p_continent continent being checked for connectivity
      */
     public void dfsSubgraph(Country p_c, HashMap<Integer, Boolean> p_continentCountry, Continent p_continent) {
         p_continentCountry.put(p_c.getD_countryId(), true);
@@ -263,7 +263,7 @@ public class Map {
     }
 
     /**
-     * Iteratively applies the DFS search from the entered node
+     * Iteratively applies the DFS search from the entered node.
      *
      * @param p_c Country visited first
      * @throws InvalidMap Exception
@@ -310,7 +310,8 @@ public class Map {
     }
 
     /**
-     * Finds the Country object for the given country Name
+     * Finds the Country object for the given country Name.
+     * 
      * @param p_countryName Name of the country object to be found
      * @return matching country object
      */
@@ -319,7 +320,8 @@ public class Map {
     }
 
     /**
-     * Returns Continent Object for given continent Name
+     * Returns Continent Object for given continent Name.
+     * 
      * @param p_continentName Continent Name to be found
      * @return matching continent object
      */
@@ -328,7 +330,8 @@ public class Map {
     }
 
     /**
-     * Returns Continent Object for a continent ID
+     * Returns Continent Object for a continent ID.
+     * 
      * @param p_continentID Continent Id to be found
      * @return continent object
      */
@@ -337,7 +340,8 @@ public class Map {
     }
 
     /**
-     * Performs Add Continent operation on Map
+     * Performs Add Continent operation on Map.
+     * 
      * @param p_continentName Name of the Continent to be Added
      * @param p_controlValue Control value of the continent to be added
      * @throws InvalidMap to handle Invalid addition
@@ -389,7 +393,8 @@ public class Map {
     }
 
     /**
-     * Performs the add country operation on the Map
+     * Performs the add country operation on the Map.
+     * 
      * @param p_countryName Name of Country to be Added
      * @param p_continentName Name of Continent to be added in
      * @throws InvalidMap Exception
@@ -418,7 +423,8 @@ public class Map {
     }
 
     /**
-     * Performs the remove country operation on Map
+     * Performs the remove country operation on Map.
+     * 
      * @param p_countryName Name of country to be Added
      * @throws InvalidMap Exception
      */
@@ -439,7 +445,8 @@ public class Map {
     }
 
     /**
-     * Performs the Add Neighbour Operation
+     * Performs the Add Neighbour Operation.
+     * 
      * @param p_countryName Country whose neighbours are to be updated
      * @param p_neighbourName Country to be added as neighbour
      * @throws InvalidMap Exception
@@ -455,7 +462,8 @@ public class Map {
     }
 
     /**
-     * Performs the Remove Neighbor Operation
+     * Performs the Remove Neighbor Operation.
+     * 
      * @param p_countryName Country whose neighbors are to be updated
      * @param p_neighbourName Country to be removed as neighbor
      * @throws InvalidMap Exception
@@ -472,7 +480,8 @@ public class Map {
 
     /**
      * Remove Particular Country as Neighbor from all associated countries (in continent Objects)
-     * Used while deletion of a country object
+     * Used while deletion of a country object.
+     * 
      * @param p_countryId Country to be removed
      */
     public void updateNeighboursCont(Integer p_countryId){
@@ -483,7 +492,8 @@ public class Map {
 
     /**
      * Remove Particular Country as Neighbor from all associated countries (in Map CountryList)
-     * Used while deletion of country object
+     * Used while deletion of country object.
+     * 
      * @param p_countryID Country to be removed
      */
     public void removeCountryNeighboursFromAll(Integer p_countryID){

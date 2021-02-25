@@ -150,7 +150,7 @@ public class Player {
 
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned
-	 * orders pool
+	 * orders pool.
 	 * 
 	 * @throws IOException    exception in reading inputs from user
 	 * @throws InvalidCommand exception if invalid deploy command is given

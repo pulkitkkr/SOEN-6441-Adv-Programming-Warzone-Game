@@ -145,7 +145,8 @@ public class Continent {
 	}
 
 	/**
-	 * removes Country from Continent
+	 * removes Country from Continent.
+	 * 
 	 * @param p_country country to be removed
 	 */
 	public void removeCountry(Country p_country){
@@ -157,7 +158,8 @@ public class Continent {
 	}
 
 	/**
-	 * Removes particular country ID from the neighbor list of all countries in continent
+	 * Removes particular country ID from the neighbor list of all countries in continent.
+	 * 
 	 * @param p_countryId ID of country to be removed
 	 */
 	public void removeCountryNeighboursFromAll(Integer p_countryId){

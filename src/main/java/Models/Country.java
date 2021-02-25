@@ -54,6 +54,11 @@ public class Country {
 		d_continentId = p_continentId;
 	}
 
+	/**
+	 * single parameter constructor.
+	 * 
+	 * @param p_countryName name of the country
+	 */
 	public Country(String p_countryName) {
 		d_countryName = p_countryName;
 	}
@@ -153,7 +158,8 @@ public class Country {
 	}
 
 	/**
-	 * Adds country Id to the neighbor list
+	 * Adds country Id to the neighbor list.
+	 * 
 	 * @param p_countryId Id of country to be added
 	 */
 	public void addNeighbour(Integer p_countryId){
@@ -162,7 +168,8 @@ public class Country {
 	}
 
 	/**
-	 * removes country Id from  neighbor list
+	 * removes country Id from  neighbor list.
+	 * 
 	 * @param p_countryId Id of country to be removed
 	 */
 	public void removeNeighbour(Integer p_countryId){
