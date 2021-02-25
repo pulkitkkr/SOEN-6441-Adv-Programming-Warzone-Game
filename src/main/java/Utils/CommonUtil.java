@@ -13,57 +13,57 @@ public class CommonUtil {
 
 	/**
 	 * This method checks if the string is empty or not.
-	 * 
-	 * @param str to check string
+	 *
+	 * @param p_str to check string
 	 * @return boolean true if String is empty else false
 	 */
-	public static boolean isEmpty(String str) {
-		return (str == null || str.trim().isEmpty());
+	public static boolean isEmpty(String p_str) {
+		return (p_str == null || p_str.trim().isEmpty());
 	}
 
 	/**
 	 * This method checks if the string is non-empty or not.
-	 * 
-	 * @param str to check string
+	 *
+	 * @param p_str to check string
 	 * @return boolean true if string is not empty else false
 	 */
-	public static boolean isNotEmpty(String str) {
-		return !isEmpty(str);
+	public static boolean isNotEmpty(String p_str) {
+		return !isEmpty(p_str);
 	}
 
 	/**
 	 * This method checks if the object is null or not.
-	 * 
-	 * @param object to check object
-	 * @return boolean true if object is null else false
+	 *
+	 * @param p_object to check object
+	 * @return true if object is null else false
 	 */
-	public static boolean isNull(Object object) {
-		return (object == null);
+	public static boolean isNull(Object p_object) {
+		return (p_object == null);
 	}
 
 	/**
 	 * This method checks if the collection is empty or not.
-	 * 
-	 * @param collection to check collection
-	 * @return boolean true if collection is empty else false
+	 *
+	 * @param p_collection to check collection
+	 * @return true if collection is empty else false
 	 */
-	public static boolean isCollectionEmpty(Collection<?> collection) {
-		return (collection == null || collection.isEmpty());
+	public static boolean isCollectionEmpty(Collection<?> p_collection) {
+		return (p_collection == null || p_collection.isEmpty());
 	}
 
 	/**
 	 * This method checks if the map is empty or not.
-	 * 
-	 * @param map to check Map
-	 * @return boolean true if map is empty else false
+	 *
+	 * @param p_map to check Map
+	 * @return true if map is empty else false
 	 */
-	public static boolean isMapEmpty(Map<?, ?> map) {
-		return (map == null || map.isEmpty());
+	public static boolean isMapEmpty(Map<?, ?> p_map) {
+		return (p_map == null || p_map.isEmpty());
 	}
 	
 	/**
 	 * Generates absolute file path from the given map file.
-	 * 
+	 *
 	 * @param p_fileName filename to map it with the file path
 	 * @return string map file along with its path
 	 */

@@ -2,7 +2,7 @@ package Models;
 
 /**
  * 
- * This is the ContinentTest Class.
+ * This class is used to test functionality of Continent class functions.
  * 
  */
 public class ContinentTest {

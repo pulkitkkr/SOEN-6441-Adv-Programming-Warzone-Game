@@ -75,7 +75,7 @@ public class MapView {
 		
 		for (int i = 0; i < playerCountries.size(); i++) {
 			System.out.format(table, p_country.getD_countryId(), p_country.getD_countryName(), p_player.getD_noOfUnallocatedArmies(), 
-					p_continent.getD_continentName(), p_country.getD_adjacentCountryIds(), p_player.getD_playerName());
+					p_continent.getD_continentName(), p_country.getD_adjacentCountryIds(), p_player.getPlayerName());
 		}
 		System.out.format(
 				"+--------------+----------------+----------------------------+------------------+---------------+---------------+%n");

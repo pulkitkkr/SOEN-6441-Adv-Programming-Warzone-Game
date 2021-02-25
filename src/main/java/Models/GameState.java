@@ -2,6 +2,9 @@ package Models;
 
 import java.util.List;
 
+/**
+ * This class is used to test functionality of GameState class functions.
+ */
 public class GameState {
 	
 	/**
