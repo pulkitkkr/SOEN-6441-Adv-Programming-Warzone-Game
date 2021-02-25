@@ -44,7 +44,7 @@ public class MapView {
 	}
 
     /**
-     * Constructor to initialise MapView with Players
+     * Constructor to initialise MapView with Players.
      *
      * @param p_gameState Current GameState
      * @param p_players List of Player Objects
@@ -116,7 +116,7 @@ public class MapView {
      *
      * @param p_index Index of Countries.
      * @param p_countryName Country Name to be rendered.
-     * @return
+     * @return Returns the Formatted String
      */
 	private String getFormattedCountryName(int p_index, String p_countryName){
 		String l_indexedString = String.format("%02d. %s", p_index, p_countryName);
@@ -252,7 +252,7 @@ public class MapView {
 	}
 
 	/**
-	 * This method displays the list of continents and countries present in the .map files alongside current state of the game
+	 * This method displays the list of continents and countries present in the .map files alongside current state of the game.
 	 */
 	public void showMap() {
 

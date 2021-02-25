@@ -84,6 +84,8 @@ public class Player {
 
 	/**
 	 * This getter is used to get color code for player.
+	 *
+	 * @return Color
 	 */
 	public String getD_color() {
 		return d_color;
