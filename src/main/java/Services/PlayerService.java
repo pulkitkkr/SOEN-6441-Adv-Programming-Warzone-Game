@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This service class handles the players.
+ */
 public class PlayerService {
 
 	/**
-	 * Checks if player name is exists in given existing player list
-   *
+	 * Checks if player name is exists in given existing player list.
+	 * 
 	 * @param p_existingPlayerList existing players list present in game
 	 * @param p_playerName player name which needs to be looked upon
 	 * @return boolean true if player name is unique, false if its not
@@ -36,8 +39,8 @@ public class PlayerService {
 	 * This method is used to add and remove players.
 	 *
 	 * @param p_existingPlayerList current player list.
-	 * @param p_operation          operation to add or remove player.
-	 * @param p_argument           name of player to add or remove.
+	 * @param p_operation operation to add or remove player.
+	 * @param p_argument name of player to add or remove.
 	 * @return return updated list of player.
 	 */
 	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) {
@@ -62,8 +65,8 @@ public class PlayerService {
 	}
 
 	/**
-	 * Remove player from the game if it exists
-   *
+	 * Remove player from the game if it exists.
+	 *
 	 * @param p_existingPlayerList Existing player list present in game
 	 * @param p_updatedPlayers Updated player list with removal to be done
 	 * @param p_enteredPlayerName Player name which is to be removed
@@ -84,8 +87,8 @@ public class PlayerService {
 	}
 
 	/**
-	 * Adds player to Game if its not there already
-   *
+	 * Adds player to Game if its not there already.
+	 *
 	 * @param p_updatedPlayers updated player list with newly added player
 	 * @param p_enteredPlayerName new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
@@ -102,7 +105,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * Check whether players are loaded or not
+	 * Check whether players are loaded or not.
 	 *
 	 * @param p_gameState current game state with map and player information
 	 * @return boolean players exists or not
@@ -115,6 +118,11 @@ public class PlayerService {
 		return true;
 	}
 
+	/**
+	 * Assigns the Colors to the players.
+	 *
+	 * @param p_gameState Current Game State
+	 */
 	public void assignColors(GameState p_gameState){
 		if (!checkPlayersAvailability(p_gameState)) return;
 
@@ -126,7 +134,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * This method is used to assign countries randomly among players
+	 * This method is used to assign countries randomly among players.
 	 *
 	 * @param p_gameState current game state with map and player information
 	 */
@@ -144,11 +152,11 @@ public class PlayerService {
 	}
 
 	/**
-	 * Performs random country assignment to all players
+	 * Performs random country assignment to all players.
 	 *
 	 * @param p_countriesPerPlayer countries which are to be assigned to each player
-	 * @param p_countries          list of all countries present in map
-	 * @param p_players            list of all available players
+	 * @param p_countries list of all countries present in map
+	 * @param p_players list of all available players
 	 */
 	private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
 			List<Player> p_players) {
@@ -174,16 +182,15 @@ public class PlayerService {
 		// If any countries are still left for assignment, it will redistribute those
 		// among players
 		if (!l_unassignedCountries.isEmpty()) {
-			System.out.println(l_unassignedCountries);
 			performRandomCountryAssignment(1, l_unassignedCountries, p_players);
 		}
 	}
 
 	/**
 	 * Checks if player is having any continent as a result of random country
-	 * assignment
+	 * assignment.
 	 *
-	 * @param p_players    list of all available players
+	 * @param p_players list of all available players
 	 * @param p_continents list of all available continents
 	 */
 	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
@@ -209,8 +216,9 @@ public class PlayerService {
 	}
 
 	/**
+	 * creates the deploy order on the commands entered by the player.
+	 *
 	 * @param p_commandEntered command entered by the user
-   *
 	 * @param p_player player to create deploy order
 	 */
 	public void createDeployOrder(String p_commandEntered, Player p_player) {
@@ -233,11 +241,10 @@ public class PlayerService {
 	}
 
 	/**
-	 * 
 	 * Used to test number of armies entered in deploy command to check that player
 	 * cannot deploy more armies that there is in their reinforcement pool.
 	 *
-	 * @param p_player     player to create deploy order
+	 * @param p_player player to create deploy order
 	 * @param p_noOfArmies number of armies to deploy
 	 * @return boolean to validate armies to deploy
 	 */
@@ -246,7 +253,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * Calculates armies of player based on countries and continents owned
+	 * Calculates armies of player based on countries and continents owned.
 	 *
 	 * @param p_player player for which armies have to be calculated
 	 * @return Integer armies to be assigned to player
@@ -267,7 +274,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * Assigns armies to each player of the game
+	 * Assigns armies to each player of the game.
 	 *
 	 * @param p_gameState current game state with map and player information
 	 */
@@ -281,7 +288,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * Check if unexecuted orders exists in the game
+	 * Check if unexecuted orders exists in the game.
 	 *
 	 * @param p_playersList players involved in game
 	 * @return boolean true if unexecuted orders exists with any of the players or
@@ -296,7 +303,7 @@ public class PlayerService {
 	}
 
 	/**
-	 * Check if any of the players have unassigned armies
+	 * Check if any of the players have unassigned armies.
 	 *
 	 * @param p_playersList players involved in game
 	 * @return boolean true if unassigned armies exists with any of the players or
@@ -315,7 +322,7 @@ public class PlayerService {
 	 *
 	 * @param p_gameState update game state with players information.
 	 * @param p_operation operation to add or remove player.
-	 * @param p_argument  name of player to add or remove.
+	 * @param p_argument name of player to add or remove.
 	 */
 	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
 		if (!isMapLoaded(p_gameState)) {
@@ -323,7 +330,6 @@ public class PlayerService {
 			return;
 		}
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
-		//this.assignColors(p_gameState);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
 			p_gameState.setD_players(l_updatedPlayers);

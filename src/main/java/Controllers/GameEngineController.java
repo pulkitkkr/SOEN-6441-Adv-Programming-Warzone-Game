@@ -19,27 +19,27 @@ import Utils.CommonUtil;
 import Views.MapView;
 
 /**
- * This is the entry point of the Game and keeps the track of current Game State
+ * This is the entry point of the Game and keeps the track of current Game State.
  */
 public class GameEngineController {
 
 	/**
-	 * gameState stores the information about current GamePlay
+	 * d_gameState stores the information about current GamePlay.
 	 */
 	GameState d_gameState = new GameState();
 
 	/**
-	 * Map Service instance to handle load, read, parse, edit, and save map file
+	 * d_mapService instance is used to handle load, read, parse, edit, and save map file.
 	 */
 	MapService d_mapService = new MapService();
 
 	/**
-	 * Player Service instance to edit players and issue orders
+	 * Player Service instance to edit players and issue orders.
 	 */
 	PlayerService d_playerService = new PlayerService();
 
 	/**
-	 * getD_gameState is a getter method to get current game state
+	 * getD_gameState is a getter method to get current game state.
 	 *
 	 * @return the current game state
 	 */
@@ -49,9 +49,9 @@ public class GameEngineController {
 
 	/**
 	 * The main method responsible for accepting command from users and redirecting
-	 * those to corresponding logical flows
+	 * those to corresponding logical flows.
 	 *
-	 * @param p_args the program doesn't use command line arguments
+	 * @param p_args the program doesn't use default command line arguments
 	 */
 	public static void main(String[] p_args) {
 		GameEngineController l_game = new GameEngineController();
@@ -61,11 +61,11 @@ public class GameEngineController {
 
 	/**
 	 * Handle the commands.
-   *
+	 *
 	 * @param p_enteredCommand command entered by the user in CLI
-	 * @throws InvalidMap     indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws IOException    indicates failure in I/O operation
+	 * @throws IOException indicates failure in I/O operation
 	 */
 	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
 		Command l_command = new Command(p_enteredCommand);
@@ -73,23 +73,23 @@ public class GameEngineController {
 		boolean l_isMapLoaded = d_gameState.getD_map() != null;
 
 		switch (l_rootCommand) {
-		case "editmap": {
-			performMapEdit(l_command);
-			break;
-		}
-		case "editcontinent": {
-			if (!l_isMapLoaded) {
-				System.out.println("Can not Edit Continent, please perform `editmap` first");
+			case "editmap": {
+				performMapEdit(l_command);
 				break;
 			}
-			performEditContinent(l_command);
-			break;
-		}
-		case "savemap": {
-			if (!l_isMapLoaded) {
-				System.out.println("No map found to save, Please `editmap` first");
+			case "editcontinent": {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Continent, please perform `editmap` first");
+					break;
+				}
+				performEditContinent(l_command);
 				break;
 			}
+			case "savemap": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found to save, Please `editmap` first");
+					break;
+				}
 
 			performSaveMap(l_command);
 			break;
@@ -152,11 +152,11 @@ public class GameEngineController {
 	}
 
 	/**
-	 * The initGamePlay method initiates the CLI to accept commands from user and
-	 * maps them to corresponding action handler
+	 * This method initiates the CLI to accept commands from user and maps them to corresponding action handler.
 	 */
 	private void initGamePlay() {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+
 		while (true) {
 			try {
 				System.out.println("Enter Game Commands or type 'exit' for quitting");
@@ -176,8 +176,8 @@ public class GameEngineController {
 	 * arguments and redirecting control to model for actual processing.
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException    indicates failure in I/O operation
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws IOException indicates when failure in I/O operation
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -197,12 +197,12 @@ public class GameEngineController {
 
 	/**
 	 * Basic validation of <strong>editcontinent</strong> command for checking
-	 * required arguments and redirecting control to model for actual processing
+	 * required arguments and redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException    indicates failure in I/O operation
+	 * @throws IOException indicates failure in I/O operation
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap     indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 */
 	public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -224,11 +224,11 @@ public class GameEngineController {
 
 	/**
 	 * Basic validation of <strong>savemap</strong> command for checking required
-	 * arguments and redirecting control to model for actual processing
+	 * arguments and redirecting control to model for actual processing.
 	 * 
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap indicates map is invalid
+	 * @throws InvalidMap indicates when map is invalid
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -252,11 +252,11 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of <strong>loadmap</strong> command for checking required
-	 * arguments and redirecting control to model for actual processing
+	 * Basic validation of <strong>loadmap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	private void performLoadMap(Command p_command) throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -287,12 +287,12 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Basic validation of <strong>validatemap</strong> command for checking
-	 * required arguments and redirecting control to model for actual processing
+	 * Basic validation of <strong>validatemap</strong> command for checking required arguments and
+	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws InvalidMap indicates map is invalid
-	 * @throws InvalidCommand indicates command is invalid
+	 * @throws InvalidCommand indicates when command is invalid
+	 * @throws InvalidMap indicates when map is invalid
 	 */
 	private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -314,11 +314,11 @@ public class GameEngineController {
 
 	/**
 	 * Basic validation of <strong>editcountry</strong> command for checking
-	 * required arguments and redirecting control to model for actual processing
+	 * required arguments and redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap     indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 */
 	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -343,7 +343,7 @@ public class GameEngineController {
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap  indicates map is invalid
+	 * @throws InvalidMap indicates map is invalid
 	 */
 	public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -388,7 +388,7 @@ public class GameEngineController {
 
 	/**
 	 * Basic validation of <strong>assigncountries</strong> for checking required
-	 * arguments and redirecting control to model for assigning countries to players
+	 * arguments and redirecting control to model for assigning countries to players.
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
@@ -399,13 +399,13 @@ public class GameEngineController {
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
 			d_playerService.assignColors(d_gameState);
-      
+
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
 				System.out.println("\n********Starting Main Game Loop***********\n");
-        
+
 				// Assigning armies to players
 				d_playerService.assignArmies(d_gameState);
-        
+
 				// Issuing order for players
 				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
@@ -413,7 +413,7 @@ public class GameEngineController {
 							l_player.issue_order();
 					}
 				}
-        
+
 				// Executing orders
 				while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
@@ -424,7 +424,7 @@ public class GameEngineController {
 				}
 				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
 				l_map_view.showMap();
-        
+
 				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
 				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 				String l_continue = l_reader.readLine();

@@ -21,6 +21,9 @@ import Models.Map;
 import Models.Player;
 import Utils.CommonUtil;
 
+/**
+ * This class is used to test functionality of PlayerService class functions.
+ */
 public class PlayerServiceTest {
 	/**
 	 * Player class reference.

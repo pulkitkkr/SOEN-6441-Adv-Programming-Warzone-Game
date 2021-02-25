@@ -20,8 +20,8 @@ jobs:
       run: mvn clean install
     - name: Run Junit Tests
       run: mvn test
-#     - name: Check JavaDoc
-#       run: mvn checkstyle:checkstyle
+    - name: Check JavaDoc
+      run: mvn checkstyle:checkstyle
     - name: Generate JavaDoc
       run: mvn javadoc:javadoc
 

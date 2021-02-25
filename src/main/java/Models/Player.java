@@ -12,18 +12,16 @@ import Utils.Command;
 import Utils.CommonUtil;
 
 /**
- * 
  * This class depicts player's information and services.
- *
  */
 public class Player {
 	/**
-	 * color to show details with on map
+	 * color to show details with on map.
 	 */
 	private String d_color;
 
 	/**
-	 * Name of the player
+	 * Name of the player.
 	 */
 	private String d_name;
 
@@ -49,8 +47,8 @@ public class Player {
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
-	 * armies
-	 *
+	 * armies.
+	 * 
 	 * @param p_playerName player name.
 	 */
 	public Player(String p_playerName) {
@@ -85,7 +83,7 @@ public class Player {
 	}
 
 	/**
-	 * This getter is used to get color code for player
+	 * This getter is used to get color code for player.
 	 */
 	public String getD_color() {
 		return d_color;
@@ -93,7 +91,7 @@ public class Player {
 
 	/**
 	 *
-	 * @param p_color ANSI color code
+	 * @param p_color ANSI color code.
 	 */
 	public void setD_color(String p_color) {
 		d_color = p_color;
@@ -172,7 +170,7 @@ public class Player {
 	}
 
 	/**
-	 * Extracts the list of names of countries owned by the player
+	 * Extracts the list of names of countries owned by the player.
 	 *
 	 * @return list of country names
 	 */
@@ -185,7 +183,7 @@ public class Player {
 	}
 
 	/**
-	 * Retrieves the list of continent names owned by the player
+	 * Retrieves the list of continent names owned by the player.
 	 *
 	 * @return list of continent names
 	 */
@@ -202,9 +200,9 @@ public class Player {
 
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned
-	 * orders pool
+	 * orders pool.
 	 * 
-	 * @throws IOException    exception in reading inputs from user
+	 * @throws IOException exception in reading inputs from user
 	 * @throws InvalidCommand exception if invalid deploy command is given
 	 */
 	public void issue_order() throws IOException, InvalidCommand {

@@ -8,38 +8,106 @@ import Utils.CommonUtil;
 import java.util.Collections;
 import java.util.Map.Entry;
 
+/**
+ * this model class manages all the maps.
+ */
 public class Map {
-    String d_mapFile;
-    List<Continent> d_continents;
-    List<Country> d_countries;
+
+	/**
+	 * stores the map file name.
+	 */
+	String d_mapFile;
+
+	/**
+	 * list of continents.
+	 */
+	List<Continent> d_continents;
+
+	/**
+	 * list of countries.
+	 */
+	List<Country> d_countries;
+
+	/**
+	 * HashMap of the countries one can reach from the existing position.
+	 */
     HashMap<Integer, Boolean> d_countryReach = new HashMap<Integer, Boolean>();
 
-    public String getD_mapFile() {
-        return d_mapFile;
-    }
+	/**
+	 * getter method to get the map file.
+	 * 
+	 * @return d_mapfile
+	 */
+	public String getD_mapFile() {
+		return d_mapFile;
+	}
 
-    public void setD_mapFile(String p_mapFile) {
-        this.d_mapFile = p_mapFile;
-    }
+	/**
+	 * setter method to set the map file.
+	 * 
+	 * @param p_mapFile mapfile name
+	 */
+	public void setD_mapFile(String p_mapFile) {
+		this.d_mapFile = p_mapFile;
+	}
 
-    public List<Continent> getD_continents() {
-        return d_continents;
-    }
+	/**
+	 * getter method to get the list of continents.
+	 * 
+	 * @return the list of continents
+	 */
+	public List<Continent> getD_continents() {
+		return d_continents;
+	}
 
-    public void setD_continents(List<Continent> p_continents) {
-        this.d_continents = p_continents;
-    }
+	/**
+	 * setter method to set the list of continents.
+	 * 
+	 * @param p_continents list of continents
+	 */
+	public void setD_continents(List<Continent> p_continents) {
+		this.d_continents = p_continents;
+	}
 
-    public List<Country> getD_countries() {
-        return d_countries;
-    }
+	/**
+	 * getter method to get the list of countries.
+	 * 
+	 * @return list of countries
+	 */
+	public List<Country> getD_countries() {
+		return d_countries;
+	}
 
-    public void setD_countries(List<Country> p_countries) {
-        this.d_countries = p_countries;
-    }
+	/**
+	 * setter method to set the countries.
+	 *
+	 * @param p_countries list of countries
+	 */
+	public void setD_countries(List<Country> p_countries) {
+		this.d_countries = p_countries;
+	}
+
+	/**
+	 * adds the continent to the map.
+	 *
+	 * @param p_continent continent to add
+	 */
+	public void addContinent(Continent p_continent){
+		d_continents.add(p_continent);
+	}
+
+	/**
+	 * adds the country to the map.
+	 *
+	 * @param p_country country to add
+	 */
+	public void addCountry(Country p_country){
+		d_countries.add(p_country);
+	}
 
     /**
-     * Get a List of all Ids of continents in Map
+     * Get a List of all Ids of continents in Map.
+     * 
      * @return List of Continent Ids
      */
     public List<Integer> getContinentIDs(){
@@ -53,7 +121,8 @@ public class Map {
     }
 
     /**
-     * Get a list of all Ids of countries in Map
+     * Get a list of all Ids of countries in Map.
+     * 
      * @return List of Country Ids
      */
     public List<Integer> getCountryIDs(){
@@ -65,9 +134,31 @@ public class Map {
         }
         return l_countryIDs;
     }
+	/**
+	 * check the existing continents.
+	 */
+	public void checkContinents() {
+		for(Continent c: d_continents) {
+			System.out.println(c.getD_continentID());
+		}
+	}
+
+	/**
+	 * check the existing countries.
+	 */
+	public void checkCountries() {
+		for (Country c: d_countries) {
+			System.out.println("Country Id "+ c.getD_countryId());
+			System.out.println("Continent Id "+c.getD_continentId());
+			System.out.println("Neighbours:");
+			for (int i: c.getD_adjacentCountryIds()) {
+				System.out.println(i);
+			}
+		}
+	}
 
     /**
-     * Validates the complete map
+     * Validates the complete map.
      *
      * @return Bool Value if map is valid
      * @throws InvalidMap Exception
@@ -76,7 +167,8 @@ public class Map {
         return (!checkForNullObjects() && checkContinentConnectivity() && checkCountryConnectivity());
     }
 
-    /** Performs Null Check on Objects in Map
+    /** 
+     * Performs Null Check on Objects in Map.
      *
      * @return Boolean if it is false
      * @throws InvalidMap for corresponding Invalid conditions
@@ -97,27 +189,26 @@ public class Map {
     }
 
     /**
-     * Checks All Continent's Inner Connectivity
-     *
-     * @return Bool Value if all are connected
-     * @throws InvalidMap if any continent is not Connected
-     */
-    public Boolean checkContinentConnectivity() throws InvalidMap {
-        boolean l_flagConnectivity = true;
-
-        for (Continent c : d_continents) {
-            if (null == c.getD_countries() || c.getD_countries().size() < 1) {
-                throw new InvalidMap(c.getD_continentName() + " has no countries, it must possess atleast 1 country");
-            }
-            if (!subGraphConnectivity(c)) {
-                l_flagConnectivity = false;
-            }
-        }
-        return l_flagConnectivity;
-    }
+     * Checks All Continent's Inner Connectivity.
+	 *
+	 * @return Boolean Value if all are connected
+	 * @throws InvalidMap if any continent is not Connected
+	 */
+	public Boolean checkContinentConnectivity() throws InvalidMap {
+		boolean l_flagConnectivity=true;
+		for (Continent c:d_continents){
+			if (null == c.getD_countries() || c.getD_countries().size()<1){
+				throw new InvalidMap(c.getD_continentName() + " has no countries, it must possess atleast 1 country");
+			}
+			if(!subGraphConnectivity(c)){
+				l_flagConnectivity=false;
+			}
+		}
+		return l_flagConnectivity;
+	}
 
     /**
-     * Checks Inner Connectivity of a Continent
+     * Checks Inner Connectivity of a Continent.
      *
      * @param p_continent Continent being checked
      * @return Bool Value if Continent is Connected
@@ -143,11 +234,11 @@ public class Map {
     }
 
     /**
-     * DFS Applied to the Continent Subgraph
-     *
-     * @param p_c                Country visited
-     * @param p_continentCountry Hashmap of Visited Bool Values
-     * @param p_continent        continent being checked for connectivity
+     * DFS Applied to the Continent Subgraph.
+	 *
+	 * @param p_c country visited
+     * @param p_continentCountry Hashmap of Visited Boolean Values
+     * @param p_continent continent being checked for connectivity
      */
     public void dfsSubgraph(Country p_c, HashMap<Integer, Boolean> p_continentCountry, Continent p_continent) {
         p_continentCountry.put(p_c.getD_countryId(), true);
@@ -161,9 +252,9 @@ public class Map {
     }
 
     /**
-     * Checks country connectivity in the map
-     *
-     * @return bool value for condition if all the countries are connected
+     * Checks country connectivity in the map.
+	 *
+	 * @return boolean value for condition if all the countries are connected
      * @throws InvalidMap pointing out which Country is not connected
      */
     public boolean checkCountryConnectivity() throws InvalidMap {
@@ -183,7 +274,7 @@ public class Map {
     }
 
     /**
-     * Iteratively applies the DFS search from the entered node
+     * Iteratively applies the DFS search from the entered node.
      *
      * @param p_c Country visited first
      * @throws InvalidMap Exception
@@ -198,30 +289,31 @@ public class Map {
     }
 
     /**
-     * Gets the Adjacent Country Objects
-     *
-     * @param p_c Country
-     * @return list of Adjacent Country Objects
+     * Gets the Adjacent Country Objects.
+	 *
+	 * @param p_country the adjacent country
+	 * @return list of Adjacent Country Objects
+	 * @throws InvalidMap pointing out which Country is not connected
      * @throws InvalidMap Exception
      */
-    public List<Country> getAdjacentCountry(Country p_c) throws InvalidMap {
+    public List<Country> getAdjacentCountry(Country p_country) throws InvalidMap {
         List<Country> l_adjCountries = new ArrayList<Country>();
 
-        if (p_c.getD_adjacentCountryIds().size() > 0) {
-            for (int i : p_c.getD_adjacentCountryIds()) {
+        if (p_country.getD_adjacentCountryIds().size() > 0) {
+			for (int i : p_country.getD_adjacentCountryIds()) {
                 l_adjCountries.add(getCountry(i));
             }
         } else {
-            throw new InvalidMap(p_c.getD_countryId() + " doesn't have any adjacent countries");
-        }
-        return l_adjCountries;
-    }
+            throw new InvalidMap(p_country.getD_countryId() + " doesn't have any adjacent countries");
+		}
+		return l_adjCountries;
+	}
 
 
     /**
-     * Finds the Country object from a given country ID
-     *
-     * @param p_countryId ID of the country object to be found
+     * Finds the Country object from a given country ID.
+	 *
+	 * @param p_countryId ID of the country object to be found
      * @return matching country object
      */
     public Country getCountry(Integer p_countryId) {
@@ -229,7 +321,8 @@ public class Map {
     }
 
     /**
-     * Finds the Country object for the given country Name
+     * Finds the Country object for the given country Name.
+     * 
      * @param p_countryName Name of the country object to be found
      * @return matching country object
      */
@@ -238,7 +331,8 @@ public class Map {
     }
 
     /**
-     * Returns Continent Object for given continent Name
+     * Returns Continent Object for given continent Name.
+     * 
      * @param p_continentName Continent Name to be found
      * @return matching continent object
      */
@@ -247,7 +341,8 @@ public class Map {
     }
 
     /**
-     * Returns Continent Object for a continent ID
+     * Returns Continent Object for a continent ID.
+     * 
      * @param p_continentID Continent Id to be found
      * @return continent object
      */
@@ -256,7 +351,8 @@ public class Map {
     }
 
     /**
-     * Performs Add Continent operation on Map
+     * Performs Add Continent operation on Map.
+     * 
      * @param p_continentName Name of the Continent to be Added
      * @param p_controlValue Control value of the continent to be added
      * @throws InvalidMap to handle Invalid addition
@@ -278,7 +374,7 @@ public class Map {
     }
 
     /**
-     * Performs the remove continent operation on Map:
+     * Performs the remove continent operation on Map.
      * <ul>
      *     <li> Deletes Specified Continent</li>
      *     <li>Deletes Countries in Continents and their associated data in the Map</li>
@@ -308,7 +404,8 @@ public class Map {
     }
 
     /**
-     * Performs the add country operation on the Map
+     * Performs the add country operation on the Map.
+     * 
      * @param p_countryName Name of Country to be Added
      * @param p_continentName Name of Continent to be added in
      * @throws InvalidMap Exception
@@ -337,7 +434,8 @@ public class Map {
     }
 
     /**
-     * Performs the remove country operation on Map
+     * Performs the remove country operation on Map.
+     * 
      * @param p_countryName Name of country to be Added
      * @throws InvalidMap Exception
      */
@@ -358,7 +456,8 @@ public class Map {
     }
 
     /**
-     * Performs the Add Neighbour Operation
+     * Performs the Add Neighbour Operation.
+     * 
      * @param p_countryName Country whose neighbours are to be updated
      * @param p_neighbourName Country to be added as neighbour
      * @throws InvalidMap Exception
@@ -374,7 +473,8 @@ public class Map {
     }
 
     /**
-     * Performs the Remove Neighbor Operation
+     * Performs the Remove Neighbor Operation.
+     * 
      * @param p_countryName Country whose neighbors are to be updated
      * @param p_neighbourName Country to be removed as neighbor
      * @throws InvalidMap Exception
@@ -391,7 +491,8 @@ public class Map {
 
     /**
      * Remove Particular Country as Neighbor from all associated countries (in continent Objects)
-     * Used while deletion of a country object
+     * Used while deletion of a country object.
+     * 
      * @param p_countryId Country to be removed
      */
     public void updateNeighboursCont(Integer p_countryId){
@@ -402,7 +503,8 @@ public class Map {
 
     /**
      * Remove Particular Country as Neighbor from all associated countries (in Map CountryList)
-     * Used while deletion of country object
+     * Used while deletion of country object.
+     * 
      * @param p_countryID Country to be removed
      */
     public void removeCountryNeighboursFromAll(Integer p_countryID){
