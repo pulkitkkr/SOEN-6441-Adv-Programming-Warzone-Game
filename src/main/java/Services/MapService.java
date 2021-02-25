@@ -227,6 +227,7 @@ public class MapService {
 	 * @param p_argument the argument fetched from the given command
 	 * @param p_operation the operation to be performed as given by the user
 	 * @throws IOException triggered in case the file does not exist or the file name is invalid
+	 * @throws InvalidMap invalidmap exception
 	 */
 	public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap {
 		String l_mapFileName = p_gameState.getD_map().getD_mapFile();
@@ -249,6 +250,7 @@ public class MapService {
 	 * @param p_operation Operation to perform on Continents
 	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
+	 * @throws InvalidMap invalidmap exception
 	 */
 	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation,
 			String p_argument) throws InvalidMap {
@@ -270,6 +272,7 @@ public class MapService {
 	 * @param p_gameState Current GameState
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
+	 * @throws InvalidMap invalidmap exception
 	 */
 	public void editCountry(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
@@ -291,6 +294,7 @@ public class MapService {
 	 * @param p_operation Operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
 	 * @return Updated Map Object
+	 * @throws InvalidMap invalidmap exception
 	 */
 	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
@@ -309,7 +313,7 @@ public class MapService {
 	 * @param p_gameState Current GameState Object
 	 * @param p_operation Operation to be Performed: add/remove
 	 * @param p_argument Arguments for the pertaining command operation
-	 * @throws InvalidMap handles InvalidMap exception
+	 * @throws InvalidMap InvalidMap exception
 	 */
 	public void editNeighbour(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap{
 		String l_mapFileName= p_gameState.getD_map().getD_mapFile();
@@ -331,7 +335,7 @@ public class MapService {
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
 	 * @return map to be updated
-	 * @throws InvalidMap handles invalidmap exception
+	 * @throws InvalidMap invalidmap exception
 	 */
 	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
@@ -350,7 +354,7 @@ public class MapService {
 	 * @param p_gameState Current GameState
 	 * @param p_fileName filename to save things in
 	 * @return true/false based on successful save operation of map to file
-	 * @throws InvalidMap handles InvalidMap exception
+	 * @throws InvalidMap InvalidMap exception
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
