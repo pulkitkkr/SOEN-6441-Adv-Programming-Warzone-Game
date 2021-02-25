@@ -1,23 +1,16 @@
-; map: europe.map
-; map made with the map maker
-; yura.net Risk 1.0.9.3
-
-[files]
-pic europe_pic.jpg
-map europe_map.gif
-crd europe.cards
 
 [continents]
-Asia 5 blue
+Asia 5
 
 [countries]
-1 Waadt 1 115 224
-2 Neuenburg 1 149 185
-3 Fribourg 1 175 245
-4 Geneve 1 64 324
+1 Waadt 1
+2 Neuenburg 1
+3 Fribourg 1
+4 Geneve 1
 
 [borders]
 1 2 3
 2 3
 3 1 2
 4
+

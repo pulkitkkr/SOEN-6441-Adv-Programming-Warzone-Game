@@ -1,124 +1,187 @@
 package Models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import Constants.ApplicationConstants;
+import Exceptions.InvalidCommand;
+import Services.PlayerService;
+import Utils.Command;
+import Utils.CommonUtil;
 
 /**
- * This class handles all the players.
+ * 
+ * This class depicts player's information and services.
+ *
  */
 public class Player {
-	
+	private String d_name;
+
 	/**
-	 * List of countries owned by the player.
+	 * List of countries owned by player.
 	 */
 	List<Country> d_coutriesOwned;
-	
+
 	/**
-	 * List of continents owned by the player.
+	 * List of Continents owned by player.
 	 */
 	List<Continent> d_continentsOwned;
-	
+
 	/**
-	 * List of orders player wants to execute.
+	 * List of orders of player.
 	 */
 	List<Order> d_ordersToExecute;
-	
+
 	/**
-	 * Integer of unallocated armies owned by the player.
+	 * Number of armies allocated to player.
 	 */
 	Integer d_noOfUnallocatedArmies;
-	
+
 	/**
-	 * Stores player name.
-	 */
-	String d_playerName;
-	
-	/**
-	 * getter method to get the countries owned by the player.
+	 * This parameterized constructor is used to create player with name and default
+	 * armies
 	 * 
-	 * @return List of countries
+	 * @param p_playerName player name.
+	 */
+	public Player(String p_playerName) {
+		this.d_name = p_playerName;
+		this.d_noOfUnallocatedArmies = 0;
+		this.d_ordersToExecute = new ArrayList<>();
+	}
+
+	/**
+	 * This is No argument constructor.
+	 */
+	public Player() {
+
+	}
+
+	/**
+	 * This getter is used to get player's name.
+	 * 
+	 * @return return player name.
+	 */
+	public String getPlayerName() {
+		return d_name;
+	}
+
+	/**
+	 * This setter is used to set player's p_name.
+	 * 
+	 * @param p_name set player name.
+	 */
+	public void setPlayerName(String p_name) {
+		this.d_name = p_name;
+	}
+
+	/**
+	 * This getter is used to get list of countries owned by player.
+	 * 
+	 * @return return countries owned by player.
 	 */
 	public List<Country> getD_coutriesOwned() {
 		return d_coutriesOwned;
 	}
-	
+
 	/**
-	 * setter method to store the countries owned by the player.
+	 * This setter is used to set list of countries owned by player.
 	 * 
-	 * @param p_coutriesOwned the list of countries player owns
+	 * @param p_coutriesOwned set countries owned by player.
 	 */
 	public void setD_coutriesOwned(List<Country> p_coutriesOwned) {
 		this.d_coutriesOwned = p_coutriesOwned;
 	}
-	
+
 	/**
-	 * getter method to get the continents owned by the player.
+	 * This getter is used to get list of continents owned by player.
 	 * 
-	 * @return List of continents
+	 * @return return list of continents owned by player.
 	 */
 	public List<Continent> getD_continentsOwned() {
 		return d_continentsOwned;
 	}
-	
+
 	/**
-	 * setter method to store the continents owned by the player.
+	 * This setter is used to set list of continents owned by player.
 	 * 
-	 * @param p_continentsOwned the list of continents owned by the player
+	 * @param p_continentsOwned set continents owned by player.
 	 */
 	public void setD_continentsOwned(List<Continent> p_continentsOwned) {
 		this.d_continentsOwned = p_continentsOwned;
 	}
-	
+
 	/**
-	 * getter method to get the list of the orders given by the player.
+	 * This getter is used to get execute orders of player.
 	 * 
-	 * @return List order to be executed
+	 * @return return execute orders.
 	 */
 	public List<Order> getD_ordersToExecute() {
 		return d_ordersToExecute;
 	}
-	
+
 	/**
-	 * setter method to store the list of orders given by the player.
+	 * This setter is used to set execute orders player.
 	 * 
-	 * @param p_ordersToExecute List of orders to execute
+	 * @param p_ordersToExecute set execute orders.
 	 */
 	public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
 		this.d_ordersToExecute = p_ordersToExecute;
 	}
-	
+
 	/**
-	 * getter method to get the name of the player.
+	 * This getter is used to get allocated armies of player.
 	 * 
-	 * @return String name of the player
-	 */
-	public String getD_playerName() {
-		return d_playerName;
-	}
-	
-	/**
-	 * setter method to store the player's name.
-	 * 
-	 * @param p_playerName name of the player
-	 */
-	public void setD_playerName(String p_playerName) {
-		this.d_playerName = p_playerName;
-	}
-	
-	/**
-	 * getter method to get the number of unallocated armies owned by the player.
-	 * 
-	 * @return Integer number of unallocated armies
+	 * @return return allocated armies of player.
 	 */
 	public Integer getD_noOfUnallocatedArmies() {
 		return d_noOfUnallocatedArmies;
 	}
-	
+
 	/**
-	 * setter method to store the number of unallocated armies owned by the player.
+	 * This setter is used to set number of allocated armies to player.
 	 * 
-	 * @param p_noOfUnallocatedArmies number of unallocated armies
+	 * @param p_numberOfArmies set number of armies to player.
 	 */
-	public void setD_noOfUnallocatedArmies(Integer p_noOfUnallocatedArmies) {
-		this.d_noOfUnallocatedArmies = p_noOfUnallocatedArmies;
+	public void setD_noOfUnallocatedArmies(Integer p_numberOfArmies) {
+		this.d_noOfUnallocatedArmies = p_numberOfArmies;
+	}
+
+	/**
+	 * Issue order which takes order as an input and add it to players unassigned
+	 * orders pool
+	 * 
+	 * @throws IOException    exception in reading inputs from user
+	 * @throws InvalidCommand exception if invalid deploy command is given
+	 */
+	public void issue_order() throws IOException, InvalidCommand {
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		PlayerService l_playerService = new PlayerService();
+		System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
+				+ this.getPlayerName());
+		String l_commandEntered = l_reader.readLine();
+		Command l_command = new Command(l_commandEntered);
+
+		if (l_command.getRootCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
+			l_playerService.createDeployOrder(l_commandEntered, this);
+		} else {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
+		}
+	}
+
+	/**
+	 * Gives the first order in the players list of orders, then removes it from the
+	 * list.
+	 * 
+	 * @return Order first order from the list of player's order
+	 */
+	public Order next_order() {
+		if (CommonUtil.isCollectionEmpty(this.d_ordersToExecute)) {
+			return null;
+		}
+		Order l_order = this.d_ordersToExecute.get(0);
+		this.d_ordersToExecute.remove(l_order);
+		return l_order;
 	}
 }
