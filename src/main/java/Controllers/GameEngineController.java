@@ -391,11 +391,11 @@ public class GameEngineController {
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
 			
-			// Assigning armies to players
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
 				System.out.println("\n********Starting Main Game Loop***********\n");
+				// Assigning armies to players
 				d_playerService.assignArmies(d_gameState);
-				// Issuing order to players
+				// Issuing order for players
 				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
 						if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
