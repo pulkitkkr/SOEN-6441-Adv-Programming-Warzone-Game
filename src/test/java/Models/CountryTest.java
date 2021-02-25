@@ -2,7 +2,7 @@ package Models;
 
 /**
  * 
- * This is the CountryTest Class.
+ * This class is used to test functionality of Country class functions.
  * 
  */
 public class CountryTest {

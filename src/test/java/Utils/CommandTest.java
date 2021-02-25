@@ -9,7 +9,14 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * This class is used to test functionality of Command class functions.
+ */
 public class CommandTest {
+	
+	/**
+	 * Testing if the command entered is valid or not
+	 */
     @Test
     public void test_validCommand_getRootCommand(){
         Command l_command = new Command("editcontinent -add continentID continentvalue");
@@ -18,6 +25,9 @@ public class CommandTest {
         assertEquals("editcontinent",l_rootCommand);
     }
 
+    /**
+     * Testing if the command entered is invalid or not
+     */
     @Test
     public void test_inValidCommand_getRootCommand(){
         Command l_command = new Command("");
@@ -26,6 +36,9 @@ public class CommandTest {
         assertEquals("", l_rootCommand);
     }
 
+    /**
+     * Testing the single word commands
+     */
     @Test
     public void test_singleWord_getRootCommand(){
         Command l_command = new Command("validatemap");
@@ -34,6 +47,9 @@ public class CommandTest {
         assertEquals("validatemap", l_rootCommand);
     }
 
+    /**
+     * testing the commands
+     */
     @Test
     public void test_noFlagCommand_getRootCommand(){
         Command l_command = new Command("loadmap abc.txt");
@@ -42,6 +58,9 @@ public class CommandTest {
         assertEquals("loadmap", l_rootCommand);
     }
 
+    /**
+     * testing the single operation commands
+     */
     @Test
     public void test_singleCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -remove continentID");
@@ -59,6 +78,9 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * testing if more than one spaces in between the command and its parameters is acceptable or not
+     */
     @Test
     public void test_singleCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent      -remove continentID");
@@ -76,6 +98,9 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * testing the multiple commands in a single line are working or not
+     */
     @Test
     public void test_multiCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -add continentID continentValue  -remove continentID");
@@ -98,6 +123,9 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * testing commands
+     */
     @Test
     public void test_noFlagCommand_getOperationsAndArguments(){
         Command l_command = new Command("loadmap abc.txt");
@@ -115,6 +143,9 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * testing if more than one spaces in between the command and its parameters is acceptable or not
+     */
     @Test
     public void test_noFlagCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("loadmap         abc.txt");

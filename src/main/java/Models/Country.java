@@ -3,6 +3,9 @@ package Models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This model class manages all the countries on the map.
+ */
 public class Country {
 
 	/**

@@ -8,6 +8,9 @@ import Utils.CommonUtil;
 import java.util.Collections;
 import java.util.Map.Entry;
 
+/**
+ * this model class manages all the maps.
+ */
 public class Map {
 
 	/**

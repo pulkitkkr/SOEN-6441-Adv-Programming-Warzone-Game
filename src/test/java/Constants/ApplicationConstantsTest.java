@@ -1,9 +1,7 @@
 package Constants;
 
 /**
- * 
- * This is the ApplicationConstantsTest Class.
- * 
+ * This class is used to test functionality of Application class functions.
  */
 public class ApplicationConstantsTest {
 }

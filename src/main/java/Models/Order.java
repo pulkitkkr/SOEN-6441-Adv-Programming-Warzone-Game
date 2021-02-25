@@ -1,9 +1,7 @@
 package Models;
 
 /**
- * 
- * This is the Order Class.
- * 
+ * This model class manages the orders given by the players.
  */
 public class Order {
 	

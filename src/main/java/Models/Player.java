@@ -12,9 +12,7 @@ import Utils.Command;
 import Utils.CommonUtil;
 
 /**
- * 
  * This class depicts player's information and services.
- *
  */
 public class Player {
 	private String d_name;

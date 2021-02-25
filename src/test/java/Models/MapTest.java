@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 
- * This is the MapTest Class.
+ * This class is used to test functionality of Map class functions.
  * 
  */
 public class MapTest {

@@ -15,6 +15,9 @@ import Models.GameState;
 import Models.Map;
 import Utils.Command;
 
+/**
+ * This class is used to test functionality of GameEngineController class functions.
+ */
 public class GameEngineControllerTest {
 
 	Map d_map;
@@ -90,6 +93,13 @@ public class GameEngineControllerTest {
 		Command l_command = new Command("savemap");
 		d_gameEngine.performSaveMap(l_command);
 	}
+	
+	/**
+	 * Tests if the assigned country is valid of not.
+	 * 
+	 * @throws InvalidCommand Exception
+	 * @throws IOException Exception
+	 */
 	@Test(expected = InvalidCommand.class)
 	public void testAssignCountriesInvalidCommand() throws InvalidCommand, IOException {
 		Command l_command = new Command("assigncountries -add india");

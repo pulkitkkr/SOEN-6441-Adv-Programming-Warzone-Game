@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This service class handles the players.
+ */
 public class PlayerService {
 
 	/**
