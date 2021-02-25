@@ -371,7 +371,7 @@ public class Map {
     }
 
     /**
-     * Performs the remove continent operation on Map:
+     * Performs the remove continent operation on Map.
      * <ul>
      *     <li> Deletes Specified Continent</li>
      *     <li>Deletes Countries in Continents and their associated data in the Map</li>
