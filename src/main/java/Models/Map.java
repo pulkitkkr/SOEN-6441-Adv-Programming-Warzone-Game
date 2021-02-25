@@ -108,6 +108,7 @@ public class Map {
      */
     public Boolean checkContinentConnectivity() throws InvalidMap {
         boolean l_flagConnectivity = true;
+
         for (Continent c : d_continents) {
             if (null == c.getD_countries() || c.getD_countries().size() < 1) {
                 throw new InvalidMap(c.getD_continentName() + " has no countries, it must possess atleast 1 country");
@@ -133,6 +134,8 @@ public class Map {
             l_continentCountry.put(c.getD_countryId(), false);
         }
         dfsSubgraph(p_continent.getD_countries().get(0), l_continentCountry, p_continent);
+
+        // Iterates Over Entries to locate unreachable countries in continent
         for (Entry<Integer, Boolean> entry : l_continentCountry.entrySet()) {
             if (!entry.getValue()) {
                 Country l_country = getCountry(entry.getKey());
@@ -172,6 +175,8 @@ public class Map {
             d_countryReach.put(c.getD_countryId(), false);
         }
         dfsCountry(d_countries.get(0));
+
+        // Iterates over entries to locate the unreachable country
         for (Entry<Integer, Boolean> entry : d_countryReach.entrySet()) {
             if (!entry.getValue()) {
                 String l_exceptionMessage = getCountry(entry.getKey()).getD_countryName() + " country is not reachable";
@@ -205,6 +210,7 @@ public class Map {
      */
     public List<Country> getAdjacentCountry(Country p_c) throws InvalidMap {
         List<Country> l_adjCountries = new ArrayList<Country>();
+
         if (p_c.getD_adjacentCountryIds().size() > 0) {
             for (int i : p_c.getD_adjacentCountryIds()) {
                 l_adjCountries.add(getCountry(i));
@@ -261,6 +267,7 @@ public class Map {
      */
     public void addContinent(String p_continentName, Integer p_controlValue) throws InvalidMap{
         int l_continentId;
+
         if (d_continents!=null) {
             l_continentId=d_continents.size()>0?Collections.max(getContinentIDs())+1:1;
             if(CommonUtil.isNull(getContinent(p_continentName))){
@@ -286,6 +293,8 @@ public class Map {
     public void removeContinent(String p_continentName) throws InvalidMap{
         if (d_continents!=null) {
             if(!CommonUtil.isNull(getContinent(p_continentName))){
+
+                // Deletes the continent and updates neighbour as well as country objects
                 if (getContinent(p_continentName).getD_countries()!=null) {
                     for(Country c: getContinent(p_continentName).getD_countries()){
                         removeCountryNeighboursFromAll(c.getD_countryId());

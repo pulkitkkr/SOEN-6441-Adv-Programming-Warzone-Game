@@ -38,11 +38,15 @@ public class MapService {
 		List<String> l_linesOfFile = loadFile(p_loadFileName);
 
 		if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
+
+			// Parses the file and stores information in objects
 			List<String> l_continentData = getMetaData(l_linesOfFile, "continent");
 			List<Continent> l_continentObjects = parseContinentsMetaData(l_continentData);
 			List<String> l_countryData = getMetaData(l_linesOfFile, "country");
 			List<String> l_bordersMetaData = getMetaData(l_linesOfFile, "border");
 			List<Country> l_countryObjects = parseCountriesMetaData(l_countryData);
+
+			// Updates the neighbour of countries in Objects
 			l_countryObjects = parseBorderMetaData(l_countryObjects, l_bordersMetaData);
 			l_continentObjects = linkCountryContinents(l_countryObjects, l_continentObjects);
 			l_map.setD_continents(l_continentObjects);
@@ -113,6 +117,7 @@ public class MapService {
 	public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
 		int l_continentId = 1;
 		List<Continent> l_continents = new ArrayList<Continent>();
+
 		for (String cont : p_continentList) {
 			String[] l_metaData = cont.split(" ");
 			l_continents.add(new Continent(l_continentId, l_metaData[0], Integer.parseInt(l_metaData[1])));
@@ -150,6 +155,7 @@ public class MapService {
 	 */
 	public List<Country> parseBorderMetaData(List<Country> p_countriesList, List<String> p_bordersList) {
 		LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+
 		for (String l_border : p_bordersList) {
 			if (null != l_border && !l_border.isEmpty()) {
 				ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
@@ -199,6 +205,7 @@ public class MapService {
 
 		String l_filePath = CommonUtil.getMapFilePath(p_editFilePath);
 		File l_fileToBeEdited = new File(l_filePath);
+
 		if (l_fileToBeEdited.createNewFile()) {
 			System.out.println("File has been created.");
 			Map l_map = new Map();
@@ -228,6 +235,7 @@ public class MapService {
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
 				: p_gameState.getD_map();
+
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
@@ -270,6 +278,7 @@ public class MapService {
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
 				: p_gameState.getD_map();
+
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
@@ -307,6 +316,7 @@ public class MapService {
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents())
 				&& CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName)
 				: p_gameState.getD_map();
+
 		if(!CommonUtil.isNull(l_mapToBeUpdated)) {
 			Map l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
 			p_gameState.setD_map(l_updatedMap);
@@ -343,12 +353,16 @@ public class MapService {
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
 		try {
+
+			// Verifies if the file linked to savemap and edited by user are same
 			if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");
 				return false;
 			} else {
 				if (null != p_gameState.getD_map()) {
 					Models.Map l_currentMap = p_gameState.getD_map();
+
+					// Proceeds to save the map if it passes the validation check
 					boolean l_mapValidationStatus = l_currentMap.Validate();
 					if (l_mapValidationStatus) {
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
@@ -389,6 +403,8 @@ public class MapService {
 		String l_countryMetaData = new String();
 		String l_bordersMetaData = new String();
 		List<String> l_bordersList = new ArrayList<>();
+
+		// Writes Country Objects to File And Organizes Border Data for each of them
 		p_writer.write(System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
 		for (Country l_country : p_gameState.getD_map().getD_countries()) {
 			l_countryMetaData = new String();
@@ -405,6 +421,8 @@ public class MapService {
 				l_bordersList.add(l_bordersMetaData);
 			}
 		}
+
+		//Writes Border data to the File
 		if (null != l_bordersList && !l_bordersList.isEmpty()) {
 			p_writer.write(System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
 			for (String l_borderStr : l_bordersList) {
