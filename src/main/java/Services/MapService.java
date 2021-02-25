@@ -72,10 +72,8 @@ public class MapService {
 			l_reader = new BufferedReader(new FileReader(l_filePath));
 			l_lineList = l_reader.lines().collect(Collectors.toList());
 			l_reader.close();
-		} catch (FileNotFoundException l_e1) {
-			l_e1.printStackTrace();
-		} catch (IOException l_e2) {
-			l_e2.printStackTrace();
+		} catch (IOException l_e1) {
+			System.out.println("File not Found!");
 		}
 		return l_lineList;
 	}

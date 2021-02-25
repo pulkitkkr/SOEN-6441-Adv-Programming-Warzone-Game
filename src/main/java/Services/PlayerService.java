@@ -4,6 +4,7 @@ import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Models.*;
 import Utils.CommonUtil;
+import Constants.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +119,21 @@ public class PlayerService {
 	}
 
 	/**
+	 * Assigns the Colors to the players.
+	 *
+	 * @param p_gameState Current Game State
+	 */
+	public void assignColors(GameState p_gameState){
+		if (!checkPlayersAvailability(p_gameState)) return;
+
+		List<Player> l_players = p_gameState.getD_players();
+
+		for(int i = 0; i< l_players.size(); i++){
+			l_players.get(i).setD_color(ApplicationConstants.COLORS.get(i));
+		}
+	}
+
+	/**
 	 * This method is used to assign countries randomly among players.
 	 *
 	 * @param p_gameState current game state with map and player information
@@ -180,18 +196,20 @@ public class PlayerService {
 	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
 		for (Player l_pl : p_players) {
 			List<String> l_countriesOwned = new ArrayList<>();
-			l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
+			if (!CommonUtil.isCollectionEmpty(l_pl.getD_coutriesOwned())) {
+				l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
 
-			for (Continent l_cont : p_continents) {
-				List<String> l_countriesOfContinent = new ArrayList<>();
-				l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
-				if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
-					if (l_pl.getD_continentsOwned() == null)
-						l_pl.setD_continentsOwned(new ArrayList<>());
+				for (Continent l_cont : p_continents) {
+					List<String> l_countriesOfContinent = new ArrayList<>();
+					l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
+					if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
+						if (l_pl.getD_continentsOwned() == null)
+							l_pl.setD_continentsOwned(new ArrayList<>());
 
-					l_pl.getD_continentsOwned().add(l_cont);
-					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
-							+ l_cont.getD_continentName());
+						l_pl.getD_continentsOwned().add(l_cont);
+						System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
+								+ l_cont.getD_continentName());
+					}
 				}
 			}
 		}

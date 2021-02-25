@@ -1,7 +1,10 @@
 package Constants;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class initializes all the constants that are going to be used throughout the application.
+ *
  */
 public final class ApplicationConstants {
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
@@ -23,8 +26,22 @@ public final class ApplicationConstants {
 
 	public static final String MAPFILEEXTENSION = ".map";
 
+	public static final String RED = "\033[0;31m";
+	public static final String GREEN = "\033[0;32m";
+	public static final String YELLOW = "\033[0;33m";
+	public static final String BLUE = "\033[0;34m";
+	public static final String PURPLE = "\033[0;35m";
+	public static final String CYAN = "\033[0;36m";
+	public static final String WHITE = "\u001B[47m";
+
 	public static final String CONTINENTS = "[continents]";
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
+	public static final String ARMIES = "Armies";
+	public static final String CONTROL_VALUE = "Control Value";
+	public static final String CONNECTIVITY = "Connections";
 	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
+	public static final int CONSOLE_WIDTH = 80;
+
+	public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
 }

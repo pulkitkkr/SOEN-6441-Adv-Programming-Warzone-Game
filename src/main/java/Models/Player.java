@@ -15,6 +15,14 @@ import Utils.CommonUtil;
  * This class depicts player's information and services.
  */
 public class Player {
+	/**
+	 * color to show details with on map.
+	 */
+	private String d_color;
+
+	/**
+	 * Name of the player.
+	 */
 	private String d_name;
 
 	/**
@@ -58,7 +66,7 @@ public class Player {
 
 	/**
 	 * This getter is used to get player's name.
-	 * 
+	 *
 	 * @return return player name.
 	 */
 	public String getPlayerName() {
@@ -67,7 +75,7 @@ public class Player {
 
 	/**
 	 * This setter is used to set player's p_name.
-	 * 
+	 *
 	 * @param p_name set player name.
 	 */
 	public void setPlayerName(String p_name) {
@@ -75,8 +83,25 @@ public class Player {
 	}
 
 	/**
+	 * This getter is used to get color code for player.
+	 *
+	 * @return Color
+	 */
+	public String getD_color() {
+		return d_color;
+	}
+
+	/**
+	 *
+	 * @param p_color ANSI color code.
+	 */
+	public void setD_color(String p_color) {
+		d_color = p_color;
+	}
+
+	/**
 	 * This getter is used to get list of countries owned by player.
-	 * 
+	 *
 	 * @return return countries owned by player.
 	 */
 	public List<Country> getD_coutriesOwned() {
@@ -85,7 +110,7 @@ public class Player {
 
 	/**
 	 * This setter is used to set list of countries owned by player.
-	 * 
+	 *
 	 * @param p_coutriesOwned set countries owned by player.
 	 */
 	public void setD_coutriesOwned(List<Country> p_coutriesOwned) {
@@ -94,7 +119,7 @@ public class Player {
 
 	/**
 	 * This getter is used to get list of continents owned by player.
-	 * 
+	 *
 	 * @return return list of continents owned by player.
 	 */
 	public List<Continent> getD_continentsOwned() {
@@ -103,7 +128,7 @@ public class Player {
 
 	/**
 	 * This setter is used to set list of continents owned by player.
-	 * 
+	 *
 	 * @param p_continentsOwned set continents owned by player.
 	 */
 	public void setD_continentsOwned(List<Continent> p_continentsOwned) {
@@ -144,6 +169,35 @@ public class Player {
 	 */
 	public void setD_noOfUnallocatedArmies(Integer p_numberOfArmies) {
 		this.d_noOfUnallocatedArmies = p_numberOfArmies;
+	}
+
+	/**
+	 * Extracts the list of names of countries owned by the player.
+	 *
+	 * @return list of country names
+	 */
+	public List<String> getCountryNames(){
+		List<String> l_countryNames=new ArrayList<String>();
+		for(Country c: d_coutriesOwned){
+			l_countryNames.add(c.getD_countryName());
+		}
+		return l_countryNames;
+	}
+
+	/**
+	 * Retrieves the list of continent names owned by the player.
+	 *
+	 * @return list of continent names
+	 */
+	public List<String> getContinentNames(){
+		List<String> l_continentNames = new ArrayList<String>();
+		if (d_continentsOwned != null) {
+			for(Continent c: d_continentsOwned){
+				l_continentNames.add(c.getD_continentName());
+			}
+			return l_continentNames;
+		}
+		return null;
 	}
 
 	/**
