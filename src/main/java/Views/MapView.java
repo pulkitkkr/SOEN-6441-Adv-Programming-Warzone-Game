@@ -122,7 +122,7 @@ public class MapView {
 	}
 
 	private void renderPlayerInfo(Integer p_index, Player p_player){
-		String l_playerInfo = String.format("%02d. %s", p_index,p_player.getPlayerName()+ " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+		String l_playerInfo = String.format("%02d. %-8s %s", p_index,p_player.getPlayerName(), " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
 		System.out.println(l_playerInfo);
 	}
 
