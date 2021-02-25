@@ -32,6 +32,7 @@ public class Map {
 
 	/**
 	 * getter method to get the map file.
+	 * 
 	 * @return d_mapfile
 	 */
 	public String getD_mapFile() {
@@ -40,6 +41,7 @@ public class Map {
 
 	/**
 	 * setter method to set the map file.
+	 * 
 	 * @param p_mapFile mapfile name
 	 */
 	public void setD_mapFile(String p_mapFile) {
@@ -48,6 +50,7 @@ public class Map {
 
 	/**
 	 * getter method to get the list of continents.
+	 * 
 	 * @return the list of continents
 	 */
 	public List<Continent> getD_continents() {
@@ -56,6 +59,7 @@ public class Map {
 
 	/**
 	 * setter method to set the list of continents.
+	 * 
 	 * @param p_continents list of continents
 	 */
 	public void setD_continents(List<Continent> p_continents) {
@@ -64,6 +68,7 @@ public class Map {
 
 	/**
 	 * getter method to get the list of countries.
+	 * 
 	 * @return list of countries
 	 */
 	public List<Country> getD_countries() {
@@ -98,7 +103,8 @@ public class Map {
 	}
 
     /**
-     * Get a List of all Ids of continents in Map
+     * Get a List of all Ids of continents in Map.
+     * 
      * @return List of Continent Ids
      */
     public List<Integer> getContinentIDs(){
@@ -112,7 +118,8 @@ public class Map {
     }
 
     /**
-     * Get a list of all Ids of countries in Map
+     * Get a list of all Ids of countries in Map.
+     * 
      * @return List of Country Ids
      */
     public List<Integer> getCountryIDs(){
@@ -157,7 +164,8 @@ public class Map {
         return (!checkForNullObjects() && checkContinentConnectivity() && checkCountryConnectivity());
     }
 
-    /** Performs Null Check on Objects in Map.
+    /** 
+     * Performs Null Check on Objects in Map.
      *
      * @return Boolean if it is false
      * @throws InvalidMap for corresponding Invalid conditions

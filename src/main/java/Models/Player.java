@@ -41,7 +41,7 @@ public class Player {
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
-	 * armies
+	 * armies.
 	 * 
 	 * @param p_playerName player name.
 	 */
@@ -152,7 +152,7 @@ public class Player {
 	 * Issue order which takes order as an input and add it to players unassigned
 	 * orders pool.
 	 * 
-	 * @throws IOException    exception in reading inputs from user
+	 * @throws IOException exception in reading inputs from user
 	 * @throws InvalidCommand exception if invalid deploy command is given
 	 */
 	public void issue_order() throws IOException, InvalidCommand {
