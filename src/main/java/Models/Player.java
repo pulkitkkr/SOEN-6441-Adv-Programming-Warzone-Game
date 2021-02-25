@@ -159,13 +159,11 @@ public class Player {
 	public void issue_order() throws IOException, InvalidCommand {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		PlayerService l_playerService = new PlayerService();
-
-		String l_commandEntered;
 			System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
 					+ this.getPlayerName());
-			l_commandEntered = l_reader.readLine();
+			String l_commandEntered = l_reader.readLine();
 			Command l_command = new Command(l_commandEntered);
-			if (l_command.getRootCommand().equalsIgnoreCase("deploy")) {
+			if (l_command.getRootCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
 				l_playerService.createDeployOrder(l_commandEntered, this);
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);

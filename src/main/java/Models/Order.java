@@ -79,7 +79,6 @@ public class Order {
 			System.out.println("Order was not executed due to invalid Order Command");
 		}
 		}
-
 	}
 
 	/**
