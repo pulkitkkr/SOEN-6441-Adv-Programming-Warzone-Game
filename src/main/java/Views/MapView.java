@@ -10,16 +10,16 @@ import Models.Country;
 import Models.GameState;
 import Models.Player;
 import Models.Map;
+import Utils.CommonUtil;
 import org.davidmoten.text.utils.WordWrap;
 
 /**
  * This is the MapView Class.
  */
 public class MapView {
-	Player d_player;
+	List<Player> d_players;
 	GameState d_gameState;
 	Map d_map;
-	String d_color;
 	List<Country> d_countries;
 	List<Continent> d_continents;
 
@@ -33,23 +33,18 @@ public class MapView {
 		d_continents = d_map.getD_continents();
 	}
 
-	public MapView(GameState p_gameState, Player p_player){
+	public MapView(GameState p_gameState, List<Player> p_players){
 		d_gameState = p_gameState;
-		d_player = p_player;
+		d_players = p_players;
 		d_map = p_gameState.getD_map();
 		d_countries = d_map.getD_countries();
 		d_continents = d_map.getD_continents();
-		d_color = p_player.getD_color();
 	}
 
-	private boolean isPlayerView(){
-		return d_player != null;
-	}
+	private String getColorizedString(String p_color, String p_s) {
+		if(p_color == null) return p_s;
 
-	private String getColorizedString(String p_s) {
-		if(d_color == null) return p_s;
-
-		return d_color + p_s + ANSI_RESET;
+		return p_color + p_s + ANSI_RESET;
 	}
 
 	private void renderCenteredString (int p_width, String p_s) {
@@ -68,32 +63,87 @@ public class MapView {
 	}
 
 	private void renderContinentName(String p_continentName){
+		String l_continentName = p_continentName+" ( "+ApplicationConstants.CONTROL_VALUE+" : "+ d_gameState.getD_map().getContinent(p_continentName).getD_continentValue()+" )";
+
 		renderSeparator();
-		renderCenteredString(ApplicationConstants.CONSOLE_WIDTH, p_continentName);
+		if(d_players != null){
+			l_continentName = getColorizedString(getContinentColor(p_continentName), l_continentName);
+		}
+		renderCenteredString(ApplicationConstants.CONSOLE_WIDTH, l_continentName);
 		renderSeparator();
 	}
 
 	private String getFormattedCountryName(int p_index, String p_countryName){
 		String l_indexedString = String.format("%02d. %s", p_index, p_countryName);
 
-		return getColorizedString(String.format("%-30s", l_indexedString));
+		if(d_players != null){
+			String l_armies = "( "+ApplicationConstants.ARMIES+" : "+ getCountryArmies(p_countryName)+" )";
+			l_indexedString = String.format("%02d. %s %s", p_index, p_countryName, l_armies);
+		}
+		return getColorizedString(getCountryColor(p_countryName), String.format("%-30s", l_indexedString));
 	}
 
-	private void renderFormattedAdjacentCountryName(List<Country> p_adjCountries){
+	private void renderFormattedAdjacentCountryName(String p_countryName, List<Country> p_adjCountries){
 		StringBuilder l_commaSeparatedCountries = new StringBuilder();
 
 		for(Country c: p_adjCountries) {
 			l_commaSeparatedCountries.append(c.getD_countryName()).append(", ");
 		}
-		System.out.println(WordWrap.from(l_commaSeparatedCountries.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap());
+		String l_adjacentCountry = ApplicationConstants.CONNECTIVITY+" : "+ WordWrap.from(l_commaSeparatedCountries.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap();
+		System.out.println(getColorizedString(getCountryColor(p_countryName),l_adjacentCountry));
 		System.out.println();
+	}
+
+	public String getCountryColor(String p_countryName){
+		if(getCountryOwner(p_countryName) != null){
+			return getCountryOwner(p_countryName).getD_color();
+		}else{
+			return null;
+		}
+	}
+
+	public String getContinentColor(String p_continentName){
+		if(getContinentOwner(p_continentName) != null){
+			return getContinentOwner(p_continentName).getD_color();
+		}else{
+			return null;
+		}
+	}
+
+	public Player getCountryOwner(String p_countryName){
+		if (d_players != null) {
+			for (Player p: d_players){
+				if(p.getCountryNames().contains(p_countryName)){
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Player getContinentOwner(String p_continentName){
+		if (d_players != null) {
+			for (Player p: d_players){
+				if(!CommonUtil.isNull(p.getContinentNames()) && p.getContinentNames().contains(p_continentName)){
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Integer getCountryArmies(String p_countryName){
+		Integer l_armies = d_gameState.getD_map().getCountryByName(p_countryName).getD_armies();
+
+		if(l_armies == null)
+			return 0;
+		return l_armies;
 	}
 
 	/**
 	 * This method displays the list of continents and countries present in the .map file.
 	 */
 	public void showMap() {
-		boolean l_isPlayerView = isPlayerView();
 
 		d_continents.forEach(l_continent -> {
 			renderContinentName(l_continent.getD_continentName());
@@ -107,7 +157,7 @@ public class MapView {
 				try {
 					List<Country> l_adjCountries = d_map.getAdjacentCountry(l_country);
 
-					renderFormattedAdjacentCountryName(l_adjCountries);
+					renderFormattedAdjacentCountryName(l_country.getD_countryName(), l_adjCountries);
 				} catch (InvalidMap l_invalidMap) {
 					System.out.println(l_invalidMap.getMessage());
 				}

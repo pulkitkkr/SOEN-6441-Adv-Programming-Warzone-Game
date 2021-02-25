@@ -171,6 +171,30 @@ public class Player {
 		this.d_noOfUnallocatedArmies = p_numberOfArmies;
 	}
 
+	/**
+	 * Extracts the list of names of countries owned by the player
+	 *
+	 * @return list of country names
+	 */
+	public List<String> getCountryNames(){
+		List<String> l_countryNames=new ArrayList<String>();
+		for(Country c: d_coutriesOwned){
+			l_countryNames.add(c.getD_countryName());
+		}
+		return l_countryNames;
+	}
+
+	public List<String> getContinentNames(){
+		List<String> l_continentNames = new ArrayList<String>();
+		if (d_continentsOwned != null) {
+			for(Continent c: d_continentsOwned){
+				l_continentNames.add(c.getD_continentName());
+			}
+			return l_continentNames;
+		}
+		return null;
+	}
+
 
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned

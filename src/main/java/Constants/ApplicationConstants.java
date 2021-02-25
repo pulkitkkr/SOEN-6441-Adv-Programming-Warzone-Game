@@ -29,10 +29,14 @@ public final class ApplicationConstants {
 	public static final String BLUE = "\033[0;34m";    // BLUE
 	public static final String PURPLE = "\033[0;35m";  // PURPLE
 	public static final String CYAN = "\033[0;36m";    // CYAN
+	public static final String WHITE = "\u001B[47m";   // WHITE
 
 	public static final String CONTINENTS = "[continents]";
 	public static final String COUNTRIES = "[countries]";
 	public static final String BORDERS = "[borders]";
+	public static final String ARMIES = "Armies";
+	public static final String CONTROL_VALUE = "Control Value";
+	public static final String CONNECTIVITY = "Connections";
 	public static final String SRC_MAIN_RESOURCES = "src/main/resources";
 	public static final int CONSOLE_WIDTH = 80;
 

@@ -378,6 +378,7 @@ public class GameEngineController {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
+			d_playerService.assignColors(d_gameState);
 
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
 				System.out.println("\n********Starting Main Game Loop***********\n");
@@ -396,7 +397,8 @@ public class GameEngineController {
 							l_order.execute(d_gameState, l_player);
 					}
 				}
-//				TODO: Add Print Map Here
+				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+				l_map_view.showMap();
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
