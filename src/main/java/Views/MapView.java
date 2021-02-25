@@ -94,7 +94,7 @@ public class MapView {
 		System.out.println();
 	}
 
-	public String getCountryColor(String p_countryName){
+	private String getCountryColor(String p_countryName){
 		if(getCountryOwner(p_countryName) != null){
 			return getCountryOwner(p_countryName).getD_color();
 		}else{
@@ -102,7 +102,7 @@ public class MapView {
 		}
 	}
 
-	public String getContinentColor(String p_continentName){
+	private String getContinentColor(String p_continentName){
 		if(getContinentOwner(p_continentName) != null){
 			return getContinentOwner(p_continentName).getD_color();
 		}else{
@@ -110,7 +110,7 @@ public class MapView {
 		}
 	}
 
-	public Player getCountryOwner(String p_countryName){
+	private Player getCountryOwner(String p_countryName){
 		if (d_players != null) {
 			for (Player p: d_players){
 				if(p.getCountryNames().contains(p_countryName)){
@@ -121,21 +121,25 @@ public class MapView {
 		return null;
 	}
 
-	public void renderPlayerInfo(Player p_player){
-		System.out.println(p_player.getPlayerName()+ " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+	private void renderPlayerInfo(Integer p_index, Player p_player){
+		String l_playerInfo = String.format("%02d. %s", p_index,p_player.getPlayerName()+ " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+		System.out.println(l_playerInfo);
 	}
 
-	public void renderPlayers(){
+	private void renderPlayers(){
+		int l_counter = 0;
+
 		renderSeparator();
 		renderCenteredString(ApplicationConstants.CONSOLE_WIDTH, "GAME PLAYERS");
 		renderSeparator();
 
 		for(Player p: d_players){
-			renderPlayerInfo(p);
+			l_counter++;
+			renderPlayerInfo(l_counter, p);
 		}
 	}
 
-	public Player getContinentOwner(String p_continentName){
+	private Player getContinentOwner(String p_continentName){
 		if (d_players != null) {
 			for (Player p: d_players){
 				if(!CommonUtil.isNull(p.getContinentNames()) && p.getContinentNames().contains(p_continentName)){
@@ -146,7 +150,7 @@ public class MapView {
 		return null;
 	}
 
-	public Integer getCountryArmies(String p_countryName){
+	private Integer getCountryArmies(String p_countryName){
 		Integer l_armies = d_gameState.getD_map().getCountryByName(p_countryName).getD_armies();
 
 		if(l_armies == null)
@@ -155,7 +159,7 @@ public class MapView {
 	}
 
 	/**
-	 * This method displays the list of continents and countries present in the .map file.
+	 * This method displays the list of continents and countries present in the .map files alongside current state of the game
 	 */
 	public void showMap() {
 

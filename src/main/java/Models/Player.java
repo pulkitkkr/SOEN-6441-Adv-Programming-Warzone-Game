@@ -184,6 +184,11 @@ public class Player {
 		return l_countryNames;
 	}
 
+	/**
+	 * Retrieves the list of continent names owned by the player
+	 *
+	 * @return list of continent names
+	 */
 	public List<String> getContinentNames(){
 		List<String> l_continentNames = new ArrayList<String>();
 		if (d_continentsOwned != null) {
