@@ -91,45 +91,45 @@ public class GameEngineController {
 					break;
 				}
 
-			performSaveMap(l_command);
-			break;
-		}
-		case "loadmap": {
-			performLoadMap(l_command);
-			break;
-		}
-		case "validatemap": {
-			if (!l_isMapLoaded) {
-				System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+				performSaveMap(l_command);
 				break;
 			}
-			performValidateMap(l_command);
-			break;
-		}
-		case "editcountry": {
-			if (!l_isMapLoaded) {
-				System.out.println("Can not Edit Country, please perform `editmap` first");
+			case "loadmap": {
+				performLoadMap(l_command);
 				break;
 			}
-			performEditCountry(l_command);
-			break;
-		}
-		case "editneighbor": {
-			if (!l_isMapLoaded) {
-				System.out.println("Can not Edit Neighbors, please perform `editmap` first");
+			case "validatemap": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+					break;
+				}
+				performValidateMap(l_command);
 				break;
 			}
-			performEditNeighbour(l_command);
-			break;
-		}
-		case "gameplayer": {
-			if (!l_isMapLoaded) {
-				System.out.println("No map found, Please `loadmap` before adding game players");
+			case "editcountry": {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Country, please perform `editmap` first");
+					break;
+				}
+				performEditCountry(l_command);
 				break;
 			}
-			createPlayers(l_command);
-			break;
-		}
+			case "editneighbor": {
+				if (!l_isMapLoaded) {
+					System.out.println("Can not Edit Neighbors, please perform `editmap` first");
+					break;
+				}
+				performEditNeighbour(l_command);
+				break;
+			}
+			case "gameplayer": {
+				if (!l_isMapLoaded) {
+					System.out.println("No map found, Please `loadmap` before adding game players");
+					break;
+				}
+				createPlayers(l_command);
+				break;
+			}
 		case "assigncountries": {
 			assignCountries(l_command);
 			break;

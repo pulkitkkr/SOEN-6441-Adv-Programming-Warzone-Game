@@ -3,7 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * ApplicationConstants class to wrap constants for general utility.
+ * This class initializes all the constants that are going to be used throughout the application.
+ *
  */
 public final class ApplicationConstants {
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";

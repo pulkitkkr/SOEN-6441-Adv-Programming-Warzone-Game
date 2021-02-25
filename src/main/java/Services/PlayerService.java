@@ -66,7 +66,7 @@ public class PlayerService {
 
 	/**
 	 * Remove player from the game if it exists.
-	 *
+	 * 
 	 * @param p_existingPlayerList Existing player list present in game
 	 * @param p_updatedPlayers Updated player list with removal to be done
 	 * @param p_enteredPlayerName Player name which is to be removed
@@ -88,7 +88,7 @@ public class PlayerService {
 
 	/**
 	 * Adds player to Game if its not there already.
-	 *
+	 * 
 	 * @param p_updatedPlayers updated player list with newly added player
 	 * @param p_enteredPlayerName new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
