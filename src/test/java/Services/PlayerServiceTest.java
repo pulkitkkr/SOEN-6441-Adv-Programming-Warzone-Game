@@ -161,17 +161,6 @@ public class PlayerServiceTest {
 	}
 
 	/**
-	 * Used to check if invalid deploy command is given
-	 * 
-	 * @throws InvalidCommand if given command is invalid
-	 */
-	@Test(expected = InvalidCommand.class)
-	public void testCreateDeployOrderNegative() throws InvalidCommand {
-		d_playerService.createDeployOrder("deploy Canada", new Player());
-
-	}
-
-	/**
 	 * Tests deploy order logic to see if required order is created and armies are
 	 * re-calculated
 	 * 

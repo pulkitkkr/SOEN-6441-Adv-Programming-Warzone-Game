@@ -196,32 +196,25 @@ public class PlayerService {
 	}
 
 	/**
-	 * @param p_commandEntered command entered by th user
+	 * @param p_commandEntered command entered by the user
 	 * @param p_player         player to create deploy order
-	 *
-	 * @throws InvalidCommand indicates if the command is invalid
 	 */
-	public void createDeployOrder(String p_commandEntered, Player p_player) throws InvalidCommand {
+	public void createDeployOrder(String p_commandEntered, Player p_player) {
 		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
 				: p_player.getD_ordersToExecute();
-
 		String l_countryName = p_commandEntered.split(" ")[1];
 		String l_noOfArmies = p_commandEntered.split(" ")[2];
-		if (!CommonUtil.isEmpty(l_countryName) && !CommonUtil.isEmpty(l_noOfArmies)) {
-			if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
-				System.out.println(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
-			} else {
-				Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-						Integer.parseInt(l_noOfArmies));
-				l_orders.add(l_orderObject);
-				p_player.setD_ordersToExecute(l_orders);
-				Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-				p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				System.out.println("Order has been added to queue for execution.");
-			}
+		if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
+			System.out.println(
+					"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
 		} else {
-			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
+			Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
+					Integer.parseInt(l_noOfArmies));
+			l_orders.add(l_orderObject);
+			p_player.setD_ordersToExecute(l_orders);
+			Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
+			p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+			System.out.println("Order has been added to queue for execution.");
 		}
 	}
 
