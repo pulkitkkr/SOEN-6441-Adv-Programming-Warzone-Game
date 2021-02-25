@@ -20,12 +20,23 @@ import Utils.Command;
  */
 public class GameEngineControllerTest {
 
+	/**
+	 * Object of Map class.
+	 */
 	Map d_map;
+	
+	/**
+	 * object of GameState class.
+	 */
 	GameState d_state;
+	
+	/**
+	 * object of GameEngineController class.
+	 */
 	GameEngineController d_gameEngine;
 
 	/**
-	 * setup before each test case
+	 * setup before each test case.
 	 */
 	@Before
 	public void setup() {
@@ -35,7 +46,8 @@ public class GameEngineControllerTest {
 	}
 
 	/**
-	 * Tests the {@link InvalidCommand } in editmap command
+	 * Tests the {@link InvalidCommand } in editmap command.
+	 * 
 	 * @throws IOException Exception
 	 * @throws InvalidCommand Exception
 	 */
