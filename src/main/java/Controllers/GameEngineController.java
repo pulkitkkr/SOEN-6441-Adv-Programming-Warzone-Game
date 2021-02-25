@@ -261,6 +261,8 @@ public class GameEngineController {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
 					try {
+
+						// Loads the map if it is valid or resets the game state
 						Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
 								l_map.get(ApplicationConstants.ARGUMENTS));
 						if (l_mapToLoad.Validate()) {

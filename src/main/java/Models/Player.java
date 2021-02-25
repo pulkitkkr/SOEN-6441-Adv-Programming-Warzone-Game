@@ -162,6 +162,7 @@ public class Player {
 				+ this.getPlayerName());
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
+
 		if (l_command.getRootCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
 			l_playerService.createDeployOrder(l_commandEntered, this);
 		} else {
