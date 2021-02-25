@@ -166,7 +166,6 @@ public class PlayerService {
 		// If any countries are still left for assignment, it will redistribute those
 		// among players
 		if (!l_unassignedCountries.isEmpty()) {
-			System.out.println(l_unassignedCountries);
 			performRandomCountryAssignment(1, l_unassignedCountries, p_players);
 		}
 	}
