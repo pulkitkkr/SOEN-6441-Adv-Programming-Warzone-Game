@@ -86,8 +86,10 @@ public class MapView {
 	private void renderFormattedAdjacentCountryName(String p_countryName, List<Country> p_adjCountries){
 		StringBuilder l_commaSeparatedCountries = new StringBuilder();
 
-		for(Country c: p_adjCountries) {
-			l_commaSeparatedCountries.append(c.getD_countryName()).append(", ");
+		for(int i=0; i<p_adjCountries.size(); i++) {
+			l_commaSeparatedCountries.append(p_adjCountries.get(i).getD_countryName());
+			if(i<p_adjCountries.size()-1)
+				l_commaSeparatedCountries.append(", ");
 		}
 		String l_adjacentCountry = ApplicationConstants.CONNECTIVITY+" : "+ WordWrap.from(l_commaSeparatedCountries.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap();
 		System.out.println(getColorizedString(getCountryColor(p_countryName),l_adjacentCountry));

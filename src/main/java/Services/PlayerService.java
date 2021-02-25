@@ -189,18 +189,20 @@ public class PlayerService {
 	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
 		for (Player l_pl : p_players) {
 			List<String> l_countriesOwned = new ArrayList<>();
-			l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
+			if (!CommonUtil.isCollectionEmpty(l_pl.getD_coutriesOwned())) {
+				l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
 
-			for (Continent l_cont : p_continents) {
-				List<String> l_countriesOfContinent = new ArrayList<>();
-				l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
-				if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
-					if (l_pl.getD_continentsOwned() == null)
-						l_pl.setD_continentsOwned(new ArrayList<>());
+				for (Continent l_cont : p_continents) {
+					List<String> l_countriesOfContinent = new ArrayList<>();
+					l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
+					if (l_countriesOwned.containsAll(l_countriesOfContinent)) {
+						if (l_pl.getD_continentsOwned() == null)
+							l_pl.setD_continentsOwned(new ArrayList<>());
 
-					l_pl.getD_continentsOwned().add(l_cont);
-					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
-							+ l_cont.getD_continentName());
+						l_pl.getD_continentsOwned().add(l_cont);
+						System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with continent : "
+								+ l_cont.getD_continentName());
+					}
 				}
 			}
 		}
@@ -321,7 +323,7 @@ public class PlayerService {
 			return;
 		}
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
-		this.assignColors(p_gameState);
+		//this.assignColors(p_gameState);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
 			p_gameState.setD_players(l_updatedPlayers);
