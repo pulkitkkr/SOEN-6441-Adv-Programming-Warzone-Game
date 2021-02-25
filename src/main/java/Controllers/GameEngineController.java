@@ -61,7 +61,7 @@ public class GameEngineController {
 
 	/**
 	 * Handle the commands.
-	 *
+   *
 	 * @param p_enteredCommand command entered by the user in CLI
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws InvalidCommand indicates command is invalid
@@ -200,9 +200,9 @@ public class GameEngineController {
 	 * required arguments and redirecting control to model for actual processing
 	 *
 	 * @param p_command command entered by the user on CLI
-	 * @throws IOException indicates failure in I/O operation
+	 * @throws IOException    indicates failure in I/O operation
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap indicates map is invalid
+	 * @throws InvalidMap     indicates map is invalid
 	 */
 	public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -318,7 +318,7 @@ public class GameEngineController {
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
-	 * @throws InvalidMap indicates map is invalid
+	 * @throws InvalidMap     indicates map is invalid
 	 */
 	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -399,11 +399,13 @@ public class GameEngineController {
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
 			d_playerService.assignColors(d_gameState);
-
+      
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
 				System.out.println("\n********Starting Main Game Loop***********\n");
+        
 				// Assigning armies to players
 				d_playerService.assignArmies(d_gameState);
+        
 				// Issuing order for players
 				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
@@ -411,6 +413,7 @@ public class GameEngineController {
 							l_player.issue_order();
 					}
 				}
+        
 				// Executing orders
 				while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
@@ -421,6 +424,7 @@ public class GameEngineController {
 				}
 				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
 				l_map_view.showMap();
+        
 				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
 				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 				String l_continue = l_reader.readLine();

@@ -200,7 +200,6 @@ public class Player {
 		return null;
 	}
 
-
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned
 	 * orders pool

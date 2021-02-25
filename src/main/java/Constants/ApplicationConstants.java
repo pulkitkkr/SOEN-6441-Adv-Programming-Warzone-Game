@@ -1,10 +1,8 @@
 package Constants;
-
 import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * ApplicationConstants class to wrap constants for general utility.
  */
 public final class ApplicationConstants {

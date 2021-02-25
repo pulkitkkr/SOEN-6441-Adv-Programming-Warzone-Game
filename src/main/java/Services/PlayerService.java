@@ -14,14 +14,13 @@ public class PlayerService {
 
 	/**
 	 * Checks if player name is exists in given existing player list
-	 *
+   *
 	 * @param p_existingPlayerList existing players list present in game
-	 * @param p_playerName         player name which needs to be looked upon
+	 * @param p_playerName player name which needs to be looked upon
 	 * @return boolean true if player name is unique, false if its not
 	 */
 	public boolean isPlayerNameUnique(List<Player> p_existingPlayerList, String p_playerName) {
 		boolean l_isUnique = true;
-
 		if (!CommonUtil.isCollectionEmpty(p_existingPlayerList)) {
 			for (Player l_player : p_existingPlayerList) {
 				if (l_player.getPlayerName().equalsIgnoreCase(p_playerName)) {
@@ -43,7 +42,6 @@ public class PlayerService {
 	 */
 	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) {
 		List<Player> l_updatedPlayers = new ArrayList<>();
-
 		if (!CommonUtil.isCollectionEmpty(p_existingPlayerList))
 			l_updatedPlayers.addAll(p_existingPlayerList);
 
@@ -65,10 +63,10 @@ public class PlayerService {
 
 	/**
 	 * Remove player from the game if it exists
-	 *
-	 * @param p_existingPlayerList     Existing player list present in game
-	 * @param p_updatedPlayers         Updated player list with removal to be done
-	 * @param p_enteredPlayerName      Player name which is to be removed
+   *
+	 * @param p_existingPlayerList Existing player list present in game
+	 * @param p_updatedPlayers Updated player list with removal to be done
+	 * @param p_enteredPlayerName Player name which is to be removed
 	 * @param p_playerNameAlreadyExist true if player already exists
 	 */
 	private void removeGamePlayer(List<Player> p_existingPlayerList, List<Player> p_updatedPlayers,
@@ -87,9 +85,9 @@ public class PlayerService {
 
 	/**
 	 * Adds player to Game if its not there already
-	 *
-	 * @param p_updatedPlayers         updated player list with newly added player
-	 * @param p_enteredPlayerName      new player name to be added
+   *
+	 * @param p_updatedPlayers updated player list with newly added player
+	 * @param p_enteredPlayerName new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
@@ -155,7 +153,6 @@ public class PlayerService {
 	private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
 			List<Player> p_players) {
 		List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
-
 		for (Player l_pl : p_players) {
 			if (l_unassignedCountries.isEmpty())
 				break;
@@ -211,6 +208,7 @@ public class PlayerService {
 
 	/**
 	 * @param p_commandEntered command entered by the user
+   *
 	 * @param p_player player to create deploy order
 	 */
 	public void createDeployOrder(String p_commandEntered, Player p_player) {
@@ -322,7 +320,6 @@ public class PlayerService {
 			System.out.println("Kindly load the map first to add player: " + p_argument);
 			return;
 		}
-
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 		this.assignColors(p_gameState);
 
