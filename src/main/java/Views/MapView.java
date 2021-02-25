@@ -259,23 +259,35 @@ public class MapView {
 		if(d_players != null){
 			renderPlayers();
 		}
-		d_continents.forEach(l_continent -> {
-			renderContinentName(l_continent.getD_continentName());
 
-			List<Country> l_continentCountries = l_continent.getD_countries();
-			final int[] l_countryIndex = {1};
+		// renders the continent if any
+		if (!CommonUtil.isNull(d_continents)) {
+			d_continents.forEach(l_continent -> {
+				renderContinentName(l_continent.getD_continentName());
 
-			l_continentCountries.forEach((l_country) -> {
-				String l_formattedCountryName = getFormattedCountryName(l_countryIndex[0]++, l_country.getD_countryName());
-				System.out.println(l_formattedCountryName);
-				try {
-					List<Country> l_adjCountries = d_map.getAdjacentCountry(l_country);
+				List<Country> l_continentCountries = l_continent.getD_countries();
+				final int[] l_countryIndex = {1};
 
-					renderFormattedAdjacentCountryName(l_country.getD_countryName(), l_adjCountries);
-				} catch (InvalidMap l_invalidMap) {
-					System.out.println(l_invalidMap.getMessage());
+				// renders the country if any
+				if (!CommonUtil.isCollectionEmpty(l_continentCountries)) {
+					l_continentCountries.forEach((l_country) -> {
+						String l_formattedCountryName = getFormattedCountryName(l_countryIndex[0]++, l_country.getD_countryName());
+						System.out.println(l_formattedCountryName);
+						try {
+							List<Country> l_adjCountries = d_map.getAdjacentCountry(l_country);
+
+							renderFormattedAdjacentCountryName(l_country.getD_countryName(), l_adjCountries);
+						} catch (InvalidMap l_invalidMap) {
+							System.out.println(l_invalidMap.getMessage());
+						}
+					});
+				} else {
+					System.out.println("No countries are present in the continent!");
 				}
 			});
-		});
+		} else {
+			System.out.println("No continents to display!");
+		}
 	}
 }
+

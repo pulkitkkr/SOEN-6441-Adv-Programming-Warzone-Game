@@ -304,7 +304,7 @@ public class Map {
                 l_adjCountries.add(getCountry(i));
             }
         } else {
-            throw new InvalidMap(p_country.getD_countryId() + " doesn't have any adjacent countries");
+            throw new InvalidMap(p_country.getD_countryName() + " doesn't have any adjacent countries");
 		}
 		return l_adjCountries;
 	}

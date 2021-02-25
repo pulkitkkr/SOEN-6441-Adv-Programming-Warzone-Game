@@ -253,13 +253,12 @@ public class MapService {
 	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation,
 			String p_argument) throws InvalidMap {
 
-		if (p_operation.equalsIgnoreCase("add")) {
+		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
 			p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
-		} else if (p_operation.equalsIgnoreCase("remove")) {
+		} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
 			p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
 		} else {
-			System.out.println("Continent with continent name : " + Integer.parseInt(p_argument.split(" ")[0])
-						+ " does not Exist. Changes are not made");
+			System.out.println("Continent couldn't be added/removed. Changes are not made");
 		}
 
 		return p_mapToBeUpdated;
@@ -294,9 +293,9 @@ public class MapService {
 	 * @return Updated Map Object
 	 */
 	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
-		if (p_operation.equalsIgnoreCase("add")){
+		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-		}else if(p_operation.equalsIgnoreCase("remove")){
+		}else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
 			p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
 		}else{
 			System.out.println("Couldn't Save your changes");
@@ -335,9 +334,9 @@ public class MapService {
 	 * @throws InvalidMap handles invalidmap exception
 	 */
 	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
-		if (p_operation.equalsIgnoreCase("add")){
+		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-		}else if(p_operation.equalsIgnoreCase("remove")){
+		}else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else{
 			System.out.println("Couldn't Save your changes");
@@ -365,6 +364,7 @@ public class MapService {
 					Models.Map l_currentMap = p_gameState.getD_map();
 
 					// Proceeds to save the map if it passes the validation check
+					System.out.println("Validating Map......");
 					boolean l_mapValidationStatus = l_currentMap.Validate();
 					if (l_mapValidationStatus) {
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
