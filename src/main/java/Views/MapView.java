@@ -121,6 +121,20 @@ public class MapView {
 		return null;
 	}
 
+	public void renderPlayerInfo(Player p_player){
+		System.out.println(p_player.getPlayerName()+ " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+	}
+
+	public void renderPlayers(){
+		renderSeparator();
+		renderCenteredString(ApplicationConstants.CONSOLE_WIDTH, "GAME PLAYERS");
+		renderSeparator();
+
+		for(Player p: d_players){
+			renderPlayerInfo(p);
+		}
+	}
+
 	public Player getContinentOwner(String p_continentName){
 		if (d_players != null) {
 			for (Player p: d_players){
@@ -145,6 +159,9 @@ public class MapView {
 	 */
 	public void showMap() {
 
+		if(d_players != null){
+			renderPlayers();
+		}
 		d_continents.forEach(l_continent -> {
 			renderContinentName(l_continent.getD_continentName());
 
