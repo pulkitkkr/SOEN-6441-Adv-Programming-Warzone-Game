@@ -61,6 +61,7 @@ public class MapServiceTest {
 	public void testEditMap() throws IOException {
 		d_mapservice.editMap(d_state, "test.map");
 		File l_file = new File(CommonUtil.getMapFilePath("test.map"));
+
 		assertTrue(l_file.exists());
 	}
 
@@ -163,6 +164,7 @@ public class MapServiceTest {
 			l_neighbours.addAll(l_country.getD_adjacentCountryIds());
 			l_actualCountryNeighbors.put(l_country.getD_countryId(), l_neighbours);
 		}
+
 		assertEquals(l_expectedCountryIdList, l_actualCountryIdList);
 		assertEquals(l_expectedCountryNeighbors, l_actualCountryNeighbors);
 	}
@@ -188,6 +190,7 @@ public class MapServiceTest {
 	public void testEditCountryAdd() throws IOException, InvalidMap {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editCountry(d_state, "add", "China Asia");
+
 		assertEquals(d_state.getD_map().getCountryByName("China").getD_countryName(), "China");
 	}
 
@@ -213,6 +216,7 @@ public class MapServiceTest {
 		d_mapservice.editCountry(d_state, "add", "Canada Northern-America");
 		d_mapservice.editCountry(d_state, "add", "Alaska Northern-America");
 		d_mapservice.editNeighbour(d_state, "add", "Canada Alaska");
+
 		assertEquals(d_state.getD_map().getCountryByName("Canada").getD_adjacentCountryIds().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
 	}
 

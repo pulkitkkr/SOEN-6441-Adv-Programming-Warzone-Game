@@ -42,11 +42,13 @@ public class MapTest {
 
     /**
      * Tests a valid and invalid Map for Validate function
+     *
      * @throws InvalidMap
      */
     @Test (expected = InvalidMap.class)
     public void testValidate() throws InvalidMap {
         d_map= d_ms.loadMap(d_gameState, "canada.map");
+
         assertEquals(d_map.Validate(), true);
         d_map= d_ms.loadMap(d_gameState, "swiss.map");
         d_map.Validate();
@@ -54,12 +56,14 @@ public class MapTest {
 
     /**
      * Checking {@link InvalidMap} for no country in Map
+     *
      * @throws InvalidMap Exception
      */
     @Test (expected = InvalidMap.class)
     public void testValidateNoCountry() throws InvalidMap{
         Continent l_continent = new Continent();
         List <Continent> l_continents = new ArrayList<Continent>();
+
         l_continents.add(l_continent);
         d_map.setD_continents(l_continents);
         d_map.Validate();
@@ -67,6 +71,7 @@ public class MapTest {
 
     /**
      * Checks Continent connectivity of an unconnected continent
+     *
      * @throws InvalidMap Exception
      */
     @Test (expected = InvalidMap.class)
@@ -77,6 +82,7 @@ public class MapTest {
 
     /**
      * Checks Country Connectivity for not connected countries
+     *
      * @throws InvalidMap Exception
      */
     @Test(expected = InvalidMap.class)

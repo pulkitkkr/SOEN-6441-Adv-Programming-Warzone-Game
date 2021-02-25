@@ -86,31 +86,4 @@ public class Continent {
 			}
 		}
 	}
-
-	/**
-	 * Add a neighbor to particular country in continent
-	 * @param p_countryInContinent ID of country to be added to
-	 * @param p_neighbourCountry ID of neighbour to be added
-	 */
-	public void addCountryNeighbours(Integer p_countryInContinent, Integer p_neighbourCountry){
-		for (Country c: d_countries){
-			if (c.getD_countryId().equals(p_countryInContinent)){
-				c.addNeighbour(p_neighbourCountry);
-			}
-		}
-	}
-
-	/**
-	 * Removes the specified neighbor from given country in continent
-	 * @param p_countryId ID of country to be updated
-	 * @param p_neighbourCountryId neighbor ID to be removed
-	 */
-	public void removeSpecificNeighbour(Integer p_countryId, Integer p_neighbourCountryId){
-		for (Country c:d_countries){
-			if (c.getD_countryId().equals(p_countryId)){
-				c.removeNeighbour(p_neighbourCountryId);
-			}
-		}
-	}
-
 }

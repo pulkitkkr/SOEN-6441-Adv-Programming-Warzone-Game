@@ -12,7 +12,7 @@ import Utils.Command;
 import Utils.CommonUtil;
 
 /**
- *
+ * 
  * This class depicts player's information and services.
  *
  */
@@ -21,6 +21,7 @@ public class Player {
 	 * color to show details with on map
 	 */
 	private String d_color;
+
 	/**
 	 * Name of the player
 	 */
@@ -136,7 +137,7 @@ public class Player {
 
 	/**
 	 * This getter is used to get execute orders of player.
-	 *
+	 * 
 	 * @return return execute orders.
 	 */
 	public List<Order> getD_ordersToExecute() {
@@ -145,7 +146,7 @@ public class Player {
 
 	/**
 	 * This setter is used to set execute orders player.
-	 *
+	 * 
 	 * @param p_ordersToExecute set execute orders.
 	 */
 	public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
@@ -154,17 +155,16 @@ public class Player {
 
 	/**
 	 * This getter is used to get allocated armies of player.
-	 *
+	 * 
 	 * @return return allocated armies of player.
 	 */
-
 	public Integer getD_noOfUnallocatedArmies() {
 		return d_noOfUnallocatedArmies;
 	}
 
 	/**
 	 * This setter is used to set number of allocated armies to player.
-	 *
+	 * 
 	 * @param p_numberOfArmies set number of armies to player.
 	 */
 	public void setD_noOfUnallocatedArmies(Integer p_numberOfArmies) {
@@ -204,34 +204,29 @@ public class Player {
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned
 	 * orders pool
-	 *
-	 * @throws IOException exception in reading inputs from user
+	 * 
+	 * @throws IOException    exception in reading inputs from user
+	 * @throws InvalidCommand exception if invalid deploy command is given
 	 */
-	public void issue_order() throws IOException {
+	public void issue_order() throws IOException, InvalidCommand {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		PlayerService l_playerService = new PlayerService();
+		System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
+				+ this.getPlayerName());
+		String l_commandEntered = l_reader.readLine();
+		Command l_command = new Command(l_commandEntered);
 
-		String l_commandEntered;
-		try {
-			System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
-					+ this.getPlayerName());
-			l_commandEntered = l_reader.readLine();
-			Command l_command = new Command(l_commandEntered);
-			if (l_command.getRootCommand().equalsIgnoreCase("deploy")) {
-				l_playerService.createDeployOrder(l_commandEntered, this);
-			} else {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
-			}
-
-		} catch (InvalidCommand l_e) {
-			l_e.printStackTrace();
+		if (l_command.getRootCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
+			l_playerService.createDeployOrder(l_commandEntered, this);
+		} else {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
 		}
 	}
 
 	/**
 	 * Gives the first order in the players list of orders, then removes it from the
 	 * list.
-	 *
+	 * 
 	 * @return Order first order from the list of player's order
 	 */
 	public Order next_order() {
