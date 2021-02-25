@@ -2,17 +2,39 @@ package Utils;
 
 import java.util.*;
 
+/**
+ * This class handles the input commands entered by the user.
+ */
 public class Command {
+	
+	/**
+	 * d_command stores the command player types in.
+	 */
     public String d_command;
 
+    /**
+     * Sets the values of the data member.
+     * 
+     * @param p_command input command given by the player
+     */
     public Command(String p_command){
         this.d_command = p_command.trim().replaceAll(" +", " ");
     }
 
+    /**
+     * Getter method for the root command.
+     * 
+     * @return string the rootcommand from the series of commands entered by the player
+     */
     public String getRootCommand(){
         return d_command.split(" ")[0];
     }
 
+    /**
+     * Processes through the list of operations received from the player.
+     * 
+     * @return list the list of operations are returned
+     */
     public List<Map<String , String>> getOperationsAndArguments(){
         String l_rootCommand = getRootCommand();
         String l_operationsString =  d_command.replace(l_rootCommand, "").trim();
@@ -38,8 +60,14 @@ public class Command {
 
         return l_operations_list;
     }
-
-    private Map<String, String>  getOperationAndArgumentsMap(String p_operation){
+    
+    /**
+     * Handles all the operations and arguments given by the player.
+     * 
+     * @param p_operation input operation given by the player
+     * @return map the operation map is returned
+     */
+    private Map<String, String> getOperationAndArgumentsMap(String p_operation){
        Map<String, String> l_operationMap = new HashMap<String, String>();
 
         String[] l_split_operation = p_operation.split(" ");
@@ -56,6 +84,14 @@ public class Command {
 
         return l_operationMap;
     }
+    
+    /**
+     * This method checks if the map chosen by the user consists of the specified keys or not.
+     * 
+     * @param p_key keys given by the player
+     * @param p_inputMap the input map selected by the player
+     * @return boolean true if the required keys are present and false if not
+     */
     public boolean checkRequiredKeysPresent(String p_key, Map<String, String> p_inputMap) {
     	if(p_inputMap.containsKey(p_key) && null != p_inputMap.get(p_key)
 				&& !p_inputMap.get(p_key).isEmpty())

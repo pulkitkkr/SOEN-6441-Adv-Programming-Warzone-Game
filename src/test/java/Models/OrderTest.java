@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * 
- * This is the OrderTest Class.
+ * This class is used to test functionality of Order class functions.
  * 
  */
 public class OrderTest {

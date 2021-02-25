@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * This is the PlayerTest Class.
+ * This class is used to test functionality of Player class functions.
  *
  */
 public class PlayerTest {

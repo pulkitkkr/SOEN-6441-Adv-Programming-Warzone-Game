@@ -12,9 +12,7 @@ import Utils.Command;
 import Utils.CommonUtil;
 
 /**
- * 
  * This class depicts player's information and services.
- *
  */
 public class Player {
 	private String d_name;
@@ -41,7 +39,7 @@ public class Player {
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
-	 * armies
+	 * armies.
 	 * 
 	 * @param p_playerName player name.
 	 */
@@ -150,9 +148,9 @@ public class Player {
 
 	/**
 	 * Issue order which takes order as an input and add it to players unassigned
-	 * orders pool
+	 * orders pool.
 	 * 
-	 * @throws IOException    exception in reading inputs from user
+	 * @throws IOException exception in reading inputs from user
 	 * @throws InvalidCommand exception if invalid deploy command is given
 	 */
 	public void issue_order() throws IOException, InvalidCommand {
