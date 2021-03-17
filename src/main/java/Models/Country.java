@@ -1,5 +1,7 @@
 package Models;
 
+import Exceptions.InvalidMap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,11 +177,11 @@ public class Country {
 	 * 
 	 * @param p_countryId Id of country to be removed
 	 */
-	public void removeNeighbour(Integer p_countryId){
+	public void removeNeighbour(Integer p_countryId) throws InvalidMap {
 		if(d_adjacentCountryIds.contains(p_countryId)){
 			d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
 		}else{
-			System.out.println("No Such Neighbour Exists");
+			throw new InvalidMap("No Such Neighbour Exists");
 		}
 	}
 }
