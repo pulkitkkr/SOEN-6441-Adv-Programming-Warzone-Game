@@ -221,24 +221,24 @@ public class PlayerService {
 	 * @param p_commandEntered command entered by the user
 	 * @param p_player player to create deploy order
 	 */
-	public void createDeployOrder(String p_commandEntered, Player p_player) {
-		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
-				: p_player.getD_ordersToExecute();
-		String l_countryName = p_commandEntered.split(" ")[1];
-		String l_noOfArmies = p_commandEntered.split(" ")[2];
-		if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
-			System.out.println(
-					"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
-		} else {
-			Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-					Integer.parseInt(l_noOfArmies));
-			l_orders.add(l_orderObject);
-			p_player.setD_ordersToExecute(l_orders);
-			Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-			p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-			System.out.println("Order has been added to queue for execution.");
-		}
-	}
+//	public void createDeployOrder(String p_commandEntered, Player p_player) {
+//		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
+//				: p_player.getD_ordersToExecute();
+//		String l_countryName = p_commandEntered.split(" ")[1];
+//		String l_noOfArmies = p_commandEntered.split(" ")[2];
+//		if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
+//			System.out.println(
+//					"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
+//		} else {
+//			Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
+//					Integer.parseInt(l_noOfArmies));
+//			l_orders.add(l_orderObject);
+//			p_player.setD_ordersToExecute(l_orders);
+//			Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
+//			p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+//			System.out.println("Order has been added to queue for execution.");
+//		}
+//	}
 
 	/**
 	 * Used to test number of armies entered in deploy command to check that player
@@ -248,9 +248,9 @@ public class PlayerService {
 	 * @param p_noOfArmies number of armies to deploy
 	 * @return boolean to validate armies to deploy
 	 */
-	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
-		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
-	}
+//	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
+//		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
+//	}
 
 	/**
 	 * Calculates armies of player based on countries and continents owned.

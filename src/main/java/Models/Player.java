@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Services.PlayerService;
@@ -38,7 +40,7 @@ public class Player {
 	/**
 	 * List of orders of player.
 	 */
-	List<Order> d_ordersToExecute;
+	List<Order> order_list;
 
 	/**
 	 * Number of armies allocated to player.
@@ -54,7 +56,8 @@ public class Player {
 	public Player(String p_playerName) {
 		this.d_name = p_playerName;
 		this.d_noOfUnallocatedArmies = 0;
-		this.d_ordersToExecute = new ArrayList<>();
+		this.d_coutriesOwned = new ArrayList<Country>();
+		this.order_list = new ArrayList<Order>();
 	}
 
 	/**
@@ -141,7 +144,7 @@ public class Player {
 	 * @return return execute orders.
 	 */
 	public List<Order> getD_ordersToExecute() {
-		return d_ordersToExecute;
+		return order_list;
 	}
 
 	/**
@@ -150,7 +153,7 @@ public class Player {
 	 * @param p_ordersToExecute set execute orders.
 	 */
 	public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
-		this.d_ordersToExecute = p_ordersToExecute;
+		this.order_list = p_ordersToExecute;
 	}
 
 	/**
@@ -176,9 +179,9 @@ public class Player {
 	 *
 	 * @return list of country names
 	 */
-	public List<String> getCountryNames(){
-		List<String> l_countryNames=new ArrayList<String>();
-		for(Country c: d_coutriesOwned){
+	public List<String> getCountryNames() {
+		List<String> l_countryNames = new ArrayList<String>();
+		for (Country c : d_coutriesOwned) {
 			l_countryNames.add(c.getD_countryName());
 		}
 		return l_countryNames;
@@ -189,10 +192,10 @@ public class Player {
 	 *
 	 * @return list of continent names
 	 */
-	public List<String> getContinentNames(){
+	public List<String> getContinentNames() {
 		List<String> l_continentNames = new ArrayList<String>();
 		if (d_continentsOwned != null) {
-			for(Continent c: d_continentsOwned){
+			for (Continent c : d_continentsOwned) {
 				l_continentNames.add(c.getD_continentName());
 			}
 			return l_continentNames;
@@ -206,19 +209,52 @@ public class Player {
 	 * 
 	 * @throws IOException exception in reading inputs from user
 	 */
-	public void issue_order() throws IOException {
+	public void issue_order(GameState gs) throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		PlayerService l_playerService = new PlayerService();
 		System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
 				+ this.getPlayerName());
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
+		String l_order = l_command.getRootCommand();
+		int target_country;
 
-		if (l_command.getRootCommand().equalsIgnoreCase("deploy") && l_commandEntered.split(" ").length == 3) {
-			l_playerService.createDeployOrder(l_commandEntered, this);
-		} else {
-			System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);;
+		// TO-DO SWITCH CASE
+		switch (l_order) {
+		case "deploy":
+			String l_countryName = l_commandEntered.split(" ")[1];
+			String l_noOfArmies = l_commandEntered.split(" ")[2];
+			
+			if (validateDeployOrderArmies(this, l_noOfArmies)) {
+				System.out.println(
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
+			} else {
+				this.order_list.add(new Deploy(this, l_countryName, d_noOfUnallocatedArmies,gs));
+				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
+				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+				System.out.println("Order has been added to queue for execution.");
+			}
+			// l_playerService.createDeployOrder(l_commandEntered, this);
+			break;
+		default:
+			System.out.println("Invalid order entered");
+			break;
 		}
+
+		
+
+	}
+
+	/**
+	 * Used to test number of armies entered in deploy command to check that player
+	 * cannot deploy more armies that there is in their reinforcement pool.
+	 *
+	 * @param p_player     player to create deploy order
+	 * @param p_noOfArmies number of armies to deploy
+	 * @return boolean to validate armies to deploy
+	 */
+	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
+		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
 	}
 
 	/**
@@ -228,11 +264,11 @@ public class Player {
 	 * @return Order first order from the list of player's order
 	 */
 	public Order next_order() {
-		if (CommonUtil.isCollectionEmpty(this.d_ordersToExecute)) {
+		if (CommonUtil.isCollectionEmpty(this.order_list)) {
 			return null;
 		}
-		Order l_order = this.d_ordersToExecute.get(0);
-		this.d_ordersToExecute.remove(l_order);
+		Order l_order = this.order_list.get(0);
+		this.order_list.remove(l_order);
 		return l_order;
 	}
 }

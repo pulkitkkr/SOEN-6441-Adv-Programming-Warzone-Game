@@ -131,7 +131,7 @@ public class GameEngineController {
 				break;
 			}
 		case "assigncountries": {
-			assignCountries(l_command);
+			assignCountries(l_command, d_gameState);
 			break;
 		}
 		case "showmap": {
@@ -394,7 +394,7 @@ public class GameEngineController {
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	public void assignCountries(Command p_command) throws InvalidCommand, IOException {
+	public void assignCountries(Command p_command, GameState gs) throws InvalidCommand, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			d_playerService.assignCountries(d_gameState);
@@ -410,7 +410,7 @@ public class GameEngineController {
 				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 					for (Player l_player : d_gameState.getD_players()) {
 						if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
-							l_player.issue_order();
+							l_player.issue_order(gs);
 					}
 				}
 
@@ -419,7 +419,8 @@ public class GameEngineController {
 					for (Player l_player : d_gameState.getD_players()) {
 						Order l_order = l_player.next_order();
 						if (l_order != null)
-							l_order.execute(d_gameState, l_player);
+							l_order.execute();
+							//l_order.execute(d_gameState, l_player);
 					}
 				}
 				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
