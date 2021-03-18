@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Continent;
 import Models.Country;
@@ -69,9 +70,10 @@ public class MapServiceTest {
 	 * tests addition of continent via editcontinent operation
 	 * @throws IOException Exceptions
 	 * @throws InvalidMap Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test
-	public void testEditContinentAdd() throws IOException, InvalidMap {
+	public void testEditContinentAdd() throws IOException, InvalidMap, InvalidCommand {
 		d_state.setD_map(new Map());
 		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state.getD_map(), "Add", "Asia 10");
 
@@ -85,9 +87,10 @@ public class MapServiceTest {
 	 *
 	 * @throws IOException Exceptions
 	 * @throws InvalidMap Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test
-	public void testEditContinentRemove() throws IOException, InvalidMap {
+	public void testEditContinentRemove() throws IOException, InvalidMap, InvalidCommand {
 		List<Continent> l_continents = new ArrayList<>();
 		Continent l_c1 = new Continent();
 		l_c1.setD_continentID(1);
@@ -185,9 +188,10 @@ public class MapServiceTest {
 	 * Tests the add country operation via editCountry
 	 * @throws IOException Exception
 	 * @throws InvalidMap Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test
-	public void testEditCountryAdd() throws IOException, InvalidMap {
+	public void testEditCountryAdd() throws IOException, InvalidMap, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "China Asia", "add", 2);
 
@@ -197,9 +201,10 @@ public class MapServiceTest {
 	/**
 	 * Tests the Remove Country Operation via editcountry
 	 * @throws InvalidMap Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test(expected = InvalidMap.class)
-	public void testEditCountryRemove() throws InvalidMap, IOException {
+	public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "Ukraine", "remove", 2);
 	}
@@ -208,9 +213,10 @@ public class MapServiceTest {
 	 * Tests the add neighbor operation via editneighbor
 	 * @throws InvalidMap Exception
 	 * @throws IOException Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test
-	public void testEditNeighborAdd() throws InvalidMap, IOException {
+	public void testEditNeighborAdd() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "Northern-America 10", "add", 1 );
 		d_mapservice.editFunctions(d_state, "Canada Northern-America", "add", 2);
@@ -224,9 +230,10 @@ public class MapServiceTest {
 	 * Tests the remove neighbor operation via editneighbor
 	 * @throws InvalidMap Exception
 	 * @throws IOException Exception
+	 * @throws InvalidCommand Exception
 	 */
 	@Test(expected = InvalidMap.class)
-	public void testEditNeighborRemove() throws InvalidMap, IOException{
+	public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand{
 		d_mapservice.editMap(d_state, "testedit.map");
 		d_mapservice.editFunctions(d_state, "Asia 9", "add", 1);
 		d_mapservice.editFunctions(d_state, "Maldives Asia", "add", 2);

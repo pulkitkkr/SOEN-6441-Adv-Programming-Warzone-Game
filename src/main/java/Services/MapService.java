@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Constants.ApplicationConstants;
+import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Continent;
 import Models.Country;
@@ -227,8 +228,9 @@ public class MapService {
 	 * @param p_switchParameter Type of Edit Operation to be performed.
 	 * @throws IOException Exception.
 	 * @throws InvalidMap invalidmap exception.
+	 * @throws InvalidCommand invalid command exception
 	 */
-	public void editFunctions(GameState p_gameState, String p_argument, String p_operation, Integer p_switchParameter) throws IOException, InvalidMap{
+	public void editFunctions(GameState p_gameState, String p_argument, String p_operation, Integer p_switchParameter) throws IOException, InvalidMap, InvalidCommand{
 		Map l_updatedMap;
 		String l_mapFileName = p_gameState.getD_map().getD_mapFile();
 		Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents()) && CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName) : p_gameState.getD_map();
@@ -262,17 +264,17 @@ public class MapService {
 	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
 	 * @throws InvalidMap invalidmap exception
+	 * @throws InvalidCommand invalid command exception
 	 */
-	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
+	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap, InvalidCommand {
 
 		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
 			p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
 		} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
 			p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
 		} else {
-			System.out.println("Continent couldn't be added/removed. Changes are not made");
+			throw new InvalidCommand("Continent couldn't be added/removed. Changes are not made");
 		}
-
 		return p_mapToBeUpdated;
 	}
 

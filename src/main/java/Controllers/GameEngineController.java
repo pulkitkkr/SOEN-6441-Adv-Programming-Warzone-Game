@@ -304,7 +304,7 @@ public class GameEngineController {
 				if (l_currentMap.Validate()) {
 					System.out.println(ApplicationConstants.VALID_MAP);
 				} else {
-					System.out.println("Failed to Validate map!");
+					throw new InvalidMap("Failed to Validate map!");
 				}
 			}
 		} else {
@@ -403,25 +403,10 @@ public class GameEngineController {
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
 				System.out.println("\n********Starting Main Game Loop***********\n");
 
-				// Assigning armies to players
 				d_playerService.assignArmies(d_gameState);
-
-				// Issuing order for players
-				while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
-					for (Player l_player : d_gameState.getD_players()) {
-						if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
-							l_player.issue_order();
-					}
-				}
-
-				// Executing orders
-				while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
-					for (Player l_player : d_gameState.getD_players()) {
-						Order l_order = l_player.next_order();
-						if (l_order != null)
-							l_order.execute(d_gameState, l_player);
-					}
-				}
+				issueOrders();
+				executeOrders();
+				
 				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
 				l_map_view.showMap();
 
@@ -433,6 +418,35 @@ public class GameEngineController {
 			}
 		} else {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+		}
+	}
+
+	/**
+	 * Invokes order execution logic for all unexecuted orders
+	 */
+	private void executeOrders() {
+		// Executing orders
+		while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
+			for (Player l_player : d_gameState.getD_players()) {
+				Order l_order = l_player.next_order();
+				if (l_order != null)
+					l_order.execute(d_gameState, l_player);
+			}
+		}
+	}
+
+	/**
+	 * Accepts orders from players
+	 * 
+	 * @throws IOException exception in reading inputs from user
+	 */
+	private void issueOrders() throws IOException {
+		// Issuing order for players
+		while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
+			for (Player l_player : d_gameState.getD_players()) {
+				if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
+					l_player.issue_order();
+			}
 		}
 	}
 }
