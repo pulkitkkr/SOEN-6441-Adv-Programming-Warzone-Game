@@ -5,21 +5,22 @@ package Models;
  * the players.
  */
 public interface Order {
+
 	/**
-	 * Method that will be called by the Receiver to execute the Order
+	 * Method that will be called by the Receiver to execute the Order.
 	 * 
-	 * @param p_gameState current state of the game
+	 * @param p_gameState current state of the game.
 	 */
 	public void execute(GameState p_gameState);
 
 	/**
 	 * 
-	 * @return
+	 * @return boolean true or false
 	 */
 	public boolean valid();
 
 	/**
-	 * 
+	 * Print order information.
 	 */
 	public void printOrder();
 }
