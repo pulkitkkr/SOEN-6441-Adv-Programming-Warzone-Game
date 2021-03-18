@@ -19,8 +19,14 @@ public class PlayerTest {
 	 * Existing Player List.
 	 */
 	List<Player> d_exisitingPlayerList = new ArrayList<>();
-	List<Order> order_list = new ArrayList<Order>();
+	/**
+	 * Order List
+	 */
+	List<Order> d_order_list = new ArrayList<Order>();
 
+	/**
+	 * Player object
+	 */
 	Player d_player = new Player();
 
 	/**
@@ -39,21 +45,17 @@ public class PlayerTest {
 	@Test
 	public void testNextOrder() {
 
-		Player player1 = d_exisitingPlayerList.get(0);
-		Player player2 = d_exisitingPlayerList.get(1);
+		Order l_deployOrder1 = new Deploy(d_exisitingPlayerList.get(0), "India", 5);
+		Order l_deployOrder2 = new Deploy(d_exisitingPlayerList.get(1), "Finland", 6);
 
-		Order o1 = new Deploy(player1, "India", 5);
-		Order o2 = new Deploy(player2, "Finland", 6);
+		d_order_list.add(l_deployOrder1);
+		d_order_list.add(l_deployOrder2);
 
-		order_list.add(o1);
-		order_list.add(o2);
-
-		d_exisitingPlayerList.get(0).setD_ordersToExecute(order_list);
-
-		d_exisitingPlayerList.get(1).setD_ordersToExecute(order_list);
+		d_exisitingPlayerList.get(0).setD_ordersToExecute(d_order_list);
+		d_exisitingPlayerList.get(1).setD_ordersToExecute(d_order_list);
 
 		Order l_order = d_exisitingPlayerList.get(0).next_order();
-		assertEquals(o1, l_order);
+		assertEquals(l_deployOrder1, l_order);
 		assertEquals(1, d_exisitingPlayerList.get(0).getD_ordersToExecute().size());
 	}
 
@@ -67,6 +69,5 @@ public class PlayerTest {
 		String l_noOfArmies = "4";
 		boolean l_bool = d_player.validateDeployOrderArmies(d_player, l_noOfArmies);
 		assertFalse(l_bool);
-
 	}
 }

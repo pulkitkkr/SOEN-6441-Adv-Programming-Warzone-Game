@@ -12,21 +12,35 @@ import org.junit.Test;
 
 import Exceptions.InvalidCommand;
 
+/**
+ * This class is used to test functionality of Deploy order.
+ */
 public class DeployTest {
 
-	List<Deploy> order_list;
-
 	/**
-	 * Player class reference.
+	 * First Player
 	 */
 	Player d_player1;
 
+	/**
+	 * Second Player
+	 */
 	Player d_player2;
 
-	Deploy d1;
+	/**
+	 * First Deploy Order.
+	 */
+	Deploy d_deployOrder1;
 
-	Deploy d2;
-	GameState g = new GameState();
+	/**
+	 * Second Deploy Order.
+	 */
+	Deploy d_deployOrder2;
+
+	/**
+	 * Game State.
+	 */
+	GameState d_gameState = new GameState();
 
 	/**
 	 * The setup is called before each test case of this class is executed.
@@ -55,11 +69,10 @@ public class DeployTest {
 
 		Map l_map = new Map();
 		l_map.setD_countries(l_mapCountries);
-		g.setD_map(l_map);
+		d_gameState.setD_map(l_map);
 
-		d1 = new Deploy(d_player1, "India", 5);
-		d2 = new Deploy(d_player2, "Canada", 15);
-
+		d_deployOrder1 = new Deploy(d_player1, "India", 5);
+		d_deployOrder2 = new Deploy(d_player2, "Canada", 15);
 	}
 
 	/**
@@ -69,32 +82,30 @@ public class DeployTest {
 	 */
 	@Test
 	public void testValidateDeployOrderCountry() {
-
-		boolean l_actualBoolean = d1.valid();
+		boolean l_actualBoolean = d_deployOrder1.valid();
 		assertTrue(l_actualBoolean);
+		boolean l_actualBoolean2 = d_deployOrder2.valid();
+		assertTrue(l_actualBoolean2);
 	}
 
 	/**
 	 * Used to test execution of deploy order and check if required armies are
-	 * deployed at country level or not
+	 * deployed at country level or not.
 	 */
 	@Test
 	public void testDeployOrderExecution() {
-
-		d1.execute(g);
-		Country l_countryIndia = g.getD_map().getCountryByName("India");
+		d_deployOrder1.execute(d_gameState);
+		Country l_countryIndia = d_gameState.getD_map().getCountryByName("India");
 		assertEquals("10", l_countryIndia.getD_armies().toString());
 
-		d2.execute(g);
-
-		Country l_countryCanada = g.getD_map().getCountryByName("Canada");
+		d_deployOrder2.execute(d_gameState);
+		Country l_countryCanada = d_gameState.getD_map().getCountryByName("Canada");
 		assertEquals("15", l_countryCanada.getD_armies().toString());
-
 	}
 
 	/**
 	 * Tests deploy order logic to see if required order is created and armies are
-	 * re-calculated
+	 * re-calculated.
 	 * 
 	 * @throws InvalidCommand if given command is invalid
 	 */
@@ -110,7 +121,7 @@ public class DeployTest {
 		assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
 		assertEquals(l_player.getD_ordersToExecute().size(), 1);
 		Deploy order = (Deploy) l_player.order_list.get(0);
-		assertEquals(order.d_targetCountryName, "Japan");
+		assertEquals("Japan", order.d_targetCountryName);
 		assertEquals("4", String.valueOf(order.d_numberOfArmiesToPlace));
 	}
 
