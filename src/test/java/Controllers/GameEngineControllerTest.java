@@ -33,7 +33,7 @@ public class GameEngineControllerTest {
 	/**
 	 * object of GameEngineController class.
 	 */
-	GameEngineController d_gameEngine;
+	GameEngine d_gameEngine;
 
 	/**
 	 * setup before each test case.
@@ -41,7 +41,7 @@ public class GameEngineControllerTest {
 	@Before
 	public void setup() {
 		d_map = new Map();
-		d_gameEngine = new GameEngineController();
+		d_gameEngine = new GameEngine();
 		d_state = d_gameEngine.getD_gameState();
 	}
 

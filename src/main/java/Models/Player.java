@@ -203,10 +203,9 @@ public class Player {
 	 * Receiver of command pattern :-Issue order which takes order as an input and
 	 * add it to player's order list.
 	 * 
-	 * @param p_gameState Game State
 	 * @throws IOException exception in reading inputs from user
 	 */
-	public void issue_order(GameState p_gameState) throws IOException {
+	public void issue_order() throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName());
 		String l_commandEntered = l_reader.readLine();
@@ -215,7 +214,7 @@ public class Player {
 
 		switch (l_order) {
 		case "deploy":
-			createDeployOrder(l_commandEntered, p_gameState);
+			createDeployOrder(l_commandEntered);
 			break;
 		default:
 			System.out.println("Invalid order entered");
@@ -228,9 +227,8 @@ public class Player {
 	 * Creates the deploy order on the commands entered by the player.
 	 * 
 	 * @param p_commandEntered command entered by the user
-	 * @param p_gameState      Game State
 	 */
-	private void createDeployOrder(String p_commandEntered, GameState p_gameState) {
+	private void createDeployOrder(String p_commandEntered) {
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
@@ -240,7 +238,7 @@ public class Player {
 				System.err.println(
 						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.");
 			} else {
-				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies), p_gameState));
+				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
 				System.out.println("Deploy order has been added to queue for execution. For player: " + this.d_name);

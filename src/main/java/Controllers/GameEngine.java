@@ -431,7 +431,7 @@ public class GameEngine {
 			for (Player l_player : d_gameState.getD_players()) {
 				Order l_order = l_player.next_order();
 				if (l_order != null)
-					l_order.execute();
+					l_order.execute(d_gameState);
 			}
 		}
 	}
@@ -446,7 +446,7 @@ public class GameEngine {
 		while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
 			for (Player l_player : d_gameState.getD_players()) {
 				if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
-					l_player.issue_order(d_gameState);
+					l_player.issue_order();
 			}
 		}
 	}

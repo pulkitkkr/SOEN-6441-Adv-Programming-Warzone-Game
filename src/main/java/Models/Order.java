@@ -7,8 +7,10 @@ package Models;
 public interface Order {
 	/**
 	 * Method that will be called by the Receiver to execute the Order
+	 * 
+	 * @param p_gameState current state of the game
 	 */
-	public void execute();
+	public void execute(GameState p_gameState);
 
 	/**
 	 * 
