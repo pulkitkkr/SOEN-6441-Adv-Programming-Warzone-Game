@@ -422,7 +422,7 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Invokes order execution logic for all unexecuted orders
+	 * Invokes order execution logic for all unexecuted orders.
 	 */
 	private void executeOrders() {
 		// Executing orders
@@ -436,7 +436,7 @@ public class GameEngineController {
 	}
 
 	/**
-	 * Accepts orders from players
+	 * Accepts orders from players.
 	 * 
 	 * @throws IOException exception in reading inputs from user
 	 */
