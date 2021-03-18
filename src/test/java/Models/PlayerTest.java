@@ -1,6 +1,7 @@
 package Models;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,9 @@ public class PlayerTest {
 	 * Existing Player List.
 	 */
 	List<Player> d_exisitingPlayerList = new ArrayList<>();
+	List<Order> order_list = new ArrayList<Order>();
+
+	Player d_player = new Player();
 
 	/**
 	 * The setup is called before each test case of this class is executed.
@@ -28,33 +32,41 @@ public class PlayerTest {
 		d_exisitingPlayerList.add(new Player("Zalak"));
 	}
 
-
 	/**
-	 * Tests first order in the player�s list of orders, then check if its removed
+	 * Tests first order in the players list of orders, then check if its removed
 	 * from the list.
 	 */
 	@Test
 	public void testNextOrder() {
 
-		Order l_order1 = new Order();
-		l_order1.setD_orderAction("deploy");
-		l_order1.setD_numberOfArmiesToPlace(5);
-		l_order1.setD_sourceCountryName(null);
-		l_order1.setD_targetCountryName("India");
+		Player player1 = d_exisitingPlayerList.get(0);
+		Player player2 = d_exisitingPlayerList.get(1);
 
-		Order l_order2 = new Order();
-		l_order1.setD_orderAction("airlift");
-		l_order2.setD_numberOfArmiesToPlace(6);
-		l_order2.setD_sourceCountryName("Canada");
-		l_order2.setD_targetCountryName("Finland");
+		Order o1 = new Deploy(player1, "India", 5);
+		Order o2 = new Deploy(player2, "Finland", 6);
 
-		List<Order> l_orderlist = new ArrayList<>();
-		l_orderlist.add(l_order1);
-		l_orderlist.add(l_order2);
+		order_list.add(o1);
+		order_list.add(o2);
 
-		d_exisitingPlayerList.get(0).setD_ordersToExecute(l_orderlist);
+		d_exisitingPlayerList.get(0).setD_ordersToExecute(order_list);
+
+		d_exisitingPlayerList.get(1).setD_ordersToExecute(order_list);
+
 		Order l_order = d_exisitingPlayerList.get(0).next_order();
-		assertEquals(l_order, l_order1);
-		assertEquals(d_exisitingPlayerList.get(0).getD_ordersToExecute().size(), 1);
+		assertEquals(o1, l_order);
+		assertEquals(1, d_exisitingPlayerList.get(0).getD_ordersToExecute().size());
+	}
+
+	/**
+	 * Used to check that player cannot deploy more armies than there is in their
+	 * reinforcement pool.
+	 */
+	@Test
+	public void testValidateDeployOrderArmies() {
+		d_player.setD_noOfUnallocatedArmies(10);
+		String l_noOfArmies = "4";
+		boolean l_bool = d_player.validateDeployOrderArmies(d_player, l_noOfArmies);
+		assertFalse(l_bool);
+
 	}
 }

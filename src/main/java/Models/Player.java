@@ -228,7 +228,7 @@ public class Player {
 	 * 
 	 * @param p_commandEntered command entered by the user
 	 */
-	private void createDeployOrder(String p_commandEntered) {
+	public void createDeployOrder(String p_commandEntered) {
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
