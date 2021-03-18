@@ -1,4 +1,5 @@
 package Models;
+import Exceptions.InvalidMap;
 import Utils.CommonUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +163,7 @@ public class Continent {
 	 * 
 	 * @param p_countryId ID of country to be removed
 	 */
-	public void removeCountryNeighboursFromAll(Integer p_countryId){
+	public void removeCountryNeighboursFromAll(Integer p_countryId) throws InvalidMap {
 		if (null!=d_countries && !d_countries.isEmpty()) {
 			for (Country c: d_countries){
 				if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {
