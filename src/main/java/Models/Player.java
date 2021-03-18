@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import Constants.ApplicationConstants;
-import Exceptions.InvalidCommand;
-import Services.PlayerService;
 import Utils.Command;
 import Utils.CommonUtil;
 
@@ -204,44 +200,55 @@ public class Player {
 	}
 
 	/**
-	 * Issue order which takes order as an input and add it to players unassigned
-	 * orders pool.
+	 * Receiver of command pattern :-Issue order which takes order as an input and
+	 * add it to player's order list.
 	 * 
+	 * @param p_gameState Game State
 	 * @throws IOException exception in reading inputs from user
 	 */
-	public void issue_order(GameState gs) throws IOException {
+	public void issue_order(GameState p_gameState) throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		PlayerService l_playerService = new PlayerService();
-		System.out.println("\nPlease enter command to deploy reinforcement armies on the map for player : "
-				+ this.getPlayerName());
+		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName());
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
-		int target_country;
 
-		// TO-DO SWITCH CASE
 		switch (l_order) {
 		case "deploy":
-			String l_countryName = l_commandEntered.split(" ")[1];
-			String l_noOfArmies = l_commandEntered.split(" ")[2];
-			
-			if (validateDeployOrderArmies(this, l_noOfArmies)) {
-				System.out.println(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
-			} else {
-				this.order_list.add(new Deploy(this, l_countryName, d_noOfUnallocatedArmies,gs));
-				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				System.out.println("Order has been added to queue for execution.");
-			}
-			// l_playerService.createDeployOrder(l_commandEntered, this);
+			createDeployOrder(l_commandEntered, p_gameState);
 			break;
 		default:
 			System.out.println("Invalid order entered");
 			break;
 		}
 
-		
+	}
+
+	/**
+	 * Creates the deploy order on the commands entered by the player.
+	 * 
+	 * @param p_commandEntered command entered by the user
+	 * @param p_gameState      Game State
+	 */
+	private void createDeployOrder(String p_commandEntered, GameState p_gameState) {
+		String l_targetCountry;
+		String l_noOfArmies;
+		try {
+			l_targetCountry = p_commandEntered.split(" ")[1];
+			l_noOfArmies = p_commandEntered.split(" ")[2];
+			if (validateDeployOrderArmies(this, l_noOfArmies)) {
+				System.err.println(
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.");
+			} else {
+				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies), p_gameState));
+				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
+				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+				System.out.println("Deploy order has been added to queue for execution. For player: " + this.d_name);
+			}
+		} catch (Exception e) {
+			System.err.println("Invalid deploy order entered");
+
+		}
 
 	}
 

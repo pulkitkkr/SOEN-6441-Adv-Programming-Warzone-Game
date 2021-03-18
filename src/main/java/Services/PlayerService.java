@@ -1,14 +1,15 @@
 package Services;
 
-import Constants.ApplicationConstants;
-import Exceptions.InvalidCommand;
-import Models.*;
-import Utils.CommonUtil;
-import Constants.ApplicationConstants;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import Constants.ApplicationConstants;
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Player;
+import Utils.CommonUtil;
 
 /**
  * This service class handles the players.
@@ -19,7 +20,7 @@ public class PlayerService {
 	 * Checks if player name is exists in given existing player list.
 	 * 
 	 * @param p_existingPlayerList existing players list present in game
-	 * @param p_playerName player name which needs to be looked upon
+	 * @param p_playerName         player name which needs to be looked upon
 	 * @return boolean true if player name is unique, false if its not
 	 */
 	public boolean isPlayerNameUnique(List<Player> p_existingPlayerList, String p_playerName) {
@@ -39,8 +40,8 @@ public class PlayerService {
 	 * This method is used to add and remove players.
 	 *
 	 * @param p_existingPlayerList current player list.
-	 * @param p_operation operation to add or remove player.
-	 * @param p_argument name of player to add or remove.
+	 * @param p_operation          operation to add or remove player.
+	 * @param p_argument           name of player to add or remove.
 	 * @return return updated list of player.
 	 */
 	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) {
@@ -67,9 +68,9 @@ public class PlayerService {
 	/**
 	 * Remove player from the game if it exists.
 	 * 
-	 * @param p_existingPlayerList Existing player list present in game
-	 * @param p_updatedPlayers Updated player list with removal to be done
-	 * @param p_enteredPlayerName Player name which is to be removed
+	 * @param p_existingPlayerList     Existing player list present in game
+	 * @param p_updatedPlayers         Updated player list with removal to be done
+	 * @param p_enteredPlayerName      Player name which is to be removed
 	 * @param p_playerNameAlreadyExist true if player already exists
 	 */
 	private void removeGamePlayer(List<Player> p_existingPlayerList, List<Player> p_updatedPlayers,
@@ -89,8 +90,8 @@ public class PlayerService {
 	/**
 	 * Adds player to Game if its not there already.
 	 * 
-	 * @param p_updatedPlayers updated player list with newly added player
-	 * @param p_enteredPlayerName new player name to be added
+	 * @param p_updatedPlayers         updated player list with newly added player
+	 * @param p_enteredPlayerName      new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
@@ -123,12 +124,13 @@ public class PlayerService {
 	 *
 	 * @param p_gameState Current Game State
 	 */
-	public void assignColors(GameState p_gameState){
-		if (!checkPlayersAvailability(p_gameState)) return;
+	public void assignColors(GameState p_gameState) {
+		if (!checkPlayersAvailability(p_gameState))
+			return;
 
 		List<Player> l_players = p_gameState.getD_players();
 
-		for(int i = 0; i< l_players.size(); i++){
+		for (int i = 0; i < l_players.size(); i++) {
 			l_players.get(i).setD_color(ApplicationConstants.COLORS.get(i));
 		}
 	}
@@ -155,8 +157,8 @@ public class PlayerService {
 	 * Performs random country assignment to all players.
 	 *
 	 * @param p_countriesPerPlayer countries which are to be assigned to each player
-	 * @param p_countries list of all countries present in map
-	 * @param p_players list of all available players
+	 * @param p_countries          list of all countries present in map
+	 * @param p_players            list of all available players
 	 */
 	private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
 			List<Player> p_players) {
@@ -190,7 +192,7 @@ public class PlayerService {
 	 * Checks if player is having any continent as a result of random country
 	 * assignment.
 	 *
-	 * @param p_players list of all available players
+	 * @param p_players    list of all available players
 	 * @param p_continents list of all available continents
 	 */
 	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
@@ -214,43 +216,6 @@ public class PlayerService {
 			}
 		}
 	}
-
-	/**
-	 * creates the deploy order on the commands entered by the player.
-	 *
-	 * @param p_commandEntered command entered by the user
-	 * @param p_player player to create deploy order
-	 */
-//	public void createDeployOrder(String p_commandEntered, Player p_player) {
-//		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
-//				: p_player.getD_ordersToExecute();
-//		String l_countryName = p_commandEntered.split(" ")[1];
-//		String l_noOfArmies = p_commandEntered.split(" ")[2];
-//		if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
-//			System.out.println(
-//					"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
-//		} else {
-//			Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-//					Integer.parseInt(l_noOfArmies));
-//			l_orders.add(l_orderObject);
-//			p_player.setD_ordersToExecute(l_orders);
-//			Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-//			p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-//			System.out.println("Order has been added to queue for execution.");
-//		}
-//	}
-
-	/**
-	 * Used to test number of armies entered in deploy command to check that player
-	 * cannot deploy more armies that there is in their reinforcement pool.
-	 *
-	 * @param p_player player to create deploy order
-	 * @param p_noOfArmies number of armies to deploy
-	 * @return boolean to validate armies to deploy
-	 */
-//	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
-//		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
-//	}
 
 	/**
 	 * Calculates armies of player based on countries and continents owned.
@@ -322,7 +287,7 @@ public class PlayerService {
 	 *
 	 * @param p_gameState update game state with players information.
 	 * @param p_operation operation to add or remove player.
-	 * @param p_argument name of player to add or remove.
+	 * @param p_argument  name of player to add or remove.
 	 */
 	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
 		if (!isMapLoaded(p_gameState)) {

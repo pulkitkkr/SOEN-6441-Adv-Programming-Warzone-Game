@@ -1,5 +1,9 @@
 package Models;
 
+/**
+ * Concrete Command of Command pattern.
+ *
+ */
 public class Deploy implements Order {
 	/**
 	 * name of the target country.
@@ -7,36 +11,35 @@ public class Deploy implements Order {
 	String d_targetCountryName;
 
 	/**
-	 * name of the source country.
-	 */
-	Country d_sourceCountryName;
-
-	/**
 	 * number of armies to be placed.
 	 */
 	Integer d_numberOfArmiesToPlace;
 
-	Player initiator;
-	
-	GameState gs;
+	/**
+	 * Player
+	 */
+	Player d_playerInitiator;
 
-//	Territory target_territory;
-//	int to_deploy;
-//	Player initiator;
+	/**
+	 * State of Game
+	 */
+	GameState d_gameState;
 
 	/**
 	 * The constructor receives all the parameters necessary to implement the order.
 	 * These are then encapsulated in the order.
 	 * 
-	 * @param initiator:        player that created the order
-	 * @param target_territory: territory that will receive the new armies
-	 * @param to_deploy:        number of armies to be added
+	 * @param p_playerInitiator       player that created the order
+	 * @param p_targetCountry         country that will receive the new armies
+	 * @param p_numberOfArmiesToPlace number of armies to be added
+	 * @param p_gameState             Game State
 	 */
-	public Deploy(Player initiator, String target_territory, Integer d_numberOfArmiesToPlace, GameState gs) {
-		this.d_targetCountryName = target_territory;
-		this.initiator = initiator;
-		this.d_numberOfArmiesToPlace = d_numberOfArmiesToPlace;
-		this.gs =gs;
+	public Deploy(Player p_playerInitiator, String p_targetCountry, Integer p_numberOfArmiesToPlace,
+			GameState p_gameState) {
+		this.d_targetCountryName = p_targetCountry;
+		this.d_playerInitiator = p_playerInitiator;
+		this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
+		this.d_gameState = p_gameState;
 	}
 
 	/**
@@ -45,95 +48,46 @@ public class Deploy implements Order {
 	 * @param p_gameState current state of the game
 	 * @param p_player    player who's order is being executed
 	 */
-	
-	
+
 	@Override
 	public void execute() {
-		if(valid()) {
-			for (Country l_country : this.gs.getD_map().getD_countries()) {
+		if (valid()) {
+			for (Country l_country : this.d_gameState.getD_map().getD_countries()) {
 				if (l_country.getD_countryName().equalsIgnoreCase(this.d_targetCountryName)) {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
 							: l_country.getD_armies() + this.d_numberOfArmiesToPlace;
 					l_country.setD_armies(l_armiesToUpdate);
 				}
 			}
-			
-		}else {
-			System.out.println(
-					"\nOrder is not executed as target country given in deploy command doesnt belongs to player : "
-							+ initiator.getPlayerName());
 
+		} else {
+			System.err.println("\nDeploy Order = " + "deploy" + " " + this.d_targetCountryName + " "
+					+ this.d_numberOfArmiesToPlace + " is not executed since Target country: "
+					+ this.d_targetCountryName + " given in deploy command does not belongs to the player : "
+					+ d_playerInitiator.getPlayerName());
 		}
 
 	}
-//	public void execute(GameState p_gameState, Player p_player) {
-//		switch (this.d_orderAction) {
-//		case "deploy": {
-//			if (this.validateDeployOrderCountry(p_player, this)) {
-//				this.executeDeployOrder(this, p_gameState, p_player);
-//				System.out.println("\nOrder has been executed successfully. " + this.getD_numberOfArmiesToPlace()
-//						+ " number of armies has been deployed to country : " + this.getD_targetCountryName());
-//			} else {
-//				System.out.println(
-//						"\nOrder is not executed as target country given in deploy command doesnt belongs to player : "
-//								+ p_player.getPlayerName());
-//			}
-//			break;
-//		}
-//		default: {
-//			System.out.println("Order was not executed due to invalid Order Command");
-//		}
-//		}
-//	}
-	
-	
-//	/**
-//	 * Executes deploy order and updates game state with latest map.
-//	 * 
-//	 * @param p_order     order which is being executed
-//	 * @param p_gameState current state of the game
-//	 * @param p_player    player whos order is being executed
-//	 */
-//	private void executeDeployOrder(Order p_order, GameState p_gameState, Player p_player) {
-//		for (Country l_country : p_gameState.getD_map().getD_countries()) {
-//			if (l_country.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())) {
-//				Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
-//						: l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
-//				l_country.setD_armies(l_armiesToUpdate);
-//			}
-//		}
-//	}
-
 
 	/**
 	 * Validates whether country given for deploy belongs to players countries or
 	 * not.
 	 * 
-	 * @param p_player player whos order is being executed
+	 * @param p_player player whose order is being executed
 	 * @param p_order  order which is being executed
 	 * @return true/false
 	 */
-//	public boolean validateDeployOrderCountry(Player p_player, Order p_order) {
-//		Country l_country = p_player.getD_coutriesOwned().stream()
-//				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())).findFirst()
-//				.orElse(null);
-//		return l_country != null;
-//	}
 
 	@Override
 	public boolean valid() {
-		Country l_country = initiator.getD_coutriesOwned().stream()
+		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryName.toString()))
 				.findFirst().orElse(null);
 		return l_country != null;
 	}
 
-	
-	
-
 	@Override
 	public void printOrder() {
-		// TODO Auto-generated method stub
 
 	}
 
