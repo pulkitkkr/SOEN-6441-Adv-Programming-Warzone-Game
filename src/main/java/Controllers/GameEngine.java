@@ -22,7 +22,7 @@ import Views.MapView;
  * This is the entry point of the Game and keeps the track of current Game
  * State.
  */
-public class GameEngineController {
+public class GameEngine {
 
 	/**
 	 * d_gameState stores the information about current GamePlay.
@@ -56,8 +56,7 @@ public class GameEngineController {
 	 * @param p_args the program doesn't use default command line arguments
 	 */
 	public static void main(String[] p_args) {
-		GameEngineController l_game = new GameEngineController();
-
+		GameEngine l_game = new GameEngine();
 		l_game.initGamePlay();
 	}
 
