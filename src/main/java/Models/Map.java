@@ -495,7 +495,7 @@ public class Map {
      * 
      * @param p_countryId Country to be removed
      */
-    public void updateNeighboursCont(Integer p_countryId){
+    public void updateNeighboursCont(Integer p_countryId) throws InvalidMap {
         for(Continent c: d_continents){
             c.removeCountryNeighboursFromAll(p_countryId);
         }
@@ -507,7 +507,7 @@ public class Map {
      * 
      * @param p_countryID Country to be removed
      */
-    public void removeCountryNeighboursFromAll(Integer p_countryID){
+    public void removeCountryNeighboursFromAll(Integer p_countryID) throws InvalidMap {
         for (Country c: d_countries) {
             if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
                 if (c.getD_adjacentCountryIds().contains(p_countryID)) {
