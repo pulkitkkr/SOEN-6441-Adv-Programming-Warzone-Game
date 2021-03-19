@@ -210,6 +210,7 @@ public class MapService {
 			Map l_map = new Map();
 			l_map.setD_mapFile(p_editFilePath);
 			p_gameState.setD_map(l_map);
+			p_gameState.updateLog(p_editFilePath+ " File has been created for user to edit");
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
@@ -217,6 +218,7 @@ public class MapService {
 				p_gameState.setD_map(new Map());
 			}
 			p_gameState.getD_map().setD_mapFile(p_editFilePath);
+			p_gameState.updateLog(p_editFilePath+ " already exists and is loaded for editing");
 		}
 	}
 
@@ -427,8 +429,9 @@ public class MapService {
 	 *
 	 * @param p_gameState object of GameState class
 	 */
-	public void resetMap(GameState p_gameState) {
+	public void resetMap(GameState p_gameState, String p_fileToLoad) {
 		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
+		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!\n");
 		p_gameState.setD_map(new Models.Map());
 	}
 }

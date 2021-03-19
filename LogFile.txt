@@ -1,0 +1,5 @@
+Initializing the Game ......
+
+test.map map has been loaded to start the game
+swiss.map map could not be loaded as it is invalid!
+canada.map map has been loaded to start the game

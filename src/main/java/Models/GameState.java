@@ -11,6 +11,11 @@ public class GameState {
 	 * map object.
 	 */
 	Map d_map;
+
+	/**
+	 * Log Entries for existing game state
+	 */
+	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 	
 	/**
 	 * list of players.
@@ -97,5 +102,14 @@ public class GameState {
 	 */
 	public void setError(String p_error) {
 		this.d_error = p_error;
+	}
+
+	/**
+	 * Message to be added in the log.
+	 *
+	 * @param p_logMessage Log Message to be set in the Object
+	 */
+	public void updateLog(String p_logMessage) {
+		d_logEntryBuffer.currentLog(p_logMessage);
 	}
 }

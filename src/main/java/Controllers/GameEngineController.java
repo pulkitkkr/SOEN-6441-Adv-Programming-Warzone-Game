@@ -56,6 +56,7 @@ public class GameEngineController {
 	public static void main(String[] p_args) {
 		GameEngineController l_game = new GameEngineController();
 
+		l_game.getD_gameState().updateLog("Initializing the Game ......" + System.lineSeparator()+System.lineSeparator());
 		l_game.initGamePlay();
 	}
 
@@ -187,6 +188,7 @@ public class GameEngineController {
 		} else {
 			for (Map<String, String> l_map : l_operations_list) {
 				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					d_gameState.updateLog("Command Entered: editmap\n");
 					d_mapService.editMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 				} else {
 					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
@@ -273,11 +275,12 @@ public class GameEngineController {
 								l_map.get(ApplicationConstants.ARGUMENTS));
 						if (l_mapToLoad.Validate()) {
 							System.out.println("Map has been loaded successfully. \n");
+							d_gameState.updateLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " map has been loaded to start the game\n");
 						} else {
-							d_mapService.resetMap(d_gameState);
+							d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 						}
 					} catch (InvalidMap l_e) {
-						d_mapService.resetMap(d_gameState);
+						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 					}
 				} else {
 					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
