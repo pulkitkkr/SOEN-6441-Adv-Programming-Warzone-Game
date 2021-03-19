@@ -11,7 +11,7 @@ public class Advance implements Order {
 	 * name of the target country.
 	 */
 	String d_targetCountryName;
-	
+
 	/**
 	 * name of the source country.
 	 */
@@ -23,7 +23,7 @@ public class Advance implements Order {
 	Integer d_numberOfArmiesToPlace;
 
 	/**
-	 * Player
+	 * Player.
 	 */
 	Player d_playerInitiator;
 
@@ -32,11 +32,13 @@ public class Advance implements Order {
 	 * These are then encapsulated in the order.
 	 * 
 	 * @param p_playerInitiator       player that created the order
-	 * @param p_sourceCountryName 	  country from which armies are to be transferred
+	 * @param p_sourceCountryName     country from which armies are to be
+	 *                                transferred
 	 * @param p_targetCountry         country that will receive the new armies
 	 * @param p_numberOfArmiesToPlace number of armies to be added
 	 */
-	public Advance(Player p_playerInitiator, String p_sourceCountryName, String p_targetCountry, Integer p_numberOfArmiesToPlace) {
+	public Advance(Player p_playerInitiator, String p_sourceCountryName, String p_targetCountry,
+			Integer p_numberOfArmiesToPlace) {
 		this.d_targetCountryName = p_targetCountry;
 		this.d_sourceCountryName = p_sourceCountryName;
 		this.d_playerInitiator = p_playerInitiator;
@@ -67,10 +69,6 @@ public class Advance implements Order {
 	/**
 	 * Validates whether country given for deploy belongs to players countries or
 	 * not.
-	 * 
-	 * @param p_player player whose order is being executed
-	 * @param p_order  order which is being executed
-	 * @return true/false
 	 */
 
 	@Override
@@ -78,16 +76,18 @@ public class Advance implements Order {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_sourceCountryName.toString()))
 				.findFirst().orElse(null);
-		if(l_country == null) {
-			System.err.println("\nAdvance Order : " + "advance" + " " + this.d_sourceCountryName + " "
-					+ this.d_targetCountryName + " " + this.d_numberOfArmiesToPlace + " is not executed since Source country : "
-					+ this.d_sourceCountryName + " given in advance command does not belongs to the player : "
-					+ d_playerInitiator.getPlayerName());
+		if (l_country == null) {
+			System.err.println(
+					"\nAdvance Order : " + "advance" + " " + this.d_sourceCountryName + " " + this.d_targetCountryName
+							+ " " + this.d_numberOfArmiesToPlace + " is not executed since Source country : "
+							+ this.d_sourceCountryName + " given in advance command does not belongs to the player : "
+							+ d_playerInitiator.getPlayerName());
 			return false;
 		}
-		if(this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
+		if (this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
 			System.err.println(
-					"Given advance order cant be executed as armies in advance order exceeds armies of source country : " + this.d_sourceCountryName);
+					"Given advance order cant be executed as armies in advance order exceeds armies of source country : "
+							+ this.d_sourceCountryName);
 			return false;
 		}
 		return true;

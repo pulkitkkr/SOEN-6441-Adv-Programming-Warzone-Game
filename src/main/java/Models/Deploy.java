@@ -16,7 +16,7 @@ public class Deploy implements Order {
 	Integer d_numberOfArmiesToPlace;
 
 	/**
-	 * Player
+	 * Player Initiator.
 	 */
 	Player d_playerInitiator;
 
@@ -35,11 +35,10 @@ public class Deploy implements Order {
 	}
 
 	/**
-	 * Enacts the order object and makes necessary changes in game state.
+	 * Executes the deploy order.
 	 * 
-	 * @param p_gameState current state of the game
+	 * @param p_gameState current state of the game.
 	 */
-
 	@Override
 	public void execute(GameState p_gameState) {
 		if (valid()) {
@@ -63,12 +62,7 @@ public class Deploy implements Order {
 	/**
 	 * Validates whether country given for deploy belongs to players countries or
 	 * not.
-	 * 
-	 * @param p_player player whose order is being executed
-	 * @param p_order  order which is being executed
-	 * @return true/false
 	 */
-
 	@Override
 	public boolean valid() {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
