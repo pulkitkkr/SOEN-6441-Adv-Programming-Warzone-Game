@@ -193,7 +193,7 @@ public class MapServiceTest {
 	@Test
 	public void testEditCountryAdd() throws IOException, InvalidMap, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
-		d_mapservice.editFunctions(d_state, "China Asia", "add", 2);
+		d_mapservice.editFunctions(d_state, "add", "China Asia", 2);
 
 		assertEquals(d_state.getD_map().getCountryByName("China").getD_countryName(), "China");
 	}
@@ -206,7 +206,7 @@ public class MapServiceTest {
 	@Test(expected = InvalidMap.class)
 	public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
-		d_mapservice.editFunctions(d_state, "Ukraine", "remove", 2);
+		d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
 	}
 
 	/**
@@ -219,9 +219,9 @@ public class MapServiceTest {
 	public void testEditNeighborAdd() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "Northern-America 10", "add", 1 );
-		d_mapservice.editFunctions(d_state, "Canada Northern-America", "add", 2);
-		d_mapservice.editFunctions(d_state, "Alaska Northern-America", "add", 2);
-		d_mapservice.editFunctions(d_state, "Canada Alaska", "add", 3);
+		d_mapservice.editFunctions(d_state, "add", "Canada Northern-America",  2);
+		d_mapservice.editFunctions(d_state, "add","Alaska Northern-America", 2);
+		d_mapservice.editFunctions(d_state, "add", "Canada Alaska", 3);
 
 		assertEquals(d_state.getD_map().getCountryByName("Canada").getD_adjacentCountryIds().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
 	}
@@ -235,10 +235,10 @@ public class MapServiceTest {
 	@Test(expected = InvalidMap.class)
 	public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand{
 		d_mapservice.editMap(d_state, "testedit.map");
-		d_mapservice.editFunctions(d_state, "Asia 9", "add", 1);
-		d_mapservice.editFunctions(d_state, "Maldives Asia", "add", 2);
-		d_mapservice.editFunctions(d_state, "Singapore Asia", "add", 2);
-		d_mapservice.editFunctions(d_state, "Singapore Maldives", "add", 3);
-		d_mapservice.editFunctions(d_state, "Maldives Singapore", "remove", 3);
+		d_mapservice.editFunctions(d_state, "add", "Asia 9",  1);
+		d_mapservice.editFunctions(d_state, "add", "Maldives Asia", 2);
+		d_mapservice.editFunctions(d_state, "add", "Singapore Asia", 2);
+		d_mapservice.editFunctions(d_state, "add", "Singapore Maldives", 3);
+		d_mapservice.editFunctions(d_state, "remove", "Maldives Singapore", 3);
 	}
 }

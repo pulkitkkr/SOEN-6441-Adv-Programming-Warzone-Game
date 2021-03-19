@@ -1,5 +1,6 @@
 package Controllers;
 
+import static Constants.ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class GameEngineControllerTest {
 	 * @throws InvalidMap Exception
 	 */
 	@Test(expected = InvalidCommand.class)
-	public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+	public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
 		Command l_command = new Command("editcontinent -add");
 		d_gameEngine.performEditContinent(l_command);
 	}
