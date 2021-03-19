@@ -1,5 +1,7 @@
 package Models;
 
+import Utils.CommonUtil;
+
 /**
  * Concrete Command of Command pattern.
  *
@@ -50,7 +52,15 @@ public class Advance implements Order {
 	@Override
 	public void execute(GameState p_gameState) {
 		if (valid()) {
-			//logic for advance order
+			Player l_playerOfTargetCountry = null;
+			for (Player l_player : p_gameState.getD_players()) {
+				String l_cont = l_player.getCountryNames().stream()
+						.filter(l_country -> l_country.equalsIgnoreCase(this.d_targetCountryName)).findFirst()
+						.orElse(null);
+				if(!CommonUtil.isEmpty(l_cont)) {
+					l_playerOfTargetCountry = l_player;
+				}
+			}
 		}
 	}
 
