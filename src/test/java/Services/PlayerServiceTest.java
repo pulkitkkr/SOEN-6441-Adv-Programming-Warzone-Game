@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Exceptions.InvalidMap;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -112,7 +113,7 @@ public class PlayerServiceTest {
 	 * Used for checking whether players have been assigned with countries
 	 */
 	@Test
-	public void testPlayerCountryAssignment() {
+	public void testPlayerCountryAssignment() throws InvalidMap {
 		d_mapservice = new MapService();
 		d_map = new Map();
 		d_map = d_mapservice.loadMap(d_gameState, "canada.map");

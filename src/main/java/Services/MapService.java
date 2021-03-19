@@ -2,7 +2,6 @@ package Services;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class MapService {
 	 * @param p_loadFileName map file name.
 	 * @return Map object after processing map file.
 	 */
-	public Map loadMap(GameState p_gameState, String p_loadFileName) {
+	public Map loadMap(GameState p_gameState, String p_loadFileName) throws InvalidMap {
 		Map l_map = new Map();
 		List<String> l_linesOfFile = loadFile(p_loadFileName);
 
@@ -63,7 +62,7 @@ public class MapService {
 	 * @param p_loadFileName map file name to load.
 	 * @return List of lines from map file.
 	 */
-	public List<String> loadFile(String p_loadFileName) {
+	public List<String> loadFile(String p_loadFileName) throws InvalidMap{
 
 		String l_filePath = CommonUtil.getMapFilePath(p_loadFileName);
 		List<String> l_lineList = new ArrayList<>();
@@ -74,7 +73,7 @@ public class MapService {
 			l_lineList = l_reader.lines().collect(Collectors.toList());
 			l_reader.close();
 		} catch (IOException l_e1) {
-			System.out.println("File not Found!");
+			throw new InvalidMap("Map File not Found!");
 		}
 		return l_lineList;
 	}
@@ -200,7 +199,7 @@ public class MapService {
 	 * @param p_editFilePath consists of base filepath
 	 * @throws IOException triggered in case the file does not exist or the file name is invalid
 	 */
-	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
+	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException, InvalidMap {
 
 		String l_filePath = CommonUtil.getMapFilePath(p_editFilePath);
 		File l_fileToBeEdited = new File(l_filePath);
@@ -210,7 +209,7 @@ public class MapService {
 			Map l_map = new Map();
 			l_map.setD_mapFile(p_editFilePath);
 			p_gameState.setD_map(l_map);
-			p_gameState.updateLog(p_editFilePath+ " File has been created for user to edit");
+			p_gameState.updateLog(p_editFilePath+ " File has been created for user to edit", "effect");
 		} else {
 			System.out.println("File already exists.");
 			this.loadMap(p_gameState, p_editFilePath);
@@ -218,12 +217,13 @@ public class MapService {
 				p_gameState.setD_map(new Map());
 			}
 			p_gameState.getD_map().setD_mapFile(p_editFilePath);
-			p_gameState.updateLog(p_editFilePath+ " already exists and is loaded for editing");
+			p_gameState.updateLog(p_editFilePath+ " already exists and is loaded for editing", "effect");
 		}
 	}
 
 	/**
 	 * Controls the Flow of Edit Operations: editcontinent, editcountry, editneighbor.
+     *
 	 * @param p_gameState Current GameState Object.
 	 * @param p_argument Arguments for the pertaining command operation.
 	 * @param p_operation Add/Remove operation to be performed.
@@ -242,12 +242,15 @@ public class MapService {
 			switch(p_switchParameter){
 				case 1:
 					l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
+					p_gameState.updateLog("Continent "+p_argument.split(" ")[0]+" "+ p_operation+ " operation carried out successfully!", "effect");
 					break;
 				case 2:
 					l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
+					p_gameState.updateLog("Country "+ p_operation.split(" ")[0]+" "+p_argument+ " operation carried out successfully!", "effect");
 					break;
 				case 3:
 					l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
+					p_gameState.updateLog("Neighbour "+ p_argument+ " operation carried out successfully!", "effect");
 					break;
 				default:
 					throw new IllegalStateException("Unexpected value: " + p_switchParameter);
@@ -275,7 +278,7 @@ public class MapService {
 		} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
 			p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
 		} else {
-			throw new InvalidCommand("Continent couldn't be added/removed. Changes are not made");
+			throw new InvalidMap("Continent couldn't be added/removed. Changes are not made");
 		}
 		return p_mapToBeUpdated;
 	}
@@ -289,13 +292,13 @@ public class MapService {
 	 * @return Updated Map Object
 	 * @throws InvalidMap invalidmap exception
 	 */
-	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
+	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
 			p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
 		}else{
-			System.out.println("Country could not be "+ p_operation +"ed!");
+			throw new InvalidMap("Country could not be "+ p_operation +"ed!");
 		}
 		return p_mapToBeUpdated;
 	}
@@ -309,13 +312,13 @@ public class MapService {
 	 * @return map to be updated
 	 * @throws InvalidMap invalidmap exception
 	 */
-	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap{
+	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
 		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
 			p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
 		}else{
-			System.out.println("Neighbour could not be "+ p_operation +"ed!");
+			throw new InvalidMap("Neighbour could not be "+ p_operation +"ed!");
 		}
 		return p_mapToBeUpdated;
 	}
@@ -341,8 +344,8 @@ public class MapService {
 
 					// Proceeds to save the map if it passes the validation check
 					System.out.println("Validating Map......");
-					boolean l_mapValidationStatus = l_currentMap.Validate();
-					if (l_mapValidationStatus) {
+					//boolean l_mapValidationStatus = l_currentMap.Validate();
+					if (l_currentMap.Validate()) {
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
 						FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
 
@@ -354,9 +357,11 @@ public class MapService {
 								&& !p_gameState.getD_map().getD_countries().isEmpty()) {
 							writeCountryAndBoarderMetaData(p_gameState, l_writer);
 						}
+						p_gameState.updateLog("Map Saved Successfully", "effect");
 						l_writer.close();
 					}
 				} else {
+					p_gameState.updateLog("Validation failed! Cannot Save the Map file!", "effect");
 					p_gameState.setError("Validation Failed");
 					return false;
 				}
@@ -424,14 +429,16 @@ public class MapService {
 							+ System.lineSeparator());
 		}
 	}
+
 	/**
 	 * Resets Game State's Map.
 	 *
 	 * @param p_gameState object of GameState class
+	 * @param p_fileToLoad File which couldn't be loaded
 	 */
 	public void resetMap(GameState p_gameState, String p_fileToLoad) {
 		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
-		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!\n");
+		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!", "effect");
 		p_gameState.setD_map(new Models.Map());
 	}
 }

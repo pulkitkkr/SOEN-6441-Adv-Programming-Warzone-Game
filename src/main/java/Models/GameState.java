@@ -13,7 +13,7 @@ public class GameState {
 	Map d_map;
 
 	/**
-	 * Log Entries for existing game state
+	 * Log Entries for existing game state.
 	 */
 	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 	
@@ -109,7 +109,7 @@ public class GameState {
 	 *
 	 * @param p_logMessage Log Message to be set in the Object
 	 */
-	public void updateLog(String p_logMessage) {
-		d_logEntryBuffer.currentLog(p_logMessage);
+	public void updateLog(String p_logMessage, String p_logType) {
+		d_logEntryBuffer.currentLog(p_logMessage, p_logType);
 	}
 }

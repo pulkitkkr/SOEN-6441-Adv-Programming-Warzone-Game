@@ -46,7 +46,7 @@ public class MapServiceTest {
 	 * Setup before each MapService Operations
 	 */
 	@Before
-	public void setup() {
+	public void setup() throws InvalidMap {
 		d_mapservice = new MapService();
 		d_map = new Map();
 		d_state = new GameState();
@@ -59,7 +59,7 @@ public class MapServiceTest {
 	 * @throws IOException throws IOException
 	 */
 	@Test
-	public void testEditMap() throws IOException {
+	public void testEditMap() throws IOException, InvalidMap {
 		d_mapservice.editMap(d_state, "test.map");
 		File l_file = new File(CommonUtil.getMapFilePath("test.map"));
 

@@ -3,7 +3,7 @@ package Views;
 import Models.LogEntryBuffer;
 
 
-import java.io.File;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,8 +34,9 @@ public class LogWriter implements Observer {
         String l_logMessage = d_logEntryBuffer.getD_logMessage();
 
         try{
-            if(l_logMessage.equals("Initializing the Game ......" + System.lineSeparator()+System.lineSeparator()) && l_logfile.exists())
+            if(l_logMessage.equals("Initializing the Game ......"+System.lineSeparator()+System.lineSeparator())) {
                 Files.newBufferedWriter(Paths.get("LogFile.txt"), StandardOpenOption.TRUNCATE_EXISTING).write(" ");
+            }
             Files.write(Paths.get("LogFile.txt"), l_logMessage.getBytes(StandardCharsets.US_ASCII), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         }catch(Exception l_e){
             l_e.printStackTrace();

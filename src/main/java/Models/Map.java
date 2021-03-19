@@ -417,7 +417,7 @@ public class Map {
         }
         if(CommonUtil.isNull(getCountryByName(p_countryName))){
             l_countryId=d_countries.size()>0? Collections.max(getCountryIDs())+1:1;
-            if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
+            if(d_continents!=null && getContinent(p_continentName)!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
                 Country l_country= new Country(l_countryId, p_countryName, getContinent(p_continentName).getD_continentID());
                 d_countries.add(l_country);
                 for (Continent c: d_continents) {

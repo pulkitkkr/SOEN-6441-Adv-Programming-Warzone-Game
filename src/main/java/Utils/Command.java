@@ -98,4 +98,13 @@ public class Command {
     		return true;
     	return false;
     }
+
+    /**
+     * Getter for the command.
+     *
+     * @return command in string
+     */
+    public String getD_command() {
+        return d_command;
+    }
 }

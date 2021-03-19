@@ -1,5 +1,57 @@
 Initializing the Game ......
 
-test.map map has been loaded to start the game
-swiss.map map could not be loaded as it is invalid!
-canada.map map has been loaded to start the game
+
+Command Entered: editmap swiss.map
+Log: swiss.map already exists and is loaded for editing
+
+Command Entered: editcontinent -add A 10 -add B 5 -add A 9
+Log: Continent A add operation carried out successfully!
+Log: Continent B add operation carried out successfully!
+Log: Continent cannot be added! It already exists!
+
+Command Entered: editcountry -add C A -add D A -add E B -add F B -add G B
+Log: Country C add operation carried out successfully!
+Log: Country D add operation carried out successfully!
+Log: Country E add operation carried out successfully!
+Log: Country F add operation carried out successfully!
+Log: Country G add operation carried out successfully!
+
+Command Entered: editcontinent -add C 19
+Log: Continent C add operation carried out successfully!
+
+Command Entered: editcountry -add H C -add I C -add J C
+Log: Country H add operation carried out successfully!
+Log: Country I add operation carried out successfully!
+Log: Country J add operation carried out successfully!
+
+Command Entered: editcontinent -remove C
+Log: Continent C remove operation carried out successfully!
+
+Command Entered: editcontinent -remove W
+Log: No such Continent exists!
+
+Command Entered: editcountry -remove G
+Log: Country G remove operation carried out successfully!
+
+Command Entered: editneighbor -add C D -add D C -add E D -add D E -add F E -add E F
+Log: Neighbour add operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+
+Command Entered: editneighbor -remove D C -add F C
+Log: Neighbour remove operation carried out successfully!
+Log: Neighbour add operation carried out successfully!
+
+Command Entered: editneighbor -remove F D
+Log: No Such Neighbour Exists
+
+Command Entered: validatemap
+Log: Schaffhausen in Continent AG-LU-ZH-ZG-SH is not reachable
+Log: Invalid Map!
+
+Command Entered: savemap swiss.map
+Log: Schaffhausen in Continent AG-LU-ZH-ZG-SH is not reachable
+Log: Couldn't Save Changes to Map File!

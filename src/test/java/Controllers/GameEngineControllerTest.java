@@ -52,7 +52,7 @@ public class GameEngineControllerTest {
 	 * @throws InvalidCommand Exception
 	 */
 	@Test(expected = InvalidCommand.class)
-	public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand {
+	public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
 		Command l_command = new Command("editmap");
 		d_gameEngine.performMapEdit(l_command);
 	}
