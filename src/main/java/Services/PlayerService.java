@@ -147,7 +147,7 @@ public class PlayerService {
 		List<Country> l_countries = p_gameState.getD_map().getD_countries();
 		int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
 
-		this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
+		this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(), p_gameState);
 		this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
 		System.out.println("Countries have been assigned to Players.");
 
@@ -159,9 +159,10 @@ public class PlayerService {
 	 * @param p_countriesPerPlayer countries which are to be assigned to each player
 	 * @param p_countries          list of all countries present in map
 	 * @param p_players            list of all available players
+	 * @param p_gameState		   current game state with map and player information
 	 */
 	private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
-			List<Player> p_players) {
+			List<Player> p_players, GameState p_gameState) {
 		List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
 		for (Player l_pl : p_players) {
 			if (l_unassignedCountries.isEmpty())
@@ -175,7 +176,7 @@ public class PlayerService {
 
 				if (l_pl.getD_coutriesOwned() == null)
 					l_pl.setD_coutriesOwned(new ArrayList<>());
-				l_pl.getD_coutriesOwned().add(l_randomCountry);
+				l_pl.getD_coutriesOwned().add(p_gameState.getD_map().getCountryByName(l_randomCountry.getD_countryName()));
 				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
 						+ l_randomCountry.getD_countryName());
 				l_unassignedCountries.remove(l_randomCountry);
@@ -184,7 +185,7 @@ public class PlayerService {
 		// If any countries are still left for assignment, it will redistribute those
 		// among players
 		if (!l_unassignedCountries.isEmpty()) {
-			performRandomCountryAssignment(1, l_unassignedCountries, p_players);
+			performRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
 		}
 	}
 
@@ -223,10 +224,10 @@ public class PlayerService {
 	 * @param p_player player for which armies have to be calculated
 	 * @return Integer armies to be assigned to player
 	 */
-	public int calculateArmiesForPlayer(Player p_player) {
-		int l_armies = 0;
+	public Integer calculateArmiesForPlayer(Player p_player) {
+		Integer l_armies = null != p_player.getD_noOfUnallocatedArmies() ? p_player.getD_noOfUnallocatedArmies() : 0;
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
-			l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
+			l_armies = l_armies + Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
 		}
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
 			int l_continentCtrlValue = 0;
@@ -309,5 +310,13 @@ public class PlayerService {
 	 */
 	public boolean isMapLoaded(GameState p_gameState) {
 		return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
+	}
+	
+	public boolean checkForMoreOrders(List<Player> p_playersList) {
+		for (Player l_player : p_playersList) {
+			if(l_player.getD_moreOrders())
+				return true;
+		}
+		return false;
 	}
 }

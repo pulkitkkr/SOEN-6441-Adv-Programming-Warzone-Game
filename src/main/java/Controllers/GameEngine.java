@@ -408,7 +408,7 @@ public class GameEngine {
 				issueOrders();
 				executeOrders();
 				
-				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+				MapView l_map_view = new MapView(d_gameState);
 				l_map_view.showMap();
 
 				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
@@ -443,11 +443,11 @@ public class GameEngine {
 	 */
 	private void issueOrders() throws IOException {
 		// Issuing order for players
-		while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
+		do {
 			for (Player l_player : d_gameState.getD_players()) {
-				if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0)
-					l_player.issue_order();
+				if (l_player.getD_moreOrders())
+					l_player.issue_order(d_gameState);
 			}
-		}
+		} while(d_playerService.checkForMoreOrders(d_gameState.getD_players()));
 	}
 }

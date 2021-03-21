@@ -73,7 +73,8 @@ public class Deploy implements Order {
 
 	@Override
 	public void printOrder() {
-
+		System.out.println("Deploy order issued by player " + this.d_playerInitiator.getPlayerName());
+		System.out.println("Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName);
 	}
 
 }

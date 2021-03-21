@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constants.ApplicationConstants;
 import Utils.Command;
 import Utils.CommonUtil;
+import Views.MapView;
 
 /**
  * This class depicts player's information and services.
@@ -44,6 +46,11 @@ public class Player {
 	Integer d_noOfUnallocatedArmies;
 
 	/**
+	 * More orders to be accepted for player
+	 */
+	boolean d_moreOrders;
+
+	/**
 	 * This parameterized constructor is used to create player with name and default
 	 * armies.
 	 * 
@@ -54,6 +61,7 @@ public class Player {
 		this.d_noOfUnallocatedArmies = 0;
 		this.d_coutriesOwned = new ArrayList<Country>();
 		this.order_list = new ArrayList<Order>();
+		this.d_moreOrders = true;
 	}
 
 	/**
@@ -171,6 +179,25 @@ public class Player {
 	}
 
 	/**
+	 * Gets info about more orders from player are to be accepted or not.
+	 * 
+	 * @return boolean true if player wants to give more order or else false
+	 */
+	public boolean getD_moreOrders() {
+		return d_moreOrders;
+	}
+
+	/**
+	 * Sets info about more orders from player are to be accepted or not.
+	 * 
+	 * @param d_moreOrders Boolean true if player wants to give more order or else
+	 *                     false
+	 */
+	public void setD_moreOrders(boolean d_moreOrders) {
+		this.d_moreOrders = d_moreOrders;
+	}
+
+	/**
 	 * Extracts the list of names of countries owned by the player.
 	 *
 	 * @return list of country names
@@ -205,22 +232,50 @@ public class Player {
 	 * 
 	 * @throws IOException exception in reading inputs from user
 	 */
-	public void issue_order() throws IOException {
+	public void issue_order(GameState p_gameState) throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName());
+		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
+				+ " or give showmap command to view current state of the game.");
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
 
-		switch (l_order) {
-		case "deploy":
+		if ("deploy".equalsIgnoreCase(l_order)) {
 			createDeployOrder(l_commandEntered);
-			break;
-		default:
-			System.out.println("Invalid order entered");
-			break;
-		}
+			checkForMoreOrders();
+		} else if ("advance".equalsIgnoreCase(l_order)) {
+			System.out.println("Advance Order Fired");
+			createAdvanceOrder(l_commandEntered);
+			checkForMoreOrders();
+		} else if ("showmap".equalsIgnoreCase(l_order)) {
 
+			MapView l_mapView = new MapView(p_gameState);
+			l_mapView.showMap();
+			this.issue_order(p_gameState);
+
+		} else if (ApplicationConstants.CARDS.contains(l_order)) {
+			// card orders capture method invocation
+		} else {
+			System.out.println("Invalid command given at this stage.");
+		}
+	}
+
+	/**
+	 * Checks if there are more order to be accepted for player in next turn or not.
+	 * 
+	 * @throws IOException  exception in reading inputs from user
+	 */
+	private void checkForMoreOrders() throws IOException {
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
+				+ " in next turn ? \nPress Y for Yes or N for No");
+		String l_nextOrderCheck = l_reader.readLine();
+		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
+			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
+		} else {
+			System.out.println("Invalid Input Passed.");
+			this.checkForMoreOrders();
+		}
 	}
 
 	/**
@@ -275,5 +330,29 @@ public class Player {
 		Order l_order = this.order_list.get(0);
 		this.order_list.remove(l_order);
 		return l_order;
+	}
+	
+	/**
+	 * Creates the advance order on the commands entered by the player.
+	 * 
+	 * @param p_commandEntered command entered by the user
+	 */
+	public void createAdvanceOrder(String p_commandEntered) {
+		try {
+			if(p_commandEntered.split(" ").length == 4) {
+				String l_sourceCountry = p_commandEntered.split(" ")[1];
+				String l_targetCountry = p_commandEntered.split(" ")[2];
+				String l_noOfArmies = p_commandEntered.split(" ")[3];
+
+				this.order_list.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+				System.out.println("Advance order has been added to queue for execution. For player: " + this.d_name);
+			} else {
+				System.out.println("Invalid Arguments Passed For Advance Order");
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Invalid Advance Order Given");
+		}
+
 	}
 }

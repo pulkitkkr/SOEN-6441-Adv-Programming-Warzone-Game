@@ -36,21 +36,7 @@ public class MapView {
 	public MapView(GameState p_gameState){
 		d_gameState = p_gameState;
 		d_map = p_gameState.getD_map();
-		d_map = p_gameState.getD_map();
-		d_countries = d_map.getD_countries();
-		d_continents = d_map.getD_continents();
-	}
-
-    /**
-     * Constructor to initialise MapView with Players.
-     *
-     * @param p_gameState Current GameState
-     * @param p_players List of Player Objects
-     */
-	public MapView(GameState p_gameState, List<Player> p_players){
-		d_gameState = p_gameState;
-		d_players = p_players;
-		d_map = p_gameState.getD_map();
+		d_players = p_gameState.getD_players();
 		d_countries = d_map.getD_countries();
 		d_continents = d_map.getD_continents();
 	}

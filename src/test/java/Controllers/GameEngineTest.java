@@ -18,7 +18,7 @@ import Utils.Command;
 /**
  * This class is used to test functionality of GameEngineController class functions.
  */
-public class GameEngineControllerTest {
+public class GameEngineTest {
 
 	/**
 	 * Object of Map class.
