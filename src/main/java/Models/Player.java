@@ -46,7 +46,7 @@ public class Player {
 	Integer d_noOfUnallocatedArmies;
 
 	/**
-	 * More orders to be accepted for player
+	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
 
@@ -230,6 +230,7 @@ public class Player {
 	 * Receiver of command pattern :-Issue order which takes order as an input and
 	 * add it to player's order list.
 	 * 
+	 * @param p_gameState Current state of the game
 	 * @throws IOException exception in reading inputs from user
 	 */
 	public void issue_order(GameState p_gameState) throws IOException {

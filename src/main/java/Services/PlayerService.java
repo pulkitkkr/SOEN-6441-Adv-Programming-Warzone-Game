@@ -312,6 +312,12 @@ public class PlayerService {
 		return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
 	}
 	
+	/**
+	 * Checks if any of the player in game wants to give further order or not.
+	 * 
+	 * @param p_playersList players involved in game
+	 * @return boolean whether there are more orders to give or not
+	 */
 	public boolean checkForMoreOrders(List<Player> p_playersList) {
 		for (Player l_player : p_playersList) {
 			if(l_player.getD_moreOrders())

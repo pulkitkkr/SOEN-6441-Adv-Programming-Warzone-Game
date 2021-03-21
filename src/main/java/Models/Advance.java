@@ -78,7 +78,9 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * @param p_targetCountry
+	 * If the target territory is of same player, it will just move armies.
+	 * 
+	 * @param p_targetCountry country to which armies have to be moved
 	 */
 	private void moveArmiesToTarget(Country p_targetCountry) {
 		Integer l_updatedTargetContArmies = p_targetCountry.getD_armies() + this.d_numberOfArmiesToPlace;
@@ -86,9 +88,11 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * @param p_targetCountry
-	 * @param p_attackerArmies
-	 * @param p_defenderArmies
+	 * Produces the battle result of advance order based on attackers and defenders army units.
+	 * 
+	 * @param p_targetCountry  country to which armies have to be moved
+	 * @param p_attackerArmies random army numbers of attacker
+	 * @param p_defenderArmies random army numbers of defender
 	 */
 	private void produceBattleResult(Country p_targetCountry, List<Integer> p_attackerArmies,
 			List<Integer> p_defenderArmies) {
@@ -144,7 +148,7 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * Gives current advance order which is being executed
+	 * Gives current advance order which is being executed.
 	 * 
 	 * @return advance order command
 	 */
@@ -159,8 +163,10 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * @param l_size
-	 * @param l_role
+	 * Generates random army units based attacker and defender's winning probability.
+	 * 
+	 * @param l_size number of random armies to be generated
+	 * @param l_role armies to be generated is for defender or for attacker
 	 * @return
 	 */
 	private List<Integer> generateRandomArmyUnits(int l_size, String l_role) {
@@ -175,7 +181,7 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * returns random integer between minimum and maximum range
+	 * returns random integer between minimum and maximum range.
 	 * 
 	 * @param maximum upper limit
 	 * @param minimum lower limit
