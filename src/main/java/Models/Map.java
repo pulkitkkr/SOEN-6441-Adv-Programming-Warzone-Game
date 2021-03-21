@@ -1,11 +1,12 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 /**
@@ -494,6 +495,7 @@ public class Map {
      * Used while deletion of a country object.
      * 
      * @param p_countryId Country to be removed
+     * @throws InvalidMap indicates Map Object Validation failure
      */
     public void updateNeighboursCont(Integer p_countryId) throws InvalidMap {
         for(Continent c: d_continents){
@@ -506,6 +508,7 @@ public class Map {
      * Used while deletion of country object.
      * 
      * @param p_countryID Country to be removed
+     * @throws InvalidMap indicates Map Object Validation failure
      */
     public void removeCountryNeighboursFromAll(Integer p_countryID) throws InvalidMap {
         for (Country c: d_countries) {

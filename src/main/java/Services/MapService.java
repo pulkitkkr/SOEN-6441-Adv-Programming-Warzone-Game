@@ -28,6 +28,7 @@ public class MapService {
 	 * @param p_gameState current state of game.
 	 * @param p_loadFileName map file name.
 	 * @return Map object after processing map file.
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 */
 	public Map loadMap(GameState p_gameState, String p_loadFileName) throws InvalidMap {
 		Map l_map = new Map();
@@ -57,6 +58,7 @@ public class MapService {
 	 * 
 	 * @param p_loadFileName map file name to load.
 	 * @return List of lines from map file.
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 */
 	public List<String> loadFile(String p_loadFileName) throws InvalidMap{
 
@@ -193,6 +195,7 @@ public class MapService {
 	 * 
 	 * @param p_gameState GameState model class object
 	 * @param p_editFilePath consists of base filepath
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 * @throws IOException triggered in case the file does not exist or the file name is invalid
 	 */
 	public void editMap(GameState p_gameState, String p_editFilePath) throws IOException, InvalidMap {

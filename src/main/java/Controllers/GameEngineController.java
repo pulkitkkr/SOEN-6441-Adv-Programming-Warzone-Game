@@ -187,6 +187,7 @@ public class GameEngineController {
 	 * 
 	 * @param p_command command entered by the user on CLI
 	 * @throws IOException indicates when failure in I/O operation
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	public void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap {
@@ -270,6 +271,7 @@ public class GameEngineController {
 	 * redirecting control to model for actual processing.
 	 *
 	 * @param p_command command entered by the user on CLI
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 * @throws InvalidCommand indicates when command is invalid
 	 */
 	private void performLoadMap(Command p_command) throws InvalidCommand, InvalidMap {
