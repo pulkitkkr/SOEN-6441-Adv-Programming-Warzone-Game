@@ -87,7 +87,7 @@ public class Advance implements Order {
 	}
 
 	/**
-	 * Retrieves the player owning the target country
+	 * Retrieves the player owning the target country.
 	 * 
 	 * @param p_gameState current state of the game
 	 * @return target country player
@@ -147,11 +147,11 @@ public class Advance implements Order {
 	/**
 	 * Process surviving armies and transferring ownership of countries.
 	 * 
-	 * @param p_attackerArmiesLeft
-	 * @param p_defenderArmiesLeft
-	 * @param p_sourceCountry
-	 * @param p_targetCountry
-	 * @param p_playerOfTargetCountry
+	 * @param p_attackerArmiesLeft remaining attacking armies from battle
+	 * @param p_defenderArmiesLeft remaining defending armies from battle
+	 * @param p_sourceCountry source country
+	 * @param p_targetCountry target country
+	 * @param p_playerOfTargetCountry player owning the target country
 	 */
 	private void handleSurvivingArmies(Integer p_attackerArmiesLeft, Integer p_defenderArmiesLeft,
 			Country p_sourceCountry, Country p_targetCountry, Player p_playerOfTargetCountry) {

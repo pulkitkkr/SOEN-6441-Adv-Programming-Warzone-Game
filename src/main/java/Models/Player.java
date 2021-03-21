@@ -360,7 +360,7 @@ public class Player {
 	}
 	
 	/**
-	 * Checks if source and target countries given in advance order exists in the map or not 
+	 * Checks if source and target countries given in advance order exists in the map or not.
 	 * 
 	 * @param p_countryName country name which needs to be checked in map
 	 * @param p_gameState current state of the map
@@ -375,7 +375,7 @@ public class Player {
 	}
 	
 	/**
-	 * Checks if given advance order has zero armies to move
+	 * Checks if given advance order has zero armies to move.
 	 * 
 	 * @param l_noOfArmies number of armies given in order
 	 * @return true if given order has zero armies or else false
