@@ -263,7 +263,7 @@ public class Player {
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
 	 * 
-	 * @throws IOException  exception in reading inputs from user
+	 * @throws IOException exception in reading inputs from user
 	 */
 	private void checkForMoreOrders() throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
@@ -331,49 +331,54 @@ public class Player {
 		this.order_list.remove(l_order);
 		return l_order;
 	}
-	
+
 	/**
 	 * Creates the advance order on the commands entered by the player.
 	 * 
 	 * @param p_commandEntered command entered by the user
-	 * @param p_gameState current state of the game
+	 * @param p_gameState      current state of the game
 	 */
 	public void createAdvanceOrder(String p_commandEntered, GameState p_gameState) {
 		try {
-			if(p_commandEntered.split(" ").length == 4) {
+			if (p_commandEntered.split(" ").length == 4) {
 				String l_sourceCountry = p_commandEntered.split(" ")[1];
 				String l_targetCountry = p_commandEntered.split(" ")[2];
 				String l_noOfArmies = p_commandEntered.split(" ")[3];
 				if (this.checkCountryExists(l_sourceCountry, p_gameState)
 						&& this.checkCountryExists(l_targetCountry, p_gameState)
-						&& !checkZeroArmiesInOrder(l_noOfArmies)) {
-					this.order_list.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-					System.out.println("Advance order has been added to queue for execution. For player: " + this.d_name);
+						&& !checkZeroArmiesInOrder(l_noOfArmies)
+						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
+					this.order_list
+							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+					System.out
+							.println("Advance order has been added to queue for execution. For player: " + this.d_name);
 				}
 			} else {
 				System.err.println("Invalid Arguments Passed For Advance Order");
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Invalid Advance Order Given");
 		}
 	}
-	
+
 	/**
-	 * Checks if source and target countries given in advance order exists in the map or not.
+	 * Checks if source and target countries given in advance order exists in the
+	 * map or not.
 	 * 
 	 * @param p_countryName country name which needs to be checked in map
-	 * @param p_gameState current state of the map
+	 * @param p_gameState   current state of the map
 	 * @return true if country exists in map or else false
 	 */
 	private Boolean checkCountryExists(String p_countryName, GameState p_gameState) {
-		if(p_gameState.getD_map().getCountryByName(p_countryName)==null) {
-			System.err.println("Country : " + p_countryName + " given in advance order doesnt exists in map. Order given is ignored.");
+		if (p_gameState.getD_map().getCountryByName(p_countryName) == null) {
+			System.err.println("Country : " + p_countryName
+					+ " given in advance order doesnt exists in map. Order given is ignored.");
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks if given advance order has zero armies to move.
 	 * 
@@ -381,10 +386,32 @@ public class Player {
 	 * @return true if given order has zero armies or else false
 	 */
 	private Boolean checkZeroArmiesInOrder(String l_noOfArmies) {
-		if(Integer.parseInt(l_noOfArmies) == 0) {
+		if (Integer.parseInt(l_noOfArmies) == 0) {
 			System.err.println("Advance order with 0 armies to move cant be issued.");
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Checks if countries given advance order are adjacent or not.
+	 * 
+	 * @param p_gameState         current state of the game
+	 * @param p_sourceCountryName source country name
+	 * @param p_targetCountryName target country name
+	 * @return boolean true if countries are adjacent or else false
+	 */
+	@SuppressWarnings("unlikely-arg-type")
+	private boolean checkAdjacency(GameState p_gameState, String p_sourceCountryName, String p_targetCountryName) {
+		Country l_sourceCountry = p_gameState.getD_map().getCountryByName(p_sourceCountryName);
+		Country l_targetCountry = p_gameState.getD_map().getCountryByName(p_targetCountryName);
+		Integer l_targetCountryId = l_sourceCountry.getD_adjacentCountryIds().stream()
+				.filter(l_adjCountry -> l_adjCountry == l_targetCountry.getD_countryId()).findFirst().orElse(null);
+		if (l_targetCountryId == null) {
+			System.err.println("Advance order cant be issued since target country : " + p_targetCountryName
+					+ " is not adjacent to source country : " + p_sourceCountryName);
+			return false;
+		}
+		return true;
 	}
 }
