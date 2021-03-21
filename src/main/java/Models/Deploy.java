@@ -41,12 +41,15 @@ public class Deploy implements Order {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
+		this.printOrder();
 		if (valid()) {
 			for (Country l_country : p_gameState.getD_map().getD_countries()) {
 				if (l_country.getD_countryName().equalsIgnoreCase(this.d_targetCountryName)) {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
 							: l_country.getD_armies() + this.d_numberOfArmiesToPlace;
 					l_country.setD_armies(l_armiesToUpdate);
+					System.out.println("\n" + l_armiesToUpdate + " armies have been deployed successfully on country : "
+							+ l_country.getD_countryName());
 				}
 			}
 
@@ -55,6 +58,8 @@ public class Deploy implements Order {
 					+ this.d_numberOfArmiesToPlace + " is not executed since Target country: "
 					+ this.d_targetCountryName + " given in deploy command does not belongs to the player : "
 					+ d_playerInitiator.getPlayerName());
+			d_playerInitiator.setD_noOfUnallocatedArmies(
+					d_playerInitiator.getD_noOfUnallocatedArmies() + this.d_numberOfArmiesToPlace);
 		}
 
 	}
@@ -73,7 +78,7 @@ public class Deploy implements Order {
 
 	@Override
 	public void printOrder() {
-		System.out.println("Deploy order issued by player " + this.d_playerInitiator.getPlayerName());
+		System.out.println("\nDeploy order issued by player " + this.d_playerInitiator.getPlayerName());
 		System.out.println("Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName);
 	}
 

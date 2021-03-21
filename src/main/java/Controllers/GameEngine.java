@@ -434,6 +434,7 @@ public class GameEngine {
 					l_order.execute(d_gameState);
 			}
 		}
+		d_playerService.resetPlayersOrdersFlag(d_gameState.getD_players());
 	}
 
 	/**

@@ -56,25 +56,52 @@ public class Advance implements Order {
 
 	@Override
 	public void execute(GameState p_gameState) {
+		this.printOrder();
 		if (valid()) {
-			Player l_playerOfTargetCountry = null;
-			for (Player l_player : p_gameState.getD_players()) {
-				String l_cont = l_player.getCountryNames().stream()
-						.filter(l_country -> l_country.equalsIgnoreCase(this.d_targetCountryName)).findFirst()
-						.orElse(null);
-				if (!CommonUtil.isEmpty(l_cont)) {
-					l_playerOfTargetCountry = l_player;
+			Player l_playerOfTargetCountry = getPlayerOfTargetCountry(p_gameState);
+			Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryName);
+			Country l_sourceCountry = p_gameState.getD_map().getCountryByName(d_sourceCountryName);
+			if (l_targetCountry.getD_armies() == 0) {
+				l_playerOfTargetCountry.getD_coutriesOwned().remove(l_targetCountry);
+				this.d_playerInitiator.getD_coutriesOwned().add(l_targetCountry);
+			} else {
+				Integer l_armiesInAttack = this.d_numberOfArmiesToPlace < l_targetCountry.getD_armies()
+						? this.d_numberOfArmiesToPlace
+						: l_targetCountry.getD_armies();
+
+				List<Integer> l_attackerArmies = generateRandomArmyUnits(l_armiesInAttack, "attacker");
+				List<Integer> l_defenderArmies = generateRandomArmyUnits(l_armiesInAttack, "defender");
+
+				Integer l_sourceArmiesToUpdate = l_sourceCountry.getD_armies() - this.d_numberOfArmiesToPlace;
+				l_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
+
+				if (l_playerOfTargetCountry.getPlayerName().equalsIgnoreCase(this.d_playerInitiator.getPlayerName())) {
+					deployArmiesToTarget(l_targetCountry);
+				} else {
+					produceBattleResult(l_sourceCountry, l_targetCountry, l_attackerArmies, l_defenderArmies,
+							l_playerOfTargetCountry, l_armiesInAttack);
 				}
 			}
-			Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryName);
-			List<Integer> l_attackerArmies = generateRandomArmyUnits(this.d_numberOfArmiesToPlace, "attacker");
-			List<Integer> l_defenderArmies = generateRandomArmyUnits(l_targetCountry.getD_armies(), "attacker");
-			if(l_playerOfTargetCountry.getPlayerName().equalsIgnoreCase(this.d_playerInitiator.getPlayerName())) {
-				moveArmiesToTarget(l_targetCountry);
-			} else {
-				produceBattleResult(l_targetCountry, l_attackerArmies, l_defenderArmies);				
+
+		}
+	}
+
+	/**
+	 * Retrieves the player owning the target country
+	 * 
+	 * @param p_gameState current state of the game
+	 * @return target country player
+	 */
+	private Player getPlayerOfTargetCountry(GameState p_gameState) {
+		Player l_playerOfTargetCountry = null;
+		for (Player l_player : p_gameState.getD_players()) {
+			String l_cont = l_player.getCountryNames().stream()
+					.filter(l_country -> l_country.equalsIgnoreCase(this.d_targetCountryName)).findFirst().orElse(null);
+			if (!CommonUtil.isEmpty(l_cont)) {
+				l_playerOfTargetCountry = l_player;
 			}
 		}
+		return l_playerOfTargetCountry;
 	}
 
 	/**
@@ -82,35 +109,69 @@ public class Advance implements Order {
 	 * 
 	 * @param p_targetCountry country to which armies have to be moved
 	 */
-	private void moveArmiesToTarget(Country p_targetCountry) {
+	private void deployArmiesToTarget(Country p_targetCountry) {
 		Integer l_updatedTargetContArmies = p_targetCountry.getD_armies() + this.d_numberOfArmiesToPlace;
 		p_targetCountry.setD_armies(l_updatedTargetContArmies);
 	}
 
 	/**
-	 * Produces the battle result of advance order based on attackers and defenders army units.
+	 * Produces the battle result of advance order based on attackers and defenders
+	 * army units.
 	 * 
-	 * @param p_targetCountry  country to which armies have to be moved
-	 * @param p_attackerArmies random army numbers of attacker
-	 * @param p_defenderArmies random army numbers of defender
+	 * @param p_sourceCountry         country from which armies have to be moved
+	 * @param p_targetCountry         country to which armies have to be moved
+	 * @param p_attackerArmies        random army numbers of attacker
+	 * @param p_defenderArmies        random army numbers of defender
+	 * @param p_playerOfTargetCountry player owning the target country
+	 * @param p_armiesInAttack        armies involved in direct battle
 	 */
-	private void produceBattleResult(Country p_targetCountry, List<Integer> p_attackerArmies,
-			List<Integer> p_defenderArmies) {
-		Integer l_armiesInAttack = this.d_numberOfArmiesToPlace < p_targetCountry.getD_armies()
-				? this.d_numberOfArmiesToPlace
-				: p_targetCountry.getD_armies();
+	private void produceBattleResult(Country p_sourceCountry, Country p_targetCountry, List<Integer> p_attackerArmies,
+			List<Integer> p_defenderArmies, Player p_playerOfTargetCountry, Integer p_armiesInAttack) {
 		Integer l_attackerArmiesLeft = this.d_numberOfArmiesToPlace > p_targetCountry.getD_armies()
 				? this.d_numberOfArmiesToPlace - p_targetCountry.getD_armies()
 				: 0;
 		Integer l_defenderArmiesLeft = this.d_numberOfArmiesToPlace < p_targetCountry.getD_armies()
 				? p_targetCountry.getD_armies() - this.d_numberOfArmiesToPlace
 				: 0;
-		for (int l_i = 0; l_i < l_armiesInAttack; l_i++) {
+		for (int l_i = 0; l_i < p_armiesInAttack; l_i++) {
 			if (p_attackerArmies.get(l_i) > p_defenderArmies.get(l_i)) {
 				l_attackerArmiesLeft++;
 			} else {
 				l_defenderArmiesLeft++;
 			}
+		}
+		this.handleSurvivingArmies(l_attackerArmiesLeft, l_defenderArmiesLeft, p_sourceCountry, p_targetCountry,
+				p_playerOfTargetCountry);
+	}
+
+	/**
+	 * Process surviving armies and transferring ownership of countries.
+	 * 
+	 * @param p_attackerArmiesLeft
+	 * @param p_defenderArmiesLeft
+	 * @param p_sourceCountry
+	 * @param p_targetCountry
+	 * @param p_playerOfTargetCountry
+	 */
+	private void handleSurvivingArmies(Integer p_attackerArmiesLeft, Integer p_defenderArmiesLeft,
+			Country p_sourceCountry, Country p_targetCountry, Player p_playerOfTargetCountry) {
+		if (p_defenderArmiesLeft == 0) {
+			p_targetCountry.setD_armies(p_attackerArmiesLeft);
+			p_playerOfTargetCountry.getD_coutriesOwned().remove(p_targetCountry);
+			this.d_playerInitiator.getD_coutriesOwned().add(p_targetCountry);
+			System.out.println("Player : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+					+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies());
+		} else {
+			p_targetCountry.setD_armies(p_defenderArmiesLeft);
+
+			Integer l_sourceArmiesToUpdate = p_sourceCountry.getD_armies() + p_attackerArmiesLeft;
+			p_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
+			System.out.println(
+					"Country : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
+							+ " armies and is still owned by player : " + p_playerOfTargetCountry.getPlayerName());
+			System.out.println(
+					"Country : " + p_sourceCountry.getD_countryName() + " is left with " + p_sourceCountry.getD_armies()
+							+ " armies and is still owned by player : " + this.d_playerInitiator.getPlayerName());
 		}
 	}
 
@@ -134,12 +195,12 @@ public class Advance implements Order {
 		}
 		if (this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
 			System.err.println("\n" + this.currentOrder()
-					+ "is not executed as armies given in advance order exceeds armies of source country : "
+					+ " is not executed as armies given in advance order exceeds armies of source country : "
 					+ this.d_sourceCountryName);
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace == l_country.getD_armies()) {
-			System.out.println("\n" + this.currentOrder() + "is not executed as source country : "
+			System.err.println("\n" + this.currentOrder() + " is not executed as source country : "
 					+ this.d_sourceCountryName + " has " + l_country.getD_armies()
 					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.");
 			return false;
@@ -159,15 +220,18 @@ public class Advance implements Order {
 
 	@Override
 	public void printOrder() {
-
+		System.out.println("\nAdvance order issued by player " + this.d_playerInitiator.getPlayerName());
+		System.out.println("Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to "
+				+ this.d_targetCountryName);
 	}
 
 	/**
-	 * Generates random army units based attacker and defender's winning probability.
+	 * Generates random army units based attacker and defender's winning
+	 * probability.
 	 * 
 	 * @param l_size number of random armies to be generated
 	 * @param l_role armies to be generated is for defender or for attacker
-	 * @return
+	 * @return List random army units based on probability
 	 */
 	private List<Integer> generateRandomArmyUnits(int l_size, String l_role) {
 		List<Integer> l_armyList = new ArrayList<>();
@@ -185,6 +249,7 @@ public class Advance implements Order {
 	 * 
 	 * @param maximum upper limit
 	 * @param minimum lower limit
+	 * @return int random number
 	 */
 	private static int getRandomInteger(int maximum, int minimum) {
 		return ((int) (Math.random() * (maximum - minimum))) + minimum;

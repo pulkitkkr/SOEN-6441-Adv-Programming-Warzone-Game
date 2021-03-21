@@ -245,8 +245,7 @@ public class Player {
 			createDeployOrder(l_commandEntered);
 			checkForMoreOrders();
 		} else if ("advance".equalsIgnoreCase(l_order)) {
-			System.out.println("Advance Order Fired");
-			createAdvanceOrder(l_commandEntered);
+			createAdvanceOrder(l_commandEntered, p_gameState);
 			checkForMoreOrders();
 		} else if ("showmap".equalsIgnoreCase(l_order)) {
 
@@ -257,7 +256,7 @@ public class Player {
 		} else if (ApplicationConstants.CARDS.contains(l_order)) {
 			// card orders capture method invocation
 		} else {
-			System.out.println("Invalid command given at this stage.");
+			System.err.println("Invalid command given at this stage.");
 		}
 	}
 
@@ -274,7 +273,7 @@ public class Player {
 		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
 			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
 		} else {
-			System.out.println("Invalid Input Passed.");
+			System.err.println("Invalid Input Passed.");
 			this.checkForMoreOrders();
 		}
 	}
@@ -337,23 +336,55 @@ public class Player {
 	 * Creates the advance order on the commands entered by the player.
 	 * 
 	 * @param p_commandEntered command entered by the user
+	 * @param p_gameState current state of the game
 	 */
-	public void createAdvanceOrder(String p_commandEntered) {
+	public void createAdvanceOrder(String p_commandEntered, GameState p_gameState) {
 		try {
 			if(p_commandEntered.split(" ").length == 4) {
 				String l_sourceCountry = p_commandEntered.split(" ")[1];
 				String l_targetCountry = p_commandEntered.split(" ")[2];
 				String l_noOfArmies = p_commandEntered.split(" ")[3];
-
-				this.order_list.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-				System.out.println("Advance order has been added to queue for execution. For player: " + this.d_name);
+				if (this.checkCountryExists(l_sourceCountry, p_gameState)
+						&& this.checkCountryExists(l_targetCountry, p_gameState)
+						&& !checkZeroArmiesInOrder(l_noOfArmies)) {
+					this.order_list.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+					System.out.println("Advance order has been added to queue for execution. For player: " + this.d_name);
+				}
 			} else {
-				System.out.println("Invalid Arguments Passed For Advance Order");
+				System.err.println("Invalid Arguments Passed For Advance Order");
 			}
 			
 		} catch (Exception e) {
 			System.err.println("Invalid Advance Order Given");
 		}
-
+	}
+	
+	/**
+	 * Checks if source and target countries given in advance order exists in the map or not 
+	 * 
+	 * @param p_countryName country name which needs to be checked in map
+	 * @param p_gameState current state of the map
+	 * @return true if country exists in map or else false
+	 */
+	private Boolean checkCountryExists(String p_countryName, GameState p_gameState) {
+		if(p_gameState.getD_map().getCountryByName(p_countryName)==null) {
+			System.err.println("Country : " + p_countryName + " given in advance order doesnt exists in map. Order given is ignored.");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks if given advance order has zero armies to move
+	 * 
+	 * @param l_noOfArmies number of armies given in order
+	 * @return true if given order has zero armies or else false
+	 */
+	private Boolean checkZeroArmiesInOrder(String l_noOfArmies) {
+		if(Integer.parseInt(l_noOfArmies) == 0) {
+			System.err.println("Advance order with 0 armies to move cant be issued.");
+			return true;
+		}
+		return false;
 	}
 }
