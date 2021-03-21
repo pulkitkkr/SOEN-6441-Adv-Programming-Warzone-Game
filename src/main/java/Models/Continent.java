@@ -1,6 +1,8 @@
 package Models;
+
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,8 +151,9 @@ public class Continent {
 	 * removes Country from Continent.
 	 * 
 	 * @param p_country country to be removed
+	 * @throws InvalidMap invalid map exception
 	 */
-	public void removeCountry(Country p_country){
+	public void removeCountry(Country p_country) throws InvalidMap{
 		if(d_countries==null){
 			System.out.println("No such Country Exists");
 		}else {
@@ -162,6 +165,7 @@ public class Continent {
 	 * Removes particular country ID from the neighbor list of all countries in continent.
 	 * 
 	 * @param p_countryId ID of country to be removed
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 */
 	public void removeCountryNeighboursFromAll(Integer p_countryId) throws InvalidMap {
 		if (null!=d_countries && !d_countries.isEmpty()) {

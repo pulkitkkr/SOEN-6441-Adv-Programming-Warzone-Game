@@ -266,7 +266,6 @@ public class MapService {
 	 * @param p_argument Arguments pertaining to the operations
 	 * @return List of updated continents
 	 * @throws InvalidMap invalidmap exception
-	 * @throws InvalidCommand invalid command exception
 	 */
 	public Map addRemoveContinents(GameState p_gameState, Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
 
