@@ -144,7 +144,7 @@ public class PlayerServiceTest {
 		l_playerInfo.setD_continentsOwned(l_continentList);
 		l_playerInfo.setD_noOfUnallocatedArmies(10);
 		Integer l_actualResult = d_playerService.calculateArmiesForPlayer(l_playerInfo);
-		Integer l_expectedresult = 8;
+		Integer l_expectedresult = 18;
 		assertEquals(l_expectedresult, l_actualResult);
 	}
 
