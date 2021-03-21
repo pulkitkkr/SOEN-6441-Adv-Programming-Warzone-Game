@@ -1,7 +1,14 @@
 package Services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Map;
+import Utils.CommonUtil;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,17 +17,8 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
-import Models.Continent;
-import Models.Country;
-import Models.GameState;
-import Models.Map;
-import Utils.CommonUtil;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class is used to test functionality of MapService class functions.
@@ -75,7 +73,7 @@ public class MapServiceTest {
 	@Test
 	public void testEditContinentAdd() throws IOException, InvalidMap, InvalidCommand {
 		d_state.setD_map(new Map());
-		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state.getD_map(), "Add", "Asia 10");
+		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state, d_state.getD_map(), "Add", "Asia 10");
 
 		assertEquals(l_updatedContinents.getD_continents().size(), 1);
 		assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Asia");
@@ -108,7 +106,7 @@ public class MapServiceTest {
 		Map l_map = new Map();
 		l_map.setD_continents(l_continents);
 		d_state.setD_map(l_map);
-		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state.getD_map(), "Remove", "Asia");
+		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state, d_state.getD_map(), "Remove", "Asia");
 
 		assertEquals(l_updatedContinents.getD_continents().size(), 1);
 		assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Europe");
@@ -177,11 +175,12 @@ public class MapServiceTest {
 	 *
 	 *  @throws InvalidMap Exception
 	 */
-	@Test(expected = InvalidMap.class)
+	@Test
 	public void testSaveInvalidMap() throws InvalidMap {
 		d_map.setD_mapFile("europe.map");
 		d_state.setD_map(d_map);
 		d_mapservice.saveMap(d_state, "europe.map");
+		assertEquals("Log: Couldn't save the changes in map file!"+System.lineSeparator(), d_state.getRecentLog());
 	}
 
 	/**
@@ -203,10 +202,11 @@ public class MapServiceTest {
 	 * @throws InvalidMap Exception
 	 * @throws InvalidCommand Exception
 	 */
-	@Test(expected = InvalidMap.class)
+	@Test
 	public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
+		assertEquals("Log: Country:  Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
 	}
 
 	/**
@@ -232,13 +232,14 @@ public class MapServiceTest {
 	 * @throws IOException Exception
 	 * @throws InvalidCommand Exception
 	 */
-	@Test(expected = InvalidMap.class)
+	@Test
 	public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand{
 		d_mapservice.editMap(d_state, "testedit.map");
-		d_mapservice.editFunctions(d_state, "add", "Asia 9",  1);
+		d_mapservice.editFunctions(d_state, "Asia 9", "add",   1);
 		d_mapservice.editFunctions(d_state, "add", "Maldives Asia", 2);
 		d_mapservice.editFunctions(d_state, "add", "Singapore Asia", 2);
 		d_mapservice.editFunctions(d_state, "add", "Singapore Maldives", 3);
 		d_mapservice.editFunctions(d_state, "remove", "Maldives Singapore", 3);
+		assertEquals("Log: No Such Neighbour Exists"+System.lineSeparator(), d_state.getRecentLog());
 	}
 }

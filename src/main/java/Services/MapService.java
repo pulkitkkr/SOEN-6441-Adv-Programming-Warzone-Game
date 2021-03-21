@@ -1,17 +1,5 @@
 package Services;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -20,6 +8,14 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 import Utils.CommonUtil;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The MapService class load, read, parse, edit, and save map file.
@@ -241,16 +237,13 @@ public class MapService {
 		if(!CommonUtil.isNull(l_mapToBeUpdated)){
 			switch(p_switchParameter){
 				case 1:
-					l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
-					p_gameState.updateLog("Continent "+p_argument.split(" ")[0]+" "+ p_operation+ " operation carried out successfully!", "effect");
+					l_updatedMap = addRemoveContinents(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
 					break;
 				case 2:
-					l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
-					p_gameState.updateLog("Country "+ p_operation.split(" ")[0]+" "+p_argument+ " operation carried out successfully!", "effect");
+					l_updatedMap = addRemoveCountry(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
 					break;
 				case 3:
-					l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
-					p_gameState.updateLog("Neighbour "+ p_argument+ " operation carried out successfully!", "effect");
+					l_updatedMap = addRemoveNeighbour(p_gameState, l_mapToBeUpdated, p_operation, p_argument);
 					break;
 				default:
 					throw new IllegalStateException("Unexpected value: " + p_switchParameter);
@@ -263,7 +256,8 @@ public class MapService {
 	/**
 	 * Constructs updated Continents list based on passed operations - Add/Remove
 	 * and Arguments.
-	 * 
+	 *
+	 * @param p_gameState Current GameState Object
 	 * @param p_mapToBeUpdated Map Object to be Updated
 	 * @param p_operation Operation to perform on Continents
 	 * @param p_argument Arguments pertaining to the operations
@@ -271,54 +265,79 @@ public class MapService {
 	 * @throws InvalidMap invalidmap exception
 	 * @throws InvalidCommand invalid command exception
 	 */
-	public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap, InvalidCommand {
+	public Map addRemoveContinents(GameState p_gameState, Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
 
-		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
-			p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
-		} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
-			p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
-		} else {
-			throw new InvalidMap("Continent couldn't be added/removed. Changes are not made");
+		try {
+			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
+				p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
+				p_gameState.updateLog("Continent "+ p_argument.split(" ")[0]+ " added successfully!", "effect");
+			} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
+				p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
+				p_gameState.updateLog("Continent "+ p_argument.split(" ")[0]+ " removed successfully!", "effect");
+			} else {
+				throw new InvalidMap("Continent "+p_argument.split(" ")[0]+" couldn't be added/removed. Changes are not made");
+			}
+		} catch (InvalidMap | NumberFormatException l_e) {
+			System.out.println(l_e.getMessage());
+			p_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 		return p_mapToBeUpdated;
 	}
 
 	/**
 	 * Performs the add/remove operation on the countries in map.
-	 * 
+	 *
+	 * @param p_gameState Current GameState Object
 	 * @param p_mapToBeUpdated The Map to be updated
 	 * @param p_operation Operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
 	 * @return Updated Map Object
 	 * @throws InvalidMap invalidmap exception
 	 */
-	public Map addRemoveCountry(Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
-		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
-			p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-		}else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
-			p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
-		}else{
-			throw new InvalidMap("Country could not be "+ p_operation +"ed!");
+	public Map addRemoveCountry(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
+
+		try {
+			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
+				p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+				p_gameState.updateLog("Country "+ p_argument.split(" ")[0]+ " added successfully!", "effect");
+			}else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
+				p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
+				p_gameState.updateLog("Country "+ p_argument.split(" ")[0]+ " removed successfully!", "effect");
+			}else{
+				throw new InvalidMap("Country "+p_argument.split(" ")[0]+" could not be "+ p_operation +"ed!");
+			}
+		} catch (InvalidMap l_e) {
+			System.out.println(l_e.getMessage());
+			p_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 		return p_mapToBeUpdated;
 	}
 
 	/**
 	 * Performs the add/remove operation on Map Object.
-	 * 
+	 *
+	 * @param p_gameState Current GameState Object
 	 * @param p_mapToBeUpdated The Map to be updated
 	 * @param p_operation Add/Remove operation to be performed
 	 * @param p_argument Arguments for the pertaining command operation
 	 * @return map to be updated
 	 * @throws InvalidMap invalidmap exception
 	 */
-	public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
-		if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
-			p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-		}else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
-			p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-		}else{
-			throw new InvalidMap("Neighbour could not be "+ p_operation +"ed!");
+	public Map addRemoveNeighbour(GameState p_gameState, Map p_mapToBeUpdated, String p_argument, String p_operation) throws InvalidMap{
+
+		try {
+			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
+				p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+				p_gameState.updateLog("Neighbour Pair added successfully!", "effect");
+			}else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
+				p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+				p_gameState.updateLog("Neighbour Pair removed successfully!", "effect");
+			}else{
+				throw new InvalidMap("Neighbour could not be "+ p_operation +"ed!");
+			}
+		} catch (InvalidMap l_e) {
+			System.out.println(l_e.getMessage());
+			p_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 		return p_mapToBeUpdated;
 	}
@@ -332,6 +351,7 @@ public class MapService {
 	 * @throws InvalidMap InvalidMap exception
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
+		boolean l_flagValidate = false;
 		try {
 
 			// Verifies if the file linked to savemap and edited by user are same
@@ -367,8 +387,10 @@ public class MapService {
 				}
 			}
 			return true;
-		} catch (IOException l_e) {
-			l_e.printStackTrace();
+		} catch (IOException | InvalidMap l_e) {
+			System.out.println(l_e.getMessage());
+			p_gameState.updateLog(l_e.getMessage(), "effect");
+			p_gameState.updateLog("Couldn't save the changes in map file!", "effect");
 			p_gameState.setError("Error in saving map file");
 			return false;
 		}

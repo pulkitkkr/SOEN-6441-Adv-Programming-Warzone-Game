@@ -4,54 +4,98 @@ Initializing the Game ......
 Command Entered: editmap swiss.map
 Log: swiss.map already exists and is loaded for editing
 
-Command Entered: editcontinent -add A 10 -add B 5 -add A 9
-Log: Continent A add operation carried out successfully!
-Log: Continent B add operation carried out successfully!
-Log: Continent cannot be added! It already exists!
+Command Entered: editcontinent -add A -add B 1 -add C 10 -add D 10
+Log: Continent A couldn't be added/removed. Changes are not made
+Log: Continent B added successfully!
+Log: Continent C added successfully!
+Log: Continent D added successfully!
 
-Command Entered: editcountry -add C A -add D A -add E B -add F B -add G B
-Log: Country C add operation carried out successfully!
-Log: Country D add operation carried out successfully!
-Log: Country E add operation carried out successfully!
-Log: Country F add operation carried out successfully!
-Log: Country G add operation carried out successfully!
+Command Entered: editcountry -add E A -add F B -add G C -add H C -add I A -add J D -add I D -add L D
+Log: Cannot add Country to a Continent that doesn't exist!
+Log: Country F added successfully!
+Log: Country G added successfully!
+Log: Country H added successfully!
+Log: Cannot add Country to a Continent that doesn't exist!
+Log: Country J added successfully!
+Log: Country I added successfully!
+Log: Country L added successfully!
 
-Command Entered: editcontinent -add C 19
-Log: Continent C add operation carried out successfully!
-
-Command Entered: editcountry -add H C -add I C -add J C
-Log: Country H add operation carried out successfully!
-Log: Country I add operation carried out successfully!
-Log: Country J add operation carried out successfully!
-
-Command Entered: editcontinent -remove C
-Log: Continent C remove operation carried out successfully!
-
-Command Entered: editcontinent -remove W
-Log: No such Continent exists!
-
-Command Entered: editcountry -remove G
-Log: Country G remove operation carried out successfully!
-
-Command Entered: editneighbor -add C D -add D C -add E D -add D E -add F E -add E F
-Log: Neighbour add operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-
-Command Entered: editneighbor -remove D C -add F C
-Log: Neighbour remove operation carried out successfully!
-Log: Neighbour add operation carried out successfully!
-
-Command Entered: editneighbor -remove F D
+Command Entered: editneighbor -add F G -add G H -add H I -add I J -add J I -add L I -add L J -remove H G
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
+Log: Neighbour Pair added successfully!
 Log: No Such Neighbour Exists
 
+Command Entered: editcountry -remove L -remove R
+Log: Country L removed successfully!
+Log: Country:  R does not exist!
+
+Command Entered: editcontinent -remove D
+Log: Continent D removed successfully!
+
 Command Entered: validatemap
-Log: Schaffhausen in Continent AG-LU-ZH-ZG-SH is not reachable
-Log: Invalid Map!
+Log: H does not possess any neighbour, hence isn't reachable!
+
+Command Entered: savemap
+Log: Invalid command. Kindly provide command in Format of : savemap filename
+
+Command Entered: savemap swiss.mp
 
 Command Entered: savemap swiss.map
-Log: Schaffhausen in Continent AG-LU-ZH-ZG-SH is not reachable
-Log: Couldn't Save Changes to Map File!
+Log: H does not possess any neighbour, hence isn't reachable!
+Log: Couldn't save the changes in map file!
+
+Command Entered: loadmap canada.map
+Log: canada.map has been loaded to start the game
+
+Command Entered: assigncountries
+Log: Kindly add players before assigning countries
+
+Command Entered: gameplayer -add Er -add Gr -add Wr
+Log: Player with name : Er has been added successfully.
+Log: Player with name : Gr has been added successfully.
+Log: Player with name : Wr has been added successfully.
+
+Command Entered: gameplayer -remove Wr -remove Qr
+Log: Player with name : Wr has been removed successfully.
+Log: Player with name : Qr does not Exist. Changes are not made.
+
+Command Entered: assigncountries
+Log: Country/Continent Assignment:
+ Player : Er is assigned with country : NU-Ellesmere_Island
+ Player : Er is assigned with country : Quebec-North
+ Player : Er is assigned with country : NU-Northern_Islands
+ Player : Er is assigned with country : NU-Victoria_Island-East
+ Player : Er is assigned with country : NT-Victoria_Island-West
+ Player : Er is assigned with country : New_Brunswick
+ Player : Er is assigned with country : Manitoba-South
+ Player : Er is assigned with country : BC-Vancouver_Island
+ Player : Er is assigned with country : NU-Southern_Islands
+ Player : Er is assigned with country : NT-Northern_Islands
+ Player : Er is assigned with country : Northwest_Territories-Continental
+ Player : Er is assigned with country : Ontario-South
+ Player : Er is assigned with country : Quebec-Central
+ Player : Er is assigned with country : Alberta-North
+ Player : Er is assigned with country : N&L-Labrador
+ Player : Gr is assigned with country : Yukon_Territory
+ Player : Gr is assigned with country : Quebec-South
+ Player : Gr is assigned with country : Saskatchewan-North
+ Player : Gr is assigned with country : British_Columbia-South
+ Player : Gr is assigned with country : Saskatchewan-South
+ Player : Gr is assigned with country : N&L-Newfoundland
+ Player : Gr is assigned with country : Prince_Edward_Island
+ Player : Gr is assigned with country : Ontario-West
+ Player : Gr is assigned with country : Ontario-North
+ Player : Gr is assigned with country : British_Columbia-North
+ Player : Gr is assigned with country : Alberta-South
+ Player : Gr is assigned with country : Nova_Scotia
+ Player : Gr is assigned with country : Manitoba-North
+ Player : Gr is assigned with country : NU-Baffin_Island
+ Player : Gr is assigned with country : Nunavut-Continental
+ Player : Er is assigned with country : NT-Banks_Island
+Log: Player : Er has been assigned with 5 armies
+Log: Player : Gr has been assigned with 5 armies

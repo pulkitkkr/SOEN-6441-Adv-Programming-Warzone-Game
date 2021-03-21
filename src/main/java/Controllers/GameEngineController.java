@@ -1,11 +1,5 @@
 package Controllers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Map;
-
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -16,7 +10,14 @@ import Services.MapService;
 import Services.PlayerService;
 import Utils.Command;
 import Utils.CommonUtil;
+import Utils.ExceptionLogHandler;
 import Views.MapView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game State.
@@ -82,6 +83,7 @@ public class GameEngineController {
 			case "editcontinent": {
 				if (!l_isMapLoaded) {
 					System.out.println("Can not Edit Continent, please perform `editmap` first");
+					d_gameState.updateLog("Can not Edit Continent, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditContinent(l_command);
@@ -90,6 +92,7 @@ public class GameEngineController {
 			case "savemap": {
 				if (!l_isMapLoaded) {
 					System.out.println("No map found to save, Please `editmap` first");
+					d_gameState.updateLog("No map found to save, Please `editmap` first", "effect");
 					break;
 				}
 
@@ -103,6 +106,7 @@ public class GameEngineController {
 			case "validatemap": {
 				if (!l_isMapLoaded) {
 					System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
+					d_gameState.updateLog("No map found to validate, Please `loadmap` & `editmap` first", "effect");
 					break;
 				}
 				performValidateMap(l_command);
@@ -111,6 +115,7 @@ public class GameEngineController {
 			case "editcountry": {
 				if (!l_isMapLoaded) {
 					System.out.println("Can not Edit Country, please perform `editmap` first");
+					d_gameState.updateLog("Can not Edit Country, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditCountry(l_command);
@@ -119,6 +124,7 @@ public class GameEngineController {
 			case "editneighbor": {
 				if (!l_isMapLoaded) {
 					System.out.println("Can not Edit Neighbors, please perform `editmap` first");
+					d_gameState.updateLog("Can not Edit Neighbors, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditNeighbour(l_command);
@@ -127,6 +133,7 @@ public class GameEngineController {
 			case "gameplayer": {
 				if (!l_isMapLoaded) {
 					System.out.println("No map found, Please `loadmap` before adding game players");
+					d_gameState.updateLog("No map found, Please `loadmap` before adding game players", "effect");
 					break;
 				}
 				createPlayers(l_command);
@@ -143,11 +150,13 @@ public class GameEngineController {
 			}
 			case "exit": {
 				System.out.println("Exit Command Entered");
+				d_gameState.updateLog("Exit Command Entered, Game Ends!", "effect");
 				System.exit(0);
 				break;
 			}
 			default: {
 				System.out.println("Invalid Command");
+				d_gameState.updateLog("Invalid Command", "effect");
 				break;
 			}
 		}
@@ -183,21 +192,17 @@ public class GameEngineController {
 	public void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (l_operations_list == null || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-						d_mapService.editMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (l_operations_list == null || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					d_mapService.editMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
 				}
 			}
-		} catch (InvalidCommand | InvalidMap | IOException l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -213,23 +218,19 @@ public class GameEngineController {
 	public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (l_operations_list == null || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-						d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
-								l_map.get(ApplicationConstants.OPERATION), 1);
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (l_operations_list == null || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
+							l_map.get(ApplicationConstants.OPERATION), 1);
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
 				}
 			}
-		} catch (InvalidCommand | InvalidMap | IOException l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -244,28 +245,23 @@ public class GameEngineController {
 	public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (null == l_operations_list || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-						boolean l_fileUpdateStatus = d_mapService.saveMap(d_gameState,
-								l_map.get(ApplicationConstants.ARGUMENTS));
-						if (l_fileUpdateStatus) {
-							System.out.println("Required changes has been done in map file");
-							d_gameState.updateLog("Required changes have been made in map file", "effect");
-						} else
-							System.out.println(d_gameState.getError());
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					boolean l_fileUpdateStatus = d_mapService.saveMap(d_gameState,
+							l_map.get(ApplicationConstants.ARGUMENTS));
+					if (l_fileUpdateStatus) {
+						System.out.println("Required changes has been done in map file");
+						d_gameState.updateLog("Required changes have been made in map file", "effect");
+					} else
+						System.out.println(d_gameState.getError());
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
 				}
 			}
-		} catch (InvalidCommand | InvalidMap l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
-			d_gameState.updateLog("Couldn't Save Changes to Map File!", "effect");
 		}
 	}
 
@@ -278,35 +274,31 @@ public class GameEngineController {
 	 */
 	private void performLoadMap(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+		boolean l_flagValidate = false;
 
-		try {
-			if (null == l_operations_list || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
-						try {
-
-							// Loads the map if it is valid or resets the game state
-							Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
-									l_map.get(ApplicationConstants.ARGUMENTS));
-							if (l_mapToLoad.Validate()) {
-								System.out.println("Map has been loaded successfully. \n");
-								d_gameState.updateLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
-							} else {
-								d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-							}
-						} catch (InvalidMap l_e) {
-							d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-						}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+					// Loads the map if it is valid or resets the game state
+					Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
+							l_map.get(ApplicationConstants.ARGUMENTS));
+					if (l_mapToLoad.Validate()) {
+						l_flagValidate = true;
+						System.out.println("Map has been loaded successfully. \n");
+						d_gameState.updateLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
 					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 					}
+					if(!l_flagValidate){
+						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+					}
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
 				}
 			}
-		} catch (InvalidCommand l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -321,26 +313,21 @@ public class GameEngineController {
 	private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (null == l_operations_list || l_operations_list.isEmpty()) {
-				Models.Map l_currentMap = d_gameState.getD_map();
-				if (l_currentMap == null) {
-					throw new InvalidMap(ApplicationConstants.INVALID_MAP_ERROR_EMPTY);
-				} else {
-					if (l_currentMap.Validate()) {
-						d_gameState.updateLog("Entered Map is Valid!", "effect");
-						System.out.println(ApplicationConstants.VALID_MAP);
-					} else {
-						throw new InvalidMap("Failed to Validate map!");
-					}
-				}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			Models.Map l_currentMap = d_gameState.getD_map();
+			if (l_currentMap == null) {
+				throw new InvalidMap(ApplicationConstants.INVALID_MAP_ERROR_EMPTY);
 			} else {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
+				if (l_currentMap.Validate()) {
+					d_gameState.updateLog("Entered Map is Valid!", "effect");
+					System.out.println(ApplicationConstants.VALID_MAP);
+				} else {
+					throw new InvalidMap("Failed to Validate map!");
+				}
 			}
-		} catch (InvalidCommand | InvalidMap l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
-			d_gameState.updateLog("Invalid Map!", "effect");
+		} else {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_VALIDATEMAP);
 		}
 	}
 
@@ -355,23 +342,19 @@ public class GameEngineController {
 	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (null == l_operations_list || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-						d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-								l_map.get(ApplicationConstants.ARGUMENTS), 2);
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS), 2);
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
 				}
 			}
-		} catch (InvalidCommand | InvalidMap | IOException l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -386,23 +369,19 @@ public class GameEngineController {
 	public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (null == l_operations_list || l_operations_list.isEmpty()) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-						d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-								l_map.get(ApplicationConstants.ARGUMENTS), 3);
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (null == l_operations_list || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS), 3);
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
 				}
 			}
-		} catch (InvalidCommand | InvalidMap | IOException l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -416,23 +395,19 @@ public class GameEngineController {
 	private void createPlayers(Command p_command) throws InvalidCommand {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
-			} else {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-						d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-								l_map.get(ApplicationConstants.ARGUMENTS));
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
-					}
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+		} else {
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
 				}
 			}
-		} catch (InvalidCommand l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
 		}
 	}
 
@@ -447,33 +422,29 @@ public class GameEngineController {
 	public void assignCountries(Command p_command) throws InvalidCommand, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		try {
-			if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-				d_playerService.assignCountries(d_gameState);
-				d_playerService.assignColors(d_gameState);
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+			d_playerService.assignCountries(d_gameState);
+			d_playerService.assignColors(d_gameState);
 
-				while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-					System.out.println("\n********Starting Main Game Loop***********\n");
+			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+				System.out.println("\n********Starting Main Game Loop***********\n");
 
-					d_playerService.assignArmies(d_gameState);
-					issueOrders();
-					executeOrders();
+				d_playerService.assignArmies(d_gameState);
+				issueOrders();
+				executeOrders();
 
-					MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
-					l_map_view.showMap();
+				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+				l_map_view.showMap();
 
-					System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-					BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-					String l_continue = l_reader.readLine();
-					if (l_continue.equalsIgnoreCase("N"))
-						break;
-				}
-			} else {
-				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+				String l_continue = l_reader.readLine();
+				if (l_continue.equalsIgnoreCase("N"))
+					break;
 			}
-		} catch (InvalidCommand | IOException l_e) {
-			System.out.println(l_e.getMessage());
-			d_gameState.updateLog(l_e.getMessage(), "effect");
+		} else {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 		}
 	}
 

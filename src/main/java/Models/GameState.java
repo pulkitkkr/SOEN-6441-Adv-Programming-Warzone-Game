@@ -108,8 +108,18 @@ public class GameState {
 	 * Message to be added in the log.
 	 *
 	 * @param p_logMessage Log Message to be set in the Object
+	 * @param p_logType Type of Log Message to be Added
 	 */
 	public void updateLog(String p_logMessage, String p_logType) {
 		d_logEntryBuffer.currentLog(p_logMessage, p_logType);
+	}
+
+	/**
+	 * Fetches the most recent Log in current GameState.
+	 *
+	 * @return recent Log Message
+	 */
+	public String getRecentLog(){
+		return d_logEntryBuffer.getD_logMessage();
 	}
 }
