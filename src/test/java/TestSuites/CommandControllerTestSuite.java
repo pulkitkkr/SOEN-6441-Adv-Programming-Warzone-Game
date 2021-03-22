@@ -3,7 +3,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import Controllers.GameEngineControllerTest;
+import Controllers.GameEngineTest;
 import Utils.CommandTest;
 /**
  * Test suite for testing command parsing utility and controller logic to check
@@ -11,6 +11,6 @@ import Utils.CommandTest;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CommandTest.class, GameEngineControllerTest.class })
+@SuiteClasses({ CommandTest.class, GameEngineTest.class })
 public class CommandControllerTestSuite {   
 }  

@@ -7,13 +7,11 @@ import static org.junit.Assert.assertNotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import Exceptions.InvalidCommand;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
@@ -146,40 +144,8 @@ public class PlayerServiceTest {
 		l_playerInfo.setD_continentsOwned(l_continentList);
 		l_playerInfo.setD_noOfUnallocatedArmies(10);
 		Integer l_actualResult = d_playerService.calculateArmiesForPlayer(l_playerInfo);
-		Integer l_expectedresult = 8;
+		Integer l_expectedresult = 18;
 		assertEquals(l_expectedresult, l_actualResult);
 	}
 
-	/**
-	 * Used to check that player cannot deploy more armies than there is in their
-	 * reinforcement pool.
-	 */
-	@Test
-	public void testValidateDeployOrderArmies() {
-		d_playerInfo.setD_noOfUnallocatedArmies(10);
-		String l_noOfArmies = "4";
-		boolean l_bool = d_playerService.validateDeployOrderArmies(d_playerInfo, l_noOfArmies);
-		assertFalse(l_bool);
-
-	}
-
-	/**
-	 * Tests deploy order logic to see if required order is created and armies are
-	 * re-calculated
-	 * 
-	 * @throws InvalidCommand if given command is invalid
-	 */
-	@Test
-	public void testDeployOrder() throws InvalidCommand {
-		Player l_player = new Player("Maze");
-		l_player.setD_noOfUnallocatedArmies(10);
-		Country l_country = new Country(1, "Japan", 1);
-		l_player.setD_coutriesOwned(Arrays.asList(l_country));
-		d_playerService.createDeployOrder("deploy Japan 4", l_player);
-
-		assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
-		assertEquals(l_player.getD_ordersToExecute().size(), 1);
-		assertEquals(l_player.getD_ordersToExecute().get(0).getD_targetCountryName(), "Japan");
-		assertEquals(l_player.getD_ordersToExecute().get(0).getD_numberOfArmiesToPlace().toString(), "4");
-	}
 }
