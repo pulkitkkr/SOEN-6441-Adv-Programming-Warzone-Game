@@ -8,5 +8,6 @@ package Models;
  *
  */
 public interface Cards {
-
+	public void randomCard();
+	
 }
