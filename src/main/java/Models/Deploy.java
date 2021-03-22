@@ -41,7 +41,7 @@ public class Deploy implements Order {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		this.printOrder();
+		
 		if (valid()) {
 			for (Country l_country : p_gameState.getD_map().getD_countries()) {
 				if (l_country.getD_countryName().equalsIgnoreCase(this.d_targetCountryName)) {
@@ -78,7 +78,7 @@ public class Deploy implements Order {
 
 	@Override
 	public void printOrder() {
-		System.out.println("\nDeploy order issued by player " + this.d_playerInitiator.getPlayerName());
+		System.out.println("\n----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+"----------");
 		System.out.println("Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName);
 	}
 

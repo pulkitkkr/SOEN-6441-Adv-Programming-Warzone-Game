@@ -240,24 +240,23 @@ public class Player {
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
-
-		if ("deploy".equalsIgnoreCase(l_order)) {
-			createDeployOrder(l_commandEntered);
-			checkForMoreOrders();
-		} else if ("advance".equalsIgnoreCase(l_order)) {
-			createAdvanceOrder(l_commandEntered, p_gameState);
-			checkForMoreOrders();
-		} else if ("showmap".equalsIgnoreCase(l_order)) {
-
+		if ("showmap".equalsIgnoreCase(l_order)) {
 			MapView l_mapView = new MapView(p_gameState);
 			l_mapView.showMap();
 			this.issue_order(p_gameState);
-
-		} else if (ApplicationConstants.CARDS.contains(l_order)) {
-			// card orders capture method invocation
 		} else {
-			System.err.println("Invalid command given at this stage.");
+			if ("deploy".equalsIgnoreCase(l_order)) {
+				createDeployOrder(l_commandEntered);
+			} else if ("advance".equalsIgnoreCase(l_order)) {
+				createAdvanceOrder(l_commandEntered, p_gameState);
+			} else if (ApplicationConstants.CARDS.contains(l_order)) {
+				// card orders capture method invocation
+			} else {
+				System.err.println("Invalid command given at this stage.");
+			}
+			checkForMoreOrders();
 		}
+		
 	}
 
 	/**
