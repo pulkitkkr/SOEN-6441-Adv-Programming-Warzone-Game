@@ -1,12 +1,15 @@
 package Services;
 
-import Constants.ApplicationConstants;
-import Models.*;
-import Utils.CommonUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import Constants.ApplicationConstants;
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Player;
+import Utils.CommonUtil;
 
 /**
  * This service class handles the players.
@@ -27,7 +30,7 @@ public class PlayerService {
 	 * Checks if player name is exists in given existing player list.
 	 * 
 	 * @param p_existingPlayerList existing players list present in game
-	 * @param p_playerName player name which needs to be looked upon
+	 * @param p_playerName         player name which needs to be looked upon
 	 * @return boolean true if player name is unique, false if its not
 	 */
 	public boolean isPlayerNameUnique(List<Player> p_existingPlayerList, String p_playerName) {
@@ -47,8 +50,8 @@ public class PlayerService {
 	 * This method is used to add and remove players.
 	 *
 	 * @param p_existingPlayerList current player list.
-	 * @param p_operation operation to add or remove player.
-	 * @param p_argument name of player to add or remove.
+	 * @param p_operation          operation to add or remove player.
+	 * @param p_argument           name of player to add or remove.
 	 * @return return updated list of player.
 	 */
 	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) {
@@ -76,9 +79,9 @@ public class PlayerService {
 	/**
 	 * Remove player from the game if it exists.
 	 * 
-	 * @param p_existingPlayerList Existing player list present in game
-	 * @param p_updatedPlayers Updated player list with removal to be done
-	 * @param p_enteredPlayerName Player name which is to be removed
+	 * @param p_existingPlayerList     Existing player list present in game
+	 * @param p_updatedPlayers         Updated player list with removal to be done
+	 * @param p_enteredPlayerName      Player name which is to be removed
 	 * @param p_playerNameAlreadyExist true if player already exists
 	 */
 	private void removeGamePlayer(List<Player> p_existingPlayerList, List<Player> p_updatedPlayers,
@@ -100,8 +103,8 @@ public class PlayerService {
 	/**
 	 * Adds player to Game if its not there already.
 	 * 
-	 * @param p_updatedPlayers updated player list with newly added player
-	 * @param p_enteredPlayerName new player name to be added
+	 * @param p_updatedPlayers         updated player list with newly added player
+	 * @param p_enteredPlayerName      new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
@@ -137,12 +140,13 @@ public class PlayerService {
 	 *
 	 * @param p_gameState Current Game State
 	 */
-	public void assignColors(GameState p_gameState){
-		if (!checkPlayersAvailability(p_gameState)) return;
+	public void assignColors(GameState p_gameState) {
+		if (!checkPlayersAvailability(p_gameState))
+			return;
 
 		List<Player> l_players = p_gameState.getD_players();
 
-		for(int i = 0; i< l_players.size(); i++){
+		for (int i = 0; i < l_players.size(); i++) {
 			l_players.get(i).setD_color(ApplicationConstants.COLORS.get(i));
 		}
 	}
@@ -161,7 +165,7 @@ public class PlayerService {
 		List<Country> l_countries = p_gameState.getD_map().getD_countries();
 		int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
 
-		this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
+		this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(), p_gameState);
 		this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
 		p_gameState.updateLog(d_assignmentLog, "effect");
 		System.out.println("Countries have been assigned to Players.");
@@ -172,11 +176,12 @@ public class PlayerService {
 	 * Performs random country assignment to all players.
 	 *
 	 * @param p_countriesPerPlayer countries which are to be assigned to each player
-	 * @param p_countries list of all countries present in map
-	 * @param p_players list of all available players
+	 * @param p_countries          list of all countries present in map
+	 * @param p_players            list of all available players
+	 * @param p_gameState		   current game state with map and player information
 	 */
 	private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries,
-			List<Player> p_players) {
+			List<Player> p_players, GameState p_gameState) {
 		List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
 		for (Player l_pl : p_players) {
 			if (l_unassignedCountries.isEmpty())
@@ -190,7 +195,7 @@ public class PlayerService {
 
 				if (l_pl.getD_coutriesOwned() == null)
 					l_pl.setD_coutriesOwned(new ArrayList<>());
-				l_pl.getD_coutriesOwned().add(l_randomCountry);
+				l_pl.getD_coutriesOwned().add(p_gameState.getD_map().getCountryByName(l_randomCountry.getD_countryName()));
 				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
 						+ l_randomCountry.getD_countryName());
 				d_assignmentLog += "\n Player : " + l_pl.getPlayerName() + " is assigned with country : "
@@ -201,7 +206,7 @@ public class PlayerService {
 		// If any countries are still left for assignment, it will redistribute those
 		// among players
 		if (!l_unassignedCountries.isEmpty()) {
-			performRandomCountryAssignment(1, l_unassignedCountries, p_players);
+			performRandomCountryAssignment(1, l_unassignedCountries, p_players, p_gameState);
 		}
 	}
 
@@ -209,10 +214,10 @@ public class PlayerService {
 	 * Checks if player is having any continent as a result of random country
 	 * assignment.
 	 *
-	 * @param p_players list of all available players
+	 * @param p_players    list of all available players
 	 * @param p_continents list of all available continents
 	 */
-	private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
+	public void performContinentAssignment(List<Player> p_players, List<Continent> p_continents) {
 		for (Player l_pl : p_players) {
 			List<String> l_countriesOwned = new ArrayList<>();
 			if (!CommonUtil.isCollectionEmpty(l_pl.getD_coutriesOwned())) {
@@ -237,52 +242,15 @@ public class PlayerService {
 	}
 
 	/**
-	 * creates the deploy order on the commands entered by the player.
-	 *
-	 * @param p_commandEntered command entered by the user
-	 * @param p_player player to create deploy order
-	 */
-	public void createDeployOrder(String p_commandEntered, Player p_player) {
-		List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
-				: p_player.getD_ordersToExecute();
-		String l_countryName = p_commandEntered.split(" ")[1];
-		String l_noOfArmies = p_commandEntered.split(" ")[2];
-		if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
-			System.out.println(
-					"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies");
-		} else {
-			Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-					Integer.parseInt(l_noOfArmies));
-			l_orders.add(l_orderObject);
-			p_player.setD_ordersToExecute(l_orders);
-			Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-			p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-			System.out.println("Order has been added to queue for execution.");
-		}
-	}
-
-	/**
-	 * Used to test number of armies entered in deploy command to check that player
-	 * cannot deploy more armies that there is in their reinforcement pool.
-	 *
-	 * @param p_player player to create deploy order
-	 * @param p_noOfArmies number of armies to deploy
-	 * @return boolean to validate armies to deploy
-	 */
-	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
-		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
-	}
-
-	/**
 	 * Calculates armies of player based on countries and continents owned.
 	 *
 	 * @param p_player player for which armies have to be calculated
 	 * @return Integer armies to be assigned to player
 	 */
-	public int calculateArmiesForPlayer(Player p_player) {
-		int l_armies = 0;
+	public Integer calculateArmiesForPlayer(Player p_player) {
+		Integer l_armies = null != p_player.getD_noOfUnallocatedArmies() ? p_player.getD_noOfUnallocatedArmies() : 0;
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned())) {
-			l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
+			l_armies = l_armies + Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
 		}
 		if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned())) {
 			int l_continentCtrlValue = 0;
@@ -344,7 +312,7 @@ public class PlayerService {
 	 *
 	 * @param p_gameState update game state with players information.
 	 * @param p_operation operation to add or remove player.
-	 * @param p_argument name of player to add or remove.
+	 * @param p_argument  name of player to add or remove.
 	 */
 	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
 		if (!isMapLoaded(p_gameState)) {
@@ -368,6 +336,31 @@ public class PlayerService {
 	 */
 	public boolean isMapLoaded(GameState p_gameState) {
 		return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
+	}
+
+	/**
+	 * Checks if any of the player in game wants to give further order or not.
+	 *
+	 * @param p_playersList players involved in game
+	 * @return boolean whether there are more orders to give or not
+	 */
+	public boolean checkForMoreOrders(List<Player> p_playersList) {
+		for (Player l_player : p_playersList) {
+			if(l_player.getD_moreOrders())
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Resets each players information for accepting further orders.
+	 *
+	 * @param p_playersList players involved in game
+	 */
+	public void resetPlayersOrdersFlag(List<Player> p_playersList) {
+		for (Player l_player : p_playersList) {
+			l_player.setD_moreOrders(true);
+		}
 	}
 
 	/**
