@@ -159,7 +159,7 @@ public class Advance implements Order {
 			p_targetCountry.setD_armies(p_attackerArmiesLeft);
 			p_playerOfTargetCountry.getD_coutriesOwned().remove(p_targetCountry);
 			this.d_playerInitiator.getD_coutriesOwned().add(p_targetCountry);
-			System.out.println("/nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+			System.out.println("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
 					+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies());
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
@@ -167,7 +167,7 @@ public class Advance implements Order {
 			Integer l_sourceArmiesToUpdate = p_sourceCountry.getD_armies() + p_attackerArmiesLeft;
 			p_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
 			System.out.println(
-					"/nCountry : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
+					"\nCountry : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
 							+ " armies and is still owned by player : " + p_playerOfTargetCountry.getPlayerName());
 			System.out.println(
 					"Country : " + p_sourceCountry.getD_countryName() + " is left with " + p_sourceCountry.getD_armies()
