@@ -29,7 +29,7 @@ public abstract class Cards {
 		b, bd, a, d
 	}
 
-	private static final List<cards> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+	private static final List<cards> VALUES = Collections.unmodifiableList(Arrays.asList(cards.values()));
 	private static final int SIZE = VALUES.size();
 	private static final Random RANDOM = new Random();
 
