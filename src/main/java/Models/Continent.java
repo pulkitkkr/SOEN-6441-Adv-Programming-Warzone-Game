@@ -162,6 +162,7 @@ public class Continent {
 	 * Removes particular country ID from the neighbor list of all countries in continent.
 	 * 
 	 * @param p_countryId ID of country to be removed
+	 * @throws InvalidMap Exception
 	 */
 	public void removeCountryNeighboursFromAll(Integer p_countryId) throws InvalidMap {
 		if (null!=d_countries && !d_countries.isEmpty()) {

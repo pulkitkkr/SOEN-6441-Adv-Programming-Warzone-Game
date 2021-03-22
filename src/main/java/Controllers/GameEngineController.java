@@ -319,6 +319,7 @@ public class GameEngineController {
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws InvalidMap indicates map is invalid
+	 * @throws IOException handles input output exception
 	 */
 	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -344,6 +345,7 @@ public class GameEngineController {
 	 * @param p_command command entered by the user on CLI
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws InvalidMap indicates map is invalid
+	 * @throws IOException handles input output exception
 	 */
 	public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
