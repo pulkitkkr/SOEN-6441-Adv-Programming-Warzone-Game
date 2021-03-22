@@ -1,10 +1,10 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Services.PlayerService;
 import Utils.CommonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Concrete Command of Command pattern.
@@ -30,6 +30,11 @@ public class Advance implements Order {
 	 * Player.
 	 */
 	Player d_playerInitiator;
+
+	/**
+	 * Sets the Log containing Information about orders.
+	 */
+	String d_orderExecutionLog;
 
 	/**
 	 * The constructor receives all the parameters necessary to implement the order.
@@ -70,8 +75,9 @@ public class Advance implements Order {
 				l_targetCountry.setD_armies(d_numberOfArmiesToPlace);
 				l_playerOfTargetCountry.getD_coutriesOwned().remove(l_targetCountry);
 				this.d_playerInitiator.getD_coutriesOwned().add(l_targetCountry);
-				System.out.println("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
-						+ l_targetCountry.getD_countryName() + " and armies : " + l_targetCountry.getD_armies());
+				this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+						+ l_targetCountry.getD_countryName() + " and armies : " + l_targetCountry.getD_armies(), "default");
+				p_gameState.updateLog(orderExecutionLog(), "effect");
 				this.updateContinents(this.d_playerInitiator, l_playerOfTargetCountry, p_gameState);
 			} else {
 				Integer l_armiesInAttack = this.d_numberOfArmiesToPlace < l_targetCountry.getD_armies()
@@ -82,8 +88,11 @@ public class Advance implements Order {
 				List<Integer> l_defenderArmies = generateRandomArmyUnits(l_armiesInAttack, "defender");
 				this.produceBattleResult(l_sourceCountry, l_targetCountry, l_attackerArmies, l_defenderArmies,
 						l_playerOfTargetCountry);
+				p_gameState.updateLog(orderExecutionLog(), "effect");
 				this.updateContinents(this.d_playerInitiator, l_playerOfTargetCountry, p_gameState);
 			}
+		}else{
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 		}
 	}
 
@@ -159,19 +168,18 @@ public class Advance implements Order {
 			p_targetCountry.setD_armies(p_attackerArmiesLeft);
 			p_playerOfTargetCountry.getD_coutriesOwned().remove(p_targetCountry);
 			this.d_playerInitiator.getD_coutriesOwned().add(p_targetCountry);
-			System.out.println("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
-					+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies());
+			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+					+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(), "default");
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
 
 			Integer l_sourceArmiesToUpdate = p_sourceCountry.getD_armies() + p_attackerArmiesLeft;
 			p_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
-			System.out.println(
-					"\nCountry : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
-							+ " armies and is still owned by player : " + p_playerOfTargetCountry.getPlayerName());
-			System.out.println(
-					"Country : " + p_sourceCountry.getD_countryName() + " is left with " + p_sourceCountry.getD_armies()
-							+ " armies and is still owned by player : " + this.d_playerInitiator.getPlayerName());
+			String l_country1 = "\nCountry : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
+					+ " armies and is still owned by player : " + p_playerOfTargetCountry.getPlayerName();
+			String l_country2 = "Country : " + p_sourceCountry.getD_countryName() + " is left with " + p_sourceCountry.getD_armies()
+					+ " armies and is still owned by player : " + this.d_playerInitiator.getPlayerName();
+			this.setD_orderExecutionLog(l_country1+System.lineSeparator()+l_country2, "default");
 		}
 	}
 
@@ -188,21 +196,21 @@ public class Advance implements Order {
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_sourceCountryName.toString()))
 				.findFirst().orElse(null);
 		if (l_country == null) {
-			System.err.println("\n" + this.currentOrder() + " is not executed since Source country : "
+			this.setD_orderExecutionLog("\n" + this.currentOrder() + " is not executed since Source country : "
 					+ this.d_sourceCountryName + " given in advance command does not belongs to the player : "
-					+ d_playerInitiator.getPlayerName());
+					+ d_playerInitiator.getPlayerName(), "error");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
-			System.err.println("\n" + this.currentOrder()
+			this.setD_orderExecutionLog("\n" + this.currentOrder()
 					+ " is not executed as armies given in advance order exceeds armies of source country : "
-					+ this.d_sourceCountryName);
+					+ this.d_sourceCountryName, "error");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace == l_country.getD_armies()) {
-			System.err.println("\n" + this.currentOrder() + " is not executed as source country : "
+			this.setD_orderExecutionLog("\n" + this.currentOrder() + " is not executed as source country : "
 					+ this.d_sourceCountryName + " has " + l_country.getD_armies()
-					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.");
+					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.", "error");
 			return false;
 		}
 		return true;
@@ -220,23 +228,41 @@ public class Advance implements Order {
 
 	@Override
 	public void printOrder() {
-		System.out.println("\n----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()+"----------");
-		System.out.println("Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to "
-				+ this.d_targetCountryName);
+		this.d_orderExecutionLog = System.lineSeparator()+ "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to " + this.d_targetCountryName;
+		System.out.println(this.d_orderExecutionLog);
 	}
 
+	@Override
+	public String orderExecutionLog() {
+		return this.d_orderExecutionLog;
+	}
+
+	/**
+	 * Prints and Sets the order execution log.
+	 *
+	 * @param p_orderExecutionLog String to be set as log
+	 * @param p_logType type of log : error, default
+	 */
+	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType) {
+		this.d_orderExecutionLog = p_orderExecutionLog;
+		if(p_logType.equals("error")) {
+			System.err.println(p_orderExecutionLog);
+		}else{
+			System.out.println(p_orderExecutionLog);
+		}
+	}
 	/**
 	 * Generates random army units based attacker and defender's winning
 	 * probability.
 	 * 
-	 * @param l_size number of random armies to be generated
-	 * @param l_role armies to be generated is for defender or for attacker
+	 * @param p_size number of random armies to be generated
+	 * @param p_role armies to be generated is for defender or for attacker
 	 * @return List random army units based on probability
 	 */
-	private List<Integer> generateRandomArmyUnits(int l_size, String l_role) {
+	private List<Integer> generateRandomArmyUnits(int p_size, String p_role) {
 		List<Integer> l_armyList = new ArrayList<>();
-		Double l_probability = "attacker".equalsIgnoreCase(l_role) ? 0.6 : 0.7;
-		for (int l_i = 0; l_i < l_size; l_i++) {
+		Double l_probability = "attacker".equalsIgnoreCase(p_role) ? 0.6 : 0.7;
+		for (int l_i = 0; l_i < p_size; l_i++) {
 			int l_randomNumber = getRandomInteger(10, 1);
 			Integer l_armyUnit = (int) Math.round(l_randomNumber * l_probability);
 			l_armyList.add(l_armyUnit);
@@ -247,12 +273,12 @@ public class Advance implements Order {
 	/**
 	 * returns random integer between minimum and maximum range.
 	 * 
-	 * @param maximum upper limit
-	 * @param minimum lower limit
+	 * @param p_maximum upper limit
+	 * @param p_minimum lower limit
 	 * @return int random number
 	 */
-	private static int getRandomInteger(int maximum, int minimum) {
-		return ((int) (Math.random() * (maximum - minimum))) + minimum;
+	private static int getRandomInteger(int p_maximum, int p_minimum) {
+		return ((int) (Math.random() * (p_maximum - p_minimum))) + p_minimum;
 	}
 
 	/**

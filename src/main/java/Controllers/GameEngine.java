@@ -1,11 +1,5 @@
 package Controllers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Map;
-
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -18,6 +12,12 @@ import Utils.Command;
 import Utils.CommonUtil;
 import Utils.ExceptionLogHandler;
 import Views.MapView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game
@@ -51,6 +51,17 @@ public class GameEngine {
 	}
 
 	/**
+	 * Shows and Writes GameEngine Logs.
+	 *
+	 * @param p_gameEngineLog String of Log message.
+	 * @param p_logType Type of Log.
+	 */
+	public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
+		this.d_gameState.updateLog(p_gameEngineLog, p_logType);
+		System.out.println(p_gameEngineLog);
+	}
+
+	/**
 	 * The main method responsible for accepting command from users and redirecting
 	 * those to corresponding logical flows.
 	 *
@@ -71,7 +82,7 @@ public class GameEngine {
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
+	public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException{
 		Command l_command = new Command(p_enteredCommand);
 		String l_rootCommand = l_command.getRootCommand();
 		boolean l_isMapLoaded = d_gameState.getD_map() != null;
@@ -84,8 +95,7 @@ public class GameEngine {
 			}
 			case "editcontinent": {
 				if (!l_isMapLoaded) {
-					System.out.println("Can not Edit Continent, please perform `editmap` first");
-					d_gameState.updateLog("Can not Edit Continent, please perform `editmap` first", "effect");
+					this.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditContinent(l_command);
@@ -93,8 +103,7 @@ public class GameEngine {
 			}
 			case "savemap": {
 				if (!l_isMapLoaded) {
-					System.out.println("No map found to save, Please `editmap` first");
-					d_gameState.updateLog("No map found to save, Please `editmap` first", "effect");
+					this.setD_gameEngineLog("No map found to save, Please `editmap` first", "effect");
 					break;
 				}
 
@@ -107,8 +116,7 @@ public class GameEngine {
 			}
 			case "validatemap": {
 				if (!l_isMapLoaded) {
-					System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
-					d_gameState.updateLog("No map found to validate, Please `loadmap` & `editmap` first", "effect");
+					this.setD_gameEngineLog("No map found to validate, Please `loadmap` & `editmap` first", "effect");
 					break;
 				}
 				performValidateMap(l_command);
@@ -116,8 +124,7 @@ public class GameEngine {
 			}
 			case "editcountry": {
 				if (!l_isMapLoaded) {
-					System.out.println("Can not Edit Country, please perform `editmap` first");
-					d_gameState.updateLog("Can not Edit Country, please perform `editmap` first", "effect");
+					this.setD_gameEngineLog("Can not Edit Country, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditCountry(l_command);
@@ -125,8 +132,7 @@ public class GameEngine {
 			}
 			case "editneighbor": {
 				if (!l_isMapLoaded) {
-					System.out.println("Can not Edit Neighbors, please perform `editmap` first");
-					d_gameState.updateLog("Can not Edit Neighbors, please perform `editmap` first", "effect");
+					this.setD_gameEngineLog("Can not Edit Neighbors, please perform `editmap` first", "effect");
 					break;
 				}
 				performEditNeighbour(l_command);
@@ -134,8 +140,7 @@ public class GameEngine {
 			}
 			case "gameplayer": {
 				if (!l_isMapLoaded) {
-					System.out.println("No map found, Please `loadmap` before adding game players");
-					d_gameState.updateLog("No map found, Please `loadmap` before adding game players", "effect");
+					this.setD_gameEngineLog("No map found, Please `loadmap` before adding game players", "effect");
 					break;
 				}
 				createPlayers(l_command);
@@ -151,14 +156,12 @@ public class GameEngine {
 				break;
 			}
 			case "exit": {
-				System.out.println("Exit Command Entered");
-				d_gameState.updateLog("Exit Command Entered, Game Ends!", "effect");
+				this.setD_gameEngineLog("Exit Command Entered, Game Ends!", "effect");
 				System.exit(0);
 				break;
 			}
 			default: {
-				System.out.println("Invalid Command");
-				d_gameState.updateLog("Invalid Command", "effect");
+				this.setD_gameEngineLog("Invalid Command", "effect");
 				break;
 			}
 		}
@@ -178,8 +181,7 @@ public class GameEngine {
 
 				handleCommand(l_commandEntered);
 			} catch (InvalidCommand | InvalidMap | IOException l_exception) {
-				d_gameState.updateLog(l_exception.getMessage(), "effect");
-				System.out.println(l_exception.getMessage());
+				this.setD_gameEngineLog(l_exception.getMessage(), "effect");
 			}
 		}
 	}
@@ -258,8 +260,7 @@ public class GameEngine {
 					boolean l_fileUpdateStatus = d_mapService.saveMap(d_gameState,
 							l_map.get(ApplicationConstants.ARGUMENTS));
 					if (l_fileUpdateStatus) {
-						System.out.println("Required changes has been done in map file");
-						d_gameState.updateLog("Required changes have been made in map file", "effect");
+						this.setD_gameEngineLog("Required changes have been made in map file", "effect");
 					} else
 						System.out.println(d_gameState.getError());
 				} else {
@@ -292,8 +293,7 @@ public class GameEngine {
 							l_map.get(ApplicationConstants.ARGUMENTS));
 					if (l_mapToLoad.Validate()) {
 						l_flagValidate = true;
-						System.out.println("Map has been loaded successfully. \n");
-						d_gameState.updateLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
+						this.setD_gameEngineLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
 					} else {
 						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 					}
@@ -325,8 +325,7 @@ public class GameEngine {
 				throw new InvalidMap(ApplicationConstants.INVALID_MAP_ERROR_EMPTY);
 			} else {
 				if (l_currentMap.Validate()) {
-					d_gameState.updateLog("Entered Map is Valid!", "effect");
-					System.out.println(ApplicationConstants.VALID_MAP);
+					this.setD_gameEngineLog(ApplicationConstants.VALID_MAP, "effect");
 				} else {
 					throw new InvalidMap("Failed to Validate map!");
 				}
@@ -427,7 +426,7 @@ public class GameEngine {
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	public void assignCountries(Command p_command) throws InvalidCommand, IOException {
+	public void assignCountries(Command p_command) throws InvalidCommand, IOException{
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
@@ -436,14 +435,14 @@ public class GameEngine {
 			d_playerService.assignColors(d_gameState);
 
 			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-				System.out.println("\n********Starting Main Game Loop***********\n");
+				this.setD_gameEngineLog("\n********Starting Main Game Loop***********\n", "start");
 
 				// Assigning armies to players
 				d_playerService.assignArmies(d_gameState);
 				issueOrders();
 				executeOrders();
 
-				MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+				MapView l_map_view = new MapView(d_gameState);
 				l_map_view.showMap();
 
 				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
@@ -462,12 +461,13 @@ public class GameEngine {
 	 */
 	private void executeOrders() {
 		// Executing orders
-		System.out.println("********** Starting Execution Of Orders ***********");
+		this.setD_gameEngineLog("\n********** Starting Execution Of Orders ***********", "start");
 		while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
 			for (Player l_player : d_gameState.getD_players()) {
 				Order l_order = l_player.next_order();
 				if (l_order != null) {
 					l_order.printOrder();
+					d_gameState.updateLog(l_order.orderExecutionLog(), "effect");
 					l_order.execute(d_gameState);
 				}
 			}
@@ -480,7 +480,7 @@ public class GameEngine {
 	 * 
 	 * @throws IOException exception in reading inputs from user
 	 */
-	private void issueOrders() throws IOException {
+	private void issueOrders() throws IOException, InvalidCommand{
 		// Issuing order for players
 		do {
 			for (Player l_player : d_gameState.getD_players()) {

@@ -1,101 +1,77 @@
 Initializing the Game ......
 
 
-Command Entered: editmap swiss.map
-Log: swiss.map already exists and is loaded for editing
+Command Entered: loadmap swiss.map
+Log: Schaffhausen in Continent AG-LU-ZH-ZG-SH is not reachable
 
-Command Entered: editcontinent -add A -add B 1 -add C 10 -add D 10
-Log: Continent A couldn't be added/removed. Changes are not made
-Log: Continent B added successfully!
-Log: Continent C added successfully!
-Log: Continent D added successfully!
+Command Entered: loadmap test.map
+Log: test.map has been loaded to start the game
 
-Command Entered: editcountry -add E A -add F B -add G C -add H C -add I A -add J D -add I D -add L D
-Log: Cannot add Country to a Continent that doesn't exist!
-Log: Country F added successfully!
-Log: Country G added successfully!
-Log: Country H added successfully!
-Log: Cannot add Country to a Continent that doesn't exist!
-Log: Country J added successfully!
-Log: Country I added successfully!
-Log: Country L added successfully!
-
-Command Entered: editneighbor -add F G -add G H -add H I -add I J -add J I -add L I -add L J -remove H G
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: Neighbour Pair added successfully!
-Log: No Such Neighbour Exists
-
-Command Entered: editcountry -remove L -remove R
-Log: Country L removed successfully!
-Log: Country:  R does not exist!
-
-Command Entered: editcontinent -remove D
-Log: Continent D removed successfully!
-
-Command Entered: validatemap
-Log: H does not possess any neighbour, hence isn't reachable!
-
-Command Entered: savemap
-Log: Invalid command. Kindly provide command in Format of : savemap filename
-
-Command Entered: savemap swiss.mp
-
-Command Entered: savemap swiss.map
-Log: H does not possess any neighbour, hence isn't reachable!
-Log: Couldn't save the changes in map file!
-
-Command Entered: loadmap canada.map
-Log: canada.map has been loaded to start the game
-
-Command Entered: assigncountries
-Log: Kindly add players before assigning countries
-
-Command Entered: gameplayer -add Er -add Gr -add Wr
-Log: Player with name : Er has been added successfully.
-Log: Player with name : Gr has been added successfully.
-Log: Player with name : Wr has been added successfully.
-
-Command Entered: gameplayer -remove Wr -remove Qr
-Log: Player with name : Wr has been removed successfully.
-Log: Player with name : Qr does not Exist. Changes are not made.
+Command Entered: gameplayer -add a -add b
+Log: Player with name : a has been added successfully.
+Log: Player with name : b has been added successfully.
 
 Command Entered: assigncountries
 Log: Country/Continent Assignment:
- Player : Er is assigned with country : NU-Ellesmere_Island
- Player : Er is assigned with country : Quebec-North
- Player : Er is assigned with country : NU-Northern_Islands
- Player : Er is assigned with country : NU-Victoria_Island-East
- Player : Er is assigned with country : NT-Victoria_Island-West
- Player : Er is assigned with country : New_Brunswick
- Player : Er is assigned with country : Manitoba-South
- Player : Er is assigned with country : BC-Vancouver_Island
- Player : Er is assigned with country : NU-Southern_Islands
- Player : Er is assigned with country : NT-Northern_Islands
- Player : Er is assigned with country : Northwest_Territories-Continental
- Player : Er is assigned with country : Ontario-South
- Player : Er is assigned with country : Quebec-Central
- Player : Er is assigned with country : Alberta-North
- Player : Er is assigned with country : N&L-Labrador
- Player : Gr is assigned with country : Yukon_Territory
- Player : Gr is assigned with country : Quebec-South
- Player : Gr is assigned with country : Saskatchewan-North
- Player : Gr is assigned with country : British_Columbia-South
- Player : Gr is assigned with country : Saskatchewan-South
- Player : Gr is assigned with country : N&L-Newfoundland
- Player : Gr is assigned with country : Prince_Edward_Island
- Player : Gr is assigned with country : Ontario-West
- Player : Gr is assigned with country : Ontario-North
- Player : Gr is assigned with country : British_Columbia-North
- Player : Gr is assigned with country : Alberta-South
- Player : Gr is assigned with country : Nova_Scotia
- Player : Gr is assigned with country : Manitoba-North
- Player : Gr is assigned with country : NU-Baffin_Island
- Player : Gr is assigned with country : Nunavut-Continental
- Player : Er is assigned with country : NT-Banks_Island
-Log: Player : Er has been assigned with 5 armies
-Log: Player : Gr has been assigned with 5 armies
+ Player : a is assigned with country : India
+ Player : a is assigned with country : Pakistan
+ Player : b is assigned with country : France
+ Player : b is assigned with country : Belgium
+ Player : a is assigned with continent : Asia
+ Player : b is assigned with continent : Europe
+
+********Starting Main Game Loop***********
+
+Log: Player : a has been assigned with 4 armies
+Log: Player : b has been assigned with 23 armies
+
+ Order Issued: (a) deploy India 9
+Log: Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.
+
+ Order Issued: (b) deploy France 10
+Log: Deploy order has been added to queue for execution. For player: b
+
+ Order Issued: (a) deploy India 2
+Log: Deploy order has been added to queue for execution. For player: a
+
+ Order Issued: (b) deploy Belgium 13
+Log: Deploy order has been added to queue for execution. For player: b
+
+ Order Issued: (a) deploy Pakistan 2
+Log: Deploy order has been added to queue for execution. For player: a
+
+ Order Issued: (b) showmap
+
+ Order Issued: (b) advance Belgium Pakistan 9
+Log: Advance order has been added to queue for execution. For player: b
+
+ Order Issued: (a) advance Pakistan Afghan 1
+Log: Country : Afghan given in advance order doesnt exists in map. Order given is ignored.
+
+********** Starting Execution Of Orders ***********
+Log: 
+----------Deploy order issued by player a----------
+Deploy 2 armies to India
+Log: 
+2 armies have been deployed successfully on country : India
+Log: 
+----------Deploy order issued by player b----------
+Deploy 10 armies to France
+Log: 
+10 armies have been deployed successfully on country : France
+Log: 
+----------Deploy order issued by player a----------
+Deploy 2 armies to Pakistan
+Log: 
+2 armies have been deployed successfully on country : Pakistan
+Log: 
+----------Deploy order issued by player b----------
+Deploy 13 armies to Belgium
+Log: 
+13 armies have been deployed successfully on country : Belgium
+Log: 
+----------Advance order issued by player b----------
+Move 9 armies from Belgium to Pakistan
+Log: 
+Country : Pakistan is left with 1 armies and is still owned by player : a
+Country : Belgium is left with 12 armies and is still owned by player : b

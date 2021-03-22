@@ -21,6 +21,11 @@ public class Deploy implements Order {
 	Player d_playerInitiator;
 
 	/**
+	 * Sets the Log containing Information about orders.
+	 */
+	String d_orderExecutionLog;
+
+	/**
 	 * The constructor receives all the parameters necessary to implement the order.
 	 * These are then encapsulated in the order.
 	 * 
@@ -48,20 +53,20 @@ public class Deploy implements Order {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
 							: l_country.getD_armies() + this.d_numberOfArmiesToPlace;
 					l_country.setD_armies(l_armiesToUpdate);
-					System.out.println("\n" + l_armiesToUpdate + " armies have been deployed successfully on country : "
-							+ l_country.getD_countryName());
+					this.setD_orderExecutionLog("\n" + l_armiesToUpdate + " armies have been deployed successfully on country : "
+							+ l_country.getD_countryName(), "default");
 				}
 			}
 
 		} else {
-			System.err.println("\nDeploy Order = " + "deploy" + " " + this.d_targetCountryName + " "
+			this.setD_orderExecutionLog("\nDeploy Order = " + "deploy" + " " + this.d_targetCountryName + " "
 					+ this.d_numberOfArmiesToPlace + " is not executed since Target country: "
 					+ this.d_targetCountryName + " given in deploy command does not belongs to the player : "
-					+ d_playerInitiator.getPlayerName());
+					+ d_playerInitiator.getPlayerName(), "error");
 			d_playerInitiator.setD_noOfUnallocatedArmies(
 					d_playerInitiator.getD_noOfUnallocatedArmies() + this.d_numberOfArmiesToPlace);
 		}
-
+		p_gameState.updateLog(orderExecutionLog(), "effect");
 	}
 
 	/**
@@ -78,8 +83,27 @@ public class Deploy implements Order {
 
 	@Override
 	public void printOrder() {
-		System.out.println("\n----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+"----------");
-		System.out.println("Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName);
+		this.d_orderExecutionLog = System.lineSeparator()+"----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName;
+		System.out.println(this.d_orderExecutionLog);
 	}
 
+	@Override
+	public String orderExecutionLog() {
+		return d_orderExecutionLog;
+	}
+
+	/**
+	 * Prints and Sets the order execution log.
+	 *
+	 * @param p_orderExecutionLog String to be set as log
+	 * @param p_logType type of log : error, default
+	 */
+	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType) {
+		this.d_orderExecutionLog = p_orderExecutionLog;
+		if(p_logType.equals("error")) {
+			System.err.println(p_orderExecutionLog);
+		}else{
+			System.out.println(p_orderExecutionLog);
+		}
+	}
 }
