@@ -7,6 +7,6 @@ package Models;
  * @author Bhoomi Shah
  *
  */
-public class Airlift implements Cards {
+public class Airlift extends Cards {
 
 }

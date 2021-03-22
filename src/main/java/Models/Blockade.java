@@ -7,6 +7,6 @@ package Models;
  * @author Bhoomi Shah
  *
  */
-public class Blockade implements Cards {
+public class Blockade extends Cards {
 
 }
