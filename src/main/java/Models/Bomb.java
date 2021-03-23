@@ -31,7 +31,7 @@ public class Bomb implements Card {
 	 * 
 	 */
 	@Override
-	public void printOrder() {
+	public void printCard() {
 		// TODO Auto-generated method stub
 		
 	}

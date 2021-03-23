@@ -39,7 +39,7 @@ public interface Card {
 	public boolean valid();
 
 	/**
-	 * Print order information.
+	 * Print card information.
 	 */
-	public void printOrder();
+	public void printCard();
 }
