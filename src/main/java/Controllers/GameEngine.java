@@ -1,5 +1,11 @@
 package Controllers;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
+
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -12,12 +18,6 @@ import Utils.Command;
 import Utils.CommonUtil;
 import Utils.ExceptionLogHandler;
 import Views.MapView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game
@@ -344,6 +344,7 @@ public class GameEngine {
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws InvalidMap indicates map is invalid
 	 * @throws IOException handles File I/O Exception
+	 * @throws InvalidMap     indicates map is invalid
 	 */
 	public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -477,7 +478,6 @@ public class GameEngine {
 				}
 			}
 		}
-		d_playerService.resetPlayersOrdersFlag(d_gameState.getD_players());
 	}
 
 	/**

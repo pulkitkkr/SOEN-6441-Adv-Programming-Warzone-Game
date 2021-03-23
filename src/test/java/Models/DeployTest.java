@@ -109,7 +109,7 @@ public class DeployTest {
 	 * @throws InvalidCommand if given command is invalid
 	 */
 	@Test
-	public void testDeployOrder() throws InvalidCommand{
+	public void testDeployOrder() throws InvalidCommand {
 		Player l_player = new Player("Maze");
 		l_player.setD_noOfUnallocatedArmies(10);
 		Country l_country = new Country(1, "Japan", 1);

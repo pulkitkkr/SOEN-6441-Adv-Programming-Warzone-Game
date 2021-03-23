@@ -1,16 +1,15 @@
 package Models;
 
-import Constants.ApplicationConstants;
-import Exceptions.InvalidCommand;
-import Utils.Command;
-import Utils.CommonUtil;
-import Views.MapView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import Constants.ApplicationConstants;
+import Utils.Command;
+import Utils.CommonUtil;
+import Views.MapView;
 
 /**
  * This class depicts player's information and services.
@@ -185,7 +184,7 @@ public class Player {
 
 	/**
 	 * Gets info about more orders from player are to be accepted or not.
-	 * 
+	 *
 	 * @return boolean true if player wants to give more order or else false
 	 */
 	public boolean getD_moreOrders() {
@@ -194,12 +193,12 @@ public class Player {
 
 	/**
 	 * Sets info about more orders from player are to be accepted or not.
-	 * 
-	 * @param p_moreOrders Boolean true if player wants to give more order or else
+	 *
+	 * @param d_moreOrders Boolean true if player wants to give more order or else
 	 *                     false
 	 */
-	public void setD_moreOrders(boolean p_moreOrders) {
-		this.d_moreOrders = p_moreOrders;
+	public void setD_moreOrders(boolean d_moreOrders) {
+		this.d_moreOrders = d_moreOrders;
 	}
 
 	/**
@@ -257,7 +256,9 @@ public class Player {
 	/**
 	 * Receiver of command pattern :-Issue order which takes order as an input and
 	 * add it to player's order list.
-	 * 
+	 * Receiver of command pattern :-Issue order which takes order as an input and
+	 * add it to player's order list.
+	 *
 	 * @param p_gameState Current state of the game
 	 * @throws IOException exception in reading inputs from user
 	 * @throws InvalidCommand Invalid Command
@@ -289,12 +290,12 @@ public class Player {
 			}
 			checkForMoreOrders();
 		}
-		
+
 	}
 
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
-	 * 
+	 *
 	 * @throws IOException exception in reading inputs from user
 	 */
 	private void checkForMoreOrders() throws IOException {
@@ -308,11 +309,12 @@ public class Player {
 			System.err.println("Invalid Input Passed.");
 			this.checkForMoreOrders();
 		}
+
 	}
 
 	/**
 	 * Creates the deploy order on the commands entered by the player.
-	 * 
+	 *
 	 * @param p_commandEntered command entered by the user
 	 */
 	public void createDeployOrder(String p_commandEntered){
@@ -366,7 +368,7 @@ public class Player {
 
 	/**
 	 * Creates the advance order on the commands entered by the player.
-	 * 
+	 *
 	 * @param p_commandEntered command entered by the user
 	 * @param p_gameState      current state of the game
 	 */
@@ -396,7 +398,7 @@ public class Player {
 	/**
 	 * Checks if source and target countries given in advance order exists in the
 	 * map or not.
-	 * 
+	 *
 	 * @param p_countryName country name which needs to be checked in map
 	 * @param p_gameState   current state of the map
 	 * @return true if country exists in map or else false
@@ -412,7 +414,7 @@ public class Player {
 
 	/**
 	 * Checks if given advance order has zero armies to move.
-	 * 
+	 *
 	 * @param p_noOfArmies number of armies given in order
 	 * @return true if given order has zero armies or else false
 	 */
@@ -426,7 +428,7 @@ public class Player {
 
 	/**
 	 * Checks if countries given advance order are adjacent or not.
-	 * 
+	 *
 	 * @param p_gameState         current state of the game
 	 * @param p_sourceCountryName source country name
 	 * @param p_targetCountryName target country name
