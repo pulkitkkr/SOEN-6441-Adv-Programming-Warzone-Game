@@ -33,7 +33,7 @@ public class Country {
 	/**
 	 * list of the countries which are adjacent to the existing one.
 	 */
-	List<Integer> d_adjacentCountryIds = new ArrayList<Integer>();;
+	List<Integer> d_adjacentCountryIds = new ArrayList<Integer>();
 
 	/**
 	 * constructor of this class.

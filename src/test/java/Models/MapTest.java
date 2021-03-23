@@ -43,7 +43,7 @@ public class MapTest {
     /**
      * Tests a valid and invalid Map for Validate function
      *
-     * @throws InvalidMap
+     * @throws InvalidMap Exception
      */
     @Test (expected = InvalidMap.class)
     public void testValidate() throws InvalidMap {

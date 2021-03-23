@@ -201,12 +201,13 @@ public class MapServiceTest {
 	 * Tests the Remove Country Operation via editcountry
 	 * @throws InvalidMap Exception
 	 * @throws InvalidCommand Exception
+	 * @throws IOException handles input output exception
 	 */
 	@Test
 	public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
 		d_mapservice.loadMap(d_state, "test.map");
 		d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
-		assertEquals("Log: Country:  Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
+		assertEquals("Log: Country: Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
 	}
 
 	/**
