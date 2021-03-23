@@ -478,6 +478,7 @@ public class GameEngine {
 				}
 			}
 		}
+		d_playerService.resetPlayersOrdersFlag(d_gameState.getD_players());
 	}
 
 	/**

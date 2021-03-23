@@ -1,12 +1,17 @@
 package Views;
 
-import Constants.ApplicationConstants;
-import Exceptions.InvalidMap;
-import Models.*;
-import Utils.CommonUtil;
+import java.util.List;
+
 import org.davidmoten.text.utils.WordWrap;
 
-import java.util.List;
+import Constants.ApplicationConstants;
+import Exceptions.InvalidMap;
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Map;
+import Models.Player;
+import Utils.CommonUtil;
 
 /**
  * This is the MapView Class.

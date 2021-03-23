@@ -1,6 +1,5 @@
 package Controllers;
 
-import static Constants.ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;

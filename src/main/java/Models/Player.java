@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
 import Utils.Command;
@@ -50,6 +51,7 @@ public class Player {
 	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
+  
 	/**
 	 * String holding Log for individual Player methods.
 	 */
@@ -257,14 +259,13 @@ public class Player {
 	/**
 	 * Receiver of command pattern :-Issue order which takes order as an input and
 	 * add it to player's order list.
-	 * Receiver of command pattern :-Issue order which takes order as an input and
-	 * add it to player's order list.
 	 *
 	 * @param p_gameState Current state of the game
 	 * @throws IOException exception in reading inputs from user
 	 * @throws InvalidCommand Invalid Command
 	 */
 	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand{
+    
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
 				+ " or give showmap command to view current state of the game.");
@@ -310,7 +311,6 @@ public class Player {
 			System.err.println("Invalid Input Passed.");
 			this.checkForMoreOrders();
 		}
-
 	}
 
 	/**
