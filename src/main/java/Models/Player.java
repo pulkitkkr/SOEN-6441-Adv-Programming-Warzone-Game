@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Constants.ApplicationConstants;
+import Models.Card.cards;
 import Utils.Command;
 import Utils.CommonUtil;
 import Views.MapView;
@@ -412,5 +413,14 @@ public class Player {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
+	 * 
+	 * @return string random card from set of cards
+	 */
+	public String randomCard() {
+		return ApplicationConstants.CARDS.get(ApplicationConstants.RANDOM.nextInt(ApplicationConstants.SIZE));
 	}
 }

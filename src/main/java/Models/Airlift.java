@@ -7,12 +7,35 @@ package Models;
  * 
  *
  */
-public class Airlift extends Cards {
+public class Airlift implements Card {
 
+	/**
+	 * 
+	 */
 	@Override
-	public void performAction() {
+	public void execute(GameState p_gameState) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public boolean valid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void printOrder() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

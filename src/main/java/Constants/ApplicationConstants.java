@@ -1,6 +1,7 @@
 package Constants;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class initializes all the constants that are going to be used throughout the application.
@@ -46,4 +47,6 @@ public final class ApplicationConstants {
 	public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
 	
 	public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
+	public static final int SIZE = CARDS.size();
+	public static final Random RANDOM = new Random();
 }
