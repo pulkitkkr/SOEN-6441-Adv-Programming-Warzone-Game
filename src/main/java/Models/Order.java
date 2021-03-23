@@ -23,4 +23,19 @@ public interface Order {
 	 * Print order information.
 	 */
 	public void printOrder();
+
+	/**
+	 * Returns the Log to GameState with Execution Log.
+	 *
+	 * @return String containing log message
+	 */
+	public String orderExecutionLog();
+
+	/**
+	 * Prints and Sets the order execution log.
+	 *
+	 * @param p_orderExecutionLog String to be set as log
+	 * @param p_logType type of log : error, default
+	 */
+	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType);
 }

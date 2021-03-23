@@ -183,7 +183,7 @@ public class MapView {
      * @param p_player Player Object
      */
 	private void renderPlayerInfo(Integer p_index, Player p_player){
-		String l_playerInfo = String.format("%02d. %-8s %s", p_index,p_player.getPlayerName(), " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+		String l_playerInfo = String.format("%02d. %s %-10s %s", p_index,p_player.getPlayerName(), getPlayerArmies(p_player), " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
 		System.out.println(l_playerInfo);
 	}
 
@@ -233,6 +233,16 @@ public class MapView {
 		if(l_armies == null)
 			return 0;
 		return l_armies;
+	}
+
+	/**
+	 * Returns Unallocated Player Armies.
+	 *
+	 * @param p_player Player Object.
+	 * @return String to fit with Player.
+	 */
+	private String getPlayerArmies(Player p_player){
+		return "(Unallocated Armies: "+p_player.getD_noOfUnallocatedArmies()+")";
 	}
 
 	/**

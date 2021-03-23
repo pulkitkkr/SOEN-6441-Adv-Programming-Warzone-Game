@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
 import Utils.Command;
 import Utils.CommonUtil;
@@ -50,6 +52,11 @@ public class Player {
 	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
+  
+	/**
+	 * String holding Log for individual Player methods.
+	 */
+	String d_playerLog;
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -181,7 +188,7 @@ public class Player {
 
 	/**
 	 * Gets info about more orders from player are to be accepted or not.
-	 * 
+	 *
 	 * @return boolean true if player wants to give more order or else false
 	 */
 	public boolean getD_moreOrders() {
@@ -190,12 +197,12 @@ public class Player {
 
 	/**
 	 * Sets info about more orders from player are to be accepted or not.
-	 * 
-	 * @param d_moreOrders Boolean true if player wants to give more order or else
+	 *
+	 * @param p_moreOrders Boolean true if player wants to give more order or else
 	 *                     false
 	 */
-	public void setD_moreOrders(boolean d_moreOrders) {
-		this.d_moreOrders = d_moreOrders;
+	public void setD_moreOrders(boolean p_moreOrders) {
+		this.d_moreOrders = p_moreOrders;
 	}
 
 	/**
@@ -228,19 +235,45 @@ public class Player {
 	}
 
 	/**
+	 * Prints and writes the player log.
+	 *
+	 * @param p_playerLog String as log message
+	 * @param p_typeLog Type of log : error, or log
+	 */
+	public void setD_playerLog(String p_playerLog, String p_typeLog) {
+		this.d_playerLog = p_playerLog;
+		if(p_typeLog.equals("error"))
+			System.err.println(p_playerLog);
+		else if(p_typeLog.equals("log"))
+			System.out.println(p_playerLog);
+	}
+
+	/**
+	 * Returns the player log string.
+	 *
+	 * @return String of log message.
+	 */
+	public String getD_playerLog(){
+		return this.d_playerLog;
+	}
+
+	/**
 	 * Receiver of command pattern :-Issue order which takes order as an input and
 	 * add it to player's order list.
-	 * 
+	 *
 	 * @param p_gameState Current state of the game
 	 * @throws IOException exception in reading inputs from user
+	 * @throws InvalidCommand Invalid Command
 	 */
-	public void issue_order(GameState p_gameState) throws IOException {
+	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand{
+    
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
 				+ " or give showmap command to view current state of the game.");
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
+		p_gameState.updateLog("(Player: "+this.getPlayerName()+") "+ l_commandEntered, "order");
 		if ("showmap".equalsIgnoreCase(l_order)) {
 			MapView l_mapView = new MapView(p_gameState);
 			l_mapView.showMap();
@@ -248,21 +281,24 @@ public class Player {
 		} else {
 			if ("deploy".equalsIgnoreCase(l_order)) {
 				createDeployOrder(l_commandEntered);
+				p_gameState.updateLog(getD_playerLog(), "effect");
 			} else if ("advance".equalsIgnoreCase(l_order)) {
 				createAdvanceOrder(l_commandEntered, p_gameState);
+				p_gameState.updateLog(getD_playerLog(), "effect");
 			} else if (ApplicationConstants.CARDS.contains(l_order)) {
 				// card orders capture method invocation
 			} else {
 				System.err.println("Invalid command given at this stage.");
+				throw new InvalidCommand("Invalid command given at this stage.");
 			}
 			checkForMoreOrders();
 		}
-		
+
 	}
 
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
-	 * 
+	 *
 	 * @throws IOException exception in reading inputs from user
 	 */
 	private void checkForMoreOrders() throws IOException {
@@ -280,27 +316,27 @@ public class Player {
 
 	/**
 	 * Creates the deploy order on the commands entered by the player.
-	 * 
+	 *
 	 * @param p_commandEntered command entered by the user
 	 */
-	public void createDeployOrder(String p_commandEntered) {
+	public void createDeployOrder(String p_commandEntered){
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
 			l_targetCountry = p_commandEntered.split(" ")[1];
 			l_noOfArmies = p_commandEntered.split(" ")[2];
 			if (validateDeployOrderArmies(this, l_noOfArmies)) {
-				System.err.println(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.");
+				this.setD_playerLog(
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.", "error");
 			} else {
 				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				System.out.println("Deploy order has been added to queue for execution. For player: " + this.d_name);
-			}
-		} catch (Exception e) {
-			System.err.println("Invalid deploy order entered");
+				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
 
+			}
+		} catch (Exception l_e) {
+			this.setD_playerLog("Invalid deploy order entered", "error");
 		}
 
 	}
@@ -334,7 +370,7 @@ public class Player {
 
 	/**
 	 * Creates the advance order on the commands entered by the player.
-	 * 
+	 *
 	 * @param p_commandEntered command entered by the user
 	 * @param p_gameState      current state of the game
 	 */
@@ -350,30 +386,29 @@ public class Player {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.order_list
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-					System.out
-							.println("Advance order has been added to queue for execution. For player: " + this.d_name);
+					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
-				System.err.println("Invalid Arguments Passed For Advance Order");
+				this.setD_playerLog("Invalid Arguments Passed For Advance Order", "error");
 			}
 
-		} catch (Exception e) {
-			System.err.println("Invalid Advance Order Given");
+		} catch (Exception l_e) {
+			this.setD_playerLog("Invalid Advance Order Given", "error");
 		}
 	}
 
 	/**
 	 * Checks if source and target countries given in advance order exists in the
 	 * map or not.
-	 * 
+	 *
 	 * @param p_countryName country name which needs to be checked in map
 	 * @param p_gameState   current state of the map
 	 * @return true if country exists in map or else false
 	 */
 	private Boolean checkCountryExists(String p_countryName, GameState p_gameState) {
 		if (p_gameState.getD_map().getCountryByName(p_countryName) == null) {
-			System.err.println("Country : " + p_countryName
-					+ " given in advance order doesnt exists in map. Order given is ignored.");
+			this.setD_playerLog("Country : " + p_countryName
+					+ " given in advance order doesnt exists in map. Order given is ignored.", "error");
 			return false;
 		}
 		return true;
@@ -381,13 +416,13 @@ public class Player {
 
 	/**
 	 * Checks if given advance order has zero armies to move.
-	 * 
-	 * @param l_noOfArmies number of armies given in order
+	 *
+	 * @param p_noOfArmies number of armies given in order
 	 * @return true if given order has zero armies or else false
 	 */
-	private Boolean checkZeroArmiesInOrder(String l_noOfArmies) {
-		if (Integer.parseInt(l_noOfArmies) == 0) {
-			System.err.println("Advance order with 0 armies to move cant be issued.");
+	private Boolean checkZeroArmiesInOrder(String p_noOfArmies) {
+		if (Integer.parseInt(p_noOfArmies) == 0) {
+			this.setD_playerLog("Advance order with 0 armies to move cant be issued.", "error");
 			return true;
 		}
 		return false;
@@ -395,7 +430,7 @@ public class Player {
 
 	/**
 	 * Checks if countries given advance order are adjacent or not.
-	 * 
+	 *
 	 * @param p_gameState         current state of the game
 	 * @param p_sourceCountryName source country name
 	 * @param p_targetCountryName target country name
@@ -408,8 +443,8 @@ public class Player {
 		Integer l_targetCountryId = l_sourceCountry.getD_adjacentCountryIds().stream()
 				.filter(l_adjCountry -> l_adjCountry == l_targetCountry.getD_countryId()).findFirst().orElse(null);
 		if (l_targetCountryId == null) {
-			System.err.println("Advance order cant be issued since target country : " + p_targetCountryName
-					+ " is not adjacent to source country : " + p_sourceCountryName);
+			this.setD_playerLog("Advance order cant be issued since target country : " + p_targetCountryName
+					+ " is not adjacent to source country : " + p_sourceCountryName, "error");
 			return false;
 		}
 		return true;

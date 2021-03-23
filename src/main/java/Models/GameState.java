@@ -11,6 +11,11 @@ public class GameState {
 	 * map object.
 	 */
 	Map d_map;
+
+	/**
+	 * Log Entries for existing game state.
+	 */
+	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 	
 	/**
 	 * list of players.
@@ -26,6 +31,11 @@ public class GameState {
 	 * error message.
 	 */
 	String d_error;
+
+	/**
+	 * Checks if user has used load command.
+	 */
+	Boolean d_loadCommand = false;
 
 	/**
 	 * getter method to get the map.
@@ -97,5 +107,40 @@ public class GameState {
 	 */
 	public void setError(String p_error) {
 		this.d_error = p_error;
+	}
+
+	/**
+	 * Message to be added in the log.
+	 *
+	 * @param p_logMessage Log Message to be set in the Object
+	 * @param p_logType Type of Log Message to be Added
+	 */
+	public void updateLog(String p_logMessage, String p_logType) {
+		d_logEntryBuffer.currentLog(p_logMessage, p_logType);
+	}
+
+	/**
+	 * Fetches the most recent Log in current GameState.
+	 *
+	 * @return recent Log Message
+	 */
+	public String getRecentLog(){
+		return d_logEntryBuffer.getD_logMessage();
+	}
+
+	/**
+	 * Sets the Boolean load map variable.
+	 */
+	public void setD_loadCommand() {
+		this.d_loadCommand = true;
+	}
+
+	/**
+	 * Returns if load command is used.
+	 *
+	 * @return bool value if map is loaded
+	 */
+	public boolean getD_loadCommand(){
+		return this.d_loadCommand;
 	}
 }
