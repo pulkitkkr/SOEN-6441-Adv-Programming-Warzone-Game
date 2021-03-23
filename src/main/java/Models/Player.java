@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
 import Utils.Command;
 import Utils.CommonUtil;
@@ -194,11 +195,11 @@ public class Player {
 	/**
 	 * Sets info about more orders from player are to be accepted or not.
 	 *
-	 * @param d_moreOrders Boolean true if player wants to give more order or else
+	 * @param p_moreOrders Boolean true if player wants to give more order or else
 	 *                     false
 	 */
-	public void setD_moreOrders(boolean d_moreOrders) {
-		this.d_moreOrders = d_moreOrders;
+	public void setD_moreOrders(boolean p_moreOrders) {
+		this.d_moreOrders = p_moreOrders;
 	}
 
 	/**
