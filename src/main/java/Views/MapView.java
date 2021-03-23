@@ -1,19 +1,17 @@
 package Views;
 
-import java.util.*;
+import java.util.List;
+
+import org.davidmoten.text.utils.WordWrap;
+
 import Constants.ApplicationConstants;
 import Exceptions.InvalidMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
-import Models.Player;
 import Models.Map;
+import Models.Player;
 import Utils.CommonUtil;
-import org.davidmoten.text.utils.WordWrap;
 
 /**
  * This is the MapView Class.
@@ -38,21 +36,7 @@ public class MapView {
 	public MapView(GameState p_gameState){
 		d_gameState = p_gameState;
 		d_map = p_gameState.getD_map();
-		d_map = p_gameState.getD_map();
-		d_countries = d_map.getD_countries();
-		d_continents = d_map.getD_continents();
-	}
-
-    /**
-     * Constructor to initialise MapView with Players.
-     *
-     * @param p_gameState Current GameState
-     * @param p_players List of Player Objects
-     */
-	public MapView(GameState p_gameState, List<Player> p_players){
-		d_gameState = p_gameState;
-		d_players = p_players;
-		d_map = p_gameState.getD_map();
+		d_players = p_gameState.getD_players();
 		d_countries = d_map.getD_countries();
 		d_continents = d_map.getD_continents();
 	}
