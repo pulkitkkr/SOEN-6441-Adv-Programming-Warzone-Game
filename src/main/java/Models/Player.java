@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Constants.ApplicationConstants;
-import Models.Card.cards;
 import Utils.Command;
 import Utils.CommonUtil;
 import Views.MapView;
@@ -421,6 +421,7 @@ public class Player {
 	 * @return string random card from set of cards
 	 */
 	public String randomCard() {
-		return ApplicationConstants.CARDS.get(ApplicationConstants.RANDOM.nextInt(ApplicationConstants.SIZE));
+		Random l_random = new Random();
+		return ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
 	}
 }

@@ -32,7 +32,7 @@ public class Bomb implements Card {
 	 */
 	@Override
 	public void printCard() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
