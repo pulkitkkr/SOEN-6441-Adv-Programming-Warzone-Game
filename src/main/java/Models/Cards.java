@@ -9,24 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author Bhoomi Shah
- *
  * The abstract class manages all the cards.
  */
 public abstract class Cards {
-	Bomb b = new Bomb();
-	Blockade bd = new Blockade();
-	Airlift a = new Airlift();
-	Diplomacy d = new Diplomacy();
+	Bomb d_bomb = new Bomb();
+	Blockade d_blockade = new Blockade();
+	Airlift d_airlift = new Airlift();
+	Diplomacy d_diplomacy = new Diplomacy();
 
 	/**
 	 * enum of objects of each card type.
-	 * 
-	 * @author Bhoomi Shah
 	 *
 	 */
 	enum cards {
-		b, bd, a, d
+		d_bomb, d_blockade, d_airlift, d_diplomacy
 	}
 
 	private static final List<cards> VALUES = Collections.unmodifiableList(Arrays.asList(cards.values()));
@@ -41,4 +37,6 @@ public abstract class Cards {
 	public static cards randomCard() {
 		return VALUES.get(RANDOM.nextInt(SIZE));
 	}
+	
+	public abstract void performAction();
 }
