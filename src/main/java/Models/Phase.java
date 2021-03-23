@@ -36,6 +36,11 @@ public abstract class Phase {
     PlayerService d_playerService = new PlayerService();
 
     /**
+     * it is a flag to check if map is loaded
+     */
+    boolean l_isMapLoaded;
+
+    /**
      * Constructor to initialize the value of current game engine
      *
      * @param p_gameEngine game engine instance to update state
@@ -67,7 +72,7 @@ public abstract class Phase {
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
         Command l_command = new Command(p_enteredCommand);
         String l_rootCommand = l_command.getRootCommand();
-        boolean l_isMapLoaded = d_gameState.getD_map() != null;
+        l_isMapLoaded = d_gameState.getD_map() != null;
 
         d_gameState.updateLog(l_command.getD_command(), "command");
 
@@ -77,19 +82,10 @@ public abstract class Phase {
                 break;
             }
             case "editcontinent": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", "effect");
-                    break;
-                }
                 performEditContinent(l_command);
                 break;
             }
             case "savemap": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("No map found to save, Please `editmap` first", "effect");
-                    break;
-                }
-
                 performSaveMap(l_command);
                 break;
             }
@@ -98,34 +94,18 @@ public abstract class Phase {
                 break;
             }
             case "validatemap": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("No map found to validate, Please `loadmap` & `editmap` first", "effect");
-                    break;
-                }
                 performValidateMap(l_command);
                 break;
             }
             case "editcountry": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("Can not Edit Country, please perform `editmap` first", "effect");
-                    break;
-                }
                 performEditCountry(l_command);
                 break;
             }
             case "editneighbor": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("Can not Edit Neighbors, please perform `editmap` first", "effect");
-                    break;
-                }
                 performEditNeighbour(l_command);
                 break;
             }
             case "gameplayer": {
-                if (!l_isMapLoaded) {
-                    d_gameEngine.setD_gameEngineLog("No map found, Please `loadmap` before adding game players", "effect");
-                    break;
-                }
                 createPlayers(l_command);
                 break;
             }
@@ -159,7 +139,7 @@ public abstract class Phase {
     /**
      * Invokes order execution logic for all unexecuted orders.
      */
-    private void executeOrders() {
+    protected void executeOrders() {
         // Executing orders
         d_gameEngine.setD_gameEngineLog("\n********** Starting Execution Of Orders ***********", "start");
         while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
@@ -180,7 +160,7 @@ public abstract class Phase {
      *
      * @throws IOException exception in reading inputs from user
      */
-    private void issueOrders() throws IOException, InvalidCommand{
+    protected void issueOrders() throws IOException, InvalidCommand{
         // Issuing order for players
         do {
             for (Player l_player : d_gameState.getD_players()) {
