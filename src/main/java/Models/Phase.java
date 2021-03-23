@@ -10,8 +10,7 @@ public abstract class Phase {
     /**
      * d_gameState stores the information about current GamePlay.
      */
-    GameState d_gameState;
-    
+    GameState d_gameState = new GameState();
 
     /**
      * d_mapService instance is used to handle load, read, parse, edit, and save map
@@ -23,14 +22,6 @@ public abstract class Phase {
      * Player Service instance to edit players and issue orders.
      */
     PlayerService d_playerService = new PlayerService();
-    /**
-     * handle command methods handles all state specific commands that can be entered by user
-     *
-     * @param p_enteredCommand command entered by the user in CLI
-     */
-    public void handleCommand(String p_enteredCommand) throws Exception{
-
-    };
 
     /**
      * Shows and Writes GameEngine Logs.
@@ -43,8 +34,21 @@ public abstract class Phase {
         System.out.println(p_gameEngineLog);
     }
 
-    public void setD_gameState(GameState p_gameState) {
-        d_gameState = p_gameState;
+    /**
+     * getD_gameState is a getter method to get current game state.
+     *
+     * @return the current game state
+     */
+    public GameState getD_gameState() {
+        return d_gameState;
     }
 
+    /**
+     * handle command methods handles all state specific commands that can be entered by user
+     *
+     * @param p_enteredCommand command entered by the user in CLI
+     */
+    public void handleCommand(String p_enteredCommand) throws Exception{
+
+    };
 }
