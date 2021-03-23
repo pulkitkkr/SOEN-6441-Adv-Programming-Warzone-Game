@@ -33,7 +33,7 @@ public class Country {
 	/**
 	 * list of the countries which are adjacent to the existing one.
 	 */
-	List<Integer> d_adjacentCountryIds = new ArrayList<Integer>();;
+	List<Integer> d_adjacentCountryIds = new ArrayList<Integer>();
 
 	/**
 	 * constructor of this class.
@@ -177,6 +177,7 @@ public class Country {
 	 * removes country Id from  neighbor list.
 	 * 
 	 * @param p_countryId Id of country to be removed
+	 * @throws InvalidMap Exception
 	 */
 	public void removeNeighbour(Integer p_countryId) throws InvalidMap {
 		if(d_adjacentCountryIds.contains(p_countryId)){

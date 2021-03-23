@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Constants.ApplicationConstants;
 import Utils.Command;
@@ -412,5 +413,15 @@ public class Player {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
+	 * 
+	 * @return string selects random card from set of cards
+	 */
+	public String randomCard() {
+		Random l_random = new Random();
+		return ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
 	}
 }

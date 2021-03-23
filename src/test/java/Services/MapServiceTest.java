@@ -202,6 +202,7 @@ public class MapServiceTest {
 	 * Tests the Remove Country Operation via editcountry
 	 * @throws InvalidMap Exception
 	 * @throws InvalidCommand Exception
+	 * @throws IOException handles input output exception
 	 */
 	@Test(expected = InvalidMap.class)
 	public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {

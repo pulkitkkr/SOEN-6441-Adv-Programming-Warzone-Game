@@ -494,6 +494,7 @@ public class Map {
      * Used while deletion of a country object.
      * 
      * @param p_countryId Country to be removed
+     * @throws InvalidMap Exception
      */
     public void updateNeighboursCont(Integer p_countryId) throws InvalidMap {
         for(Continent c: d_continents){
@@ -506,6 +507,7 @@ public class Map {
      * Used while deletion of country object.
      * 
      * @param p_countryID Country to be removed
+     * @throws InvalidMap Exception
      */
     public void removeCountryNeighboursFromAll(Integer p_countryID) throws InvalidMap {
         for (Country c: d_countries) {
