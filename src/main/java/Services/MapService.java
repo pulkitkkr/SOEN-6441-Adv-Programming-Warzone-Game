@@ -474,6 +474,12 @@ public class MapService {
 		p_gameState.setD_map(new Models.Map());
 	}
 
+	/**
+	 * Set the log of map editor methods.
+	 *
+	 * @param p_MapServiceLog String containing log
+	 * @param p_gameState current gamestate instance
+	 */
 	public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState){
 		System.out.println(p_MapServiceLog);
 		p_gameState.updateLog(p_MapServiceLog, "effect");
