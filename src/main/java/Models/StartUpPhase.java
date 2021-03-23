@@ -15,8 +15,16 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Start Up Phase implementation for GamePlay using State Pattern.
+ */
 public class StartUpPhase extends Phase{
 
+    /**
+     * It's a constructor that init the GameEngine context in Phase class.
+     *
+     * @param p_gameEngine GameEngine Context
+     */
     public StartUpPhase(GameEngine p_gameEngine){
         super(p_gameEngine);
     }
@@ -35,13 +43,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>editmap</strong> command for checking required
-     * arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws IOException indicates when failure in I/O operation
-     * @throws InvalidMap indicates Map Object Validation failure
-     * @throws InvalidCommand indicates when command is invalid
+     * {@inheritDoc}
      */
     public void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap {
         List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -62,13 +64,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>editcontinent</strong> command for checking
-     * required arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws IOException    indicates failure in I/O operation
-     * @throws InvalidCommand indicates command is invalid
-     * @throws InvalidMap     indicates map is invalid
+     * {@inheritDoc}
      */
     public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
@@ -95,12 +91,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>savemap</strong> command for checking required
-     * arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidMap     indicates when map is invalid
-     * @throws InvalidCommand indicates when command is invalid
+     * {@inheritDoc}
      */
     public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
@@ -130,12 +121,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>loadmap</strong> command for checking required
-     * arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidMap indicates Map Object Validation failure
-     * @throws InvalidCommand indicates when command is invalid
+     * {@inheritDoc}
      */
     public void performLoadMap(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -168,12 +154,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>validatemap</strong> command for checking
-     * required arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidCommand indicates when command is invalid
-     * @throws InvalidMap indicates when map is invalid
+     * {@inheritDoc}
      */
     public void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
         if (!l_isMapLoaded) {
@@ -201,14 +182,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>editcountry</strong> command for checking
-     * required arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidCommand indicates command is invalid
-     * @throws InvalidMap indicates map is invalid
-     * @throws IOException handles File I/O Exception
-     * @throws InvalidMap     indicates map is invalid
+     * {@inheritDoc}
      */
     public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException {
         if (!l_isMapLoaded) {
@@ -235,13 +209,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>editneighbor</strong> command for checking
-     * required arguments and redirecting control to model for actual processing.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidCommand indicates command is invalid
-     * @throws InvalidMap indicates map is invalid
-     * @throws IOException handles File I/O Exception
+     * {@inheritDoc}
      */
     public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap, IOException {
         if (!l_isMapLoaded) {
@@ -268,11 +236,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>gameplayer</strong> command for checking required
-     * arguments and redirecting control to model for adding or removing players.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidCommand indicates command is invalid
+     * {@inheritDoc}
      */
     public void createPlayers(Command p_command) throws InvalidCommand {
         if (!l_isMapLoaded) {
@@ -303,13 +267,7 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Basic validation of <strong>assigncountries</strong> for checking required
-     * arguments and redirecting control to model for assigning countries to
-     * players.
-     *
-     * @param p_command command entered by the user on CLI
-     * @throws InvalidCommand indicates command is invalid
-     * @throws IOException    indicates failure in I/O operation
+     * {@inheritDoc}
      */
     public void performAssignCountries(Command p_command) throws InvalidCommand, IOException{
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();

@@ -11,7 +11,7 @@ import Views.MapView;
 import java.io.IOException;
 
 /**
- *  This Interface enforces the method requirement for Each Game Phase
+ *  This Interface enforces the method requirement for Each Game Phase.
  */
 public abstract class Phase {
     /**
@@ -36,24 +36,18 @@ public abstract class Phase {
     PlayerService d_playerService = new PlayerService();
 
     /**
-     * it is a flag to check if map is loaded
+     * it is a flag to check if map is loaded.
      */
     boolean l_isMapLoaded;
 
     /**
-     * Constructor to initialize the value of current game engine
+     * Constructor to initialize the value of current game engine.
      *
      * @param p_gameEngine game engine instance to update state
      */
     public Phase(GameEngine p_gameEngine){
         d_gameEngine = p_gameEngine;
     }
-    /**
-     * Shows and Writes GameEngine Logs.
-     *
-     * @param p_gameEngineLog String of Log message.
-     * @param p_logType Type of Log.
-     */
 
     /**
      * getD_gameState is a getter method to get current game state.
@@ -65,7 +59,7 @@ public abstract class Phase {
     }
 
     /**
-     * handle command methods handles all state specific commands that can be entered by user
+     * handle command methods handles all state specific commands that can be entered by user.
      *
      * @param p_enteredCommand command entered by the user in CLI
      */
@@ -130,6 +124,9 @@ public abstract class Phase {
         }
     }
 
+    /**
+     * Method to Log and Print if the command can't be executed in current phase.
+     */
     public void printInvalidCommandInState(){
         d_gameEngine.setD_gameEngineLog("Invalid Command in State", "effect");
     }
@@ -170,22 +167,102 @@ public abstract class Phase {
         } while (d_playerService.checkForMoreOrders(d_gameState.getD_players()));
     }
 
+    /**
+     * Basic validation of <strong>assigncountries</strong> for checking required
+     * arguments and redirecting control to model for assigning countries to
+     * players.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidCommand indicates command is invalid
+     * @throws IOException    indicates failure in I/O operation
+     */
     protected abstract void performAssignCountries(Command p_command) throws InvalidCommand, IOException;
 
+
+    /**
+     * Basic validation of <strong>gameplayer</strong> command for checking required
+     * arguments and redirecting control to model for adding or removing players.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidCommand indicates command is invalid
+     */
     protected abstract void createPlayers(Command p_command) throws InvalidCommand;
 
+
+    /**
+     * Basic validation of <strong>editneighbor</strong> command for checking
+     * required arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException handles File I/O Exception
+     */
     protected abstract void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap, IOException;
 
+    /**
+     * Basic validation of <strong>editcountry</strong> command for checking
+     * required arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException handles File I/O Exception
+     * @throws InvalidMap     indicates map is invalid
+     */
     protected abstract void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException;
 
+    /**
+     * Basic validation of <strong>validatemap</strong> command for checking
+     * required arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidCommand indicates when command is invalid
+     * @throws InvalidMap indicates when map is invalid
+     */
     protected abstract void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand;
 
+    /**
+     * Basic validation of <strong>loadmap</strong> command for checking required
+     * arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidMap indicates Map Object Validation failure
+     * @throws InvalidCommand indicates when command is invalid
+     */
     protected abstract void performLoadMap(Command p_command) throws InvalidCommand, InvalidMap;
 
+    /**
+     * Basic validation of <strong>savemap</strong> command for checking required
+     * arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws InvalidMap     indicates when map is invalid
+     * @throws InvalidCommand indicates when command is invalid
+     */
     protected abstract void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap;
 
+    /**
+     * Basic validation of <strong>editcontinent</strong> command for checking
+     * required arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws IOException    indicates failure in I/O operation
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap     indicates map is invalid
+     */
     protected abstract void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap;
 
+
+    /**
+     * Basic validation of <strong>editmap</strong> command for checking required
+     * arguments and redirecting control to model for actual processing.
+     *
+     * @param p_command command entered by the user on CLI
+     * @throws IOException indicates when failure in I/O operation
+     * @throws InvalidMap indicates Map Object Validation failure
+     * @throws InvalidCommand indicates when command is invalid
+     */
     protected abstract void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap;
 
 }

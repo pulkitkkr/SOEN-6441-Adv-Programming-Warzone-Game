@@ -15,12 +15,12 @@ import Models.*;
 public class GameEngine {
 
 	/**
-	 *	It is the current game play phase as per state pattern
+	 *	It is the current game play phase as per state pattern.
 	 */
 	Phase d_currentPhase = new StartUpPhase(this);
 
 	/**
-	 * It's used to update context
+	 * It's used to update context.
 	 *
 	 * @param p_phase new Phase to set in Game context
 	 */
@@ -29,7 +29,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * This method is getter for current Phase of Game Context
+	 * This method is getter for current Phase of Game Context.
 	 *
 	 * @return current Phase of Game Context
 	 */
