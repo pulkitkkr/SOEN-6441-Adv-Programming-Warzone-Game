@@ -3,11 +3,6 @@
  */
 package Models;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 /**
  * This model class manages all the cards owned by the player.
  */

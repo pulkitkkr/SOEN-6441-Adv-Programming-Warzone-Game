@@ -1,7 +1,6 @@
 package Constants;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * This class initializes all the constants that are going to be used throughout the application.

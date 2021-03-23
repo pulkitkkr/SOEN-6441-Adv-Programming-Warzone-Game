@@ -418,7 +418,7 @@ public class Player {
 	/**
 	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
 	 * 
-	 * @return string random card from set of cards
+	 * @return string selects random card from set of cards
 	 */
 	public String randomCard() {
 		Random l_random = new Random();

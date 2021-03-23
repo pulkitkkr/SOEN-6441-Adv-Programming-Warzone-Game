@@ -14,7 +14,6 @@ public class Bomb implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -23,7 +22,7 @@ public class Bomb implements Card {
 	 */
 	@Override
 	public boolean valid() {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
@@ -33,7 +32,6 @@ public class Bomb implements Card {
 	@Override
 	public void printCard() {
 
-		
 	}
 
 
