@@ -366,7 +366,7 @@ public class Map {
             if(CommonUtil.isNull(getContinent(p_continentName))){
                 d_continents.add(new Continent(l_continentId, p_continentName, p_controlValue));
             }else{
-                throw new InvalidMap("Continent cannot be added! It already exists!");
+                throw new InvalidMap("Continent "+p_continentName+" cannot be added! It already exists!");
             }
         }else{
             d_continents= new ArrayList<Continent>();
@@ -427,7 +427,7 @@ public class Map {
                     }
                 }
             } else{
-                throw new InvalidMap("Cannot add Country to a Continent that doesn't exist!");
+                throw new InvalidMap("Cannot add Country "+p_countryName+" to a Continent that doesn't exist!");
             }
         }else{
             throw new InvalidMap("Country with name "+ p_countryName+" already Exists!");
@@ -452,7 +452,7 @@ public class Map {
             d_countries.remove(getCountryByName(p_countryName));
 
         }else{
-           throw new InvalidMap("Country:  "+ p_countryName+" does not exist!");
+           throw new InvalidMap("Country: "+ p_countryName+" does not exist!");
         }
     }
 
@@ -468,7 +468,7 @@ public class Map {
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))){
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).addNeighbour(getCountryByName(p_neighbourName).getD_countryId());
             } else{
-                throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+                throw new InvalidMap("Invalid Neighbour Pair "+p_countryName+" "+p_neighbourName+"! Either of the Countries Doesn't exist!");
             }
         }
     }
@@ -485,7 +485,7 @@ public class Map {
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))) {
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbour(getCountryByName(p_neighbourName).getD_countryId());
             } else{
-                throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+                throw new InvalidMap("Invalid Neighbour Pair "+p_countryName+" "+p_neighbourName+"! Either of the Countries Doesn't exist!");
             }
         }
     }

@@ -293,6 +293,7 @@ public class GameEngine {
 							l_map.get(ApplicationConstants.ARGUMENTS));
 					if (l_mapToLoad.Validate()) {
 						l_flagValidate = true;
+						d_gameState.setD_loadCommand();
 						this.setD_gameEngineLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
 					} else {
 						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
@@ -405,14 +406,18 @@ public class GameEngine {
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
 		} else {
-			for (Map<String, String> l_map : l_operations_list) {
-				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-							l_map.get(ApplicationConstants.ARGUMENTS));
-				} else {
-					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+			if (d_gameState.getD_loadCommand()) {
+				for (Map<String, String> l_map : l_operations_list) {
+					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+						d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+								l_map.get(ApplicationConstants.ARGUMENTS));
+					} else {
+						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
+					}
 				}
+			} else {
+				this.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
 			}
 		}
 	}

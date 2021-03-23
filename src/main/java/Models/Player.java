@@ -269,7 +269,7 @@ public class Player {
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
-		p_gameState.updateLog("("+this.getPlayerName()+") "+ l_commandEntered, "order");
+		p_gameState.updateLog("(Player: "+this.getPlayerName()+") "+ l_commandEntered, "order");
 		if ("showmap".equalsIgnoreCase(l_order)) {
 			MapView l_mapView = new MapView(p_gameState);
 			l_mapView.showMap();

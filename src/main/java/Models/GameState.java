@@ -33,6 +33,11 @@ public class GameState {
 	String d_error;
 
 	/**
+	 * Checks if user has used load command.
+	 */
+	Boolean d_loadCommand = false;
+
+	/**
 	 * getter method to get the map.
 	 * 
 	 * @return map object
@@ -121,5 +126,21 @@ public class GameState {
 	 */
 	public String getRecentLog(){
 		return d_logEntryBuffer.getD_logMessage();
+	}
+
+	/**
+	 * Sets the Boolean load map variable.
+	 */
+	public void setD_loadCommand() {
+		this.d_loadCommand = true;
+	}
+
+	/**
+	 * Returns if load command is used.
+	 *
+	 * @return bool value if map is loaded
+	 */
+	public boolean getD_loadCommand(){
+		return this.d_loadCommand;
 	}
 }

@@ -1,17 +1,5 @@
 package Services;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -20,6 +8,14 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 import Utils.CommonUtil;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The MapService class load, read, parse, edit, and save map file.
@@ -276,16 +272,15 @@ public class MapService {
 		try {
 			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
 				p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
-				p_gameState.updateLog("Continent "+ p_argument.split(" ")[0]+ " added successfully!", "effect");
+				this.setD_MapServiceLog("Continent "+ p_argument.split(" ")[0]+ " added successfully!", p_gameState);
 			} else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
 				p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
-				p_gameState.updateLog("Continent "+ p_argument.split(" ")[0]+ " removed successfully!", "effect");
+				this.setD_MapServiceLog("Continent "+ p_argument.split(" ")[0]+ " removed successfully!", p_gameState);
 			} else {
 				throw new InvalidMap("Continent "+p_argument.split(" ")[0]+" couldn't be added/removed. Changes are not made");
 			}
 		} catch (InvalidMap | NumberFormatException l_e) {
-			System.out.println(l_e.getMessage());
-			p_gameState.updateLog(l_e.getMessage(), "effect");
+			this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
 		}
 		return p_mapToBeUpdated;
 	}
@@ -305,16 +300,15 @@ public class MapService {
 		try {
 			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 				p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-				p_gameState.updateLog("Country "+ p_argument.split(" ")[0]+ " added successfully!", "effect");
+				this.setD_MapServiceLog("Country "+ p_argument.split(" ")[0]+ " added successfully!", p_gameState);
 			}else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1){
 				p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
-				p_gameState.updateLog("Country "+ p_argument.split(" ")[0]+ " removed successfully!", "effect");
+				this.setD_MapServiceLog("Country "+ p_argument.split(" ")[0]+ " removed successfully!", p_gameState);
 			}else{
 				throw new InvalidMap("Country "+p_argument.split(" ")[0]+" could not be "+ p_operation +"ed!");
 			}
 		} catch (InvalidMap l_e) {
-			System.out.println(l_e.getMessage());
-			p_gameState.updateLog(l_e.getMessage(), "effect");
+			this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
 		}
 		return p_mapToBeUpdated;
 	}
@@ -334,16 +328,15 @@ public class MapService {
 		try {
 			if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2){
 				p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-				p_gameState.updateLog("Neighbour Pair added successfully!", "effect");
+				this.setD_MapServiceLog("Neighbour Pair "+p_argument.split(" ")[0]+" "+p_argument.split(" ")[1]+" added successfully!", p_gameState);
 			}else if(p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==2){
 				p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
-				p_gameState.updateLog("Neighbour Pair removed successfully!", "effect");
+				this.setD_MapServiceLog("Neighbour Pair "+p_argument.split(" ")[0]+" "+p_argument.split(" ")[1]+" removed successfully!", p_gameState);
 			}else{
 				throw new InvalidMap("Neighbour could not be "+ p_operation +"ed!");
 			}
 		} catch (InvalidMap l_e) {
-			System.out.println(l_e.getMessage());
-			p_gameState.updateLog(l_e.getMessage(), "effect");
+			this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
 		}
 		return p_mapToBeUpdated;
 	}
@@ -369,7 +362,7 @@ public class MapService {
 					Models.Map l_currentMap = p_gameState.getD_map();
 
 					// Proceeds to save the map if it passes the validation check
-					System.out.println("Validating Map......");
+					this.setD_MapServiceLog("Validating Map......", p_gameState);
 					//boolean l_mapValidationStatus = l_currentMap.Validate();
 					if (l_currentMap.Validate()) {
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
@@ -394,8 +387,7 @@ public class MapService {
 			}
 			return true;
 		} catch (IOException | InvalidMap l_e) {
-			System.out.println(l_e.getMessage());
-			p_gameState.updateLog(l_e.getMessage(), "effect");
+			this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
 			p_gameState.updateLog("Couldn't save the changes in map file!", "effect");
 			p_gameState.setError("Error in saving map file");
 			return false;
@@ -468,5 +460,10 @@ public class MapService {
 		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
 		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!", "effect");
 		p_gameState.setD_map(new Models.Map());
+	}
+
+	public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState){
+		System.out.println(p_MapServiceLog);
+		p_gameState.updateLog(p_MapServiceLog, "effect");
 	}
 }

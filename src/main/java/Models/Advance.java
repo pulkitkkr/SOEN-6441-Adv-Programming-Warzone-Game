@@ -196,19 +196,19 @@ public class Advance implements Order {
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_sourceCountryName.toString()))
 				.findFirst().orElse(null);
 		if (l_country == null) {
-			this.setD_orderExecutionLog("\n" + this.currentOrder() + " is not executed since Source country : "
+			this.setD_orderExecutionLog(this.currentOrder() + " is not executed since Source country : "
 					+ this.d_sourceCountryName + " given in advance command does not belongs to the player : "
 					+ d_playerInitiator.getPlayerName(), "error");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
-			this.setD_orderExecutionLog("\n" + this.currentOrder()
+			this.setD_orderExecutionLog(this.currentOrder()
 					+ " is not executed as armies given in advance order exceeds armies of source country : "
 					+ this.d_sourceCountryName, "error");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace == l_country.getD_armies()) {
-			this.setD_orderExecutionLog("\n" + this.currentOrder() + " is not executed as source country : "
+			this.setD_orderExecutionLog(this.currentOrder() + " is not executed as source country : "
 					+ this.d_sourceCountryName + " has " + l_country.getD_armies()
 					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.", "error");
 			return false;
@@ -228,7 +228,7 @@ public class Advance implements Order {
 
 	@Override
 	public void printOrder() {
-		this.d_orderExecutionLog = System.lineSeparator()+ "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to " + this.d_targetCountryName;
+		this.d_orderExecutionLog = "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to " + this.d_targetCountryName;
 		System.out.println(this.d_orderExecutionLog);
 	}
 

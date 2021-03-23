@@ -53,13 +53,13 @@ public class Deploy implements Order {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
 							: l_country.getD_armies() + this.d_numberOfArmiesToPlace;
 					l_country.setD_armies(l_armiesToUpdate);
-					this.setD_orderExecutionLog("\n" + l_armiesToUpdate + " armies have been deployed successfully on country : "
+					this.setD_orderExecutionLog( + l_armiesToUpdate + " armies have been deployed successfully on country : "
 							+ l_country.getD_countryName(), "default");
 				}
 			}
 
 		} else {
-			this.setD_orderExecutionLog("\nDeploy Order = " + "deploy" + " " + this.d_targetCountryName + " "
+			this.setD_orderExecutionLog("Deploy Order = " + "deploy" + " " + this.d_targetCountryName + " "
 					+ this.d_numberOfArmiesToPlace + " is not executed since Target country: "
 					+ this.d_targetCountryName + " given in deploy command does not belongs to the player : "
 					+ d_playerInitiator.getPlayerName(), "error");
@@ -83,7 +83,7 @@ public class Deploy implements Order {
 
 	@Override
 	public void printOrder() {
-		this.d_orderExecutionLog = System.lineSeparator()+"----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName;
+		this.d_orderExecutionLog = "----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName;
 		System.out.println(this.d_orderExecutionLog);
 	}
 
