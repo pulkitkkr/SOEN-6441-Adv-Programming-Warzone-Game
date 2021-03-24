@@ -52,7 +52,7 @@ public class GameEngineTest {
 	 * @throws InvalidCommand Exception
 	 */
 	@Test(expected = InvalidCommand.class)
-	public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand {
+	public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
 		Command l_command = new Command("editmap");
 		d_gameEngine.performMapEdit(l_command);
 	}
@@ -64,7 +64,7 @@ public class GameEngineTest {
 	 * @throws InvalidMap Exception
 	 */
 	@Test(expected = InvalidCommand.class)
-	public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+	public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
 		Command l_command = new Command("editcontinent -add");
 		d_gameEngine.performEditContinent(l_command);
 	}

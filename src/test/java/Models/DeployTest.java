@@ -1,16 +1,14 @@
 package Models;
 
+import Exceptions.InvalidCommand;
+import org.junit.Before;
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import Exceptions.InvalidCommand;
 
 /**
  * This class is used to test functionality of Deploy order.
@@ -120,9 +118,9 @@ public class DeployTest {
 
 		assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
 		assertEquals(l_player.getD_ordersToExecute().size(), 1);
-		Deploy order = (Deploy) l_player.order_list.get(0);
-		assertEquals("Japan", order.d_targetCountryName);
-		assertEquals("4", String.valueOf(order.d_numberOfArmiesToPlace));
+		Deploy l_order = (Deploy) l_player.order_list.get(0);
+		assertEquals("Japan", l_order.d_targetCountryName);
+		assertEquals("4", String.valueOf(l_order.d_numberOfArmiesToPlace));
 	}
 
 }
