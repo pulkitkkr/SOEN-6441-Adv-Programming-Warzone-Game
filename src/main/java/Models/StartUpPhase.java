@@ -30,19 +30,6 @@ public class StartUpPhase extends Phase{
     }
 
     /**
-     * Handle the commands.
-     *
-     * @param p_enteredCommand command entered by the user in CLI
-     * @throws InvalidMap     indicates map is invalid
-     * @throws InvalidCommand indicates command is invalid
-     * @throws IOException    indicates failure in I/O operation
-     */
-    @Override
-    public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException{
-
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap {

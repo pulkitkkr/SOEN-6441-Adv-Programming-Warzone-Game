@@ -59,6 +59,14 @@ public abstract class Phase {
     }
 
     /**
+     * setD_gameState is a setter method for current game state.
+     *
+     */
+    public void setD_gameState(GameState p_gameState) {
+        d_gameState = p_gameState;
+    }
+
+    /**
      * handle command methods handles all state specific commands that can be entered by user.
      *
      * @param p_enteredCommand command entered by the user in CLI
