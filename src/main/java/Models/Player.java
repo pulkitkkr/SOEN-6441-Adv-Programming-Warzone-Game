@@ -63,7 +63,7 @@ public class Player {
 	String d_playerLog;
 
 	/**
-	 * Name of the card Player owns
+	 * Name of the card Player owns.
 	 */
 	List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
 
@@ -215,6 +215,13 @@ public class Player {
 	}
 
 	/**
+	 * Returns the List of cards owned by the player.
+	 *
+	 * @return List of Strings with cards
+	 */
+	public List<String> getD_cardsOwnedByPlayer(){ return this.d_cardsOwnedByPlayer; }
+
+	/**
 	 * Sets the Per Turn Card allocated bool.
 	 *
 	 * @param p_value Bool to Set.
@@ -317,6 +324,12 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Validates if player owns the card or not.
+	 *
+	 * @param p_cardName card Name
+	 * @return bool if it owns
+	 */
 	public boolean validatePlayerOwnsCard(String p_cardName) {
 		return d_cardsOwnedByPlayer.contains(p_cardName);
 	}
@@ -482,7 +495,6 @@ public class Player {
 	 * This method will assign any random card from the set of available cards to
 	 * the player once he conquers a territory.
 	 *
-	 * @return string selects random card from set of cards
 	 */
 	public void assignCard() {
 		if (!d_oneCardPerTurn) {
@@ -523,6 +535,12 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Handles the Card Commands: creates order and adds them to the list.
+	 *
+	 * @param p_commandEntered command entered
+	 * @param p_gameState gamestate instance
+	 */
 	public void handleCardCommands(String p_commandEntered, GameState p_gameState) {
 		if (checkCardArguments(p_commandEntered)) {
 			switch (p_commandEntered.split(" ")[0]) {
@@ -534,6 +552,7 @@ public class Player {
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
+					break;
 				case "blockade":
 					Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
 					if (l_blockadeOrder.checkValidOrder(p_gameState)) {
@@ -541,8 +560,15 @@ public class Player {
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
+					break;
 				case "bomb":
+					break;
 				case "negotiate":
+					break;
+				default:
+					this.setD_playerLog("Invalid Command!", "error");
+					p_gameState.updateLog(getD_playerLog(), "effect");
+					break;
 			}
 		} else{
 			this.setD_playerLog("Invalid Card Command Passed! Check Arguments!", "error");

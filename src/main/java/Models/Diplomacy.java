@@ -23,6 +23,9 @@ public class Diplomacy implements Card {
 		return false;
 	}
 
+	/**
+	 *
+	 */
 	public void printOrder() {
 
 	}

@@ -93,7 +93,6 @@ public class Blockade implements Card {
 						+ l_order.getOrderName()
 						+ " is pending. VALIDATES :- Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
 						+ " This particular card will have no affect and you don't get the card back.", "error");
-
 				return false;
 			}
 		}
@@ -103,11 +102,12 @@ public class Blockade implements Card {
 	/**
 	 * Print Blockade order.
 	 */
+	@Override
 	public void printOrder() {
 		this.d_orderExecutionLog = "----------Blockade card order issued by player "
 				+ this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
 				+ "Creating a defensive blockade with armies = " + "on country ID" + this.d_targetCountryID;
-		System.out.println(this.d_orderExecutionLog);
+		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
 
 	}
 
@@ -115,7 +115,7 @@ public class Blockade implements Card {
 	 * Prints and Sets the order execution log.
 	 *
 	 * @param p_orderExecutionLog String to be set as log
-	 * @param p_logType           type of log : error, default
+	 * @param p_logType type of log : error, default
 	 */
 	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
 		this.d_orderExecutionLog = p_orderExecutionLog;

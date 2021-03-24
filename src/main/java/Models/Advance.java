@@ -69,8 +69,6 @@ public class Advance implements Order {
 			Integer l_sourceArmiesToUpdate = l_sourceCountry.getD_armies() - this.d_numberOfArmiesToPlace;
 			l_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
 
-			// testing
-			l_targetCountry.setD_armies(0);
 			if (l_playerOfTargetCountry.getPlayerName().equalsIgnoreCase(this.d_playerInitiator.getPlayerName())) {
 				deployArmiesToTarget(l_targetCountry);
 			} else if (l_targetCountry.getD_armies() == 0) {
@@ -242,7 +240,7 @@ public class Advance implements Order {
 		this.d_orderExecutionLog = "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()
 				+ "----------" + System.lineSeparator() + "Move " + this.d_numberOfArmiesToPlace + " armies from "
 				+ this.d_sourceCountryName + " to " + this.d_targetCountryName;
-		System.out.println(this.d_orderExecutionLog);
+		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
 	}
 
 	@Override

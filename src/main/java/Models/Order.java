@@ -46,5 +46,4 @@ public interface Order {
 	 * @return String
 	 */
 	public String getOrderName();
-
 }

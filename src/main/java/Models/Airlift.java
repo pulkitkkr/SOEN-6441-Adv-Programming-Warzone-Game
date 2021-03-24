@@ -22,7 +22,7 @@ public class Airlift implements Card {
 	String d_targetCountryName;
 
 	/**
-	 * Number of armies to Airlift
+	 * Number of armies to Airlift.
 	 */
 	Integer d_numberOfArmies;
 
@@ -47,7 +47,7 @@ public class Airlift implements Card {
 	}
 
 	/**
-	 * 
+	 * Executes the order.
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
@@ -69,7 +69,7 @@ public class Airlift implements Card {
 	}
 
 	/**
-	 * 
+	 * Checks the validation before executing orders.
 	 */
 	@Override
 	public boolean valid() {
@@ -102,14 +102,22 @@ public class Airlift implements Card {
 		return true;
 	}
 
+	/**
+	 * Prints the Order.
+	 */
 	@Override
 	public void printOrder() {
 		this.d_orderExecutionLog = "----------Airlift order issued by player " + this.d_player.getPlayerName()
 				+ "----------" + System.lineSeparator() + "Move " + this.d_numberOfArmies + " armies from "
 				+ this.d_sourceCountryName + " to " + this.d_targetCountryName;
-		System.out.println(this.d_orderExecutionLog);
+		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
 	}
 
+	/**
+	 * Set the order execution Log.
+	 *
+	 * @return String of Log.
+	 */
 	@Override
 	public String orderExecutionLog() {
 		return this.d_orderExecutionLog;
@@ -140,6 +148,12 @@ public class Airlift implements Card {
 				+ this.d_numberOfArmies;
 	}
 
+	/**
+	 * Checks Pre-validations while issuing commands.
+	 *
+	 * @param p_GameState current GameState Instance
+	 * @return Bool if the order is valid
+	 */
 	@Override
 	public Boolean checkValidOrder(GameState p_GameState) {
 		Country l_sourceCountry = p_GameState.getD_map().getCountryByName(d_sourceCountryName);
