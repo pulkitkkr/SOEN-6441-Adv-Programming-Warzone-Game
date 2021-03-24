@@ -52,7 +52,6 @@ public class Airlift implements Card {
 	@Override
 	public void execute(GameState p_gameState) {
 		if (valid()) {
-			System.out.println("Passed Validation and Entered execute");
 			Country l_sourceCountry = p_gameState.getD_map().getCountryByName(d_sourceCountryName);
 			Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryName);
 			Integer l_updatedTargetArmies = l_targetCountry.getD_armies() + this.d_numberOfArmies;
@@ -60,7 +59,7 @@ public class Airlift implements Card {
 			l_targetCountry.setD_armies(l_updatedTargetArmies);
 			l_sourceCountry.setD_armies(l_updatedSourceArmies);
 			d_player.removeCard("airlift");
-			this.setD_orderExecutionLog("Airlift Operation from "+ d_sourceCountryName+ "to "+d_targetCountryName+" successful!", "default");
+			this.setD_orderExecutionLog("Airlift Operation from "+ d_sourceCountryName+ " to "+d_targetCountryName+" successful!", "default");
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		} else {
 			this.setD_orderExecutionLog("Cannot Complete Execution of given Airlift Command!", "error");

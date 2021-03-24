@@ -87,7 +87,7 @@ public class Deploy implements Order {
 		this.d_orderExecutionLog = "----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()
 				+ "----------" + System.lineSeparator() + "Deploy " + this.d_numberOfArmiesToPlace + " armies to "
 				+ this.d_targetCountryName;
-		System.out.println(this.d_orderExecutionLog);
+		System.out.println(System.lineSeparator()+ this.d_orderExecutionLog);
 	}
 
 	@Override

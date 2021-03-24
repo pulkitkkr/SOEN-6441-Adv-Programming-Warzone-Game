@@ -9,9 +9,8 @@ import java.util.Random;
 
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
-import Utils.Command;
+import Exceptions.InvalidMap;
 import Utils.CommonUtil;
-import Views.MapView;
 
 /**
  * This class depicts player's information and services.
@@ -263,13 +262,13 @@ public class Player {
 	 * Prints and writes the player log.
 	 *
 	 * @param p_playerLog String as log message
-	 * @param p_typeLog   Type of log : error, or log
+	 * @param p_typeLog Type of log : error, or log
 	 */
 	public void setD_playerLog(String p_playerLog, String p_typeLog) {
 		this.d_playerLog = p_playerLog;
-		if (p_typeLog.equals("error"))
+		if(p_typeLog.equals("error"))
 			System.err.println(p_playerLog);
-		else if (p_typeLog.equals("log"))
+		else if(p_typeLog.equals("log"))
 			System.out.println(p_playerLog);
 	}
 
@@ -278,60 +277,8 @@ public class Player {
 	 *
 	 * @return String of log message.
 	 */
-	public String getD_playerLog() {
+	public String getD_playerLog(){
 		return this.d_playerLog;
-	}
-
-	/**
-	 * Receiver of command pattern :-Issue order which takes order as an input and
-	 * add it to player's order list.
-	 *
-	 * @param p_gameState Current state of the game
-	 * @throws IOException    exception in reading inputs from user
-	 * @throws InvalidCommand Invalid Command
-	 */
-	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand {
-
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
-				+ " or give showmap command to view current state of the game.");
-		String l_commandEntered = l_reader.readLine();
-		Command l_command = new Command(l_commandEntered);
-		String l_order = l_command.getRootCommand();
-		p_gameState.updateLog("(Player: " + this.getPlayerName() + ") " + l_commandEntered, "order");
-		if ("showmap".equalsIgnoreCase(l_order)) {
-			MapView l_mapView = new MapView(p_gameState);
-			l_mapView.showMap();
-			this.issue_order(p_gameState);
-		} else {
-			if ("deploy".equalsIgnoreCase(l_order)) {
-				createDeployOrder(l_commandEntered);
-				p_gameState.updateLog(getD_playerLog(), "effect");
-			} else if ("advance".equalsIgnoreCase(l_order)) {
-				createAdvanceOrder(l_commandEntered, p_gameState);
-				p_gameState.updateLog(getD_playerLog(), "effect");
-			} else if (ApplicationConstants.CARDS.contains(l_order)) {
-				if (validatePlayerOwnsCard(l_order)) {
-					handleCardCommands(l_commandEntered, p_gameState);
-				} else {
-					setD_playerLog("Requested Card is not owned by " + this.getPlayerName(), "error");
-				}
-			} else {
-				System.err.println("Invalid command given at this stage.");
-				// throw new InvalidCommand("Invalid command given at this stage.");
-			}
-			checkForMoreOrders();
-		}
-	}
-
-	/**
-	 * Validates if player owns the card or not.
-	 *
-	 * @param p_cardName card Name
-	 * @return bool if it owns
-	 */
-	public boolean validatePlayerOwnsCard(String p_cardName) {
-		return d_cardsOwnedByPlayer.contains(p_cardName);
 	}
 
 	/**
@@ -339,7 +286,7 @@ public class Player {
 	 *
 	 * @throws IOException exception in reading inputs from user
 	 */
-	private void checkForMoreOrders() throws IOException {
+	void checkForMoreOrders() throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
 				+ " in next turn ? \nPress Y for Yes or N for No");
@@ -357,7 +304,7 @@ public class Player {
 	 *
 	 * @param p_commandEntered command entered by the user
 	 */
-	public void createDeployOrder(String p_commandEntered) {
+	public void createDeployOrder(String p_commandEntered){
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
@@ -365,14 +312,12 @@ public class Player {
 			l_noOfArmies = p_commandEntered.split(" ")[2];
 			if (validateDeployOrderArmies(this, l_noOfArmies)) {
 				this.setD_playerLog(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.",
-						"error");
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.", "error");
 			} else {
 				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name,
-						"log");
+				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
 
 			}
 		} catch (Exception l_e) {
@@ -391,6 +336,18 @@ public class Player {
 	 */
 	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
 		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
+	}
+
+	/**
+	 * Issues order for player.
+	 *
+	 * @param p_issueOrderPhase current phase of the game
+	 * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+	 */
+	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
+		p_issueOrderPhase.askForOrder(this);
 	}
 
 	/**
@@ -426,8 +383,7 @@ public class Player {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.order_list
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-					this.setD_playerLog(
-							"Advance order has been added to queue for execution. For player: " + this.d_name, "log");
+					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
 				this.setD_playerLog("Invalid Arguments Passed For Advance Order", "error");
@@ -499,7 +455,8 @@ public class Player {
 	public void assignCard() {
 		if (!d_oneCardPerTurn) {
 			Random l_random = new Random();
-			this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+			//this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+			this.d_cardsOwnedByPlayer.add("airlift");
 			this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
 			this.setD_oneCardPerTurn(true);
 		}else{
