@@ -73,6 +73,9 @@ public abstract class Phase {
      * handle command methods handles all state specific commands that can be entered by user.
      *
      * @param p_enteredCommand command entered by the user in CLI
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
      */
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
         commandHandler(p_enteredCommand, null);
@@ -83,11 +86,23 @@ public abstract class Phase {
      *
      * @param p_enteredCommand command entered by the user in CLI
      * @param p_player instance to Player Object
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
      */
     public void handleCommand(String p_enteredCommand, Player p_player) throws InvalidMap, InvalidCommand, IOException {
         commandHandler(p_enteredCommand, p_player);
     }
 
+    /**
+     * Processes the command entered by user and redirects them to specific phase implementations.
+     * 
+     * @param p_enteredCommand command entered by the user in CLI
+     * @param p_player instance to Player Object
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
+     */
     private void commandHandler(String p_enteredCommand, Player p_player) throws InvalidMap, InvalidCommand, IOException {
         Command l_command = new Command(p_enteredCommand);
         String l_rootCommand = l_command.getRootCommand();
@@ -161,9 +176,9 @@ public abstract class Phase {
      *
      * @param p_command command entered by user
      * @param p_player instance of player object
-     * @throws InvalidCommand
-     * @throws IOException
-     * @throws InvalidMap
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
      */
     protected abstract void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
 
@@ -172,7 +187,7 @@ public abstract class Phase {
      *
      * @param p_command  command entered by user
      * @param p_player instance of player object
-     * @throws IOException
+     * @throws IOException    indicates failure in I/O operation
      */
     protected abstract void performAdvance(String p_command, Player p_player) throws IOException;
 
@@ -186,7 +201,7 @@ public abstract class Phase {
      *
      * @param p_command command entered by user
      * @param p_player instance of player object
-     * @throws IOException
+     * @throws IOException    indicates failure in I/O operation
      */
     protected abstract void performCreateDeploy(String p_command, Player p_player) throws IOException;
 
@@ -205,6 +220,7 @@ public abstract class Phase {
      * @param p_command command entered by the user on CLI
      * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
      * @throws IOException    indicates failure in I/O operation
      */
     protected abstract void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
@@ -217,6 +233,8 @@ public abstract class Phase {
      * @param p_command command entered by the user on CLI
      * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException  indicates failure in I/O operation
      */
     protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
 
@@ -254,6 +272,7 @@ public abstract class Phase {
      * @param p_player instance of Player Object
      * @throws InvalidCommand indicates when command is invalid
      * @throws InvalidMap indicates when map is invalid
+     * @throws IOException  indicates failure in I/O operation
      */
     protected abstract void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException;
 
@@ -265,6 +284,7 @@ public abstract class Phase {
      * @param p_player instance of Player Object
      * @throws InvalidMap indicates Map Object Validation failure
      * @throws InvalidCommand indicates when command is invalid
+     * @throws IOException  indicates failure in I/O operation
      */
     protected abstract void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
@@ -276,6 +296,7 @@ public abstract class Phase {
      * @param p_player instance of Player Object
      * @throws InvalidMap     indicates when map is invalid
      * @throws InvalidCommand indicates when command is invalid
+     * @throws IOException  indicates failure in I/O operation
      */
     protected abstract void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 

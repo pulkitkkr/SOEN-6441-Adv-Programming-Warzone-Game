@@ -316,7 +316,6 @@ public class Player {
 	 * Issues order for player.
 	 * 
 	 * @param p_issueOrderPhase current phase of the game
-	 * @return
 	 * @throws InvalidCommand exception if command is invalid
      * @throws IOException  indicates failure in I/O operation
      * @throws InvalidMap indicates failure in using the invalid map
