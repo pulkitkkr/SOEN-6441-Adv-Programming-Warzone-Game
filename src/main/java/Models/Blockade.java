@@ -86,15 +86,17 @@ public class Blockade implements Card {
 
 		// It make sure that any attacks, airlifts, or other actions must happen before
 		// the country changes into a neutral.
-		for (int i = 0; i < d_playerInitiator.getD_ordersToExecute().size(); i++) {
-			Order l_order = d_playerInitiator.getD_ordersToExecute().get(i);
-			if (ApplicationConstants.BLOCKADEVALIDATION.contains(l_order.getOrderName())) {
-				this.setD_orderExecutionLog(this.currentOrder() + " is not executed because" + "order: "
-						+ l_order.getOrderName()
-						+ " is pending. VALIDATES :- Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
-						+ " This particular card will have no affect and you don't get the card back.", "error");
+		if (!CommonUtil.isNull(d_playerInitiator.getD_ordersToExecute())) {
+			for (int l_index = 0; l_index < d_playerInitiator.getD_ordersToExecute().size(); l_index++) {
+				Order l_order = d_playerInitiator.getD_ordersToExecute().get(l_index);
+				if (ApplicationConstants.BLOCKADEVALIDATION.contains(l_order.getOrderName())) {
+					this.setD_orderExecutionLog(this.currentOrder() + " is not executed because " + "order: "
+							+ l_order.getOrderName()
+							+ " is pending. VALIDATES :- Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
+							+ " This particular card will have no affect and you don't get the card back.", "error");
 
-				return false;
+					return false;
+				}
 			}
 		}
 		return true;
