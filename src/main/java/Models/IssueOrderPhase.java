@@ -1,15 +1,14 @@
 package Models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.Command;
-import Utils.CommonUtil;
 import Views.MapView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Issue Order Phase implementation for GamePlay using State Pattern.
@@ -65,7 +64,7 @@ public class IssueOrderPhase extends Phase{
             for (Player l_player : d_gameState.getD_players()) {
                 if (l_player.getD_moreOrders()) {
                     try {
-                        askForOrder(l_player);
+                        l_player.issue_order(this);
                     } catch (InvalidCommand | IOException | InvalidMap l_exception) {
                         d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
                     }
@@ -76,7 +75,15 @@ public class IssueOrderPhase extends Phase{
         d_gameEngine.setOrderExecutionPhase();
     }
 
-    private void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
+    /**
+     * Asks for order commands from user.
+     * 
+     * @param p_player player for which commands are to be issued
+     * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+     */
+    public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
                 + " or give showmap command to view current state of the game.");

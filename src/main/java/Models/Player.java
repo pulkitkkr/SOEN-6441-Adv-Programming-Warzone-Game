@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
-import Utils.Command;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Utils.CommonUtil;
-import Views.MapView;
 
 /**
  * This class depicts player's information and services.
@@ -312,6 +310,19 @@ public class Player {
 	 */
 	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
 		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
+	}
+	
+	/**
+	 * Issues order for player
+	 * 
+	 * @param p_issueOrderPhase current phase of the game
+	 * @return
+	 * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+	 */
+	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
+		p_issueOrderPhase.askForOrder(this);
 	}
 
 	/**

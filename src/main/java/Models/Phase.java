@@ -194,7 +194,7 @@ public abstract class Phase {
      * Method to Log and Print if the command can't be executed in current phase.
      */
     public void printInvalidCommandInState(){
-        d_gameEngine.setD_gameEngineLog("Invalid Command in State", "effect");
+        d_gameEngine.setD_gameEngineLog("Invalid Command in Current State", "effect");
     }
 
     /**

@@ -1,12 +1,10 @@
 package Controllers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
-import Models.*;
+import Models.GameState;
+import Models.IssueOrderPhase;
+import Models.OrderExecutionPhase;
+import Models.Phase;
+import Models.StartUpPhase;
 
 /**
  * This is the entry point of the Game and keeps the track of current Game
@@ -67,7 +65,7 @@ public class GameEngine {
 	 */
 	public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
 		d_currentPhase.getD_gameState().updateLog(p_gameEngineLog, p_logType);
-		System.out.println(p_gameEngineLog);
+		System.out.println("***************** " + p_gameEngineLog + " *****************");
 	}
 
 	/**
