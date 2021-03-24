@@ -5,6 +5,9 @@ import Utils.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import Constants.ApplicationConstants;
 
 /**
  * Concrete Command of Command pattern.
@@ -68,17 +71,20 @@ public class Advance implements Order {
 			Country l_sourceCountry = p_gameState.getD_map().getCountryByName(d_sourceCountryName);
 			Integer l_sourceArmiesToUpdate = l_sourceCountry.getD_armies() - this.d_numberOfArmiesToPlace;
 			l_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
-			
+
 			if (l_playerOfTargetCountry.getPlayerName().equalsIgnoreCase(this.d_playerInitiator.getPlayerName())) {
 				deployArmiesToTarget(l_targetCountry);
 			} else if (l_targetCountry.getD_armies() == 0) {
 				l_targetCountry.setD_armies(d_numberOfArmiesToPlace);
 				l_playerOfTargetCountry.getD_coutriesOwned().remove(l_targetCountry);
 				this.d_playerInitiator.getD_coutriesOwned().add(l_targetCountry);
-				this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
-						+ l_targetCountry.getD_countryName() + " and armies : " + l_targetCountry.getD_armies(), "default");
+				this.setD_orderExecutionLog(
+						"\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+								+ l_targetCountry.getD_countryName() + " and armies : " + l_targetCountry.getD_armies(),
+						"default");
 				p_gameState.updateLog(orderExecutionLog(), "effect");
 				this.updateContinents(this.d_playerInitiator, l_playerOfTargetCountry, p_gameState);
+				issueRandomCardToPlayer();
 			} else {
 				Integer l_armiesInAttack = this.d_numberOfArmiesToPlace < l_targetCountry.getD_armies()
 						? this.d_numberOfArmiesToPlace
@@ -91,7 +97,7 @@ public class Advance implements Order {
 				p_gameState.updateLog(orderExecutionLog(), "effect");
 				this.updateContinents(this.d_playerInitiator, l_playerOfTargetCountry, p_gameState);
 			}
-		}else{
+		} else {
 			p_gameState.updateLog(orderExecutionLog(), "effect");
 		}
 	}
@@ -168,18 +174,23 @@ public class Advance implements Order {
 			p_targetCountry.setD_armies(p_attackerArmiesLeft);
 			p_playerOfTargetCountry.getD_coutriesOwned().remove(p_targetCountry);
 			this.d_playerInitiator.getD_coutriesOwned().add(p_targetCountry);
-			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
-					+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(), "default");
+			this.setD_orderExecutionLog(
+					"\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+							+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(),
+					"default");
+			issueRandomCardToPlayer();
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
 
 			Integer l_sourceArmiesToUpdate = p_sourceCountry.getD_armies() + p_attackerArmiesLeft;
 			p_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
-			String l_country1 = "\nCountry : " + p_targetCountry.getD_countryName() + " is left with " + p_targetCountry.getD_armies()
-					+ " armies and is still owned by player : " + p_playerOfTargetCountry.getPlayerName();
-			String l_country2 = "Country : " + p_sourceCountry.getD_countryName() + " is left with " + p_sourceCountry.getD_armies()
-					+ " armies and is still owned by player : " + this.d_playerInitiator.getPlayerName();
-			this.setD_orderExecutionLog(l_country1+System.lineSeparator()+l_country2, "default");
+			String l_country1 = "\nCountry : " + p_targetCountry.getD_countryName() + " is left with "
+					+ p_targetCountry.getD_armies() + " armies and is still owned by player : "
+					+ p_playerOfTargetCountry.getPlayerName();
+			String l_country2 = "Country : " + p_sourceCountry.getD_countryName() + " is left with "
+					+ p_sourceCountry.getD_armies() + " armies and is still owned by player : "
+					+ this.d_playerInitiator.getPlayerName();
+			this.setD_orderExecutionLog(l_country1 + System.lineSeparator() + l_country2, "default");
 		}
 	}
 
@@ -210,7 +221,8 @@ public class Advance implements Order {
 		if (this.d_numberOfArmiesToPlace == l_country.getD_armies()) {
 			this.setD_orderExecutionLog(this.currentOrder() + " is not executed as source country : "
 					+ this.d_sourceCountryName + " has " + l_country.getD_armies()
-					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.", "error");
+					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.",
+					"error");
 			return false;
 		}
 		return true;
@@ -228,7 +240,9 @@ public class Advance implements Order {
 
 	@Override
 	public void printOrder() {
-		this.d_orderExecutionLog = "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()+"----------"+System.lineSeparator()+"Move " + this.d_numberOfArmiesToPlace + " armies from " + this.d_sourceCountryName + " to " + this.d_targetCountryName;
+		this.d_orderExecutionLog = "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()
+				+ "----------" + System.lineSeparator() + "Move " + this.d_numberOfArmiesToPlace + " armies from "
+				+ this.d_sourceCountryName + " to " + this.d_targetCountryName;
 		System.out.println(this.d_orderExecutionLog);
 	}
 
@@ -241,16 +255,17 @@ public class Advance implements Order {
 	 * Prints and Sets the order execution log.
 	 *
 	 * @param p_orderExecutionLog String to be set as log
-	 * @param p_logType type of log : error, default
+	 * @param p_logType           type of log : error, default
 	 */
-	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType) {
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
 		this.d_orderExecutionLog = p_orderExecutionLog;
-		if(p_logType.equals("error")) {
+		if (p_logType.equals("error")) {
 			System.err.println(p_orderExecutionLog);
-		}else{
+		} else {
 			System.out.println(p_orderExecutionLog);
 		}
 	}
+
 	/**
 	 * Generates random army units based attacker and defender's winning
 	 * probability.
@@ -299,5 +314,20 @@ public class Advance implements Order {
 
 		PlayerService l_playerService = new PlayerService();
 		l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
+	}
+
+	/**
+	 * This method will assign any random card from the set of available cards to
+	 * the player once he conquers a territory.
+	 * 
+	 * @return string selects random card from set of cards
+	 */
+	public void issueRandomCardToPlayer() {
+		// check if any player conquered the country
+		// if yes then assign one card to that player
+		Random l_random = new Random();
+
+		Card card = (Card) ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
+		d_playerInitiator.assignCard(card);
 	}
 }

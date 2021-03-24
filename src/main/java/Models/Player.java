@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Vector;
 
-
-import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
+import Exceptions.InvalidCommand;
 import Utils.Command;
 import Utils.CommonUtil;
 import Views.MapView;
@@ -52,7 +51,12 @@ public class Player {
 	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
-  
+
+	private Card d_card;
+	Vector<Card> d_deckOfCards;
+
+	boolean d_countryConqueredAfterBattle;
+
 	/**
 	 * String holding Log for individual Player methods.
 	 */
@@ -70,6 +74,7 @@ public class Player {
 		this.d_coutriesOwned = new ArrayList<Country>();
 		this.order_list = new ArrayList<Order>();
 		this.d_moreOrders = true;
+		this.d_deckOfCards = new Vector<Card>();
 	}
 
 	/**
@@ -205,6 +210,24 @@ public class Player {
 		this.d_moreOrders = p_moreOrders;
 	}
 
+	public void assignCard(Card p_card) {
+		this.d_deckOfCards.add(p_card);
+	}
+
+	public boolean removeCard(Card p_card) {
+		for (int index = 0; index < d_deckOfCards.size(); index++) {
+			if (d_deckOfCards.contains(d_deckOfCards.get(index))) {
+				d_deckOfCards.remove(index);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Vector<Card> getListOfCards() {
+		return d_deckOfCards;
+	}
+
 	/**
 	 * Extracts the list of names of countries owned by the player.
 	 *
@@ -238,13 +261,13 @@ public class Player {
 	 * Prints and writes the player log.
 	 *
 	 * @param p_playerLog String as log message
-	 * @param p_typeLog Type of log : error, or log
+	 * @param p_typeLog   Type of log : error, or log
 	 */
 	public void setD_playerLog(String p_playerLog, String p_typeLog) {
 		this.d_playerLog = p_playerLog;
-		if(p_typeLog.equals("error"))
+		if (p_typeLog.equals("error"))
 			System.err.println(p_playerLog);
-		else if(p_typeLog.equals("log"))
+		else if (p_typeLog.equals("log"))
 			System.out.println(p_playerLog);
 	}
 
@@ -253,7 +276,7 @@ public class Player {
 	 *
 	 * @return String of log message.
 	 */
-	public String getD_playerLog(){
+	public String getD_playerLog() {
 		return this.d_playerLog;
 	}
 
@@ -262,18 +285,18 @@ public class Player {
 	 * add it to player's order list.
 	 *
 	 * @param p_gameState Current state of the game
-	 * @throws IOException exception in reading inputs from user
+	 * @throws IOException    exception in reading inputs from user
 	 * @throws InvalidCommand Invalid Command
 	 */
-	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand{
-    
+	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand {
+
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
 				+ " or give showmap command to view current state of the game.");
 		String l_commandEntered = l_reader.readLine();
 		Command l_command = new Command(l_commandEntered);
 		String l_order = l_command.getRootCommand();
-		p_gameState.updateLog("(Player: "+this.getPlayerName()+") "+ l_commandEntered, "order");
+		p_gameState.updateLog("(Player: " + this.getPlayerName() + ") " + l_commandEntered, "order");
 		if ("showmap".equalsIgnoreCase(l_order)) {
 			MapView l_mapView = new MapView(p_gameState);
 			l_mapView.showMap();
@@ -287,6 +310,14 @@ public class Player {
 				p_gameState.updateLog(getD_playerLog(), "effect");
 			} else if (ApplicationConstants.CARDS.contains(l_order)) {
 				// card orders capture method invocation
+				// check if player have any card, if yes only then procees with this order else
+				// print message
+				if (validateIfPlayerHaveAnyCard()) {
+					createCardOrder(l_commandEntered, l_order);
+				} else {
+					System.err.println("There is no card in player's hand" + this.getPlayerName());
+				}
+
 			} else {
 				System.err.println("Invalid command given at this stage.");
 				throw new InvalidCommand("Invalid command given at this stage.");
@@ -294,6 +325,21 @@ public class Player {
 			checkForMoreOrders();
 		}
 
+	}
+
+	public boolean validateIfPlayerHaveAnyCard() {
+		if (!CommonUtil.isNull(d_deckOfCards)) {
+			return true;
+		}
+		return false;
+	}
+
+	public void createCardOrder(String p_commandEntered, String p_card) {
+		String l_targetCountry = p_commandEntered.split(" ")[1];
+		switch (p_card) {
+		case "Blockade":
+			this.d_deckOfCards.add(new Blockade(this, l_targetCountry));
+		}
 	}
 
 	/**
@@ -319,7 +365,7 @@ public class Player {
 	 *
 	 * @param p_commandEntered command entered by the user
 	 */
-	public void createDeployOrder(String p_commandEntered){
+	public void createDeployOrder(String p_commandEntered) {
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
@@ -327,12 +373,14 @@ public class Player {
 			l_noOfArmies = p_commandEntered.split(" ")[2];
 			if (validateDeployOrderArmies(this, l_noOfArmies)) {
 				this.setD_playerLog(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.", "error");
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.",
+						"error");
 			} else {
 				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
+				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name,
+						"log");
 
 			}
 		} catch (Exception l_e) {
@@ -386,7 +434,8 @@ public class Player {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.order_list
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
+					this.setD_playerLog(
+							"Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
 				this.setD_playerLog("Invalid Arguments Passed For Advance Order", "error");
@@ -448,15 +497,5 @@ public class Player {
 			return false;
 		}
 		return true;
-	}
-	
-	/**
-	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
-	 * 
-	 * @return string selects random card from set of cards
-	 */
-	public String randomCard() {
-		Random l_random = new Random();
-		return ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
 	}
 }

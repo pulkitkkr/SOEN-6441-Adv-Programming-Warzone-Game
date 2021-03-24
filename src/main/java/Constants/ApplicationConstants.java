@@ -1,9 +1,11 @@
 package Constants;
+
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class initializes all the constants that are going to be used throughout the application.
+ * This class initializes all the constants that are going to be used throughout
+ * the application.
  *
  */
 public final class ApplicationConstants {
@@ -44,7 +46,7 @@ public final class ApplicationConstants {
 	public static final int CONSOLE_WIDTH = 80;
 
 	public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
-	
-	public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
+
+	public static final List<Object> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
 	public static final int SIZE = CARDS.size();
 }
