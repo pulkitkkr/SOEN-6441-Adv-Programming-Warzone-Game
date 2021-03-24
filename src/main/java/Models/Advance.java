@@ -87,7 +87,7 @@ public class Advance implements Order {
 						"default");
 				p_gameState.updateLog(orderExecutionLog(), "effect");
 				this.updateContinents(this.d_playerInitiator, l_playerOfTargetCountry, p_gameState);
-				issueRandomCardToPlayer();
+				this.d_playerInitiator.assignCard();
 			} else {
 				Integer l_armiesInAttack = this.d_numberOfArmiesToPlace < l_targetCountry.getD_armies()
 						? this.d_numberOfArmiesToPlace
@@ -181,7 +181,7 @@ public class Advance implements Order {
 					"\nPlayer : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
 							+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(),
 					"default");
-			issueRandomCardToPlayer();
+			this.d_playerInitiator.assignCard();
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
 
@@ -318,38 +318,4 @@ public class Advance implements Order {
 		PlayerService l_playerService = new PlayerService();
 		l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
 	}
-
-	/**
-	 * This method will assign any random card from the set of available cards to
-	 * the player once he conquers a territory.
-	 * 
-	 * @return string selects random card from set of cards
-	 */
-	public void issueRandomCardToPlayer() {
-		// check if any player conquered the country
-		// if yes then assign one card to that player
-		Random l_random = new Random();
-		String card1 = ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
-
-		List<Card> deckOfCards = new ArrayList<Card>();
-		Card blockade = new Blockade();
-		deckOfCards.add(blockade);
-		Card diploamcy = new Diplomacy();
-		deckOfCards.add(diploamcy);
-		Card bomb = new Bomb();
-		deckOfCards.add(bomb);
-		Card airlift = new Airlift();
-		deckOfCards.add(airlift);
-
-		for (int i = 0; i < ApplicationConstants.SIZE; i++) {
-			System.out.println(deckOfCards.get(i).toString());
-			if (card1.equalsIgnoreCase(deckOfCards.get(i).toString())) {
-				d_playerInitiator.assignCard(deckOfCards.get(i));
-				System.out.println("assigned card to player:- " + d_playerInitiator.getPlayerName() + "card is:- "
-						+ deckOfCards.get(i));
-			}
-		}
-
-	}
-
 }

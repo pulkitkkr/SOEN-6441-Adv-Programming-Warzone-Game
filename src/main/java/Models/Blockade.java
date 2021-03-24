@@ -27,13 +27,27 @@ public class Blockade implements Card {
 		return false;
 	}
 
-	@Override
-	public void printCard() {
-		// TODO Auto-generated method stub
+	public void printOrder() {
 
 	}
 
-	public String toString() {
-		return "blockade";
+	@Override
+	public String orderExecutionLog() {
+		return null;
+	}
+
+	@Override
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
+
+	}
+
+	@Override
+	public Boolean checkValidOrder(GameState p_gameState) {
+		return null;
+	}
+
+	@Override
+	public String getD_cardName() {
+		return null;
 	}
 }

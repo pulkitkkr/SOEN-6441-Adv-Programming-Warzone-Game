@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Models;
 
 /**
@@ -26,16 +23,27 @@ public class Diplomacy implements Card {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	public void printOrder() {
+
+	}
+
 	@Override
-	public void printCard() {
+	public String orderExecutionLog() {
+		return null;
+	}
+
+	@Override
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
 
 	}
 
-	public String toString() {
-		return "diplomacy";
+	@Override
+	public Boolean checkValidOrder(GameState p_gameState) {
+		return null;
 	}
 
+	@Override
+	public String getD_cardName() {
+		return null;
+	}
 }

@@ -367,4 +367,10 @@ public class PlayerService {
 		this.d_playerLog = p_playerLog;
 		System.out.println(p_playerLog);
 	}
+
+//	public void resetPlayerOrder(List<Player> p_playerList){
+//		for(Player p_player: p_playerList){
+//			p_player.setD_moreOrders(true);
+//		}
+//	}
 }

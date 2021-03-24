@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Models;
 
 /**
@@ -26,16 +23,28 @@ public class Bomb implements Card {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
-	public void printCard() {
+	public void printOrder() {
 
 	}
 
-	public String toString() {
-		return "bomb";
+	@Override
+	public String orderExecutionLog() {
+		return null;
 	}
 
+	@Override
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
+
+	}
+
+	@Override
+	public Boolean checkValidOrder(GameState p_gameState) {
+		return null;
+	}
+
+	@Override
+	public String getD_cardName() {
+		return null;
+	}
 }

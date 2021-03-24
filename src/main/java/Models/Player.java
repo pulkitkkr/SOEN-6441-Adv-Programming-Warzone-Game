@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 import Constants.ApplicationConstants;
@@ -52,14 +53,15 @@ public class Player {
 	 */
 	boolean d_moreOrders;
 
-	Vector<Card> d_deckOfCards;
-
-	boolean d_countryConqueredAfterBattle;
-
 	/**
 	 * String holding Log for individual Player methods.
 	 */
 	String d_playerLog;
+
+	/**
+	 * Name of the card Player owns
+	 */
+	List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -73,7 +75,6 @@ public class Player {
 		this.d_coutriesOwned = new ArrayList<Country>();
 		this.order_list = new ArrayList<Order>();
 		this.d_moreOrders = true;
-		this.d_deckOfCards = new Vector<Card>();
 	}
 
 	/**
@@ -209,24 +210,6 @@ public class Player {
 		this.d_moreOrders = p_moreOrders;
 	}
 
-	public void assignCard(Card p_card) {
-		this.d_deckOfCards.add(p_card);
-	}
-
-	public boolean removeCard(Card p_card) {
-		for (int index = 0; index < d_deckOfCards.size(); index++) {
-			if (d_deckOfCards.contains(d_deckOfCards.get(index))) {
-				d_deckOfCards.remove(index);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public Vector<Card> getListOfCards() {
-		return d_deckOfCards;
-	}
-
 	/**
 	 * Extracts the list of names of countries owned by the player.
 	 *
@@ -308,37 +291,21 @@ public class Player {
 				createAdvanceOrder(l_commandEntered, p_gameState);
 				p_gameState.updateLog(getD_playerLog(), "effect");
 			} else if (ApplicationConstants.CARDS.contains(l_order)) {
-				// card orders capture method invocation
-				// check if player have any card, if yes only then procees with this order else
-				// print message
-				if (validateIfPlayerHaveAnyCard()) {
-					createCardOrder(l_commandEntered, l_order);
+				if (validatePlayerOwnsCard(l_order)) {
+					handleCardCommands(l_commandEntered, p_gameState);
 				} else {
-					System.err.println("There is no card in player's hand" + this.getPlayerName());
+					setD_playerLog("Requested Card is not owned by " + this.getPlayerName(), "error");
 				}
-
 			} else {
 				System.err.println("Invalid command given at this stage.");
 				throw new InvalidCommand("Invalid command given at this stage.");
 			}
 			checkForMoreOrders();
 		}
-
 	}
 
-	public boolean validateIfPlayerHaveAnyCard() {
-		if (!CommonUtil.isCollectionEmpty(d_deckOfCards)) {
-			return true;
-		}
-		return false;
-	}
-
-	public void createCardOrder(String p_commandEntered, String p_card) {
-		String l_targetCountry = p_commandEntered.split(" ")[1];
-		switch (p_card) {
-		case "Blockade":
-			this.d_deckOfCards.add(new Blockade(this, l_targetCountry));
-		}
+	public boolean validatePlayerOwnsCard(String p_cardName) {
+		return d_cardsOwnedByPlayer.contains(p_cardName);
 	}
 
 	/**
@@ -496,5 +463,49 @@ public class Player {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
+	 *
+	 * @return string selects random card from set of cards
+	 */
+	public void assignCard(){
+		Random l_random = new Random();
+		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+		//this.d_cardsOwnedByPlayer.add("airlift");
+		System.out.println("Card Assigned to the Player");
+	}
+
+	public void removeCard(String p_cardName){
+		this.d_cardsOwnedByPlayer.remove(p_cardName);
+	}
+
+	public boolean checkCardArguments(String p_commandEntered){
+		if(p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
+			return p_commandEntered.split(" ").length == 4;
+		}else if(p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade") || p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb") || p_commandEntered.split(" ")[0].equalsIgnoreCase("negotiate")) {
+			return p_commandEntered.split(" ").length == 2;
+		}else {
+			return false;
+		}
+	}
+
+	public void handleCardCommands(String p_commandEntered, GameState p_gameState){
+		if(checkCardArguments(p_commandEntered)){
+			switch (p_commandEntered.split(" ")[0]){
+				case "airlift":
+					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2], Integer.parseInt(p_commandEntered.split(" ")[3]), this);
+					if(l_newOrder.checkValidOrder(p_gameState)){
+						this.order_list.add(l_newOrder);
+					}
+				case "blockade":
+				case "bomb":
+				case "negotiate":
+
+			}
+		} else{
+			setD_playerLog("Invalid Card Command Passed! Check Arguments", "error");
+		}
 	}
 }
