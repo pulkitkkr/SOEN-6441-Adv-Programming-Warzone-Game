@@ -13,19 +13,28 @@ import Models.*;
  * State.
  */
 public class GameEngine {
+	/**
+	 * d_gameState stores the information about current GamePlay.
+	 */
+	GameState d_gameState = new GameState();
 
 	/**
 	 *	It is the current game play phase as per state pattern.
 	 */
-	Phase d_currentPhase = new StartUpPhase(this);
+	Phase d_currentPhase = new StartUpPhase(this, d_gameState);
 
 	/**
 	 * It's used to update context.
 	 *
 	 * @param p_phase new Phase to set in Game context
 	 */
-	public void setD_CurrentPhase(Phase p_phase){
+	private void setD_CurrentPhase(Phase p_phase){
 		d_currentPhase = p_phase;
+	}
+
+	public void setIssueOrderPhase(){
+		setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
+		getD_CurrentPhase().initPhase();
 	}
 
 	/**
@@ -58,25 +67,7 @@ public class GameEngine {
 		GameEngine l_game = new GameEngine();
 
 		l_game.getD_CurrentPhase().getD_gameState().updateLog("Initializing the Game ......"+System.lineSeparator(), "start");
-		l_game.initGamePlay();
-	}
-
-	/**
-	 * This method initiates the CLI to accept commands from user and maps them to
-	 * corresponding action handler.
-	 */
-	private void initGamePlay() {
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-
-		while (true) {
-			try {
-				System.out.println("Enter Game Commands or type 'exit' for quitting");
-				String l_commandEntered = l_reader.readLine();
-
-				d_currentPhase.handleCommand(l_commandEntered);
-			} catch (InvalidCommand | InvalidMap | IOException l_exception) {
-				this.setD_gameEngineLog(l_exception.getMessage(), "effect");
-			}
-		}
+		l_game.setD_gameEngineLog("Game Startup Phase", "phase");
+		l_game.getD_CurrentPhase().initPhase();
 	}
 }

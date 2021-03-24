@@ -4,6 +4,7 @@ import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.Command;
+import Views.MapView;
 
 import java.io.IOException;
 
@@ -16,16 +17,30 @@ public class OrderExecutionPhase extends Phase{
      * It's a constructor that init the GameEngine context in Phase class.
      *
      * @param p_gameEngine GameEngine Context
+     * @param p_gameState current Game State
      */
-    public OrderExecutionPhase(GameEngine p_gameEngine){
-        super(p_gameEngine);
+    public OrderExecutionPhase(GameEngine p_gameEngine, GameState p_gameState){
+        super(p_gameEngine, p_gameState);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void performAssignCountries(Command p_command) throws InvalidCommand, IOException {
+    protected void performAdvance(String p_command, Player p_player) {
+        printInvalidCommandInState();
+    }
+
+    @Override
+    public void initPhase() {
+
+    }
+
+    @Override
+    protected void performShowMap(Command p_command, Player p_player) {
+        MapView l_mapView = new MapView(d_gameState);
+        l_mapView.showMap();
+    }
+
+    @Override
+    protected void performCreateDeploy(String p_command, Player p_player) {
         printInvalidCommandInState();
     }
 
@@ -33,7 +48,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void createPlayers(Command p_command) throws InvalidCommand {
+    protected void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException {
         printInvalidCommandInState();
     }
 
@@ -41,7 +56,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+    protected void createPlayers(Command p_command, Player p_player) throws InvalidCommand {
         printInvalidCommandInState();
     }
 
@@ -49,7 +64,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+    protected void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
     }
 
@@ -57,7 +72,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
+    protected void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
     }
 
@@ -65,7 +80,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performLoadMap(Command p_command) throws InvalidCommand, InvalidMap {
+    protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand {
         printInvalidCommandInState();
     }
 
@@ -73,7 +88,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
+    protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
 
@@ -81,7 +96,7 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
+    protected void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
 
@@ -89,7 +104,15 @@ public class OrderExecutionPhase extends Phase{
      * {@inheritDoc}
      */
     @Override
-    protected void performMapEdit(Command p_command) throws IOException, InvalidCommand, InvalidMap {
+    protected void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
 }
