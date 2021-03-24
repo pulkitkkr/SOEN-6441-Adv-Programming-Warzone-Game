@@ -60,6 +60,7 @@ public class Airlift implements Card {
 			Integer l_updatedSourceArmies = l_sourceCountry.getD_armies() - this.d_numberOfArmies;
 			l_targetCountry.setD_armies(l_updatedTargetArmies);
 			l_sourceCountry.setD_armies(l_updatedSourceArmies);
+			d_player.removeCard("airlift");
 			this.setD_orderExecutionLog("Airlift Operation from "+ d_sourceCountryName+ "to "+d_targetCountryName+" successful!", "default");
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		}else{
