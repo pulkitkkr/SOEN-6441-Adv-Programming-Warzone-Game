@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
@@ -298,7 +297,7 @@ public class Player {
 				}
 			} else {
 				System.err.println("Invalid command given at this stage.");
-				throw new InvalidCommand("Invalid command given at this stage.");
+				// throw new InvalidCommand("Invalid command given at this stage.");
 			}
 			checkForMoreOrders();
 		}
@@ -466,45 +465,52 @@ public class Player {
 	}
 
 	/**
-	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
+	 * This method will assign any random card from the set of available cards to
+	 * the player once he conquers a territory.
 	 *
 	 * @return string selects random card from set of cards
 	 */
-	public void assignCard(){
+	public void assignCard() {
 		Random l_random = new Random();
 		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
-		//this.d_cardsOwnedByPlayer.add("airlift");
 		System.out.println("Card Assigned to the Player");
 	}
 
-	public void removeCard(String p_cardName){
+	public void removeCard(String p_cardName) {
 		this.d_cardsOwnedByPlayer.remove(p_cardName);
 	}
 
-	public boolean checkCardArguments(String p_commandEntered){
-		if(p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
+	public boolean checkCardArguments(String p_commandEntered) {
+		if (p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
 			return p_commandEntered.split(" ").length == 4;
-		}else if(p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade") || p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb") || p_commandEntered.split(" ")[0].equalsIgnoreCase("negotiate")) {
+		} else if (p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade")
+				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb")
+				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("negotiate")) {
 			return p_commandEntered.split(" ").length == 2;
-		}else {
+		} else {
 			return false;
 		}
 	}
 
-	public void handleCardCommands(String p_commandEntered, GameState p_gameState){
-		if(checkCardArguments(p_commandEntered)){
-			switch (p_commandEntered.split(" ")[0]){
-				case "airlift":
-					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2], Integer.parseInt(p_commandEntered.split(" ")[3]), this);
-					if(l_newOrder.checkValidOrder(p_gameState)){
-						this.order_list.add(l_newOrder);
-					}
-				case "blockade":
-				case "bomb":
-				case "negotiate":
+	public void handleCardCommands(String p_commandEntered, GameState p_gameState) {
+		if (checkCardArguments(p_commandEntered)) {
+			switch (p_commandEntered.split(" ")[0]) {
+			case "airlift":
+				Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
+						Integer.parseInt(p_commandEntered.split(" ")[3]), this);
+				if (l_newOrder.checkValidOrder(p_gameState)) {
+					this.order_list.add(l_newOrder);
+				}
+			case "blockade":
+				Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
+				if (l_blockadeOrder.checkValidOrder(p_gameState)) {
+					this.order_list.add(l_blockadeOrder);
+				}
+			case "bomb":
+			case "negotiate":
 
 			}
-		} else{
+		} else {
 			setD_playerLog("Invalid Card Command Passed! Check Arguments", "error");
 		}
 	}

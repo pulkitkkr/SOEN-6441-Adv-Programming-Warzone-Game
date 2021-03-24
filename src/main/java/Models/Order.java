@@ -38,4 +38,7 @@ public interface Order {
 	 * @param p_logType type of log : error, default
 	 */
 	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType);
+	
+	public String getD_cardName();
+
 }

@@ -1,14 +1,10 @@
 package Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Services.PlayerService;
 import Utils.CommonUtil;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import Constants.ApplicationConstants;
 
 /**
  * Concrete Command of Command pattern.
@@ -317,5 +313,10 @@ public class Advance implements Order {
 
 		PlayerService l_playerService = new PlayerService();
 		l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
+	}
+
+	@Override
+	public String getD_cardName() {
+		return "advance";
 	}
 }

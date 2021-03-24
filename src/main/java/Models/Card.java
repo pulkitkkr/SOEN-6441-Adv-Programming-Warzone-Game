@@ -7,5 +7,4 @@ public interface Card extends Order {
 
 	public Boolean checkValidOrder(GameState p_gameState);
 
-	public String getD_cardName();
 }

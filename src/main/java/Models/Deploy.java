@@ -106,4 +106,10 @@ public class Deploy implements Order {
 			System.out.println(p_orderExecutionLog);
 		}
 	}
+
+	@Override
+	public String getD_cardName() {
+		// TODO Auto-generated method stub
+		return "deploy";
+	}
 }

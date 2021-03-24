@@ -44,6 +44,6 @@ public class Diplomacy implements Card {
 
 	@Override
 	public String getD_cardName() {
-		return null;
+		return "diplomacy";
 	}
 }
