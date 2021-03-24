@@ -36,7 +36,7 @@ public class IssueOrderPhase extends Phase{
 
     @Override
     protected void performAdvance(String p_command, Player p_player) throws IOException {
-        p_player.createDeployOrder(p_command);
+        p_player.createAdvanceOrder(p_command, d_gameState);
         d_gameState.updateLog(p_player.getD_playerLog(), "effect");
         p_player.checkForMoreOrders();
     }

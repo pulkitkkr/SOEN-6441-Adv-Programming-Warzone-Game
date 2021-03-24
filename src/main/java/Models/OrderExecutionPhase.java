@@ -49,6 +49,7 @@ public class OrderExecutionPhase extends Phase{
                     if (l_continue.equalsIgnoreCase("N")) {
                         break;
                     } else if(l_continue.equalsIgnoreCase("Y")){
+                        d_playerService.assignArmies(d_gameState);
                         d_gameEngine.setIssueOrderPhase();
                     } else {
                         System.out.println("Invalid Input");
