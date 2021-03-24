@@ -53,6 +53,11 @@ public class Player {
 	boolean d_moreOrders;
 
 	/**
+	 * If the per turn card is assigned already.
+	 */
+	boolean d_oneCardPerTurn = false;
+
+	/**
 	 * String holding Log for individual Player methods.
 	 */
 	String d_playerLog;
@@ -207,6 +212,15 @@ public class Player {
 	 */
 	public void setD_moreOrders(boolean p_moreOrders) {
 		this.d_moreOrders = p_moreOrders;
+	}
+
+	/**
+	 * Sets the Per Turn Card allocated bool.
+	 *
+	 * @param p_value Bool to Set.
+	 */
+	public void setD_oneCardPerTurn(Boolean p_value){
+		this.d_oneCardPerTurn = p_value;
 	}
 
 	/**
@@ -471,17 +485,34 @@ public class Player {
 	 * @return string selects random card from set of cards
 	 */
 	public void assignCard() {
-		Random l_random = new Random();
-		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
-		System.out.println("Card Assigned to the Player");
+		if (!d_oneCardPerTurn) {
+			Random l_random = new Random();
+			this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+			this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
+			this.setD_oneCardPerTurn(true);
+		}else{
+			this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
+		}
 	}
 
-	public void removeCard(String p_cardName) {
+
+	/**
+	 * Remove the card which is used.
+	 *
+	 * @param p_cardName name of the card to remove.
+	 */
+	public void removeCard(String p_cardName){
 		this.d_cardsOwnedByPlayer.remove(p_cardName);
 	}
 
-	public boolean checkCardArguments(String p_commandEntered) {
-		if (p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
+	/**
+	 * Validates the card arguments.
+	 *
+	 * @param p_commandEntered command of card
+	 * @return bool if valid
+	 */
+	public boolean checkCardArguments(String p_commandEntered){
+		if(p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
 			return p_commandEntered.split(" ").length == 4;
 		} else if (p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade")
 				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb")
@@ -495,23 +526,26 @@ public class Player {
 	public void handleCardCommands(String p_commandEntered, GameState p_gameState) {
 		if (checkCardArguments(p_commandEntered)) {
 			switch (p_commandEntered.split(" ")[0]) {
-			case "airlift":
-				Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
-						Integer.parseInt(p_commandEntered.split(" ")[3]), this);
-				if (l_newOrder.checkValidOrder(p_gameState)) {
-					this.order_list.add(l_newOrder);
-				}
-			case "blockade":
-				Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
-				if (l_blockadeOrder.checkValidOrder(p_gameState)) {
-					this.order_list.add(l_blockadeOrder);
-				}
-			case "bomb":
-			case "negotiate":
-
+				case "airlift":
+					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
+							Integer.parseInt(p_commandEntered.split(" ")[3]), this);
+					if (l_newOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_newOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+				case "blockade":
+					Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
+					if (l_blockadeOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_blockadeOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+				case "bomb":
+				case "negotiate":
 			}
-		} else {
-			setD_playerLog("Invalid Card Command Passed! Check Arguments", "error");
+		} else{
+			this.setD_playerLog("Invalid Card Command Passed! Check Arguments!", "error");
 		}
 	}
 }

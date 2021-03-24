@@ -352,9 +352,10 @@ public class PlayerService {
 	 *
 	 * @param p_playersList players involved in game
 	 */
-	public void resetPlayersOrdersFlag(List<Player> p_playersList) {
+	public void resetPlayersFlag(List<Player> p_playersList) {
 		for (Player l_player : p_playersList) {
 			l_player.setD_moreOrders(true);
+			l_player.setD_oneCardPerTurn(false);
 		}
 	}
 

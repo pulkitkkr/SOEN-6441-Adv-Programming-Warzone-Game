@@ -51,6 +51,7 @@ public class Blockade implements Card {
 
 			// change territory to neutral territory
 			d_playerInitiator.getD_coutriesOwned().remove(l_targetCountryID);
+			d_playerInitiator.removeCard("blockade");
 			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName()
 					+ " is executing defensive blockade on Country :  " + l_targetCountryID.getD_countryName()
 					+ " with armies :  " + l_targetCountryID.getD_armies(), "default");
@@ -86,16 +87,16 @@ public class Blockade implements Card {
 		// It make sure that any attacks, airlifts, or other actions must happen before
 		// the country changes into a neutral.
 		for (int i = 0; i < d_playerInitiator.getD_ordersToExecute().size(); i++) {
-			Order order = d_playerInitiator.getD_ordersToExecute().get(i);
-			if (ApplicationConstants.BLOCKADEVALIDATION.contains(order.getOrderName())) {
+			Order l_order = d_playerInitiator.getD_ordersToExecute().get(i);
+			if (ApplicationConstants.BLOCKADEVALIDATION.contains(l_order.getOrderName())) {
 				this.setD_orderExecutionLog(this.currentOrder() + " is not executed because" + "order: "
-						+ order.getOrderName()
+						+ l_order.getOrderName()
 						+ " is pending. VALIDATES :- Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
 						+ " This particular card will have no affect and you don't get the card back.", "error");
+
 				return false;
 			}
 		}
-
 		return true;
 	}
 
