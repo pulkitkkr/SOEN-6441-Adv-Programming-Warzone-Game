@@ -62,7 +62,8 @@ public class Airlift implements Card {
 			this.setD_orderExecutionLog("Airlift Operation from "+ d_sourceCountryName+ " to "+d_targetCountryName+" successful!", "default");
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		} else {
-			this.setD_orderExecutionLog("Cannot Complete Execution of given Airlift Command!", "error");
+			//this.setD_orderExecutionLog("Cannot Complete Execution of given Airlift Command!", "error");
+			System.out.println(p_gameState.getRecentLog());
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		}
 	}
@@ -143,7 +144,7 @@ public class Airlift implements Card {
 	 * @return advance order command
 	 */
 	private String currentOrder() {
-		return "Advance Order : " + "advance" + " " + this.d_sourceCountryName + " " + this.d_targetCountryName + " "
+		return "Airlift Order : " + "airlift" + " " + this.d_sourceCountryName + " " + this.d_targetCountryName + " "
 				+ this.d_numberOfArmies;
 	}
 
@@ -159,10 +160,12 @@ public class Airlift implements Card {
 		Country l_targetCountry = p_GameState.getD_map().getCountryByName(d_targetCountryName);
 		if (l_sourceCountry == null) {
 			this.setD_orderExecutionLog("Invalid Source Country! Doesn't exist on the map!", "error");
+			p_GameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		if (l_targetCountry == null) {
 			this.setD_orderExecutionLog("Invalid Target Country! Doesn't exist on the map!", "error");
+			p_GameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		return true;
