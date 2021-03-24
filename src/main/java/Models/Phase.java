@@ -44,6 +44,7 @@ public abstract class Phase {
      * Constructor to initialize the value of current game engine.
      *
      * @param p_gameEngine game engine instance to update state
+     * @param p_gameState game engine instance to game state
      */
     public Phase(GameEngine p_gameEngine, GameState p_gameState){
         d_gameEngine = p_gameEngine;
@@ -81,6 +82,7 @@ public abstract class Phase {
      * handle command methods handles all state specific commands that can be entered by user.
      *
      * @param p_enteredCommand command entered by the user in CLI
+     * @param p_player instance to Player Object
      */
     public void handleCommand(String p_enteredCommand, Player p_player) throws InvalidMap, InvalidCommand, IOException {
         commandHandler(p_enteredCommand, p_player);
@@ -154,12 +156,38 @@ public abstract class Phase {
         }
     }
 
+    /**
+     * this method handles the show map command.
+     *
+     * @param p_command command entered by user
+     * @param p_player instance of player object
+     * @throws InvalidCommand
+     * @throws IOException
+     * @throws InvalidMap
+     */
     protected abstract void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
 
+    /**
+     * this method handles the advance order in game play.
+     *
+     * @param p_command  command entered by user
+     * @param p_player instance of player object
+     * @throws IOException
+     */
     protected abstract void performAdvance(String p_command, Player p_player) throws IOException;
 
+    /**
+     * This is the main method executed on phase change.
+     */
     public abstract void initPhase();
 
+    /**
+     * This method handles the deploy order in gameplay.
+     *
+     * @param p_command command entered by user
+     * @param p_player instance of player object
+     * @throws IOException
+     */
     protected abstract void performCreateDeploy(String p_command, Player p_player) throws IOException;
 
     /**
@@ -175,6 +203,7 @@ public abstract class Phase {
      * players.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
      * @throws IOException    indicates failure in I/O operation
      */
@@ -186,6 +215,7 @@ public abstract class Phase {
      * arguments and redirecting control to model for adding or removing players.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
      */
     protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
@@ -196,6 +226,7 @@ public abstract class Phase {
      * required arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
      * @throws InvalidMap indicates map is invalid
      * @throws IOException handles File I/O Exception
@@ -207,6 +238,7 @@ public abstract class Phase {
      * required arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidCommand indicates command is invalid
      * @throws InvalidMap indicates map is invalid
      * @throws IOException handles File I/O Exception
@@ -219,6 +251,7 @@ public abstract class Phase {
      * required arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidCommand indicates when command is invalid
      * @throws InvalidMap indicates when map is invalid
      */
@@ -229,6 +262,7 @@ public abstract class Phase {
      * arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidMap indicates Map Object Validation failure
      * @throws InvalidCommand indicates when command is invalid
      */
@@ -239,6 +273,7 @@ public abstract class Phase {
      * arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws InvalidMap     indicates when map is invalid
      * @throws InvalidCommand indicates when command is invalid
      */
@@ -249,6 +284,7 @@ public abstract class Phase {
      * required arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws IOException    indicates failure in I/O operation
      * @throws InvalidCommand indicates command is invalid
      * @throws InvalidMap     indicates map is invalid
@@ -261,6 +297,7 @@ public abstract class Phase {
      * arguments and redirecting control to model for actual processing.
      *
      * @param p_command command entered by the user on CLI
+     * @param p_player instance of Player Object
      * @throws IOException indicates when failure in I/O operation
      * @throws InvalidMap indicates Map Object Validation failure
      * @throws InvalidCommand indicates when command is invalid

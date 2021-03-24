@@ -20,6 +20,7 @@ public class IssueOrderPhase extends Phase{
      * Constructor to initialize the value of current game engine.
      *
      * @param p_gameEngine game engine instance to update state
+     * @param p_gameState instance of current game state in GameEngine
      */
     public IssueOrderPhase(GameEngine p_gameEngine, GameState p_gameState) {
         super(p_gameEngine, p_gameState);
