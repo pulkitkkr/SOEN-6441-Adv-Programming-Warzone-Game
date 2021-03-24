@@ -313,7 +313,7 @@ public class Player {
 	}
 	
 	/**
-	 * Issues order for player
+	 * Issues order for player.
 	 * 
 	 * @param p_issueOrderPhase current phase of the game
 	 * @return
