@@ -33,7 +33,14 @@ public class GameEngine {
 	}
 
 	public void setIssueOrderPhase(){
+		this.setD_gameEngineLog("Issue Order Phase", "phase");
 		setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
+		getD_CurrentPhase().initPhase();
+	}
+
+	public void setOrderExecutionPhase(){
+		this.setD_gameEngineLog("Order Execution Phase", "phase");
+		setD_CurrentPhase(new OrderExecutionPhase(this, d_gameState));
 		getD_CurrentPhase().initPhase();
 	}
 

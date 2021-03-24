@@ -291,7 +291,7 @@ public class StartUpPhase extends Phase{
     /**
      * {@inheritDoc}
      */
-    public void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException{
+    public void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand{
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
@@ -299,7 +299,6 @@ public class StartUpPhase extends Phase{
             d_playerService.assignCountries(d_gameState);
             d_playerService.assignColors(d_gameState);
             d_playerService.assignArmies(d_gameState);
-            d_gameEngine.setD_gameEngineLog("Issue Order Phase", "phase");
             d_gameEngine.setIssueOrderPhase();
 
 

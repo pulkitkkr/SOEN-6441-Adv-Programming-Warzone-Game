@@ -71,6 +71,8 @@ public class IssueOrderPhase extends Phase{
                 }
             }
         } while (d_playerService.checkForMoreOrders(d_gameState.getD_players()));
+
+        d_gameEngine.setOrderExecutionPhase();
     }
 
     private void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{

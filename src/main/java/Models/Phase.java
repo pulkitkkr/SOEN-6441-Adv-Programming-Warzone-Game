@@ -169,27 +169,6 @@ public abstract class Phase {
         d_gameEngine.setD_gameEngineLog("Invalid Command in State", "effect");
     }
 
-
-
-    /**
-     * Invokes order execution logic for all unexecuted orders.
-     */
-    protected void executeOrders() {
-        // Executing orders
-        d_gameEngine.setD_gameEngineLog("\n********** Starting Execution Of Orders ***********", "start");
-        while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
-            for (Player l_player : d_gameState.getD_players()) {
-                Order l_order = l_player.next_order();
-                if (l_order != null) {
-                    l_order.printOrder();
-                    d_gameState.updateLog(l_order.orderExecutionLog(), "effect");
-                    l_order.execute(d_gameState);
-                }
-            }
-        }
-        d_playerService.resetPlayersOrdersFlag(d_gameState.getD_players());
-    }
-
     /**
      * Basic validation of <strong>assigncountries</strong> for checking required
      * arguments and redirecting control to model for assigning countries to
