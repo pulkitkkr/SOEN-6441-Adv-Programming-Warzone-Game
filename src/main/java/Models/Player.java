@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-import Exceptions.InvalidCommand;
 import Constants.ApplicationConstants;
-import Utils.Command;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
 import Utils.CommonUtil;
-import Views.MapView;
 
 /**
  * This class depicts player's information and services.
@@ -258,50 +256,11 @@ public class Player {
 	}
 
 	/**
-	 * Receiver of command pattern :-Issue order which takes order as an input and
-	 * add it to player's order list.
-	 *
-	 * @param p_gameState Current state of the game
-	 * @throws IOException exception in reading inputs from user
-	 * @throws InvalidCommand Invalid Command
-	 */
-	public void issue_order(GameState p_gameState) throws IOException, InvalidCommand{
-    
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nPlease enter command to issue order for player : " + this.getPlayerName()
-				+ " or give showmap command to view current state of the game.");
-		String l_commandEntered = l_reader.readLine();
-		Command l_command = new Command(l_commandEntered);
-		String l_order = l_command.getRootCommand();
-		p_gameState.updateLog("(Player: "+this.getPlayerName()+") "+ l_commandEntered, "order");
-		if ("showmap".equalsIgnoreCase(l_order)) {
-			MapView l_mapView = new MapView(p_gameState);
-			l_mapView.showMap();
-			this.issue_order(p_gameState);
-		} else {
-			if ("deploy".equalsIgnoreCase(l_order)) {
-				createDeployOrder(l_commandEntered);
-				p_gameState.updateLog(getD_playerLog(), "effect");
-			} else if ("advance".equalsIgnoreCase(l_order)) {
-				createAdvanceOrder(l_commandEntered, p_gameState);
-				p_gameState.updateLog(getD_playerLog(), "effect");
-			} else if (ApplicationConstants.CARDS.contains(l_order)) {
-				// card orders capture method invocation
-			} else {
-				System.err.println("Invalid command given at this stage.");
-				throw new InvalidCommand("Invalid command given at this stage.");
-			}
-			checkForMoreOrders();
-		}
-
-	}
-
-	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
 	 *
 	 * @throws IOException exception in reading inputs from user
 	 */
-	private void checkForMoreOrders() throws IOException {
+	void checkForMoreOrders() throws IOException {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
 				+ " in next turn ? \nPress Y for Yes or N for No");
@@ -351,6 +310,18 @@ public class Player {
 	 */
 	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
 		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
+	}
+	
+	/**
+	 * Issues order for player.
+	 * 
+	 * @param p_issueOrderPhase current phase of the game
+	 * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+	 */
+	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
+		p_issueOrderPhase.askForOrder(this);
 	}
 
 	/**
