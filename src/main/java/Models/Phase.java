@@ -61,6 +61,7 @@ public abstract class Phase {
     /**
      * setD_gameState is a setter method for current game state.
      *
+     * @param p_gameState game state instance to set for phase
      */
     public void setD_gameState(GameState p_gameState) {
         d_gameState = p_gameState;
