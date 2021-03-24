@@ -289,7 +289,7 @@ public class MapService {
 				p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
 				this.setD_MapServiceLog("Continent "+ p_argument.split(" ")[0]+ " removed successfully!", p_gameState);
 			} else {
-				throw new InvalidMap("Continent "+p_argument.split(" ")[0]+" couldn't be added/removed. Changes are not made");
+				throw new InvalidMap("Continent "+p_argument.split(" ")[0]+" couldn't be added/removed. Changes are not made due to Invalid Command Passed.");
 			}
 		} catch (InvalidMap | NumberFormatException l_e) {
 			this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
