@@ -316,7 +316,7 @@ public class Advance implements Order {
 	}
 
 	@Override
-	public String getD_cardName() {
+	public String getOrderName() {
 		return "advance";
 	}
 }

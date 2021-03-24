@@ -43,8 +43,13 @@ public class Bomb implements Card {
 		return null;
 	}
 
+	/**
+	 * Return order name.
+	 * 
+	 * @return String
+	 */
 	@Override
-	public String getD_cardName() {
+	public String getOrderName() {
 		return "bomb";
 	}
 }

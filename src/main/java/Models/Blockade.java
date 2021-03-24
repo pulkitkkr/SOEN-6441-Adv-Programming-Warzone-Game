@@ -3,10 +3,20 @@ package Models;
 import Constants.ApplicationConstants;
 import Utils.CommonUtil;
 
+/**
+ * Implementation of blockade order. The blockade cards change one of your
+ * territories to a neutral and tripled the number of armies on that territory.
+ */
 public class Blockade implements Card {
 
+	/**
+	 * Player owning blockade card.
+	 */
 	Player d_playerInitiator;
 
+	/**
+	 * name of the target country.
+	 */
 	String d_targetCountryID;
 
 	/**
@@ -14,15 +24,22 @@ public class Blockade implements Card {
 	 */
 	String d_orderExecutionLog;
 
-	public Blockade() {
-
-	}
-
+	/**
+	 * The constructor receives all the parameters necessary to implement the order.
+	 * 
+	 * @param p_playerInitiator Player
+	 * @param p_targetCountry   target country ID
+	 */
 	public Blockade(Player p_playerInitiator, String p_targetCountry) {
 		this.d_playerInitiator = p_playerInitiator;
 		this.d_targetCountryID = p_targetCountry;
 	}
 
+	/**
+	 * Executes the Blockade order.
+	 * 
+	 * @param p_gameState current state of the game.
+	 */
 	@Override
 	public void execute(GameState p_gameState) {
 		if (valid()) {
@@ -32,20 +49,28 @@ public class Blockade implements Card {
 					: l_targetCountryID.getD_armies();
 			l_targetCountryID.setD_armies(l_noOfArmiesOnTargetCountry * 3);
 
-			// change territory to neutral
+			// change territory to neutral territory
 			d_playerInitiator.getD_coutriesOwned().remove(l_targetCountryID);
 			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName()
-					+ " is executing defensive blockade on Country : " + l_targetCountryID.getD_countryName()
-					+ " with armies : " + l_targetCountryID.getD_armies(), "default");
+					+ " is executing defensive blockade on Country :  " + l_targetCountryID.getD_countryName()
+					+ " with armies :  " + l_targetCountryID.getD_armies(), "default");
 			p_gameState.updateLog(orderExecutionLog(), "effect");
 
 		}
-
 	}
 
+	/**
+	 * Validates whether target country belongs to the Player who executed the order
+	 * or not and also make sure that any attacks, airlifts, or other actions must
+	 * happen before the country changes into a neutral.
+	 * 
+	 * @return boolean if given advance command is valid or not.
+	 */
 	@Override
 	public boolean valid() {
 
+		// Validates whether target country belongs to the Player who executed the order
+		// or not
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryID)).findFirst()
 				.orElse(null);
@@ -58,15 +83,15 @@ public class Blockade implements Card {
 			return false;
 		}
 
+		// It make sure that any attacks, airlifts, or other actions must happen before
+		// the country changes into a neutral.
 		for (int i = 0; i < d_playerInitiator.getD_ordersToExecute().size(); i++) {
 			Order order = d_playerInitiator.getD_ordersToExecute().get(i);
-			System.out.println("------------" + order.getD_cardName());
-
-			if (ApplicationConstants.BLOCKADEVALIDATION.contains(order.getD_cardName())) {
-				this.setD_orderExecutionLog(this.currentOrder() + " is not executed because" + "order:- "
-						+ order.getD_cardName()
-						+ "is pending. Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
-						+ " The card will have no affect and you don't get the card back.", "error");
+			if (ApplicationConstants.BLOCKADEVALIDATION.contains(order.getOrderName())) {
+				this.setD_orderExecutionLog(this.currentOrder() + " is not executed because" + "order: "
+						+ order.getOrderName()
+						+ " is pending. VALIDATES :- Any attacks, airlifts, or other actions must happen before the country changes into a neutral "
+						+ " This particular card will have no affect and you don't get the card back.", "error");
 				return false;
 			}
 		}
@@ -74,8 +99,10 @@ public class Blockade implements Card {
 		return true;
 	}
 
+	/**
+	 * Print Blockade order.
+	 */
 	public void printOrder() {
-
 		this.d_orderExecutionLog = "----------Blockade card order issued by player "
 				+ this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
 				+ "Creating a defensive blockade with armies = " + "on country ID" + this.d_targetCountryID;
@@ -98,6 +125,12 @@ public class Blockade implements Card {
 		}
 	}
 
+	/**
+	 * Pre-validation of card type order.
+	 * 
+	 * @param p_gameState Gamestate
+	 * @return true or false
+	 */
 	@Override
 	public Boolean checkValidOrder(GameState p_gameState) {
 		Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryID);
@@ -108,8 +141,13 @@ public class Blockade implements Card {
 		return true;
 	}
 
+	/**
+	 * Return order name.
+	 * 
+	 * @return String
+	 */
 	@Override
-	public String getD_cardName() {
+	public String getOrderName() {
 		return "blockade";
 	}
 
@@ -122,6 +160,11 @@ public class Blockade implements Card {
 		return "Blockade card order : " + "blockade" + " " + this.d_targetCountryID;
 	}
 
+	/**
+	 * Execution log.
+	 * 
+	 * @return String return execution log
+	 */
 	public String orderExecutionLog() {
 		return this.d_orderExecutionLog;
 	}
