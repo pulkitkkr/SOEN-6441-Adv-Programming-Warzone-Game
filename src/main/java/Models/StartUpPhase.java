@@ -300,25 +300,6 @@ public class StartUpPhase extends Phase{
             d_playerService.assignColors(d_gameState);
             d_playerService.assignArmies(d_gameState);
             d_gameEngine.setIssueOrderPhase();
-
-
-//            while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-//                d_gameEngine.setD_gameEngineLog("\n********Starting Main Game Loop***********\n", "start");
-//
-//                // Assigning armies to players
-//
-//                issueOrders();
-//                executeOrders();
-//
-//                MapView l_map_view = new MapView(d_gameState);
-//                l_map_view.showMap();
-//
-//                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-//                BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-//                String l_continue = l_reader.readLine();
-//                if (l_continue.equalsIgnoreCase("N"))
-//                    break;
-//            }
         } else {
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
         }
