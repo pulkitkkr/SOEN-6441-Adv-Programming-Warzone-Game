@@ -52,7 +52,6 @@ public class Player {
 	 */
 	boolean d_moreOrders;
 
-	private Card d_card;
 	Vector<Card> d_deckOfCards;
 
 	boolean d_countryConqueredAfterBattle;
@@ -328,7 +327,7 @@ public class Player {
 	}
 
 	public boolean validateIfPlayerHaveAnyCard() {
-		if (!CommonUtil.isNull(d_deckOfCards)) {
+		if (!CommonUtil.isCollectionEmpty(d_deckOfCards)) {
 			return true;
 		}
 		return false;

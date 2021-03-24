@@ -6,6 +6,10 @@ public class Blockade implements Card {
 
 	String d_targetCountry;
 
+	public Blockade() {
+
+	}
+
 	public Blockade(Player p_playerInitiator, String p_targetCountry) {
 		this.d_playerInitiator = p_playerInitiator;
 		this.d_targetCountry = p_targetCountry;
@@ -27,5 +31,9 @@ public class Blockade implements Card {
 	public void printCard() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String toString() {
+		return "blockade";
 	}
 }

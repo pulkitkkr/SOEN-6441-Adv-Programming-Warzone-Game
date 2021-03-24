@@ -1,12 +1,10 @@
-/**
- * 
- */
 package Models;
 
 /**
  * This model class manages all the cards owned by the player.
  */
-public interface Card {	
+public interface Card {
+
 	/**
 	 * Method that will be called by the Receiver to execute the card logic.
 	 * 
@@ -24,4 +22,6 @@ public interface Card {
 	 * Print card information.
 	 */
 	public void printCard();
+	
+	public String toString();
 }

@@ -14,7 +14,7 @@ public class Bomb implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		
+
 	}
 
 	/**
@@ -34,6 +34,8 @@ public class Bomb implements Card {
 
 	}
 
-
+	public String toString() {
+		return "bomb";
+	}
 
 }

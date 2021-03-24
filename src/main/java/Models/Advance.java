@@ -4,6 +4,7 @@ import Services.PlayerService;
 import Utils.CommonUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -72,6 +73,8 @@ public class Advance implements Order {
 			Integer l_sourceArmiesToUpdate = l_sourceCountry.getD_armies() - this.d_numberOfArmiesToPlace;
 			l_sourceCountry.setD_armies(l_sourceArmiesToUpdate);
 
+			// testing
+			l_targetCountry.setD_armies(0);
 			if (l_playerOfTargetCountry.getPlayerName().equalsIgnoreCase(this.d_playerInitiator.getPlayerName())) {
 				deployArmiesToTarget(l_targetCountry);
 			} else if (l_targetCountry.getD_armies() == 0) {
@@ -326,8 +329,27 @@ public class Advance implements Order {
 		// check if any player conquered the country
 		// if yes then assign one card to that player
 		Random l_random = new Random();
+		String card1 = ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
 
-		Card card = (Card) ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
-		d_playerInitiator.assignCard(card);
+		List<Card> deckOfCards = new ArrayList<Card>();
+		Card blockade = new Blockade();
+		deckOfCards.add(blockade);
+		Card diploamcy = new Diplomacy();
+		deckOfCards.add(diploamcy);
+		Card bomb = new Bomb();
+		deckOfCards.add(bomb);
+		Card airlift = new Airlift();
+		deckOfCards.add(airlift);
+
+		for (int i = 0; i < ApplicationConstants.SIZE; i++) {
+			System.out.println(deckOfCards.get(i).toString());
+			if (card1.equalsIgnoreCase(deckOfCards.get(i).toString())) {
+				d_playerInitiator.assignCard(deckOfCards.get(i));
+				System.out.println("assigned card to player:- " + d_playerInitiator.getPlayerName() + "card is:- "
+						+ deckOfCards.get(i));
+			}
+		}
+
 	}
+
 }

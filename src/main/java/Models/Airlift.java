@@ -14,7 +14,7 @@ public class Airlift implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		
+
 	}
 
 	/**
@@ -31,9 +31,11 @@ public class Airlift implements Card {
 	 */
 	@Override
 	public void printCard() {
-		
+
 	}
 
-
+	public String toString() {
+		return "airlift";
+	}
 
 }

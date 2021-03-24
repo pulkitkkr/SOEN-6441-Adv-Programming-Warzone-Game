@@ -14,7 +14,7 @@ public class Diplomacy implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		
+
 	}
 
 	/**
@@ -22,7 +22,7 @@ public class Diplomacy implements Card {
 	 */
 	@Override
 	public boolean valid() {
-		
+
 		return false;
 	}
 
@@ -31,9 +31,11 @@ public class Diplomacy implements Card {
 	 */
 	@Override
 	public void printCard() {
-		
+
 	}
 
-
+	public String toString() {
+		return "diplomacy";
+	}
 
 }
