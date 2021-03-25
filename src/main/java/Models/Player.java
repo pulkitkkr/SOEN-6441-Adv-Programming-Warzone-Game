@@ -201,6 +201,8 @@ public class Player {
 
 	/**
 	 * Countries player cannot issue an order on.
+	 *
+	 * @param p_playerNegotiation player to negotiate with.
 	 */
 	public void addPlayerNegotiation(Player p_playerNegotiation) {
 		this.d_negotiatedWith.add(p_playerNegotiation);

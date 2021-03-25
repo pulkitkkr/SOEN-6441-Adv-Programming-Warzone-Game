@@ -17,6 +17,7 @@ public interface Order {
 	 * Validates order.
 	 * 
 	 * @return boolean true or false
+	 * @param p_gameState GameState Instance
 	 */
 	public boolean valid(GameState p_gameState);
 
