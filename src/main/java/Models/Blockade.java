@@ -109,7 +109,7 @@ public class Blockade implements Card {
 	public void printOrder() {
 		this.d_orderExecutionLog = "----------Blockade card order issued by player "
 				+ this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
-				+ "Creating a defensive blockade with armies = " + "on country ID" + this.d_targetCountryID;
+				+ "Creating a defensive blockade with armies = " + "on country ID: " + this.d_targetCountryID;
 		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
 
 	}
