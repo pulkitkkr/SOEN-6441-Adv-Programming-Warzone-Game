@@ -43,7 +43,8 @@ public class Bomb implements Card {
 		if (valid()) {
 			Country l_targetCountryID = p_gameState.getD_map().getCountryByName(d_targetCountryID);
 			Integer l_noOfArmiesOnTargetCountry = l_targetCountryID.getD_armies() == 0 ? 1 : l_targetCountryID.getD_armies();
-			l_targetCountryID.setD_armies(l_noOfArmiesOnTargetCountry / 2);
+			Integer l_newArmies = (int)Math.floor(l_noOfArmiesOnTargetCountry / 2);
+			l_targetCountryID.setD_armies(l_newArmies);
 			d_playerInitiator.removeCard("bomb");
 			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName()
 					+ " is executing Bomb card on country :  " + l_targetCountryID.getD_countryName()

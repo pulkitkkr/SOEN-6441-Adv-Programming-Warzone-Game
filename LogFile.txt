@@ -211,3 +211,5 @@ Log: Continent Northern-America added successfully!
 Log: Country Canada added successfully!
 Log: Country Alaska added successfully!
 Log: Neighbour Pair Canada Alaska added successfully!
+Log: 
+Player : Prime is executing Bomb card on country :  Norway with armies :  20. New armies: 10
