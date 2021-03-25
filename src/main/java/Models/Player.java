@@ -1,4 +1,4 @@
-package Models;
+ package Models;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,6 +65,11 @@ public class Player {
 	 * Name of the card Player owns.
 	 */
 	List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
+
+	/**
+	 * List of players to not attack if negotiated with.
+	 */
+	List<Player> d_negotiatedWith = new ArrayList<Player>();
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -192,6 +197,13 @@ public class Player {
 	 */
 	public void setD_noOfUnallocatedArmies(Integer p_numberOfArmies) {
 		this.d_noOfUnallocatedArmies = p_numberOfArmies;
+	}
+
+	/**
+	 * Countries player cannot issue an order on.
+	 */
+	public void addPlayerNegotiation(Player p_playerNegotiation) {
+		this.d_negotiatedWith.add(p_playerNegotiation);
 	}
 
 	/**
@@ -474,6 +486,28 @@ public class Player {
 	}
 
 	/**
+	 * Checks if the order issued on country is possible or not.
+	 *
+	 * @param p_targetCountryName country to attack
+	 * @return bool if it can attack
+	 */
+	public boolean negotiationValidation(String p_targetCountryName){
+		boolean l_canAttack = true;
+		for(Player p: d_negotiatedWith){
+			if (p.getCountryNames().contains(p_targetCountryName))
+				l_canAttack = false;
+		}
+		return l_canAttack;
+	}
+
+	/**
+	 * Clears all negotiation from the previous turn.
+	 */
+	public void resetNegotiation(){
+		d_negotiatedWith.clear();
+	}
+
+	/**
 	 * Validates the card arguments.
 	 *
 	 * @param p_commandEntered command of card
@@ -526,6 +560,12 @@ public class Player {
 					}
 					break;
 				case "negotiate":
+					Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1],this);
+					if (l_negotiateOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_negotiateOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
 					break;
 				default:
 					this.setD_playerLog("Invalid Command!", "error");

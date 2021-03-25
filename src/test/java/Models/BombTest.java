@@ -138,12 +138,13 @@ public class BombTest {
 	 */
 	@Test
 	public void testValidBombOrder() {
+
 		// Player cannot bomb own territory
-		boolean l_actualBoolean = d_bombOrder1.valid();
+		boolean l_actualBoolean = d_bombOrder1.valid(d_gameState);
 		assertTrue(l_actualBoolean);
 
 		// fail if target country is owned by player
-		boolean l_actualBoolean1 = d_bombOrder2.valid();
+		boolean l_actualBoolean1 = d_bombOrder2.valid(d_gameState);
 		assertFalse(l_actualBoolean1);
 	}
 

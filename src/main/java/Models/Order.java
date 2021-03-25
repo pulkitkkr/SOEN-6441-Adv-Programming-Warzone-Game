@@ -18,7 +18,7 @@ public interface Order {
 	 * 
 	 * @return boolean true or false
 	 */
-	public boolean valid();
+	public boolean valid(GameState p_gameState);
 
 	/**
 	 * Print order information.

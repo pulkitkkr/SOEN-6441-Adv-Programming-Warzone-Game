@@ -356,6 +356,7 @@ public class PlayerService {
 		for (Player l_player : p_playersList) {
 			l_player.setD_moreOrders(true);
 			l_player.setD_oneCardPerTurn(false);
+			l_player.resetNegotiation();
 		}
 	}
 
@@ -369,9 +370,13 @@ public class PlayerService {
 		System.out.println(p_playerLog);
 	}
 
-//	public void resetPlayerOrder(List<Player> p_playerList){
-//		for(Player p_player: p_playerList){
-//			p_player.setD_moreOrders(true);
-//		}
-//	}
+	/**
+	 * Find Player By Name.
+	 *
+	 * @param p_playerName player name to be found
+	 * @return p_player object
+	 */
+	public Player findPlayerByName(String p_playerName, GameState p_gameState) {
+		return p_gameState.getD_players().stream().filter(l_player -> l_player.getPlayerName().equals(p_playerName)).findFirst().orElse(null);
+	}
 }

@@ -41,7 +41,7 @@ public class Bomb implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		if (valid()) {
+		if (valid(p_gameState)) {
 			Country l_targetCountryID = p_gameState.getD_map().getCountryByName(d_targetCountryID);
 			Integer l_noOfArmiesOnTargetCountry = l_targetCountryID.getD_armies() == 0 ? 1
 					: l_targetCountryID.getD_armies();
@@ -73,7 +73,7 @@ public class Bomb implements Card {
 	 * @return boolean if given advance command is valid or not.
 	 */
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryID)).findFirst()
 				.orElse(null);
@@ -83,6 +83,13 @@ public class Bomb implements Card {
 			this.setD_orderExecutionLog(this.currentOrder() + " is not executed since Target country : "
 					+ this.d_targetCountryID + " given in bomb command is owned by the player : "
 					+ d_playerInitiator.getPlayerName() + " VALIDATES:- You cannot bomb your own territory!", "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
+			return false;
+		}
+
+		if(!d_playerInitiator.negotiationValidation(this.d_targetCountryID)){
+			this.setD_orderExecutionLog(this.currentOrder() + " is not executed as "+ d_playerInitiator.getPlayerName()+ " has negotiation pact with the target country's player!", "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		return true;

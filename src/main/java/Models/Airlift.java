@@ -51,7 +51,7 @@ public class Airlift implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		if (valid()) {
+		if (valid(p_gameState)) {
 			Country l_sourceCountry = p_gameState.getD_map().getCountryByName(d_sourceCountryName);
 			Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryName);
 			Integer l_updatedTargetArmies = l_targetCountry.getD_armies() + this.d_numberOfArmies;
@@ -71,7 +71,7 @@ public class Airlift implements Card {
 	 * Checks the validation before executing orders.
 	 */
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
 		Country l_sourceCountry = d_player.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_sourceCountryName.toString()))
 				.findFirst().orElse(null);
@@ -80,6 +80,7 @@ public class Airlift implements Card {
 					this.currentOrder() + " is not executed since Source country : " + this.d_sourceCountryName
 							+ " given in card order does not belongs to the player : " + d_player.getPlayerName(),
 					"error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		Country l_targetCountry = d_player.getD_coutriesOwned().stream()
@@ -90,12 +91,14 @@ public class Airlift implements Card {
 					this.currentOrder() + " is not executed since Target country : " + this.d_sourceCountryName
 							+ " given in card order does not belongs to the player : " + d_player.getPlayerName(),
 					"error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		if (this.d_numberOfArmies > l_sourceCountry.getD_armies()) {
 			this.setD_orderExecutionLog(this.currentOrder()
 					+ " is not executed as armies given in card order exceeds armies of source country : "
 					+ this.d_sourceCountryName, "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		return true;

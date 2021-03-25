@@ -62,7 +62,7 @@ public class Advance implements Order {
 
 	@Override
 	public void execute(GameState p_gameState) {
-		if (valid()) {
+		if (valid(p_gameState)) {
 			Player l_playerOfTargetCountry = getPlayerOfTargetCountry(p_gameState);
 			Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryName);
 			Country l_sourceCountry = p_gameState.getD_map().getCountryByName(d_sourceCountryName);
@@ -155,7 +155,6 @@ public class Advance implements Order {
 		this.handleSurvivingArmies(l_attackerArmiesLeft, l_defenderArmiesLeft, p_sourceCountry, p_targetCountry,
 				p_playerOfTargetCountry);
 	}
-
 	/**
 	 * Process surviving armies and transferring ownership of countries.
 	 * 
@@ -199,7 +198,7 @@ public class Advance implements Order {
 	 */
 
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_sourceCountryName.toString()))
 				.findFirst().orElse(null);
@@ -207,12 +206,14 @@ public class Advance implements Order {
 			this.setD_orderExecutionLog(this.currentOrder() + " is not executed since Source country : "
 					+ this.d_sourceCountryName + " given in advance command does not belongs to the player : "
 					+ d_playerInitiator.getPlayerName(), "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace > l_country.getD_armies()) {
 			this.setD_orderExecutionLog(this.currentOrder()
 					+ " is not executed as armies given in advance order exceeds armies of source country : "
 					+ this.d_sourceCountryName, "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		if (this.d_numberOfArmiesToPlace == l_country.getD_armies()) {
@@ -220,6 +221,12 @@ public class Advance implements Order {
 					+ this.d_sourceCountryName + " has " + l_country.getD_armies()
 					+ " army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.",
 					"error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
+			return false;
+		}
+		if(!d_playerInitiator.negotiationValidation(this.d_targetCountryName)){
+			this.setD_orderExecutionLog(this.currentOrder() + " is not executed as "+ d_playerInitiator.getPlayerName()+ " has negotiation pact with the target country's player!", "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		return true;

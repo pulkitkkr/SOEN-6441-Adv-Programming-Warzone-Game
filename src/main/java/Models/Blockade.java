@@ -41,7 +41,7 @@ public class Blockade implements Card {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		if (valid()) {
+		if (valid(p_gameState)) {
 			Country l_targetCountryID = p_gameState.getD_map().getCountryByName(d_targetCountryID);
 			Integer l_noOfArmiesOnTargetCountry = l_targetCountryID.getD_armies() == 0 ? 1
 					: l_targetCountryID.getD_armies();
@@ -75,7 +75,8 @@ public class Blockade implements Card {
 	 * @return boolean if given advance command is valid or not.
 	 */
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
+
 		// Validates whether target country belongs to the Player who executed the order
 		// or not
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
@@ -87,6 +88,7 @@ public class Blockade implements Card {
 					+ this.d_targetCountryID + " given in blockade command does not owned to the player : "
 					+ d_playerInitiator.getPlayerName()
 					+ " The card will have no affect and you don't get the card back.", "error");
+			p_gameState.updateLog(orderExecutionLog(), "effect");
 			return false;
 		}
 		return true;

@@ -47,7 +47,7 @@ public class Deploy implements Order {
 	@Override
 	public void execute(GameState p_gameState) {
 
-		if (valid()) {
+		if (valid(p_gameState)) {
 			for (Country l_country : p_gameState.getD_map().getD_countries()) {
 				if (l_country.getD_countryName().equalsIgnoreCase(this.d_targetCountryName)) {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
@@ -75,7 +75,7 @@ public class Deploy implements Order {
 	 * not.
 	 */
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryName.toString()))
 				.findFirst().orElse(null);
