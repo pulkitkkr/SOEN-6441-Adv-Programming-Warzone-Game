@@ -56,7 +56,7 @@ public class Blockade implements Card {
 			// assign neutral territory to the existing neutral player.
 			if (!CommonUtil.isNull(l_player)) {
 				l_player.getD_coutriesOwned().add(l_targetCountryID);
-				System.out.println("Neutral territory: " + l_targetCountryID + "assigned to the Neutral Player.");
+				System.out.println("Neutral territory: " + l_targetCountryID.getD_countryName() + "assigned to the Neutral Player.");
 			}
 
 			d_playerInitiator.removeCard("blockade");

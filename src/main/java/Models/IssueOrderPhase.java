@@ -27,8 +27,10 @@ public class IssueOrderPhase extends Phase{
 
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
-        p_player.handleCardCommands(p_enteredCommand, d_gameState);
-        d_gameEngine.setD_gameEngineLog(p_player.d_playerLog, "effect");
+    	if(p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
+    		p_player.handleCardCommands(p_enteredCommand, d_gameState);
+            d_gameEngine.setD_gameEngineLog(p_player.d_playerLog, "effect");
+    	}  
         p_player.checkForMoreOrders();
     }
 

@@ -124,7 +124,6 @@ public class PlayerService {
 	 */
 	public boolean checkPlayersAvailability(GameState p_gameState) {
 		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
-			System.out.println("Kindly add players before assigning countries");
 			return false;
 		}
 		return true;
@@ -158,7 +157,12 @@ public class PlayerService {
 		}
 
 		List<Country> l_countries = p_gameState.getD_map().getD_countries();
-		int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
+		int l_playerSize = p_gameState.getD_players().size();
+		Player l_neutralPlayer = p_gameState.getD_players().stream()
+				.filter(l_player -> l_player.getPlayerName().equalsIgnoreCase("Neutral")).findFirst().orElse(null);
+		if (l_neutralPlayer != null)
+			l_playerSize = l_playerSize - 1;
+		int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), l_playerSize);
 
 		this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players(), p_gameState);
 		this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
@@ -179,24 +183,26 @@ public class PlayerService {
 			List<Player> p_players, GameState p_gameState) {
 		List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
 		for (Player l_pl : p_players) {
-			if (l_unassignedCountries.isEmpty())
-				break;
-			// Based on number of countries to be assigned to player, it generates random
-			// country and assigns to player
-			for (int i = 0; i < p_countriesPerPlayer; i++) {
-				Random l_random = new Random();
-				int l_randomIndex = l_random.nextInt(l_unassignedCountries.size());
-				Country l_randomCountry = l_unassignedCountries.get(l_randomIndex);
+			if(!l_pl.getPlayerName().equalsIgnoreCase("Neutral")) {
+				if (l_unassignedCountries.isEmpty())
+					break;
+				// Based on number of countries to be assigned to player, it generates random
+				// country and assigns to player
+				for (int i = 0; i < p_countriesPerPlayer; i++) {
+					Random l_random = new Random();
+					int l_randomIndex = l_random.nextInt(l_unassignedCountries.size());
+					Country l_randomCountry = l_unassignedCountries.get(l_randomIndex);
 
-				if (l_pl.getD_coutriesOwned() == null)
-					l_pl.setD_coutriesOwned(new ArrayList<>());
-				l_pl.getD_coutriesOwned().add(p_gameState.getD_map().getCountryByName(l_randomCountry.getD_countryName()));
-				System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
-						+ l_randomCountry.getD_countryName());
-				d_assignmentLog += "\n Player : " + l_pl.getPlayerName() + " is assigned with country : "
-						+ l_randomCountry.getD_countryName();
-				l_unassignedCountries.remove(l_randomCountry);
-			}
+					if (l_pl.getD_coutriesOwned() == null)
+						l_pl.setD_coutriesOwned(new ArrayList<>());
+					l_pl.getD_coutriesOwned().add(p_gameState.getD_map().getCountryByName(l_randomCountry.getD_countryName()));
+					System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with country : "
+							+ l_randomCountry.getD_countryName());
+					d_assignmentLog += "\n Player : " + l_pl.getPlayerName() + " is assigned with country : "
+							+ l_randomCountry.getD_countryName();
+					l_unassignedCountries.remove(l_randomCountry);
+				}
+			}	
 		}
 		// If any countries are still left for assignment, it will redistribute those
 		// among players
@@ -354,7 +360,8 @@ public class PlayerService {
 	 */
 	public void resetPlayersFlag(List<Player> p_playersList) {
 		for (Player l_player : p_playersList) {
-			l_player.setD_moreOrders(true);
+			if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
+				l_player.setD_moreOrders(true);
 			l_player.setD_oneCardPerTurn(false);
 			l_player.resetNegotiation();
 		}
