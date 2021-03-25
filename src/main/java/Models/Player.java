@@ -50,6 +50,11 @@ public class Player {
 	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
+	
+	/**
+	 * List of cards owned by player
+	 */
+	List<Card> d_cardsOwned;
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -63,6 +68,7 @@ public class Player {
 		this.d_coutriesOwned = new ArrayList<Country>();
 		this.order_list = new ArrayList<Order>();
 		this.d_moreOrders = true;
+		this.d_cardsOwned = new ArrayList<Card>();
 	}
 
 	/**
