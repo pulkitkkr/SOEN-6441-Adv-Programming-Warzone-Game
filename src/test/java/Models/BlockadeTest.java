@@ -10,40 +10,54 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This class is used to test functionality of Blockade class functions.
+ */
 public class BlockadeTest {
 
 	/**
-	 * First Player
+	 * First Player.
 	 */
 	Player d_player1;
 
 	/**
-	 * Second Player
+	 * Second Player.
 	 */
 	Player d_player2;
 
 	/**
-	 * Blockade Order.
+	 * Blockade Order One.
 	 */
 	Blockade d_blokadeOrder1;
 
+	/**
+	 * Blockade Order Two.
+	 */
 	Blockade d_blokadeOrder2;
 
+	/**
+	 * Blockade Order Three.
+	 */
 	Blockade d_blokadeOrder3;
 
-	Airlift d_airliftOrder;
-
+	/**
+	 * Target Country.
+	 */
 	String d_targetCountry;
 
 	/**
-	 * Order List
+	 * Order List.
 	 */
 	List<Order> d_order_list;
+
 	/**
 	 * Game State.
 	 */
 	GameState d_gameState;
 
+	/**
+	 * Setup before each test case.
+	 */
 	@Before
 	public void setup() {
 		d_gameState = new GameState();
@@ -73,11 +87,8 @@ public class BlockadeTest {
 		d_blokadeOrder1 = new Blockade(d_player1, "India");
 		d_blokadeOrder2 = new Blockade(d_player1, "USA");
 
-		d_airliftOrder = new Airlift("India", "Canada", 5, d_player1);
-
 		d_order_list.add(d_blokadeOrder1);
 		d_order_list.add(d_blokadeOrder2);
-		d_order_list.add(d_airliftOrder);
 
 		d_player2.setD_ordersToExecute(d_order_list);
 
@@ -85,6 +96,9 @@ public class BlockadeTest {
 
 	}
 
+	/**
+	 * Test Blockade order execution.
+	 */
 	@Test
 	public void testBlockadeExecution() {
 		d_blokadeOrder1.execute(d_gameState);
@@ -92,20 +106,17 @@ public class BlockadeTest {
 		assertEquals("15", l_countryIndia.getD_armies().toString());
 	}
 
-	// #1 : Validates whether target country belongs to the Player who executed the
-	// order or not
+	/**
+	 * Test Validation of Blockade Order.
+	 */
 	public void testValidBlockadeOrder() {
+		// Validation 1 :- Validates whether target country belongs to the Player who
+		// executed the order or not.
 		boolean l_actualBoolean = d_blokadeOrder1.valid();
 		assertTrue(l_actualBoolean);
 
 		boolean l_actualBoolean2 = d_blokadeOrder2.valid();
 		assertFalse(l_actualBoolean2);
-
-		// Validation 2 :- It make sure that any attacks, airlifts, or other actions
-		// must happen before the country changes into a neutral.
-		boolean l_actualBoolean3 = d_blokadeOrder3.valid();
-		assertFalse(l_actualBoolean3);
-
 	}
 
 }

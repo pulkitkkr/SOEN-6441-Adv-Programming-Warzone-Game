@@ -78,25 +78,12 @@ public class Bomb implements Card {
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryID)).findFirst()
 				.orElse(null);
 
-		// cannot bomb own territory
+		// Player cannot bomb own territory
 		if (!CommonUtil.isNull(l_country)) {
 			this.setD_orderExecutionLog(this.currentOrder() + " is not executed since Target country : "
 					+ this.d_targetCountryID + " given in bomb command is owned by the player : "
 					+ d_playerInitiator.getPlayerName() + " VALIDATES:- You cannot bomb your own territory!", "error");
 			return false;
-		}
-
-		// Bombs take place after deployments,
-		if (!CommonUtil.isNull(d_playerInitiator.getD_ordersToExecute())) {
-			for (int l_index = 0; l_index < d_playerInitiator.getD_ordersToExecute().size(); l_index++) {
-				Order l_order = d_playerInitiator.getD_ordersToExecute().get(l_index);
-				if (l_order.getOrderName().equalsIgnoreCase("deploy")) {
-					this.setD_orderExecutionLog(this.currentOrder() + " is not executed because " + "order: "
-							+ l_order.getOrderName() + " is pending. VALIDATES :- Bomb take place after deployments.",
-							"error");
-					return false;
-				}
-			}
 		}
 		return true;
 	}

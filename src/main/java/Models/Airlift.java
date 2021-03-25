@@ -62,8 +62,7 @@ public class Airlift implements Card {
 			this.setD_orderExecutionLog("Airlift Operation from "+ d_sourceCountryName+ " to "+d_targetCountryName+" successful!", "default");
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		} else {
-			//this.setD_orderExecutionLog("Cannot Complete Execution of given Airlift Command!", "error");
-			System.out.println(p_gameState.getRecentLog());
+			this.setD_orderExecutionLog("Cannot Complete Execution of given Airlift Command!", "error");
 			p_gameState.updateLog(d_orderExecutionLog, "effect");
 		}
 	}

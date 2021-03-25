@@ -70,8 +70,4 @@ public class PlayerTest {
 		boolean l_bool = d_player.validateDeployOrderArmies(d_player, l_noOfArmies);
 		assertFalse(l_bool);
 	}
-	
-	public void testValidatePlayerOwnsCard() {
-		
-	}
 }
