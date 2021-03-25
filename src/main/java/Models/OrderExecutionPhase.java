@@ -44,6 +44,9 @@ public class OrderExecutionPhase extends Phase{
             MapView l_map_view = new MapView(d_gameState);
             l_map_view.showMap();
 
+			if (this.checkEndOftheGame(d_gameState))
+				break;
+			
             while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
                 System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
                 BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
@@ -59,14 +62,10 @@ public class OrderExecutionPhase extends Phase{
                     } else {
                         System.out.println("Invalid Input");
                     }
-
                 } catch (IOException l_e) {
                     System.out.println("Invalid Input");
                 }
             }
-
-
-
         }
     }
 
@@ -172,4 +171,22 @@ public class OrderExecutionPhase extends Phase{
     protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
+    
+	/**
+	 * Checks if single player has conquered all countries of the map to indicate end of the game.
+	 * 
+	 * @param p_gameState Current State of the game
+	 * @return
+	 */
+	protected Boolean checkEndOftheGame(GameState p_gameState) {
+		Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
+		for (Player l_player : p_gameState.getD_players()) {
+			if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
+				d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
+						+ " has won the Game by conquering all countries. Exiting the Game .....", "end");
+				return true;
+			}
+		}
+		return false;
+	}
 }
