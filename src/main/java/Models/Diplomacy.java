@@ -3,7 +3,7 @@ package Models;
 import Services.PlayerService;
 
 /**
- * 
+ * Handles diplomacy command.
  *
  */
 public class Diplomacy implements Card {
@@ -49,7 +49,7 @@ public class Diplomacy implements Card {
 	}
 
 	/**
-	 * 
+	 * checks if order is valid.
 	 */
 	@Override
 	public boolean valid(GameState p_gameState) {
@@ -57,7 +57,7 @@ public class Diplomacy implements Card {
 	}
 
 	/**
-	 *
+	 * Prints orders.
 	 */
 	public void printOrder() {
 		this.d_orderExecutionLog = "----------Diplomacy order issued by player " + this.d_IssuingPlayer.getPlayerName()
@@ -66,11 +66,17 @@ public class Diplomacy implements Card {
 		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
 	}
 
+	/**
+	 * sets execution log.
+	 */
 	@Override
 	public String orderExecutionLog() {
 		return this.d_orderExecutionLog;
 	}
 
+	/**
+	 * checks valid order.
+	 */
 	@Override
 	public Boolean checkValidOrder(GameState p_gameState) {
 		PlayerService l_playerService = new PlayerService();
