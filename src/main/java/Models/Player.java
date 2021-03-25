@@ -446,7 +446,7 @@ public class Player {
 	 * @return boolean true if countries are adjacent or else false
 	 */
 	@SuppressWarnings("unlikely-arg-type")
-	private boolean checkAdjacency(GameState p_gameState, String p_sourceCountryName, String p_targetCountryName) {
+	public boolean checkAdjacency(GameState p_gameState, String p_sourceCountryName, String p_targetCountryName) {
 		Country l_sourceCountry = p_gameState.getD_map().getCountryByName(p_sourceCountryName);
 		Country l_targetCountry = p_gameState.getD_map().getCountryByName(p_targetCountryName);
 		Integer l_targetCountryId = l_sourceCountry.getD_adjacentCountryIds().stream()

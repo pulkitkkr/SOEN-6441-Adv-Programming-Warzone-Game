@@ -65,7 +65,10 @@ public class GameEngine {
 	 */
 	public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
 		d_currentPhase.getD_gameState().updateLog(p_gameEngineLog, p_logType);
-		System.out.println("***************** " + p_gameEngineLog + " *****************");
+		String l_consoleLogger = p_logType.toLowerCase().equals("phase")
+				? "\n************ " + p_gameEngineLog + " ************\n"
+				: p_gameEngineLog;
+		System.out.println(l_consoleLogger);
 	}
 
 	/**

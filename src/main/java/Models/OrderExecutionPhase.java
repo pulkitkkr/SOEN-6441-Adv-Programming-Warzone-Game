@@ -44,29 +44,30 @@ public class OrderExecutionPhase extends Phase {
 			MapView l_map_view = new MapView(d_gameState);
 			l_map_view.showMap();
 
-			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			if (this.checkEndOftheGame(d_gameState))
+				break;
+
+            while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+                BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
 				try {
 					String l_continue = l_reader.readLine();
 
-					if (l_continue.equalsIgnoreCase("N")) {
-						break;
-					} else if (l_continue.equalsIgnoreCase("Y")) {
-						d_playerService.assignArmies(d_gameState);
-						d_gameEngine.setIssueOrderPhase();
-					} else {
-						System.out.println("Invalid Input");
-					}
-
-				} catch (IOException l_e) {
-					System.out.println("Invalid Input");
-				}
-			}
-
-		}
-	}
+                    if (l_continue.equalsIgnoreCase("N")) {
+                        break;
+                    } else if(l_continue.equalsIgnoreCase("Y")){
+                        d_playerService.assignArmies(d_gameState);
+                        d_gameEngine.setIssueOrderPhase();
+                    } else {
+                        System.out.println("Invalid Input");
+                    }
+                } catch (IOException l_e) {
+                    System.out.println("Invalid Input");
+                }
+            }
+        }
+    }
 
 	/**
 	 * Invokes order execution logic for all unexecuted orders.
@@ -90,7 +91,7 @@ public class OrderExecutionPhase extends Phase {
 
 	/**
 	 * Add neutral player to game state.
-	 * 
+	 *
 	 * @param p_gameState GameState
 	 */
 	public void addNeutralPlayer(GameState p_gameState) {
@@ -182,11 +183,29 @@ public class OrderExecutionPhase extends Phase {
 		printInvalidCommandInState();
 	}
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
 	/**
-	 * {@inheritDoc}
+	 * Checks if single player has conquered all countries of the map to indicate end of the game.
+	 *
+	 * @param p_gameState Current State of the game
+	 * @return true if game has to be ended else false
 	 */
-	@Override
-	protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-		printInvalidCommandInState();
+	protected Boolean checkEndOftheGame(GameState p_gameState) {
+		Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
+		for (Player l_player : p_gameState.getD_players()) {
+			if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
+				d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
+						+ " has won the Game by conquering all countries. Exiting the Game .....", "end");
+				return true;
+			}
+		}
+		return false;
 	}
 }
