@@ -519,6 +519,12 @@ public class Player {
 					}
 					break;
 				case "bomb":
+					Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
+					if (l_bombOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_bombOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
 					break;
 				case "negotiate":
 					break;
