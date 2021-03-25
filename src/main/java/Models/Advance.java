@@ -240,7 +240,7 @@ public class Advance implements Order {
 		this.d_orderExecutionLog = "----------Advance order issued by player " + this.d_playerInitiator.getPlayerName()
 				+ "----------" + System.lineSeparator() + "Move " + this.d_numberOfArmiesToPlace + " armies from "
 				+ this.d_sourceCountryName + " to " + this.d_targetCountryName;
-		System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
+		System.out.println(System.lineSeparator() + this.d_orderExecutionLog);
 	}
 
 	@Override

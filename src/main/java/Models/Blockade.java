@@ -1,6 +1,5 @@
 package Models;
 
-import Constants.ApplicationConstants;
 import Utils.CommonUtil;
 
 /**
@@ -44,19 +43,27 @@ public class Blockade implements Card {
 	public void execute(GameState p_gameState) {
 		if (valid()) {
 			Country l_targetCountryID = p_gameState.getD_map().getCountryByName(d_targetCountryID);
-
 			Integer l_noOfArmiesOnTargetCountry = l_targetCountryID.getD_armies() == 0 ? 1
 					: l_targetCountryID.getD_armies();
 			l_targetCountryID.setD_armies(l_noOfArmiesOnTargetCountry * 3);
 
 			// change territory to neutral territory
 			d_playerInitiator.getD_coutriesOwned().remove(l_targetCountryID);
+
+			Player l_player = p_gameState.getD_players().stream()
+					.filter(l_pl -> l_pl.getPlayerName().equalsIgnoreCase("Neutral")).findFirst().orElse(null);
+
+			// assign neutral territory to the existing neutral player.
+			if (!CommonUtil.isNull(l_player)) {
+				l_player.getD_coutriesOwned().add(l_targetCountryID);
+				System.out.println("Neutral territory: " + l_targetCountryID + "assigned to the Neutral Player.");
+			}
+
 			d_playerInitiator.removeCard("blockade");
 			this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName()
 					+ " is executing defensive blockade on Country :  " + l_targetCountryID.getD_countryName()
 					+ " with armies :  " + l_targetCountryID.getD_armies(), "default");
 			p_gameState.updateLog(orderExecutionLog(), "effect");
-
 		}
 	}
 
@@ -69,7 +76,6 @@ public class Blockade implements Card {
 	 */
 	@Override
 	public boolean valid() {
-
 		// Validates whether target country belongs to the Player who executed the order
 		// or not
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
@@ -83,7 +89,6 @@ public class Blockade implements Card {
 					+ " The card will have no affect and you don't get the card back.", "error");
 			return false;
 		}
-
 		return true;
 	}
 

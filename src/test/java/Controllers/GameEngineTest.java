@@ -1,6 +1,7 @@
 package Controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +15,7 @@ import Models.Continent;
 import Models.GameState;
 import Models.Map;
 import Models.Phase;
+import Models.StartUpPhase;
 
 /**
  * This class is used to test functionality of GameEngineController class
@@ -139,6 +141,6 @@ public class GameEngineTest {
 	 */
 	@Test
 	public void testCorrectStartupPhase() {
-		assertEquals(d_currentPhase, d_gameEngine.getD_CurrentPhase());
+		assertTrue(d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase);
 	}
 }
