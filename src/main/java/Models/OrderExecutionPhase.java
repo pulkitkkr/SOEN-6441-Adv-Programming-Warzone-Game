@@ -176,7 +176,7 @@ public class OrderExecutionPhase extends Phase{
 	 * Checks if single player has conquered all countries of the map to indicate end of the game.
 	 * 
 	 * @param p_gameState Current State of the game
-	 * @return
+	 * @return true if game has to be ended else false
 	 */
 	protected Boolean checkEndOftheGame(GameState p_gameState) {
 		Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
