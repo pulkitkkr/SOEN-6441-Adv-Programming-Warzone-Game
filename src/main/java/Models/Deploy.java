@@ -82,14 +82,18 @@ public class Deploy implements Order {
 		return l_country != null;
 	}
 
+	/**
+	 * Prints deploy Order.
+	 */
 	@Override
 	public void printOrder() {
-		this.d_orderExecutionLog = "----------Deploy order issued by player " + this.d_playerInitiator.getPlayerName()
-				+ "----------" + System.lineSeparator() + "Deploy " + this.d_numberOfArmiesToPlace + " armies to "
-				+ this.d_targetCountryName;
-		System.out.println(System.lineSeparator()+ this.d_orderExecutionLog);
+		this.d_orderExecutionLog = "\n---------- Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+" ----------\n"+System.lineSeparator()+"Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName;
+		System.out.println(this.d_orderExecutionLog);
 	}
 
+	/**
+	 * Gets order execution log.
+	 */
 	@Override
 	public String orderExecutionLog() {
 		return d_orderExecutionLog;
