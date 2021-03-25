@@ -1,11 +1,12 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 /**
@@ -365,7 +366,7 @@ public class Map {
             if(CommonUtil.isNull(getContinent(p_continentName))){
                 d_continents.add(new Continent(l_continentId, p_continentName, p_controlValue));
             }else{
-                throw new InvalidMap("Continent cannot be added! It already exists!");
+                throw new InvalidMap("Continent "+p_continentName+" cannot be added! It already exists!");
             }
         }else{
             d_continents= new ArrayList<Continent>();
@@ -417,7 +418,7 @@ public class Map {
         }
         if(CommonUtil.isNull(getCountryByName(p_countryName))){
             l_countryId=d_countries.size()>0? Collections.max(getCountryIDs())+1:1;
-            if(d_continents!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
+            if(d_continents!=null && getContinent(p_continentName)!=null && getContinentIDs().contains(getContinent(p_continentName).getD_continentID())){
                 Country l_country= new Country(l_countryId, p_countryName, getContinent(p_continentName).getD_continentID());
                 d_countries.add(l_country);
                 for (Continent c: d_continents) {
@@ -426,7 +427,7 @@ public class Map {
                     }
                 }
             } else{
-                throw new InvalidMap("Cannot add Country to a Continent that doesn't exist!");
+                throw new InvalidMap("Cannot add Country "+p_countryName+" to a Continent that doesn't exist!");
             }
         }else{
             throw new InvalidMap("Country with name "+ p_countryName+" already Exists!");
@@ -451,7 +452,7 @@ public class Map {
             d_countries.remove(getCountryByName(p_countryName));
 
         }else{
-           throw new InvalidMap("Country:  "+ p_countryName+" does not exist!");
+           throw new InvalidMap("Country: "+ p_countryName+" does not exist!");
         }
     }
 
@@ -467,7 +468,7 @@ public class Map {
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))){
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).addNeighbour(getCountryByName(p_neighbourName).getD_countryId());
             } else{
-                throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+                throw new InvalidMap("Invalid Neighbour Pair "+p_countryName+" "+p_neighbourName+"! Either of the Countries Doesn't exist!");
             }
         }
     }
@@ -484,7 +485,7 @@ public class Map {
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))) {
                 d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbour(getCountryByName(p_neighbourName).getD_countryId());
             } else{
-                throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
+                throw new InvalidMap("Invalid Neighbour Pair "+p_countryName+" "+p_neighbourName+"! Either of the Countries Doesn't exist!");
             }
         }
     }
@@ -494,7 +495,7 @@ public class Map {
      * Used while deletion of a country object.
      * 
      * @param p_countryId Country to be removed
-     * @throws InvalidMap Exception
+     * @throws InvalidMap indicates Map Object Validation failure
      */
     public void updateNeighboursCont(Integer p_countryId) throws InvalidMap {
         for(Continent c: d_continents){
@@ -507,7 +508,7 @@ public class Map {
      * Used while deletion of country object.
      * 
      * @param p_countryID Country to be removed
-     * @throws InvalidMap Exception
+     * @throws InvalidMap indicates Map Object Validation failure
      */
     public void removeCountryNeighboursFromAll(Integer p_countryID) throws InvalidMap {
         for (Country c: d_countries) {

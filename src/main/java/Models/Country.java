@@ -177,7 +177,7 @@ public class Country {
 	 * removes country Id from  neighbor list.
 	 * 
 	 * @param p_countryId Id of country to be removed
-	 * @throws InvalidMap Exception
+	 * @throws InvalidMap indicates Map Object Validation failure
 	 */
 	public void removeNeighbour(Integer p_countryId) throws InvalidMap {
 		if(d_adjacentCountryIds.contains(p_countryId)){

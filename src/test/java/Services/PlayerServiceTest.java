@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.InvalidMap;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,7 +81,7 @@ public class PlayerServiceTest {
 
 		System.setOut(new PrintStream(d_outContent));
 		d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Avneet");
-		assertEquals("Player with name : Avneet already Exists. Changes are not made.", d_outContent.toString());
+		assertEquals("Player with name : Avneet already Exists. Changes are not made.", d_outContent.toString().trim());
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class PlayerServiceTest {
 
 		System.setOut(new PrintStream(d_outContent));
 		d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Bhoomi");
-		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made.", d_outContent.toString());
+		assertEquals("Player with name : Bhoomi does not Exist. Changes are not made.", d_outContent.toString().trim());
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class PlayerServiceTest {
 	 * Used for checking whether players have been assigned with countries
 	 */
 	@Test
-	public void testPlayerCountryAssignment() {
+	public void testPlayerCountryAssignment() throws InvalidMap {
 		d_mapservice = new MapService();
 		d_map = new Map();
 		d_map = d_mapservice.loadMap(d_gameState, "canada.map");
