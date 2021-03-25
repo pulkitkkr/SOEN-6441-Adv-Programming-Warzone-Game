@@ -52,7 +52,7 @@ public class Player {
 	boolean d_moreOrders;
 	
 	/**
-	 * List of cards owned by player
+	 * List of cards owned by player.
 	 */
 	List<Card> d_cardsOwned;
   
