@@ -46,15 +46,16 @@ public class Deploy implements Order {
 	 */
 	@Override
 	public void execute(GameState p_gameState) {
-		
-		if (valid()) {
+
+		if (valid(p_gameState)) {
 			for (Country l_country : p_gameState.getD_map().getD_countries()) {
 				if (l_country.getD_countryName().equalsIgnoreCase(this.d_targetCountryName)) {
 					Integer l_armiesToUpdate = l_country.getD_armies() == null ? this.d_numberOfArmiesToPlace
 							: l_country.getD_armies() + this.d_numberOfArmiesToPlace;
 					l_country.setD_armies(l_armiesToUpdate);
-					this.setD_orderExecutionLog( + l_armiesToUpdate + " armies have been deployed successfully on country : "
-							+ l_country.getD_countryName(), "default");
+					this.setD_orderExecutionLog(+l_armiesToUpdate
+							+ " armies have been deployed successfully on country : " + l_country.getD_countryName(),
+							"default");
 				}
 			}
 
@@ -74,19 +75,25 @@ public class Deploy implements Order {
 	 * not.
 	 */
 	@Override
-	public boolean valid() {
+	public boolean valid(GameState p_gameState) {
 		Country l_country = d_playerInitiator.getD_coutriesOwned().stream()
 				.filter(l_pl -> l_pl.getD_countryName().equalsIgnoreCase(this.d_targetCountryName.toString()))
 				.findFirst().orElse(null);
 		return l_country != null;
 	}
 
+	/**
+	 * Prints deploy Order.
+	 */
 	@Override
 	public void printOrder() {
 		this.d_orderExecutionLog = "\n---------- Deploy order issued by player " + this.d_playerInitiator.getPlayerName()+" ----------\n"+System.lineSeparator()+"Deploy " + this.d_numberOfArmiesToPlace + " armies to " + this.d_targetCountryName;
 		System.out.println(this.d_orderExecutionLog);
 	}
 
+	/**
+	 * Gets order execution log.
+	 */
 	@Override
 	public String orderExecutionLog() {
 		return d_orderExecutionLog;
@@ -96,14 +103,24 @@ public class Deploy implements Order {
 	 * Prints and Sets the order execution log.
 	 *
 	 * @param p_orderExecutionLog String to be set as log
-	 * @param p_logType type of log : error, default
+	 * @param p_logType           type of log : error, default
 	 */
-	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType) {
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
 		this.d_orderExecutionLog = p_orderExecutionLog;
-		if(p_logType.equals("error")) {
+		if (p_logType.equals("error")) {
 			System.err.println(p_orderExecutionLog);
-		}else{
+		} else {
 			System.out.println(p_orderExecutionLog);
 		}
+	}
+
+	/**
+	 * Return order name.
+	 * 
+	 * @return String
+	 */
+	@Override
+	public String getOrderName() {
+		return "deploy";
 	}
 }

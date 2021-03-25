@@ -1,27 +1,16 @@
-/**
- * 
- */
 package Models;
 
 /**
  * This model class manages all the cards owned by the player.
  */
-public interface Card {	
-	/**
-	 * Method that will be called by the Receiver to execute the card logic.
-	 * 
-	 * @param p_gameState current state of the game.
-	 */
-	public void execute(GameState p_gameState);
+public interface Card extends Order {
 
 	/**
+	 * Pre-validation of card type order.
 	 * 
-	 * @return boolean true or false
+	 * @param p_gameState Gamestate
+	 * @return true or false
 	 */
-	public boolean valid();
+	public Boolean checkValidOrder(GameState p_gameState);
 
-	/**
-	 * Print card information.
-	 */
-	public void printCard();
 }

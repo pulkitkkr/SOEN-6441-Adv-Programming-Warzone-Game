@@ -352,9 +352,11 @@ public class PlayerService {
 	 *
 	 * @param p_playersList players involved in game
 	 */
-	public void resetPlayersOrdersFlag(List<Player> p_playersList) {
+	public void resetPlayersFlag(List<Player> p_playersList) {
 		for (Player l_player : p_playersList) {
 			l_player.setD_moreOrders(true);
+			l_player.setD_oneCardPerTurn(false);
+			l_player.resetNegotiation();
 		}
 	}
 
@@ -366,5 +368,16 @@ public class PlayerService {
 	public void setD_playerLog(String p_playerLog) {
 		this.d_playerLog = p_playerLog;
 		System.out.println(p_playerLog);
+	}
+
+	/**
+	 * Find Player By Name.
+	 *
+	 * @param p_playerName player name to be found
+	 * @param p_gameState GameState Instance.
+	 * @return p_player object
+	 */
+	public Player findPlayerByName(String p_playerName, GameState p_gameState) {
+		return p_gameState.getD_players().stream().filter(l_player -> l_player.getPlayerName().equals(p_playerName)).findFirst().orElse(null);
 	}
 }

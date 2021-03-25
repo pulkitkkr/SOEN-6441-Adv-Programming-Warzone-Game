@@ -1,4 +1,4 @@
-package Models;
+ package Models;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,16 +50,26 @@ public class Player {
 	 * More orders to be accepted for player.
 	 */
 	boolean d_moreOrders;
-	
+
 	/**
-	 * List of cards owned by player.
+	 * If the per turn card is assigned already.
 	 */
-	List<Card> d_cardsOwned;
-  
+	boolean d_oneCardPerTurn = false;
+
 	/**
 	 * String holding Log for individual Player methods.
 	 */
 	String d_playerLog;
+
+	/**
+	 * Name of the card Player owns.
+	 */
+	List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
+
+	/**
+	 * List of players to not attack if negotiated with.
+	 */
+	List<Player> d_negotiatedWith = new ArrayList<Player>();
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -73,7 +83,6 @@ public class Player {
 		this.d_coutriesOwned = new ArrayList<Country>();
 		this.order_list = new ArrayList<Order>();
 		this.d_moreOrders = true;
-		this.d_cardsOwned = new ArrayList<Card>();
 	}
 
 	/**
@@ -191,6 +200,15 @@ public class Player {
 	}
 
 	/**
+	 * Countries player cannot issue an order on.
+	 *
+	 * @param p_playerNegotiation player to negotiate with.
+	 */
+	public void addPlayerNegotiation(Player p_playerNegotiation) {
+		this.d_negotiatedWith.add(p_playerNegotiation);
+	}
+
+	/**
 	 * Gets info about more orders from player are to be accepted or not.
 	 *
 	 * @return boolean true if player wants to give more order or else false
@@ -207,6 +225,22 @@ public class Player {
 	 */
 	public void setD_moreOrders(boolean p_moreOrders) {
 		this.d_moreOrders = p_moreOrders;
+	}
+
+	/**
+	 * Returns the List of cards owned by the player.
+	 *
+	 * @return List of Strings with cards
+	 */
+	public List<String> getD_cardsOwnedByPlayer(){ return this.d_cardsOwnedByPlayer; }
+
+	/**
+	 * Sets the Per Turn Card allocated bool.
+	 *
+	 * @param p_value Bool to Set.
+	 */
+	public void setD_oneCardPerTurn(Boolean p_value){
+		this.d_oneCardPerTurn = p_value;
 	}
 
 	/**
@@ -317,10 +351,10 @@ public class Player {
 	public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies) {
 		return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
 	}
-	
+
 	/**
 	 * Issues order for player.
-	 * 
+	 *
 	 * @param p_issueOrderPhase current phase of the game
 	 * @throws InvalidCommand exception if command is invalid
      * @throws IOException  indicates failure in I/O operation
@@ -426,14 +460,122 @@ public class Player {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * This method will assign any random card from the set of available cards to the player once he conquers a territory.
-	 * 
-	 * @return string selects random card from set of cards
+	 * This method will assign any random card from the set of available cards to
+	 * the player once he conquers a territory.
+	 *
 	 */
-	public String randomCard() {
-		Random l_random = new Random();
-		return ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE));
+	public void assignCard() {
+		if (!d_oneCardPerTurn) {
+			Random l_random = new Random();
+			this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+			this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
+			this.setD_oneCardPerTurn(true);
+		}else{
+			this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
+		}
+	}
+
+
+	/**
+	 * Remove the card which is used.
+	 *
+	 * @param p_cardName name of the card to remove.
+	 */
+	public void removeCard(String p_cardName){
+		this.d_cardsOwnedByPlayer.remove(p_cardName);
+	}
+
+	/**
+	 * Checks if the order issued on country is possible or not.
+	 *
+	 * @param p_targetCountryName country to attack
+	 * @return bool if it can attack
+	 */
+	public boolean negotiationValidation(String p_targetCountryName){
+		boolean l_canAttack = true;
+		for(Player p: d_negotiatedWith){
+			if (p.getCountryNames().contains(p_targetCountryName))
+				l_canAttack = false;
+		}
+		return l_canAttack;
+	}
+
+	/**
+	 * Clears all negotiation from the previous turn.
+	 */
+	public void resetNegotiation(){
+		d_negotiatedWith.clear();
+	}
+
+	/**
+	 * Validates the card arguments.
+	 *
+	 * @param p_commandEntered command of card
+	 * @return bool if valid
+	 */
+	public boolean checkCardArguments(String p_commandEntered){
+		if(p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
+			return p_commandEntered.split(" ").length == 4;
+		} else if (p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade")
+				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb")
+				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("negotiate")) {
+			return p_commandEntered.split(" ").length == 2;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Handles the Card Commands: creates order and adds them to the list.
+	 *
+	 * @param p_commandEntered command entered
+	 * @param p_gameState gamestate instance
+	 */
+	public void handleCardCommands(String p_commandEntered, GameState p_gameState) {
+		if (checkCardArguments(p_commandEntered)) {
+			switch (p_commandEntered.split(" ")[0]) {
+				case "airlift":
+					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
+							Integer.parseInt(p_commandEntered.split(" ")[3]), this);
+					if (l_newOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_newOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+					break;
+				case "blockade":
+					Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
+					if (l_blockadeOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_blockadeOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+					break;
+				case "bomb":
+					Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
+					if (l_bombOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_bombOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+					break;
+				case "negotiate":
+					Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1],this);
+					if (l_negotiateOrder.checkValidOrder(p_gameState)) {
+						this.order_list.add(l_negotiateOrder);
+						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+						p_gameState.updateLog(getD_playerLog(), "effect");
+					}
+					break;
+				default:
+					this.setD_playerLog("Invalid Command!", "error");
+					p_gameState.updateLog(getD_playerLog(), "effect");
+					break;
+			}
+		} else{
+			this.setD_playerLog("Invalid Card Command Passed! Check Arguments!", "error");
+		}
 	}
 }

@@ -15,6 +15,10 @@ import org.junit.Test;
  */
 public class AdvanceTest {
 	/**
+	 * Recent GameState
+	 */
+	GameState d_gameState = new GameState();
+	/**
 	 * Checks whether advance order given is invalid.
 	 */
 	@Test
@@ -27,10 +31,10 @@ public class AdvanceTest {
 		List<Country> l_countries = Arrays.asList(l_country1, l_country2);
 		l_player.setD_coutriesOwned(l_countries);
 
-		assertFalse(new Advance(l_player, "India", "France", 15).valid());
-		assertFalse(new Advance(l_player, "Canada", "France", 10).valid());
-		assertFalse(new Advance(l_player, "Italy", "France", 10).valid());
-		assertTrue(new Advance(l_player, "India", "France", 10).valid());
+		assertFalse(new Advance(l_player, "India", "France", 15).valid(d_gameState));
+		assertFalse(new Advance(l_player, "Canada", "France", 10).valid(d_gameState));
+		assertFalse(new Advance(l_player, "Italy", "France", 10).valid(d_gameState));
+		assertTrue(new Advance(l_player, "India", "France", 10).valid(d_gameState));
 	}
 
 	/**

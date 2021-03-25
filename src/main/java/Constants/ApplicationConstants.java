@@ -44,6 +44,7 @@ public final class ApplicationConstants {
 	public static final int CONSOLE_WIDTH = 80;
 
 	public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
+	public static final List<String> BLOCKADEVALIDATION = Arrays.asList("bomb", "advance", "airlift", "negotiate");
 	
 	public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
 	public static final int SIZE = CARDS.size();

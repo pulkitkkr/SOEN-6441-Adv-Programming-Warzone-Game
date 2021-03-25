@@ -14,10 +14,12 @@ public interface Order {
 	public void execute(GameState p_gameState);
 
 	/**
+	 * Validates order.
 	 * 
 	 * @return boolean true or false
+	 * @param p_gameState GameState Instance
 	 */
-	public boolean valid();
+	public boolean valid(GameState p_gameState);
 
 	/**
 	 * Print order information.
@@ -35,7 +37,14 @@ public interface Order {
 	 * Prints and Sets the order execution log.
 	 *
 	 * @param p_orderExecutionLog String to be set as log
-	 * @param p_logType type of log : error, default
+	 * @param p_logType           type of log : error, default
 	 */
-	public void setD_orderExecutionLog(String p_orderExecutionLog,String p_logType);
+	public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType);
+
+	/**
+	 * Return order name.
+	 * 
+	 * @return String
+	 */
+	public String getOrderName();
 }

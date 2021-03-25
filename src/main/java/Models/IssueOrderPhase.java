@@ -26,6 +26,13 @@ public class IssueOrderPhase extends Phase{
     }
 
     @Override
+    protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
+        p_player.handleCardCommands(p_enteredCommand, d_gameState);
+        d_gameEngine.setD_gameEngineLog(p_player.d_playerLog, "effect");
+        p_player.checkForMoreOrders();
+    }
+
+    @Override
     protected void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
@@ -62,7 +69,7 @@ public class IssueOrderPhase extends Phase{
         // issue orders for each player
         do {
             for (Player l_player : d_gameState.getD_players()) {
-                if (l_player.getD_moreOrders()) {
+                if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
                     try {
                         l_player.issue_order(this);
                     } catch (InvalidCommand | IOException | InvalidMap l_exception) {

@@ -1,23 +1,25 @@
 package Controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 
-import Models.Continent;
-import Models.Phase;
 import org.junit.Before;
 import org.junit.Test;
 
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Models.Continent;
 import Models.GameState;
 import Models.Map;
-import Utils.Command;
+import Models.Phase;
+import Models.StartUpPhase;
 
 /**
- * This class is used to test functionality of GameEngineController class functions.
+ * This class is used to test functionality of GameEngineController class
+ * functions.
  */
 public class GameEngineTest {
 
@@ -30,7 +32,7 @@ public class GameEngineTest {
 	 * object of GameState class.
 	 */
 	Phase d_currentPhase;
-	
+
 	/**
 	 * object of GameEngineController class.
 	 */
@@ -49,7 +51,7 @@ public class GameEngineTest {
 	/**
 	 * Tests the {@link InvalidCommand } in editmap command.
 	 * 
-	 * @throws IOException Exception
+	 * @throws IOException    Exception
 	 * @throws InvalidCommand Exception
 	 */
 	@Test(expected = InvalidCommand.class)
@@ -59,23 +61,26 @@ public class GameEngineTest {
 
 	/**
 	 * Tests the {@link InvalidCommand} in editcontinent command
-	 * @throws IOException Exception
+	 * 
+	 * @throws IOException    Exception
 	 * @throws InvalidCommand Exception
-	 * @throws InvalidMap Exception
+	 * @throws InvalidMap     Exception
 	 */
 	@Test
 	public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
 		d_currentPhase.handleCommand("editcontinent");
 		GameState l_state = d_currentPhase.getD_gameState();
 
-		assertEquals("Log: Can not Edit Continent, please perform `editmap` first"+System.lineSeparator(), l_state.getRecentLog());
+		assertEquals("Log: Can not Edit Continent, please perform `editmap` first" + System.lineSeparator(),
+				l_state.getRecentLog());
 	}
 
 	/**
 	 * Tests the editcontinent command
-	 * @throws IOException Exception
+	 * 
+	 * @throws IOException    Exception
 	 * @throws InvalidCommand Exception
-	 * @throws InvalidMap Exception
+	 * @throws InvalidMap     Exception
 	 */
 	@Test
 	public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
@@ -100,31 +105,42 @@ public class GameEngineTest {
 
 		l_state = d_currentPhase.getD_gameState();
 		l_continents = l_state.getD_map().getD_continents();
-		assertEquals( 1, l_continents.size());
+		assertEquals(1, l_continents.size());
 	}
 
 	/**
 	 * Tests the {@link InvalidCommand } in savemap
+	 * 
 	 * @throws InvalidCommand Exception
-	 * @throws InvalidMap Exception
+	 * @throws InvalidMap     Exception
 	 */
 	@Test
 	public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap, IOException {
 		d_currentPhase.handleCommand("savemap");
 		GameState l_state = d_currentPhase.getD_gameState();
 
-		assertEquals("Log: No map found to save, Please `editmap` first"+System.lineSeparator(), l_state.getRecentLog());
+		assertEquals("Log: No map found to save, Please `editmap` first" + System.lineSeparator(),
+				l_state.getRecentLog());
 
 	}
-	
+
 	/**
 	 * Tests if the assigned country is valid of not.
 	 * 
 	 * @throws InvalidCommand Exception
-	 * @throws IOException Exception
+	 * @throws IOException    Exception
 	 */
 	@Test(expected = InvalidCommand.class)
 	public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
-		d_currentPhase.handleCommand("assigncountries -add india");;
+		d_currentPhase.handleCommand("assigncountries -add india");
+		;
+	}
+
+	/**
+	 * Validates correct startup phase.
+	 */
+	@Test
+	public void testCorrectStartupPhase() {
+		assertTrue(d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase);
 	}
 }

@@ -80,9 +80,9 @@ public class DeployTest {
 	 */
 	@Test
 	public void testValidateDeployOrderCountry() {
-		boolean l_actualBoolean = d_deployOrder1.valid();
+		boolean l_actualBoolean = d_deployOrder1.valid(d_gameState);
 		assertTrue(l_actualBoolean);
-		boolean l_actualBoolean2 = d_deployOrder2.valid();
+		boolean l_actualBoolean2 = d_deployOrder2.valid(d_gameState);
 		assertTrue(l_actualBoolean2);
 	}
 

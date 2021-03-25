@@ -1,14 +1,13 @@
 package Models;
 
+import java.io.IOException;
+
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Services.MapService;
 import Services.PlayerService;
 import Utils.Command;
-import Views.MapView;
-
-import java.io.IOException;
 
 /**
  *  This Interface enforces the method requirement for Each Game Phase.
@@ -159,6 +158,15 @@ public abstract class Phase {
                 performAdvance(p_enteredCommand, p_player);
                 break;
             }
+            case "airlift":
+            case "blockade":
+            case "negotiate":
+            case "bomb":
+            {
+                performCardHandle(p_enteredCommand, p_player);
+                break;
+            }
+
             case "exit": {
                 d_gameEngine.setD_gameEngineLog("Exit Command Entered, Game Ends!", "effect");
                 System.exit(0);
@@ -170,6 +178,15 @@ public abstract class Phase {
             }
         }
     }
+
+    /**
+     * Handles the Card Commands.
+     *
+     * @param p_enteredCommand String of entered Command
+     * @param p_player player instance
+     * @throws IOException Io exception
+     */
+    protected abstract void performCardHandle(String p_enteredCommand, Player p_player) throws IOException;
 
     /**
      * this method handles the show map command.

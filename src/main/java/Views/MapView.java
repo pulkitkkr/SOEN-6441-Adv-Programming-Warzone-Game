@@ -131,6 +131,25 @@ public class MapView {
 		System.out.println();
 	}
 
+	/**
+	 * Method that renders the number of cards owned by the player.
+	 *
+	 * @param p_player Player Instance
+	 */
+	private void renderCardsOwnedByPlayers(Player p_player){
+		StringBuilder l_cards = new StringBuilder();
+
+		for(int i=0; i<p_player.getD_cardsOwnedByPlayer().size(); i++) {
+			l_cards.append(p_player.getD_cardsOwnedByPlayer().get(i));
+			if(i<p_player.getD_cardsOwnedByPlayer().size()-1)
+				l_cards.append(", ");
+		}
+
+		String l_cardsOwnedByPlayer = "Cards Owned : "+ WordWrap.from(l_cards.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap();
+		System.out.println(getColorizedString(p_player.getD_color(),l_cardsOwnedByPlayer));
+		System.out.println();
+	}
+
     /**
      * Gets the Color of Country based on Player.
      *
@@ -201,6 +220,7 @@ public class MapView {
 		for(Player p: d_players){
 			l_counter++;
 			renderPlayerInfo(l_counter, p);
+			renderCardsOwnedByPlayers(p);
 		}
 	}
 

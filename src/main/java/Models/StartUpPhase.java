@@ -31,6 +31,11 @@ public class StartUpPhase extends Phase{
     }
 
     @Override
+    protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
+        printInvalidCommandInState();
+    }
+
+    @Override
     protected void performShowMap(Command p_command, Player p_player) {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();

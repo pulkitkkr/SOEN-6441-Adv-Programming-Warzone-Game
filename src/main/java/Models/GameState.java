@@ -143,4 +143,5 @@ public class GameState {
 	public boolean getD_loadCommand(){
 		return this.d_loadCommand;
 	}
+	
 }
