@@ -42,6 +42,8 @@ public class MapServiceTest {
 
 	/**
 	 * Setup before each MapService Operations
+	 * 
+	 * @throws InvalidMap Invalid map exception
 	 */
 	@Before
 	public void setup() throws InvalidMap {
@@ -55,6 +57,7 @@ public class MapServiceTest {
 	 * This test case is used to test the functionality of EditMap function.
 	 *
 	 * @throws IOException throws IOException
+	 * @throws InvalidMap Invalid map exception
 	 */
 	@Test
 	public void testEditMap() throws IOException, InvalidMap {
