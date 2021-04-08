@@ -300,6 +300,10 @@ public class Player {
 		return this.d_playerLog;
 	}
 	
+	/**
+	 * Sets the strategy of the Player Behavior.
+	 * @param p_playerBehaviorStrategy object of PlayerBehaviorStrategy class
+	 */
 	public void setStrategy(PlayerBehaviorStrategy p_playerBehaviorStrategy) {
 		d_playerBehaviorStrategy = p_playerBehaviorStrategy;
 	}
