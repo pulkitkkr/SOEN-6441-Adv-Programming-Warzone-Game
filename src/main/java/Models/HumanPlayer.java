@@ -4,7 +4,7 @@
 package Models;
 
 /**
- * This is the class of Human Player which requires user interaction in order to make decisions
+ * This is the class of Human Player which requires user interaction in order to make decisions.
  */
 public class HumanPlayer extends PlayerBehaviorStrategy{	
 	
@@ -14,7 +14,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	public HumanPlayer(Player p_player) {
 		super(p_player);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -23,7 +22,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Order createOrder() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -33,7 +31,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -43,7 +40,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttackFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -53,7 +49,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toMoveFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -63,7 +58,6 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toDefend() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

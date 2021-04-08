@@ -5,7 +5,7 @@ package Models;
 
 /**
  * This is the class of Aggressive Player, who gathers all his armies, attacks from his strongest territory
- * and deploys armies to maximize his forces on one country
+ * and deploys armies to maximize his forces on one country.
  *
  */
 public class AggressivePlayer extends PlayerBehaviorStrategy{
@@ -16,7 +16,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	public AggressivePlayer(Player p_player) {
 		super(p_player);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -25,7 +24,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Order createOrder() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,7 +33,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -45,7 +42,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttackFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -55,7 +51,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toMoveFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -65,7 +60,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toDefend() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

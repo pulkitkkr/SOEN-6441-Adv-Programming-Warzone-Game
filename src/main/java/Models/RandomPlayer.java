@@ -4,8 +4,8 @@
 package Models;
 
 /**
- * This is the class of Random Player, who deploys armies randomly , attacks random neighnouring countries 
- * and moves armies on his own territories randomly
+ * This is the class of Random Player, who deploys armies randomly , attacks random neighboring countries 
+ * and moves armies on his own territories randomly.
  */
 public class RandomPlayer extends PlayerBehaviorStrategy {
 
@@ -23,7 +23,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Order createOrder() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -33,7 +32,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toAttack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -43,7 +41,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toAttackFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -53,7 +50,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toMoveFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -63,7 +59,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toDefend() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

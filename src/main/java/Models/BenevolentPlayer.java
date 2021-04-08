@@ -5,7 +5,7 @@ package Models;
 
 /**
  * This is the class of Benevolent Player who focuses only on defending his own countries and
- * will never attack
+ * will never attack.
  *
  */
 public class BenevolentPlayer extends PlayerBehaviorStrategy {
@@ -16,7 +16,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	public BenevolentPlayer(Player p_player) {
 		super(p_player);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -25,7 +24,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Order createOrder() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,7 +33,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toAttack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -45,7 +42,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toAttackFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -55,7 +51,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toMoveFrom() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -65,7 +60,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Country toDefend() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
