@@ -8,6 +8,7 @@ import Constants.ApplicationConstants;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
+import Models.HumanPlayer;
 import Models.Player;
 import Utils.CommonUtil;
 
@@ -112,6 +113,10 @@ public class PlayerService {
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
 			p_updatedPlayers.add(l_addNewPlayer);
+			
+			// created player should be fetched from the list and new object of its behavoir should be created using the setStrategy method
+			l_addNewPlayer.setStrategy(new HumanPlayer(l_addNewPlayer));
+			
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
 		}
 	}
