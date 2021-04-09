@@ -10,6 +10,10 @@ import java.util.List;
 import static java.util.Collections.addAll;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Deplomacy test class.
+ *
+ */
 public class DiplomacyTest {
     /**
      * First Player.

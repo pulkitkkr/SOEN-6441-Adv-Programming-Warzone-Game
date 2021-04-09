@@ -109,6 +109,8 @@ public class PlayerServiceTest {
 
 	/**
 	 * Used for checking whether players have been assigned with countries
+	 * 
+	 * @throws InvalidMap invalid map exception
 	 */
 	@Test
 	public void testPlayerCountryAssignment() throws InvalidMap {

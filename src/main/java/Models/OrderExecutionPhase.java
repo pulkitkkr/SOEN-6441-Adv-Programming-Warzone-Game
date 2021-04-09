@@ -39,13 +39,14 @@ public class OrderExecutionPhase extends Phase {
 	@Override
 	public void initPhase() {
 		while (d_gameEngine.getD_CurrentPhase() instanceof OrderExecutionPhase) {
+			System.out.println("inside init");
 			executeOrders();
 
 			MapView l_map_view = new MapView(d_gameState);
 			l_map_view.showMap();
 
 			if (this.checkEndOftheGame(d_gameState))
-				break;
+				return;
 
             while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
                 System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
