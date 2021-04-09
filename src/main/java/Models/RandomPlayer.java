@@ -15,21 +15,6 @@ import Exceptions.InvalidMap;
 public class RandomPlayer extends PlayerBehaviorStrategy {
 
 	/**
-	 * object of player class.
-	 */
-	Player d_player;
-	
-	/**
-	 * object of IssueOrderPhase class.
-	 */
-	IssueOrderPhase d_issueOrder;
-	
-	/**
-	 * object of GameState class.
-	 */
-	GameState d_gameState;
-	
-	/**
 	 * This method creates a new order.
 	 * @param p_player object of Player class
 	 * @param p_issueOrder object of IssueOrderPhase class
@@ -43,9 +28,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		d_player = p_player;
-		d_issueOrder = p_issueOrder;
-		d_gameState = p_gameState;
+		super.setObjects(p_player, p_issueOrder, p_gameState);
 		
 		p_issueOrder.askForOrder(p_player);
 		return null;

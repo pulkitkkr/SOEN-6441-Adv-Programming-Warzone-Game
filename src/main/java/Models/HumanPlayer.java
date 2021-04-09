@@ -13,21 +13,6 @@ import Exceptions.InvalidMap;
  * This is the class of Human Player which requires user interaction in order to make decisions.
  */
 public class HumanPlayer extends PlayerBehaviorStrategy{	
-
-	/**
-	 * object of player class.
-	 */
-	Player d_player;
-	
-	/**
-	 * object of IssueOrderPhase class.
-	 */
-	IssueOrderPhase d_issueOrder;
-	
-	/**
-	 * object of GameState class.
-	 */
-	GameState d_gameState;
 	
 	/**
 	 * This method creates a new order.
@@ -44,9 +29,7 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		d_player = p_player;
-		d_issueOrder = p_issueOrder;
-		d_gameState = p_gameState;
+		super.setObjects(p_player, p_issueOrder, p_gameState);
 		
 		p_issueOrder.askForOrder(p_player);
 		return null;
