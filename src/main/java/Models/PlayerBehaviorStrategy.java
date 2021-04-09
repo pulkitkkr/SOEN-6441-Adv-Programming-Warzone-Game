@@ -34,6 +34,8 @@ public abstract class PlayerBehaviorStrategy {
 	
 	/**
 	 * This method creates a new order.
+	 * @param p_player object of Player class
+	 * @param p_issueOrder object of IssueOrderPhase class
 	 * @return Order object of order class
 	 * @throws InvalidMap handles invalid map exception
 	 * @throws IOException handles IO exception
