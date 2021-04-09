@@ -3,13 +3,20 @@
  */
 package Models;
 
+import java.util.Random;
+
 /**
  * This is the class of Aggressive Player, who gathers all his armies, attacks from his strongest territory
  * and deploys armies to maximize his forces on one country.
  *
  */
 public class AggressivePlayer extends PlayerBehaviorStrategy{
-
+	
+	/**
+	 * Random class object initialized.
+	 */
+	Random d_random = new Random();
+	
 	/**
 	 * The parameterized constructor is used to create aggressive player.
 	 * @param p_player Player Class Object
@@ -23,8 +30,9 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 * @return Order object of order class
 	 */
 	@Override
-	public Order createOrder() {
-		return null;
+	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder) {
+		//return new Deploy(d_player, toMove().getD_countryName(), toMoveFrom().getD_armies() - 1); 
+		return new Advance(d_player, toAttackFrom().d_countryName, toAttack().getD_countryName(), toAttackFrom().getD_armies() - 1);
 	}
 
 	/**
@@ -33,6 +41,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttack() {
+		//need to check adjacency
 		return null;
 	}
 
@@ -42,7 +51,13 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toAttackFrom() {
-		return null;
+		Country l_maxArmiesCountry = d_player.getD_coutriesOwned().get(0);
+		for(Country l_country : d_player.getD_coutriesOwned()) {
+			if(l_maxArmiesCountry.getD_armies() < l_country.getD_armies() && d_player.getD_coutriesOwned().contains(l_country)) {
+				l_maxArmiesCountry = l_country;
+			}
+		}
+		return l_maxArmiesCountry;
 	}
 
 	/**
@@ -60,7 +75,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Country toDefend() {
-		return null;
+		return d_player.getD_coutriesOwned().get(d_random.nextInt(d_player.d_coutriesOwned.size() - 1));
 	}
 
 }

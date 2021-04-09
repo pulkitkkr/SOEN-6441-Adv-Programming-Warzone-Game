@@ -65,7 +65,6 @@ public class IssueOrderPhase extends Phase{
 
     /**
      * Accepts orders from players.
-     *
      */
     protected void issueOrders(){
         // issue orders for each player

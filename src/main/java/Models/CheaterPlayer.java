@@ -22,7 +22,7 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 	 * @return Order object of order class
 	 */
 	@Override
-	public Order createOrder() {
+	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder) {
 		return null;
 	}
 

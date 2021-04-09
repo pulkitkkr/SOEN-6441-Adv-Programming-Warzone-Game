@@ -114,8 +114,8 @@ public class PlayerService {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
 			p_updatedPlayers.add(l_addNewPlayer);
 			
-			// created player should be fetched from the list and new object of its behavoir should be created using the setStrategy method
-			l_addNewPlayer.setStrategy(new HumanPlayer(l_addNewPlayer));
+			// created player should be fetched from the list and new object of its behavior should be created using the setStrategy method
+			//l_addNewPlayer.setStrategy(new HumanPlayer(l_addNewPlayer));
 			
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
 		}

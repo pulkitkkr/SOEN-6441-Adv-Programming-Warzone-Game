@@ -374,16 +374,12 @@ public class Player {
      * @throws InvalidMap indicates failure in using the invalid map
 	 */
 	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
-		p_issueOrderPhase.askForOrder(this);
-		//d_playerBehaviorStrategy(this, p_issueOrderPhase);
-		//pass this player object + askForOrder to PBS
+		//p_issueOrderPhase.askForOrder(this);
 		Order l_order;
-		l_order = d_playerBehaviorStrategy.createOrder();
+		l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase);
 		if(l_order != null) {
 			d_orderList.add(l_order);
-			//return true;
 		}
-		//return false;
 	}
 
 	/**

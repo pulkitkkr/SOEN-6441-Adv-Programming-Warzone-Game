@@ -3,6 +3,12 @@
  */
 package Models;
 
+import java.io.IOException;
+import java.util.List;
+
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+
 /**
  * This is the abstract strategy class of Player Behavior.
  */
@@ -12,6 +18,11 @@ public abstract class PlayerBehaviorStrategy {
 	 * Object of Player class.
 	 */
 	Player d_player;
+	
+	/**
+	 * list of countries.
+	 */
+	List<Country> d_listOfCountries;
 	
 	/**
 	 * The parameterized constructor is used to create player.
@@ -24,8 +35,11 @@ public abstract class PlayerBehaviorStrategy {
 	/**
 	 * This method creates a new order.
 	 * @return Order object of order class
+	 * @throws InvalidMap handles invalid map exception
+	 * @throws IOException handles IO exception
+	 * @throws InvalidCommand handles Invalid Command exception
 	 */
-	public abstract Order createOrder();
+	public abstract Order createOrder(Player p_player, IssueOrderPhase p_issueOrder) throws InvalidCommand, IOException, InvalidMap;
 	
 	/**
 	 * This method defines which country to attack.
