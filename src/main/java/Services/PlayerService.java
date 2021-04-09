@@ -107,6 +107,7 @@ public class PlayerService {
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
 			boolean p_playerNameAlreadyExist) {
+		Random l_random = new Random();
 
 		if (p_playerNameAlreadyExist) {
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " already Exists. Changes are not made.");

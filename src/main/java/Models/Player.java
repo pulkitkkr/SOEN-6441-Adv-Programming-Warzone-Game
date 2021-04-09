@@ -376,7 +376,7 @@ public class Player {
 	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
 		//p_issueOrderPhase.askForOrder(this);
 		Order l_order;
-		l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase);
+		l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase, p_issueOrderPhase.d_gameState);
 		if(l_order != null) {
 			d_orderList.add(l_order);
 		}
