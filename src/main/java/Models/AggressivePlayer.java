@@ -27,7 +27,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	IssueOrderPhase d_issueOrder;
 	
 	/**
-	 * object of GameState class
+	 * object of GameState class.
 	 */
 	GameState d_gameState;
 	
