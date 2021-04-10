@@ -42,6 +42,7 @@ public abstract class PlayerBehaviorStrategy {
 
 	/**
 	 * this method sets the objects of player class and GameState class.
+	 * @param p_player object of player class
 	 * @param p_gameState object of GameState class
 	 */
 	public void setObjects(Player p_player, GameState p_gameState) {
