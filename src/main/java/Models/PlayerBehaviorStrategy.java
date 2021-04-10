@@ -19,26 +19,9 @@ public abstract class PlayerBehaviorStrategy {
 	Player d_player;
 	
 	/**
-	 * object of IssueOrderPhase class.
-	 */
-	IssueOrderPhase d_issueOrder;
-	
-	/**
 	 * object of GameState class.
 	 */
 	GameState d_gameState;
-	
-	/**
-	 * this method sets the objects of player class, IssueOrderPhase class and GameState class.
-	 * @param p_player object of player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 */
-	public void setObjects(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) {
-		d_player = p_player;
-		d_issueOrder = p_issueOrder;
-		d_gameState = p_gameState;
-	}
 
 	/**
 	 * this method sets the objects of player class and GameState class.

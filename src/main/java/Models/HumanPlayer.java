@@ -14,6 +14,11 @@ import Exceptions.InvalidMap;
 public class HumanPlayer extends PlayerBehaviorStrategy{	
 	
 	/**
+	 * object of IssueOrderPhase class.
+	 */
+	IssueOrderPhase d_issueOrder;
+	
+	/**
 	 * This method creates a new order.
 	 * 
 	 * @param p_player object of Player class
@@ -28,22 +33,9 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 */
 	@Override
 	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		super.setObjects(p_player, p_issueOrder, p_gameState);
-		
+		super.setObjects(p_player, p_gameState);
+		d_issueOrder = p_issueOrder;
 		p_issueOrder.askForOrder(p_player);
-		return null;
-	}
-	
-	/**
-	 * This method creates a new order.
-	 * 
-	 * @param p_player object of Player class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 */
-	@Override
-	public Order createOrder(Player p_player, GameState p_gameState) {
 		return null;
 	}
 
@@ -90,5 +82,18 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	@Override
 	public String getPlayerBehavior() {
 		return "Human";
+	}
+	
+	/**
+	 * This method creates a new order.
+	 * 
+	 * @param p_player object of Player class
+	 * @param p_gameState object of GameState class
+	 * 
+	 * @return Order object of order class
+	 */
+	@Override
+	public Order createOrder(Player p_player, GameState p_gameState) {
+		return null;
 	}
 }
