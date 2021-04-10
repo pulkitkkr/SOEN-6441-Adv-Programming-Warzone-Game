@@ -374,9 +374,15 @@ public class Player {
      * @throws InvalidMap indicates failure in using the invalid map
 	 */
 	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
-		//p_issueOrderPhase.askForOrder(this);
 		Order l_order;
-		l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase, p_issueOrderPhase.d_gameState);
+		
+		if(d_playerBehaviorStrategy.getPlayerBehavior().equals("Human")) {
+			l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase, p_issueOrderPhase.d_gameState);
+		}
+		else {
+			l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase.d_gameState);
+		}
+		
 		if(l_order != null) {
 			d_orderList.add(l_order);
 		}

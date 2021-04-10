@@ -4,7 +4,6 @@
 package Models;
 
 import java.io.IOException;
-import java.util.List;
 
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -32,6 +31,19 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 		super.setObjects(p_player, p_issueOrder, p_gameState);
 		
 		p_issueOrder.askForOrder(p_player);
+		return null;
+	}
+	
+	/**
+	 * This method creates a new order.
+	 * 
+	 * @param p_player object of Player class
+	 * @param p_gameState object of GameState class
+	 * 
+	 * @return Order object of order class
+	 */
+	@Override
+	public Order createOrder(Player p_player, GameState p_gameState) {
 		return null;
 	}
 
@@ -70,5 +82,13 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	public Country toDefend() {
 		return null;
 	}
-
+	
+	/**
+	 * This method returns the player behavior.
+	 * @return String player behavior
+	 */
+	@Override
+	public String getPlayerBehavior() {
+		return "Human";
+	}
 }

@@ -118,8 +118,9 @@ public class PlayerService {
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
 			p_updatedPlayers.add(l_addNewPlayer);
+			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
 			
-			switch(ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt())) {
+			switch(ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1))) {
 			case "Human":
 				l_addNewPlayer.setStrategy(new HumanPlayer());
 				break;
@@ -137,9 +138,8 @@ public class PlayerService {
 				break;
 			default:
 				setD_playerLog("Invalid Player Behavior");
+				break;
 			}
-			
-			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
 		}
 	}
 
