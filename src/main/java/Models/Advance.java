@@ -200,8 +200,7 @@ public class Advance implements Order {
 					"Player : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
 							+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(),
 					"default");
-
-			this.d_playerInitiator.assignCard();
+			this.d_playerInitiator.setD_oneCardPerTurn(true);
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
 

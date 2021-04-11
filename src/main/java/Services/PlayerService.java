@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 import Constants.ApplicationConstants;
+import Models.AggressivePlayer;
+import Models.BenevolentPlayer;
+import Models.CheaterPlayer;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
+import Models.HumanPlayer;
 import Models.Player;
+import Models.RandomPlayer;
 import Utils.CommonUtil;
 
 /**
@@ -106,6 +111,7 @@ public class PlayerService {
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
 			boolean p_playerNameAlreadyExist) {
+		Random l_random = new Random();
 
 		if (p_playerNameAlreadyExist) {
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " already Exists. Changes are not made.");
@@ -113,6 +119,27 @@ public class PlayerService {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
 			p_updatedPlayers.add(l_addNewPlayer);
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
+			
+			switch(ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1))) {
+			case "Human":
+				l_addNewPlayer.setStrategy(new HumanPlayer());
+				break;
+			case "Aggressive":
+				l_addNewPlayer.setStrategy(new AggressivePlayer());
+				break;
+			case "Random":
+				l_addNewPlayer.setStrategy(new RandomPlayer());
+				break;
+			case "Benevolent":
+				l_addNewPlayer.setStrategy(new BenevolentPlayer());
+				break;
+			case "Cheater":
+				l_addNewPlayer.setStrategy(new CheaterPlayer());
+				break;
+			default:
+				setD_playerLog("Invalid Player Behavior");
+				break;
+			}
 		}
 	}
 
@@ -362,7 +389,10 @@ public class PlayerService {
 		for (Player l_player : p_playersList) {
 			if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
 				l_player.setD_moreOrders(true);
-			l_player.setD_oneCardPerTurn(false);
+			if(l_player.getD_oneCardPerTurn()) {
+				l_player.assignCard();
+				l_player.setD_oneCardPerTurn(false);
+			}
 			l_player.resetNegotiation();
 		}
 	}

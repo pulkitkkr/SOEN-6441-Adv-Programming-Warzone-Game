@@ -1,0 +1,99 @@
+/**
+ * 
+ */
+package Models;
+
+import java.io.IOException;
+
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+
+/**
+ * This is the class of Human Player which requires user interaction in order to make decisions.
+ */
+public class HumanPlayer extends PlayerBehaviorStrategy{	
+	
+	/**
+	 * object of IssueOrderPhase class.
+	 */
+	IssueOrderPhase d_issueOrder;
+	
+	/**
+	 * This method creates a new order.
+	 * 
+	 * @param p_player object of Player class
+	 * @param p_issueOrder object of IssueOrderPhase class
+	 * @param p_gameState object of GameState class
+	 * 
+	 * @return Order object of order class
+	 * 
+	 * @throws InvalidMap handles invalid map exception
+	 * @throws IOException handles IO exception
+	 * @throws InvalidCommand handles Invalid Command exception
+	 */
+	@Override
+	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
+		super.setObjects(p_player, p_gameState);
+		d_issueOrder = p_issueOrder;
+		p_issueOrder.askForOrder(p_player);
+		return null;
+	}
+
+	/**
+	 * This method defines which country to attack.
+	 * @return Country object of class Country
+	 */
+	@Override
+	public Country toAttack() {
+		return null;
+	}
+
+	/**
+	 * This method defines from which country the attack will be initiated.
+	 * @return Country object of class Country
+	 */
+	@Override
+	public Country toAttackFrom() {
+		return null;
+	}
+
+	/**
+	 * This method defines where to move the armies from.
+	 * @return Country object of class Country
+	 */
+	@Override
+	public Country toMoveFrom() {
+		return null;
+	}
+
+	/**
+	 * This method defines the placement of more armies in order to defend the country.
+	 * @return Country object of class Country
+	 */
+	@Override
+	public Country toDefend() {
+		return null;
+	}
+	
+	/**
+	 * This method returns the player behavior.
+	 * @return String player behavior
+	 */
+	@Override
+	public String getPlayerBehavior() {
+		return "Human";
+	}
+	
+	/**
+	 * This method creates a new order.
+	 * 
+	 * @param p_player object of Player class
+	 * @param p_gameState object of GameState class
+	 * 
+	 * @return Order object of order class
+	 */
+	@Override
+	public Order createOrder(Player p_player, GameState p_gameState) {
+		return null;
+	}
+}

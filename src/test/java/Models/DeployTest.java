@@ -118,7 +118,7 @@ public class DeployTest {
 
 		assertEquals(l_player.getD_noOfUnallocatedArmies().toString(), "6");
 		assertEquals(l_player.getD_ordersToExecute().size(), 1);
-		Deploy l_order = (Deploy) l_player.order_list.get(0);
+		Deploy l_order = (Deploy) l_player.d_orderList.get(0);
 		assertEquals("Japan", l_order.d_targetCountryName);
 		assertEquals("4", String.valueOf(l_order.d_numberOfArmiesToPlace));
 	}
