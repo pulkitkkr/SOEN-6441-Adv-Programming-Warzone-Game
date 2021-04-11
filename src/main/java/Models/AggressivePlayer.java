@@ -34,49 +34,6 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	}
 
 	/**
-	 * This method defines which country to attack.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toAttack() {
-		//need to check adjacency
-		return null;
-	}
-
-	/**
-	 * This method defines from which country the attack will be initiated.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toAttackFrom() {
-		Country l_maxArmiesCountry = d_player.getD_coutriesOwned().get(0);
-		for(Country l_country : d_player.getD_coutriesOwned()) {
-			if(l_maxArmiesCountry.getD_armies() < l_country.getD_armies() && d_player.getD_coutriesOwned().contains(l_country)) {
-				l_maxArmiesCountry = l_country;
-			}
-		}
-		return l_maxArmiesCountry;
-	}
-
-	/**
-	 * This method defines where to move the armies from.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toMoveFrom() {
-		return null;
-	}
-
-	/**
-	 * This method defines the placement of more armies in order to defend the country.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toDefend() {
-		return d_player.getD_coutriesOwned().get(d_random.nextInt(d_player.d_coutriesOwned.size() - 1));
-	}
-
-	/**
 	 * This method returns the player behavior.
 	 * @return String player behavior
 	 */

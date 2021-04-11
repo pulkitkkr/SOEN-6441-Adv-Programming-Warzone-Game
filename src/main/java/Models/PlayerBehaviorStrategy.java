@@ -44,30 +44,6 @@ public abstract class PlayerBehaviorStrategy {
 	public abstract String createOrder(Player p_player, GameState p_gameState) throws IOException;
 	
 	/**
-	 * This method defines which country to attack.
-	 * @return Country object of class Country
-	 */
-	public abstract Country toAttack();
-	
-	/**
-	 * This method defines from which country the attack will be initiated.
-	 * @return Country object of class Country
-	 */
-	public abstract Country toAttackFrom();
-	
-	/**
-	 * This method defines where to move the armies from.
-	 * @return Country object of class Country
-	 */
-	public abstract Country toMoveFrom();
-	
-	/**
-	 * This method defines the placement of more armies in order to defend the country.
-	 * @return Country object of class Country
-	 */
-	public abstract Country toDefend();
-	
-	/**
 	 * This method returns the player behavior.
 	 * @return String player behavior
 	 */

@@ -16,42 +16,6 @@ import Exceptions.InvalidMap;
 public class HumanPlayer extends PlayerBehaviorStrategy{	
 
 	/**
-	 * This method defines which country to attack.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toAttack() {
-		return null;
-	}
-
-	/**
-	 * This method defines from which country the attack will be initiated.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toAttackFrom() {
-		return null;
-	}
-
-	/**
-	 * This method defines where to move the armies from.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toMoveFrom() {
-		return null;
-	}
-
-	/**
-	 * This method defines the placement of more armies in order to defend the country.
-	 * @return Country object of class Country
-	 */
-	@Override
-	public Country toDefend() {
-		return null;
-	}
-	
-	/**
 	 * This method returns the player behavior.
 	 * @return String player behavior
 	 */

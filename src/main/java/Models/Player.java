@@ -272,6 +272,19 @@ public class Player {
 	}
 
 	/**
+	 * Extracts the list of IDs of countries owned by the player.
+	 *
+	 * @return list of country Ids
+	 */
+	public List<Integer> getCountryIDs() {
+		List<Integer> l_countryIDs = new ArrayList<Integer>();
+		for (Country c : d_coutriesOwned) {
+			l_countryIDs.add(c.getD_countryId());
+		}
+		return l_countryIDs;
+	}
+
+	/**
 	 * Extracts the list of names of countries owned by the player.
 	 *
 	 * @return list of country names
@@ -337,15 +350,17 @@ public class Player {
 	 * @throws IOException exception in reading inputs from user
 	 */
 	void checkForMoreOrders() throws IOException {
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
-				+ " in next turn ? \nPress Y for Yes or N for No");
-		String l_nextOrderCheck = l_reader.readLine();
-		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
-			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
-		} else {
-			System.err.println("Invalid Input Passed.");
-			this.checkForMoreOrders();
+		if (this.d_playerBehaviorStrategy.getPlayerBehavior()=="Human") {
+			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
+					+ " in next turn ? \nPress Y for Yes or N for No");
+			String l_nextOrderCheck = l_reader.readLine();
+			if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
+				this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
+			} else {
+				System.err.println("Invalid Input Passed.");
+				this.checkForMoreOrders();
+			}
 		}
 	}
 
