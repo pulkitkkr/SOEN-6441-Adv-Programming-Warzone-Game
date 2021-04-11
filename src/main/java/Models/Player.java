@@ -231,6 +231,20 @@ public class Player {
 		return d_moreOrders;
 	}
 
+	public String getPlayerOrder(GameState p_gameState) throws IOException {
+		String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
+		return l_stringOrder;
+	}
+
+	/**
+	 * Returns player strategy object.
+	 *
+	 * @return player strategy
+	 */
+	public PlayerBehaviorStrategy getD_playerBehaviorStrategy(){
+		return d_playerBehaviorStrategy;
+	}
+
 	/**
 	 * Sets info about more orders from player are to be accepted or not.
 	 *

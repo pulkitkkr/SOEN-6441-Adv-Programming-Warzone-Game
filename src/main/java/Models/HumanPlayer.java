@@ -3,7 +3,9 @@
  */
 package Models;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -12,32 +14,6 @@ import Exceptions.InvalidMap;
  * This is the class of Human Player which requires user interaction in order to make decisions.
  */
 public class HumanPlayer extends PlayerBehaviorStrategy{	
-	
-	/**
-	 * object of IssueOrderPhase class.
-	 */
-	IssueOrderPhase d_issueOrder;
-	
-	/**
-	 * This method creates a new order.
-	 * 
-	 * @param p_player object of Player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 * 
-	 * @throws InvalidMap handles invalid map exception
-	 * @throws IOException handles IO exception
-	 * @throws InvalidCommand handles Invalid Command exception
-	 */
-	@Override
-	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		super.setObjects(p_player, p_gameState);
-		d_issueOrder = p_issueOrder;
-		p_issueOrder.askForOrder(p_player);
-		return null;
-	}
 
 	/**
 	 * This method defines which country to attack.
@@ -93,7 +69,12 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 	 * @return Order object of order class
 	 */
 	@Override
-	public Order createOrder(Player p_player, GameState p_gameState) {
-		return null;
+	public String createOrder(Player p_player, GameState p_gameState) throws IOException {
+
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
+				+ " or give showmap command to view current state of the game.");
+		String l_commandEntered = l_reader.readLine();
+		return l_commandEntered;
 	}
 }

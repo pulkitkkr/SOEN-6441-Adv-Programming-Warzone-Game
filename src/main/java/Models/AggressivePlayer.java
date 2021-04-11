@@ -26,13 +26,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 * @param p_player object of Player class
 	 * @param p_gameState object of GameState class
 	 * 
-	 * @return Order object of order class
+	 * @return String form of order
 	 */
 	@Override
-	public Order createOrder(Player p_player, GameState p_gameState) {
-		super.setObjects(p_player, p_gameState);
-		//return new Deploy(d_player, toMove().getD_countryName(), toMoveFrom().getD_armies() - 1); 
-		return new Advance(d_player, toAttackFrom().d_countryName, toAttack().getD_countryName(), toAttackFrom().getD_armies() - 1);
+	public String createOrder(Player p_player, GameState p_gameState) {
+		return null;
 	}
 
 	/**
@@ -85,22 +83,5 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	@Override
 	public String getPlayerBehavior() {
 		return "Aggressive";
-	}
-
-	/**
-	 * This method creates a new order.
-	 * @param p_player object of Player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 * 
-	 * @throws InvalidMap handles invalid map exception
-	 * @throws IOException handles IO exception
-	 * @throws InvalidCommand handles Invalid Command exception
-	 */
-	@Override
-	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		return null;
 	}
 }

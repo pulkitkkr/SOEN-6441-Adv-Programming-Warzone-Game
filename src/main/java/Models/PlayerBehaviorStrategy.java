@@ -32,21 +32,6 @@ public abstract class PlayerBehaviorStrategy {
 		d_player = p_player;
 		d_gameState = p_gameState;
 	}
-	
-	/**
-	 * This method creates a new order for Human Player Behavior.
-	 * 
-	 * @param p_player object of Player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 * 
-	 * @throws InvalidMap handles invalid map exception
-	 * @throws IOException handles IO exception
-	 * @throws InvalidCommand handles Invalid Command exception
-	 */
-	public abstract Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap;
 
 	/**
 	 * This method creates a new order for Random, Aggressive, Cheater and Benevolent Players.
@@ -56,7 +41,7 @@ public abstract class PlayerBehaviorStrategy {
 	 * 
 	 * @return Order object of order class
 	 */
-	public abstract Order createOrder(Player p_player, GameState p_gameState);
+	public abstract String createOrder(Player p_player, GameState p_gameState) throws IOException;
 	
 	/**
 	 * This method defines which country to attack.

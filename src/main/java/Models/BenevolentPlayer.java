@@ -23,7 +23,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 * @return Order object of order class
 	 */
 	@Override
-	public Order createOrder(Player p_player, GameState p_gameState) {
+	public String createOrder(Player p_player, GameState p_gameState) {
 		super.setObjects(p_player, p_gameState);
 		return null;
 	}
@@ -71,22 +71,5 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	@Override
 	public String getPlayerBehavior() {
 		return "Benevolent";
-	}
-
-	/**
-	 * This method creates a new order.
-	 * @param p_player object of Player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 * 
-	 * @throws InvalidMap handles invalid map exception
-	 * @throws IOException handles IO exception
-	 * @throws InvalidCommand handles Invalid Command exception
-	 */
-	@Override
-	public Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap{
-		return null;
 	}
 }

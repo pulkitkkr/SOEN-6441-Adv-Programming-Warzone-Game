@@ -117,10 +117,9 @@ public class PlayerService {
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " already Exists. Changes are not made.");
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
-			p_updatedPlayers.add(l_addNewPlayer);
-			setD_playerLog("Player with name : " + p_enteredPlayerName + " has been added successfully.");
-			
-			switch(ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1))) {
+			//String l_playerStrategy = ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1));
+			String l_playerStrategy = "Human";
+			switch(l_playerStrategy) {
 			case "Human":
 				l_addNewPlayer.setStrategy(new HumanPlayer());
 				break;
@@ -140,6 +139,8 @@ public class PlayerService {
 				setD_playerLog("Invalid Player Behavior");
 				break;
 			}
+			p_updatedPlayers.add(l_addNewPlayer);
+			setD_playerLog("Player with name : " + p_enteredPlayerName +" and strategy: "+l_playerStrategy+ " has been added successfully.");
 		}
 	}
 
