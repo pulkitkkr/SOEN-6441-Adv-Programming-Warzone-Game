@@ -125,6 +125,15 @@ public class Player {
 	}
 
 	/**
+	 * Returns the boolean if player has earned a card or not.
+	 *
+	 * @return bool if player has earned one card
+	 */
+	public boolean getD_oneCardPerTurn(){
+		return d_oneCardPerTurn;
+	}
+
+	/**
 	 *
 	 * @param p_color ANSI color code.
 	 */
@@ -374,18 +383,7 @@ public class Player {
      * @throws InvalidMap indicates failure in using the invalid map
 	 */
 	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
-		Order l_order;
-		
-		if(d_playerBehaviorStrategy.getPlayerBehavior().equals("Human")) {
-			l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase, p_issueOrderPhase.d_gameState);
-		}
-		else {
-			l_order = d_playerBehaviorStrategy.createOrder(this, p_issueOrderPhase.d_gameState);
-		}
-		
-		if(l_order != null) {
-			d_orderList.add(l_order);
-		}
+		p_issueOrderPhase.askForOrder(this);
 	}
 
 	/**
@@ -491,14 +489,9 @@ public class Player {
 	 *
 	 */
 	public void assignCard() {
-		if (!d_oneCardPerTurn) {
-			Random l_random = new Random();
-			this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
-			this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
-			this.setD_oneCardPerTurn(true);
-		}else{
-			this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
-		}
+		Random l_random = new Random();
+		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+		this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
 	}
 
 

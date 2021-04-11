@@ -389,7 +389,10 @@ public class PlayerService {
 		for (Player l_player : p_playersList) {
 			if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
 				l_player.setD_moreOrders(true);
-			l_player.setD_oneCardPerTurn(false);
+			if(l_player.getD_oneCardPerTurn()) {
+				l_player.assignCard();
+				l_player.setD_oneCardPerTurn(false);
+			}
 			l_player.resetNegotiation();
 		}
 	}
