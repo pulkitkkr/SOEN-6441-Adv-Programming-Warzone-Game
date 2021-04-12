@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ public class MapService {
 				MapReaderAdapter l_mapReaderAdapter = new MapReaderAdapter(new ConquestMapFileReader());
 				l_mapReaderAdapter.parseMapFile(p_gameState, l_map, l_linesOfFile);
 			} else if(l_linesOfFile.contains("[countries]")) {
-				MapFileReader l_mapFileReader = new MapFileReader();
-				l_mapFileReader.parseMapFile(p_gameState, l_map, l_linesOfFile);
+				new MapFileReader().parseMapFile(p_gameState, l_map, l_linesOfFile);
 			}
 		}
 		return l_map;
@@ -234,9 +234,8 @@ public class MapService {
 	 * @throws InvalidMap InvalidMap exception
 	 */
 	public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
-		boolean l_flagValidate = false;
 		try {
-
+			String l_mapFormat = null;
 			// Verifies if the file linked to savemap and edited by user are same
 			if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
 				p_gameState.setError("Kindly provide same file name to save which you have given for edit");
@@ -248,18 +247,13 @@ public class MapService {
 					// Proceeds to save the map if it passes the validation check
 					this.setD_MapServiceLog("Validating Map......", p_gameState);
 					//boolean l_mapValidationStatus = l_currentMap.Validate();
+					System.out.println("");
 					if (l_currentMap.Validate()) {
+						l_mapFormat = this.getFormatToSave();
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
 						FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
 
-						if (null != p_gameState.getD_map().getD_continents()
-								&& !p_gameState.getD_map().getD_continents().isEmpty()) {
-							writeContinentMetadata(p_gameState, l_writer);
-						}
-						if (null != p_gameState.getD_map().getD_countries()
-								&& !p_gameState.getD_map().getD_countries().isEmpty()) {
-							writeCountryAndBoarderMetaData(p_gameState, l_writer);
-						}
+						parseMapToFile(p_gameState, l_writer, l_mapFormat);
 						p_gameState.updateLog("Map Saved Successfully", "effect");
 						l_writer.close();
 					}
@@ -279,58 +273,17 @@ public class MapService {
 	}
 
 	/**
-	 * Retrieves country and boarder data from game state and writes it to file
-	 * writer.
-	 * 
-	 * @param p_gameState Current GameState Object
-	 * @param p_writer Writer object for file
-	 * @throws IOException handles I/0
+	 * @param p_gameState
+	 * @param l_writer
+	 * @param l_mapFormat 
+	 * @throws IOException
 	 */
-	private void writeCountryAndBoarderMetaData(GameState p_gameState, FileWriter p_writer) throws IOException {
-		String l_countryMetaData = new String();
-		String l_bordersMetaData = new String();
-		List<String> l_bordersList = new ArrayList<>();
-
-		// Writes Country Objects to File And Organizes Border Data for each of them
-		p_writer.write(System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
-		for (Country l_country : p_gameState.getD_map().getD_countries()) {
-			l_countryMetaData = new String();
-			l_countryMetaData = l_country.getD_countryId().toString().concat(" ").concat(l_country.getD_countryName())
-					.concat(" ").concat(l_country.getD_continentId().toString());
-			p_writer.write(l_countryMetaData + System.lineSeparator());
-
-			if (null != l_country.getD_adjacentCountryIds() && !l_country.getD_adjacentCountryIds().isEmpty()) {
-				l_bordersMetaData = new String();
-				l_bordersMetaData = l_country.getD_countryId().toString();
-				for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
-					l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
-				}
-				l_bordersList.add(l_bordersMetaData);
-			}
-		}
-
-		// Writes Border data to the File
-		if (null != l_bordersList && !l_bordersList.isEmpty()) {
-			p_writer.write(System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
-			for (String l_borderStr : l_bordersList) {
-				p_writer.write(l_borderStr + System.lineSeparator());
-			}
-		}
-	}
-
-	/**
-	 * Retrieves continents' data from game state and writes it to file.
-	 * 
-	 * @param p_gameState Current GameState
-	 * @param p_writer Writer Object for file
-	 * @throws IOException handles I/O
-	 */
-	private void writeContinentMetadata(GameState p_gameState, FileWriter p_writer) throws IOException {
-		p_writer.write(System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
-		for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
-			p_writer.write(
-					l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString())
-							+ System.lineSeparator());
+	private void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
+		if(l_mapFormat.equalsIgnoreCase("ConquestMap")) {
+			MapWriterAdapter l_mapWriterAdapter = new MapWriterAdapter(new ConquestMapFileWriter());
+			l_mapWriterAdapter.parseMapToFile(p_gameState, l_writer, l_mapFormat);
+		} else {
+			new MapFileWriter().parseMapToFile(p_gameState, l_writer, l_mapFormat);
 		}
 	}
 
@@ -355,5 +308,25 @@ public class MapService {
 	public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState){
 		System.out.println(p_MapServiceLog);
 		p_gameState.updateLog(p_MapServiceLog, "effect");
+	}
+	
+	/**
+	 * Checks in what format user wants to save the map file.
+	 *
+	 * @return String map format to be saved
+	 * @throws IOException exception in reading inputs from user
+	 */
+	public String getFormatToSave() throws IOException {
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Kindly press 1 to save the map as conquest map format or else press 2");
+		String l_nextOrderCheck = l_reader.readLine();
+		if (l_nextOrderCheck.equalsIgnoreCase("1")) {
+			return "ConquestMap";
+		} else if (l_nextOrderCheck.equalsIgnoreCase("2")) {
+			return "NormalMap";
+		} else {
+			System.err.println("Invalid Input Passed.");
+			return this.getFormatToSave();
+		}
 	}
 }

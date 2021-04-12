@@ -150,10 +150,6 @@ public class StartUpPhase extends Phase{
                     } else {
                         d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
                     }
-					/*
-					 * if(!l_flagValidate){ d_mapService.resetMap(d_gameState,
-					 * l_map.get(ApplicationConstants.ARGUMENTS)); }
-					 */
                 } else {
                     throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
                 }

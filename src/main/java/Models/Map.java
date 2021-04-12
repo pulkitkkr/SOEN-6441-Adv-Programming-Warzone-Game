@@ -350,6 +350,16 @@ public class Map {
     public Continent getContinentByID(Integer p_continentID){
         return d_continents.stream().filter(l_continent -> l_continent.getD_continentID().equals(p_continentID)).findFirst().orElse(null);
     }
+    
+    /**
+     * Returns Country Object for a country ID.
+     * 
+     * @param p_countryID Country Id to be found
+     * @return country object
+     */
+    public Country getCountryByID(Integer p_countryID){
+        return d_countries.stream().filter(l_country -> l_country.getD_countryId().equals(p_countryID)).findFirst().orElse(null);
+    }
 
     /**
      * Performs Add Continent operation on Map.
