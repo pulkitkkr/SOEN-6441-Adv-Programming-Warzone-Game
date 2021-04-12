@@ -350,17 +350,15 @@ public class Player {
 	 * @throws IOException exception in reading inputs from user
 	 */
 	void checkForMoreOrders() throws IOException {
-		if (this.d_playerBehaviorStrategy.getPlayerBehavior()=="Human") {
-			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
-					+ " in next turn ? \nPress Y for Yes or N for No");
-			String l_nextOrderCheck = l_reader.readLine();
-			if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
-				this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
-			} else {
-				System.err.println("Invalid Input Passed.");
-				this.checkForMoreOrders();
-			}
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
+				+ " in next turn ? \nPress Y for Yes or N for No");
+		String l_nextOrderCheck = l_reader.readLine();
+		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
+			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
+		} else {
+			System.err.println("Invalid Input Passed.");
+			this.checkForMoreOrders();
 		}
 	}
 
@@ -382,6 +380,7 @@ public class Player {
 				this.d_orderList.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+				d_orderList.get(d_orderList.size()-1).printOrder();
 				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
 
 			}
@@ -448,6 +447,7 @@ public class Player {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.d_orderList
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+					d_orderList.get(d_orderList.size()-1).printOrder();
 					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {

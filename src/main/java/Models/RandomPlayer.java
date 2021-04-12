@@ -4,6 +4,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -11,6 +12,11 @@ import java.util.Random;
  * and moves armies on his own territories randomly.
  */
 public class RandomPlayer extends PlayerBehaviorStrategy {
+
+	/**
+	 *
+	 */
+	ArrayList<Country> d_deployCountries = new ArrayList<Country>();
 	
 	/**
 	 * This method creates a new order.
@@ -25,11 +31,9 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 
 		super.setObjects(p_player, p_gameState);
 		if(p_player.getD_noOfUnallocatedArmies()>0) {
-			p_player.setD_moreOrders(true);
 			l_command = createDeployOrder(p_player);
 		}else{
 			if(p_player.getD_cardsOwnedByPlayer().size()>0){
-				p_player.setD_moreOrders(true);
 				Random l_random = new Random();
 				int l_randomIndex = l_random.nextInt(p_player.getD_cardsOwnedByPlayer().size()+1);
 				if(l_randomIndex==p_player.getD_cardsOwnedByPlayer().size()){
@@ -46,35 +50,48 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 
 	public String createDeployOrder(Player p_player){
 		Random l_random = new Random();
-		Country l_randomCountry = getRandomOwnCountry(p_player);
+		Country l_randomCountry = getRandomCountry(p_player.getD_coutriesOwned());
+		d_deployCountries.add(l_randomCountry);
 		int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
-		p_player.setD_noOfUnallocatedArmies(p_player.getD_noOfUnallocatedArmies() - l_armiesToDeploy);
 
 		return String.format("deploy %s %d", l_randomCountry.getD_countryName(), l_armiesToDeploy);
 	}
 
 	public String createAdvanceOrder(Player p_player, GameState p_gameState){
+		int l_armiesToSend;
 		Random l_random = new Random();
-		Country l_randomOwnCountry = getRandomOwnCountry(p_player);
+		Country l_randomOwnCountry = getRandomCountry(d_deployCountries);
 		Country l_randomNeighbor = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(l_random.nextInt(l_randomOwnCountry.getD_adjacentCountryIds().size())));
-		int l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
-		l_randomOwnCountry.setD_armies(l_randomOwnCountry.getD_armies() - l_armiesToSend);
 
+		if (l_randomOwnCountry.getD_armies()>1) {
+			l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
+		} else {
+			l_armiesToSend = 1;
+		}
 		return "advance "+l_randomOwnCountry.getD_countryName()+" "+l_randomNeighbor.getD_countryName()+" "+ l_armiesToSend;
 	}
 
-	public String createCardOrder(Player p_player, GameState p_gameState,  String p_cardName){
+	public String createCardOrder(Player p_player, GameState p_gameState, String p_cardName){
+		int l_armiesToSend;
 		Random l_random = new Random();
-		Country l_randomOwnCountry = getRandomOwnCountry(p_player);
+		Country l_randomOwnCountry = getRandomCountry(p_player.getD_coutriesOwned());
 		Country l_randomEnemyNeighbor = p_gameState.getD_map().getCountry(randomEnemyNeighbor(p_player, l_randomOwnCountry).get(l_random.nextInt(randomEnemyNeighbor(p_player, l_randomOwnCountry).size())));
-		int l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
+		Player l_randomPlayer = getRandomPlayer(p_player, p_gameState);
+
+		if (l_randomOwnCountry.getD_armies()>1) {
+			l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
+		} else {
+			l_armiesToSend = 1;
+		}
 		switch(p_cardName){
 			case "bomb":
 				return "bomb "+l_randomEnemyNeighbor.getD_countryName();
 			case "blockade":
 				return "blockade "+ l_randomOwnCountry.getD_countryName();
 			case "airlift":
-				return "airlift "+ l_randomOwnCountry.getD_countryName()+" "+getRandomOwnCountry(p_player)+" "+l_armiesToSend;
+				return "airlift "+ l_randomOwnCountry.getD_countryName()+" "+getRandomCountry(p_player.getD_coutriesOwned())+" "+l_armiesToSend;
+			case "negotiate":
+				return "negotiate"+" "+l_randomPlayer;
 		}
 		return null;
 	}
@@ -88,17 +105,29 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return "Random";
 	}
 
-	public Country getRandomOwnCountry(Player p_player){
+	private Country getRandomCountry(List<Country> p_listOfCountries){
 		Random l_random = new Random();
-		return p_player.getD_coutriesOwned().get(l_random.nextInt(p_player.getD_coutriesOwned().size()));
+		return p_listOfCountries.get(l_random.nextInt(p_listOfCountries.size()));
 	}
 
-	public ArrayList<Integer> randomEnemyNeighbor(Player p_player, Country p_country){
+	private ArrayList<Integer> randomEnemyNeighbor(Player p_player, Country p_country){
 		ArrayList<Integer> l_enemyNeighbors = new ArrayList<Integer>();
+
 		for(Integer l_countryID : p_country.getD_adjacentCountryIds()){
 			if(!p_player.getCountryIDs().contains(l_countryID))
 				l_enemyNeighbors.add(l_countryID);
 		}
 		return l_enemyNeighbors;
 	}
+
+	private Player getRandomPlayer(Player p_player, GameState p_gameState){
+		ArrayList<Player> l_playerList = new ArrayList<Player>();
+		Random l_random = new Random();
+
+		for(Player l_player : p_gameState.getD_players()){
+			if(!l_player.equals(p_player))
+				l_playerList.add(p_player);
+		}
+		return l_playerList.get(l_random.nextInt(l_playerList.size()));
+ 	}
 }
