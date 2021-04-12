@@ -51,4 +51,6 @@ public final class ApplicationConstants {
 	
 	public static final String CONQUEST_CONTINENTS = "[Continents]";
 	public static final String CONQUEST_TERRITORIES = "[Territories]";
+
+	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
 }

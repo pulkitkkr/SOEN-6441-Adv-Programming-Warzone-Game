@@ -37,7 +37,6 @@ public class IssueOrderPhase extends Phase{
     protected void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
-
         askForOrder(p_player);
     }
 
@@ -64,7 +63,6 @@ public class IssueOrderPhase extends Phase{
 
     /**
      * Accepts orders from players.
-     *
      */
     protected void issueOrders(){
         // issue orders for each player
@@ -92,13 +90,9 @@ public class IssueOrderPhase extends Phase{
      * @throws InvalidMap indicates failure in using the invalid map
      */
     public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
-        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
-                + " or give showmap command to view current state of the game.");
-        String l_commandEntered = l_reader.readLine();
 
+        String l_commandEntered = p_player.getPlayerOrder(d_gameState);
         d_gameState.updateLog("(Player: "+p_player.getPlayerName()+") "+ l_commandEntered, "order");
-
         handleCommand(l_commandEntered, p_player);
     }
 

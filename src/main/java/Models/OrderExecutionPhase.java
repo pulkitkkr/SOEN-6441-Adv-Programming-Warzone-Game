@@ -39,7 +39,6 @@ public class OrderExecutionPhase extends Phase {
 	@Override
 	public void initPhase() {
 		while (d_gameEngine.getD_CurrentPhase() instanceof OrderExecutionPhase) {
-			System.out.println("inside init");
 			executeOrders();
 
 			MapView l_map_view = new MapView(d_gameState);
@@ -56,7 +55,7 @@ public class OrderExecutionPhase extends Phase {
 					String l_continue = l_reader.readLine();
 
                     if (l_continue.equalsIgnoreCase("N")) {
-                        break;
+                        d_gameEngine.setStartUpPhase();
                     } else if(l_continue.equalsIgnoreCase("Y")){
                         d_playerService.assignArmies(d_gameState);
                         d_gameEngine.setIssueOrderPhase();

@@ -73,7 +73,7 @@ public class Advance implements Order {
 				deployArmiesToTarget(l_targetCountry);
 			} else if (l_targetCountry.getD_armies() == 0) {
 				conquerTargetCountry(p_gameState, l_playerOfTargetCountry, l_targetCountry);
-				this.d_playerInitiator.assignCard();
+				this.d_playerInitiator.setD_oneCardPerTurn(true);
 			} else {
 				produceOrderResult(p_gameState, l_playerOfTargetCountry, l_targetCountry, l_sourceCountry);
 			}
@@ -200,8 +200,7 @@ public class Advance implements Order {
 					"Player : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
 							+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(),
 					"default");
-
-			this.d_playerInitiator.assignCard();
+			this.d_playerInitiator.setD_oneCardPerTurn(true);
 		} else {
 			p_targetCountry.setD_armies(p_defenderArmiesLeft);
 

@@ -39,7 +39,7 @@ public class Player {
 	/**
 	 * List of orders of player.
 	 */
-	List<Order> order_list;
+	List<Order> d_orderList;
 
 	/**
 	 * Number of armies allocated to player.
@@ -70,6 +70,11 @@ public class Player {
 	 * List of players to not attack if negotiated with.
 	 */
 	List<Player> d_negotiatedWith = new ArrayList<Player>();
+	
+	/**
+	 * Object of Player Behavior Strategy class.
+	 */
+	PlayerBehaviorStrategy d_playerBehaviorStrategy;
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -81,7 +86,7 @@ public class Player {
 		this.d_name = p_playerName;
 		this.d_noOfUnallocatedArmies = 0;
 		this.d_coutriesOwned = new ArrayList<Country>();
-		this.order_list = new ArrayList<Order>();
+		this.d_orderList = new ArrayList<Order>();
 		this.d_moreOrders = true;
 	}
 
@@ -117,6 +122,15 @@ public class Player {
 	 */
 	public String getD_color() {
 		return d_color;
+	}
+
+	/**
+	 * Returns the boolean if player has earned a card or not.
+	 *
+	 * @return bool if player has earned one card
+	 */
+	public boolean getD_oneCardPerTurn(){
+		return d_oneCardPerTurn;
 	}
 
 	/**
@@ -169,7 +183,7 @@ public class Player {
 	 * @return return execute orders.
 	 */
 	public List<Order> getD_ordersToExecute() {
-		return order_list;
+		return d_orderList;
 	}
 
 	/**
@@ -178,7 +192,7 @@ public class Player {
 	 * @param p_ordersToExecute set execute orders.
 	 */
 	public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
-		this.order_list = p_ordersToExecute;
+		this.d_orderList = p_ordersToExecute;
 	}
 
 	/**
@@ -218,6 +232,27 @@ public class Player {
 	}
 
 	/**
+	 * Get Player Order according to its Strategy.
+	 *
+	 * @param p_gameState Current GameState Object
+	 * @return String representing Order
+	 * @throws IOException Exception
+	 */
+	public String getPlayerOrder(GameState p_gameState) throws IOException {
+		String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
+		return l_stringOrder;
+	}
+
+	/**
+	 * Returns player strategy object.
+	 *
+	 * @return player strategy
+	 */
+	public PlayerBehaviorStrategy getD_playerBehaviorStrategy(){
+		return d_playerBehaviorStrategy;
+	}
+
+	/**
 	 * Sets info about more orders from player are to be accepted or not.
 	 *
 	 * @param p_moreOrders Boolean true if player wants to give more order or else
@@ -241,6 +276,19 @@ public class Player {
 	 */
 	public void setD_oneCardPerTurn(Boolean p_value){
 		this.d_oneCardPerTurn = p_value;
+	}
+
+	/**
+	 * Extracts the list of IDs of countries owned by the player.
+	 *
+	 * @return list of country Ids
+	 */
+	public List<Integer> getCountryIDs() {
+		List<Integer> l_countryIDs = new ArrayList<Integer>();
+		for (Country c : d_coutriesOwned) {
+			l_countryIDs.add(c.getD_countryId());
+		}
+		return l_countryIDs;
 	}
 
 	/**
@@ -294,6 +342,14 @@ public class Player {
 	public String getD_playerLog(){
 		return this.d_playerLog;
 	}
+	
+	/**
+	 * Sets the strategy of the Player Behavior.
+	 * @param p_playerBehaviorStrategy object of PlayerBehaviorStrategy class
+	 */
+	public void setStrategy(PlayerBehaviorStrategy p_playerBehaviorStrategy) {
+		d_playerBehaviorStrategy = p_playerBehaviorStrategy;
+	}
 
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
@@ -328,9 +384,10 @@ public class Player {
 				this.setD_playerLog(
 						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.", "error");
 			} else {
-				this.order_list.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+				this.d_orderList.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+				d_orderList.get(d_orderList.size()-1).printOrder();
 				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
 
 			}
@@ -371,11 +428,11 @@ public class Player {
 	 * @return Order first order from the list of player's order
 	 */
 	public Order next_order() {
-		if (CommonUtil.isCollectionEmpty(this.order_list)) {
+		if (CommonUtil.isCollectionEmpty(this.d_orderList)) {
 			return null;
 		}
-		Order l_order = this.order_list.get(0);
-		this.order_list.remove(l_order);
+		Order l_order = this.d_orderList.get(0);
+		this.d_orderList.remove(l_order);
 		return l_order;
 	}
 
@@ -395,8 +452,9 @@ public class Player {
 						&& this.checkCountryExists(l_targetCountry, p_gameState)
 						&& !checkZeroArmiesInOrder(l_noOfArmies)
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
-					this.order_list
+					this.d_orderList
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+					d_orderList.get(d_orderList.size()-1).printOrder();
 					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
@@ -467,14 +525,9 @@ public class Player {
 	 *
 	 */
 	public void assignCard() {
-		if (!d_oneCardPerTurn) {
-			Random l_random = new Random();
-			this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
-			this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
-			this.setD_oneCardPerTurn(true);
-		}else{
-			this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
-		}
+		Random l_random = new Random();
+		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+		this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
 	}
 
 
@@ -540,7 +593,7 @@ public class Player {
 					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
 							Integer.parseInt(p_commandEntered.split(" ")[3]), this);
 					if (l_newOrder.checkValidOrder(p_gameState)) {
-						this.order_list.add(l_newOrder);
+						this.d_orderList.add(l_newOrder);
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
@@ -548,7 +601,7 @@ public class Player {
 				case "blockade":
 					Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
 					if (l_blockadeOrder.checkValidOrder(p_gameState)) {
-						this.order_list.add(l_blockadeOrder);
+						this.d_orderList.add(l_blockadeOrder);
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
@@ -556,7 +609,7 @@ public class Player {
 				case "bomb":
 					Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
 					if (l_bombOrder.checkValidOrder(p_gameState)) {
-						this.order_list.add(l_bombOrder);
+						this.d_orderList.add(l_bombOrder);
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
@@ -564,7 +617,7 @@ public class Player {
 				case "negotiate":
 					Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1],this);
 					if (l_negotiateOrder.checkValidOrder(p_gameState)) {
-						this.order_list.add(l_negotiateOrder);
+						this.d_orderList.add(l_negotiateOrder);
 						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 						p_gameState.updateLog(getD_playerLog(), "effect");
 					}
