@@ -231,6 +231,13 @@ public class Player {
 		return d_moreOrders;
 	}
 
+	/**
+	 * Get Player Order according to its Strategy.
+	 *
+	 * @param p_gameState Current GameState Object
+	 * @return String representing Order
+	 * @throws IOException Exception
+	 */
 	public String getPlayerOrder(GameState p_gameState) throws IOException {
 		String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
 		return l_stringOrder;

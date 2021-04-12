@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package Models;
 
@@ -14,7 +14,7 @@ import java.util.Random;
 public class RandomPlayer extends PlayerBehaviorStrategy {
 
 	/**
-	 *
+	 * List containing deploy order countries.
 	 */
 	ArrayList<Country> d_deployCountries = new ArrayList<Country>();
 	
@@ -48,6 +48,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return l_command;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String createDeployOrder(Player p_player){
 		Random l_random = new Random();
 		Country l_randomCountry = getRandomCountry(p_player.getD_coutriesOwned());
@@ -57,6 +61,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return String.format("deploy %s %d", l_randomCountry.getD_countryName(), l_armiesToDeploy);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String createAdvanceOrder(Player p_player, GameState p_gameState){
 		int l_armiesToSend;
 		Random l_random = new Random();
@@ -71,6 +79,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return "advance "+l_randomOwnCountry.getD_countryName()+" "+l_randomNeighbor.getD_countryName()+" "+ l_armiesToSend;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String createCardOrder(Player p_player, GameState p_gameState, String p_cardName){
 		int l_armiesToSend;
 		Random l_random = new Random();

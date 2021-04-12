@@ -34,6 +34,30 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createDeployOrder(Player p_player) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createAdvanceOrder(Player p_player, GameState p_gameState) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createCardOrder(Player p_player, GameState p_gameState, String p_cardName) {
+		return null;
+	}
+
+	/**
 	 * This method returns the player behavior.
 	 * @return String player behavior
 	 */

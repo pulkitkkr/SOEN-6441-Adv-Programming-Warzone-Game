@@ -41,4 +41,28 @@ public class HumanPlayer extends PlayerBehaviorStrategy{
 		String l_commandEntered = l_reader.readLine();
 		return l_commandEntered;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createDeployOrder(Player p_player) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createAdvanceOrder(Player p_player, GameState p_gameState) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String createCardOrder(Player p_player, GameState p_gameState, String p_cardName) {
+		return null;
+	}
 }

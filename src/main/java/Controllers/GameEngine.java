@@ -31,6 +31,15 @@ public class GameEngine {
 	}
 
 	/**
+	 * this methods updates the current phase to StartUp Phase as per State Pattern.
+	 */
+	public void setStartUpPhase(){
+		this.setD_gameEngineLog("Start Up Phase", "phase");
+		setD_CurrentPhase(new StartUpPhase(this, d_gameState));
+		getD_CurrentPhase().initPhase();
+	}
+
+	/**
 	 * this methods updates the current phase to Issue Order Phase as per State Pattern.
 	 */
 	public void setIssueOrderPhase(){
