@@ -2,20 +2,17 @@ package Services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
 import Models.Map;
 
 /**
- * @author admin
+ * Test class for parsing conquest map file.
  *
  */
 public class ConquestMapFileReaderTest {
