@@ -49,5 +49,8 @@ public final class ApplicationConstants {
 	public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
 	public static final int SIZE = CARDS.size();
 	
+	public static final String CONQUEST_CONTINENTS = "[Continents]";
+	public static final String CONQUEST_TERRITORIES = "[Territories]";
+
 	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
 }
