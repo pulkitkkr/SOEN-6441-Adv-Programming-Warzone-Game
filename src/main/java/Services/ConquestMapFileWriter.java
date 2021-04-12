@@ -2,13 +2,11 @@ package Services;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import Constants.ApplicationConstants;
 import Models.Continent;
 import Models.Country;
 import Models.GameState;
-import Models.Map;
 
 /**
  * Writer to read and create conquest map file.

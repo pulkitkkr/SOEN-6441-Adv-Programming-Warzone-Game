@@ -246,8 +246,6 @@ public class MapService {
 
 					// Proceeds to save the map if it passes the validation check
 					this.setD_MapServiceLog("Validating Map......", p_gameState);
-					//boolean l_mapValidationStatus = l_currentMap.Validate();
-					System.out.println("");
 					if (l_currentMap.Validate()) {
 						l_mapFormat = this.getFormatToSave();
 						Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
