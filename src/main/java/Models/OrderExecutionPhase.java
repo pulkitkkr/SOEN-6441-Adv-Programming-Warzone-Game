@@ -1,15 +1,15 @@
 package Models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.Command;
 import Utils.CommonUtil;
 import Views.MapView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Order Execution Phase implementation for GamePlay using State Pattern.
@@ -48,27 +48,27 @@ public class OrderExecutionPhase extends Phase {
 			if (this.checkEndOftheGame(d_gameState))
 				return;
 
-            while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-                BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
 				try {
 					String l_continue = l_reader.readLine();
 
-                    if (l_continue.equalsIgnoreCase("N")) {
-                        break;
-                    } else if(l_continue.equalsIgnoreCase("Y")){
-                        d_playerService.assignArmies(d_gameState);
-                        d_gameEngine.setIssueOrderPhase();
-                    } else {
-                        System.out.println("Invalid Input");
-                    }
-                } catch (IOException l_e) {
-                    System.out.println("Invalid Input");
-                }
-            }
-        }
-    }
+					if (l_continue.equalsIgnoreCase("N")) {
+						break;
+					} else if (l_continue.equalsIgnoreCase("Y")) {
+						d_playerService.assignArmies(d_gameState);
+						d_gameEngine.setIssueOrderPhase();
+					} else {
+						System.out.println("Invalid Input");
+					}
+				} catch (IOException l_e) {
+					System.out.println("Invalid Input");
+				}
+			}
+		}
+	}
 
 	/**
 	 * Invokes order execution logic for all unexecuted orders.
@@ -185,16 +185,17 @@ public class OrderExecutionPhase extends Phase {
 		printInvalidCommandInState();
 	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
-        printInvalidCommandInState();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+		printInvalidCommandInState();
+	}
 
 	/**
-	 * Checks if single player has conquered all countries of the map to indicate end of the game.
+	 * Checks if single player has conquered all countries of the map to indicate
+	 * end of the game.
 	 *
 	 * @param p_gameState Current State of the game
 	 * @return true if game has to be ended else false
@@ -209,5 +210,12 @@ public class OrderExecutionPhase extends Phase {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	protected void tournamentGamePlay(Command p_enteredCommand) {
+		d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Tournament Mode.....", "start");
+		d_tournament.executeTournamentMode();
+		d_tournament.printTournamentModeResult();
 	}
 }
