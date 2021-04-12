@@ -32,21 +32,6 @@ public abstract class PlayerBehaviorStrategy {
 		d_player = p_player;
 		d_gameState = p_gameState;
 	}
-	
-	/**
-	 * This method creates a new order for Human Player Behavior.
-	 * 
-	 * @param p_player object of Player class
-	 * @param p_issueOrder object of IssueOrderPhase class
-	 * @param p_gameState object of GameState class
-	 * 
-	 * @return Order object of order class
-	 * 
-	 * @throws InvalidMap handles invalid map exception
-	 * @throws IOException handles IO exception
-	 * @throws InvalidCommand handles Invalid Command exception
-	 */
-	public abstract Order createOrder(Player p_player, IssueOrderPhase p_issueOrder, GameState p_gameState) throws InvalidCommand, IOException, InvalidMap;
 
 	/**
 	 * This method creates a new order for Random, Aggressive, Cheater and Benevolent Players.
@@ -55,32 +40,36 @@ public abstract class PlayerBehaviorStrategy {
 	 * @param p_gameState object of GameState class
 	 * 
 	 * @return Order object of order class
+	 * @throws IOException Exception
 	 */
-	public abstract Order createOrder(Player p_player, GameState p_gameState);
-	
+	public abstract String createOrder(Player p_player, GameState p_gameState) throws IOException;
+
 	/**
-	 * This method defines which country to attack.
-	 * @return Country object of class Country
+	 * Deploy Orders to be defined via Strategy.
+	 *
+	 * @param p_player player to give deploy orders
+	 * @return String representing Order.
 	 */
-	public abstract Country toAttack();
-	
+	public abstract String createDeployOrder(Player p_player);
+
 	/**
-	 * This method defines from which country the attack will be initiated.
-	 * @return Country object of class Country
+	 * Advance Orders to be defined via Strategy.
+	 *
+	 * @param p_player player to give advance orders
+	 * @param p_gameState GameState representing current Game
+	 * @return String representing Order.
 	 */
-	public abstract Country toAttackFrom();
-	
+	public abstract String createAdvanceOrder(Player p_player, GameState p_gameState);
+
 	/**
-	 * This method defines where to move the armies from.
-	 * @return Country object of class Country
+	 * Card Orders to be defined via Strategy.
+	 *
+	 * @param p_player player to give Card Orders.
+	 * @param p_gameState GameState representing Current Game
+	 * @param p_cardName Card Name to create Order for
+	 * @return String representing order
 	 */
-	public abstract Country toMoveFrom();
-	
-	/**
-	 * This method defines the placement of more armies in order to defend the country.
-	 * @return Country object of class Country
-	 */
-	public abstract Country toDefend();
+	public abstract String createCardOrder(Player p_player, GameState p_gameState, String p_cardName);
 	
 	/**
 	 * This method returns the player behavior.

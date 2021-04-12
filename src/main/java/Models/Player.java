@@ -232,6 +232,27 @@ public class Player {
 	}
 
 	/**
+	 * Get Player Order according to its Strategy.
+	 *
+	 * @param p_gameState Current GameState Object
+	 * @return String representing Order
+	 * @throws IOException Exception
+	 */
+	public String getPlayerOrder(GameState p_gameState) throws IOException {
+		String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
+		return l_stringOrder;
+	}
+
+	/**
+	 * Returns player strategy object.
+	 *
+	 * @return player strategy
+	 */
+	public PlayerBehaviorStrategy getD_playerBehaviorStrategy(){
+		return d_playerBehaviorStrategy;
+	}
+
+	/**
 	 * Sets info about more orders from player are to be accepted or not.
 	 *
 	 * @param p_moreOrders Boolean true if player wants to give more order or else
@@ -255,6 +276,19 @@ public class Player {
 	 */
 	public void setD_oneCardPerTurn(Boolean p_value){
 		this.d_oneCardPerTurn = p_value;
+	}
+
+	/**
+	 * Extracts the list of IDs of countries owned by the player.
+	 *
+	 * @return list of country Ids
+	 */
+	public List<Integer> getCountryIDs() {
+		List<Integer> l_countryIDs = new ArrayList<Integer>();
+		for (Country c : d_coutriesOwned) {
+			l_countryIDs.add(c.getD_countryId());
+		}
+		return l_countryIDs;
 	}
 
 	/**
@@ -353,6 +387,7 @@ public class Player {
 				this.d_orderList.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+				d_orderList.get(d_orderList.size()-1).printOrder();
 				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
 
 			}
@@ -419,6 +454,7 @@ public class Player {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.d_orderList
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
+					d_orderList.get(d_orderList.size()-1).printOrder();
 					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
