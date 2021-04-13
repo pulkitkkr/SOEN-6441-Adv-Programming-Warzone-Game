@@ -1,6 +1,8 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import Exceptions.InvalidMap;
 import Services.MapService;
@@ -17,11 +19,13 @@ public class Tournament {
 
 	String d_TournamentModeLog;
 
-	
-	ArrayList<Map> listofmapfiles = new ArrayList<>();
+	ArrayList<Map> d_listofmapfiles = new ArrayList<>();
 
-	ArrayList<Map> listofplayerstrategies = new ArrayList<>();
-	private String strategyString = "";
+	ArrayList<String> d_listofplayerstrategies = new ArrayList<>();
+
+	LinkedHashMap<String, Player> d_mappingPlayersToStrategies = new LinkedHashMap<String, Player>();
+
+	private String d_strategyString = "";
 
 	public void parseTournamentCommand(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap {
 
@@ -30,57 +34,76 @@ public class Tournament {
 
 		switch (p_operation) {
 		case "M":
-			strategyString = p_argument;
+			d_strategyString = p_argument;
 			String[] l_listOfMapFiles = p_argument.split(" ");
-			int mapFilesSize = l_listOfMapFiles.length;
+			int l_mapFilesSize = l_listOfMapFiles.length;
 
 			boolean l_flagValidate = false;
 
-			if (mapFilesSize >= 1 & mapFilesSize <= 5) {
-				for (String mapToLoad : l_listOfMapFiles) {
-					Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState, mapToLoad);
-					if (l_mapToLoad.Validate()) {
+			if (l_mapFilesSize >= 1 & l_mapFilesSize <= 5) {
+				for (String l_mapToLoad : l_listOfMapFiles) {
+					Models.Map l_loadMap = d_mapService.loadMap(d_gameState, l_mapToLoad);
+					if (l_loadMap.Validate()) {
 						l_flagValidate = true;
-						listofmapfiles.add(l_mapToLoad);
-						System.err.println("map loaded:- " + mapToLoad);
+						d_listofmapfiles.add(l_loadMap);
+						System.out.println("Map is loaded: " + l_mapToLoad);
 					}
 					if (!l_flagValidate) {
-						System.err.println("map loaded invalid:- " + mapToLoad);
+						System.out.println("Map loaded is invalid:- " + l_mapToLoad);
 					}
 				}
+				p_gameState.setD_ArrayOfMap(d_listofmapfiles);
 			} else {
-				System.err.println("invalid maps");
+				System.err.println("User entered invalid number of maps in command, Range of map :- 1<=map<=5");
 			}
 			break;
 		case "P":
-			String obj2 = p_argument.split(" ")[0];
-			System.err.println("entered P mode");
+			String[] l_listofplayerstrategies = p_argument.split(" ");
+			int l_playerStrategiesSize = l_listofplayerstrategies.length;
+			List<Player> l_listOfPlayers = p_gameState.getD_players();
+
+			if (l_playerStrategiesSize >= 2 && l_playerStrategiesSize <= 4) {
+				for (String l_strategy : l_listofplayerstrategies) {
+					for (Player l_pl : l_listOfPlayers) {
+						if (l_pl.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase(l_strategy)
+								// && !mapping.containsKey(l_strategy)
+								&& !l_pl.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
+							d_mappingPlayersToStrategies.put(l_strategy, l_pl);
+							System.out
+									.println("Player:  " + l_pl.getPlayerName() + " srategy: " + l_strategy + " added");
+						}
+					}
+
+				}
+				p_gameState.setD_mappingOfPlayerStrategies(d_mappingPlayersToStrategies);
+			} else {
+				System.err.println(
+						"User entered invalid number of strategies in command, Range of strategies :- 2<=strategy<=4");
+			}
+			if (d_mappingPlayersToStrategies.size() < 2) {
+				System.err.println("Player with single strategy cannot play the tournament mode");
+			}
 
 			break;
 		case "G":
-			String obj3 = p_argument.split(" ")[0];
-			int noOfGames = Integer.parseInt(obj3);
+			int l_noOfGames = Integer.parseInt(p_argument.split(" ")[0]);
 
-			if (noOfGames >= 1 && noOfGames <= 5) {
-				d_NoOfGames = Integer.parseInt(obj3);
+			if (l_noOfGames >= 1 && l_noOfGames <= 5) {
+				d_NoOfGames = l_noOfGames;
 			} else {
-				System.err.println("invalid");
+				System.err.println(
+						"User entered invalid number of games in command, Range of games :- 1<=number of games<=5");
 			}
-
-			System.out.println("Games" + d_NoOfGames);
 
 			break;
 		case "D":
-			String obj4 = p_argument.split(" ")[0];
-			int maxTurns = Integer.parseInt(obj4);
-			if (maxTurns >= 10 && maxTurns <= 50) {
-				d_NoOfTurns = Integer.parseInt(obj4);
+			int l_maxTurns = Integer.parseInt(p_argument.split(" ")[0]);
+			if (l_maxTurns >= 10 && l_maxTurns <= 50) {
+				d_NoOfTurns = l_maxTurns;
 			} else {
-				System.err.println("invalid");
-
+				System.err.println(
+						"User entered invalid number of turns in command, Range of turns :- 10<=number of turns<=50");
 			}
-
-			System.out.println("TURNES" + d_NoOfTurns);
 
 			break;
 		default:
@@ -91,6 +114,11 @@ public class Tournament {
 	}
 
 	public void executeTournamentMode() {
+		for (Map map : d_listofmapfiles) {
+			for (int i = 0; i < d_NoOfGames; i++) {
+
+			}
+		}
 
 	}
 

@@ -3,6 +3,9 @@ package Models;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
@@ -49,9 +52,30 @@ public class IssueOrderPhase extends Phase {
 	}
 
 	@Override
-	public void initPhase() {
+	public void initPhase(boolean p_isTournamentMode) {
 		while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
-			issueOrders();
+			if (!p_isTournamentMode) {
+				issueOrders();
+			} else {
+				try {
+					List<Player> l_playerList = new ArrayList<Player>();
+					d_gameState.getD_mappingOfPlayerStrategies();
+					for (Entry<String, Player> l_entry : d_gameState.getD_mappingOfPlayerStrategies().entrySet()) {
+						l_playerList.add(l_entry.getValue());
+					}
+					for (Player l_pl : l_playerList) {
+						if (l_pl.getD_noOfUnallocatedArmies() > 0) {
+							System.out.println("check if more armies left");
+							l_pl.getPlayerOrder(d_gameState, p_isTournamentMode, l_pl);
+						} else {
+							System.out.println("Player: " + l_pl + "do not have unallocated armies.");
+						}
+					}
+				} catch (Exception e) {
+
+				}
+				d_gameEngine.setOrderExecutionPhase();
+			}
 		}
 	}
 
@@ -106,7 +130,7 @@ public class IssueOrderPhase extends Phase {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void performAssignCountries(Command p_command, Player p_player)
+	protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode)
 			throws InvalidCommand, IOException, InvalidMap {
 		printInvalidCommandInState();
 		askForOrder(p_player);
@@ -190,6 +214,6 @@ public class IssueOrderPhase extends Phase {
 
 	@Override
 	protected void tournamentGamePlay(Command p_enteredCommand) {
-		printInvalidCommandInState();
+		// printInvalidCommandInState();
 	}
 }

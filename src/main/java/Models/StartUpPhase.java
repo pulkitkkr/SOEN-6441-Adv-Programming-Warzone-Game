@@ -135,7 +135,6 @@ public class StartUpPhase extends Phase {
 	 */
 	public void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-		boolean l_flagValidate = false;
 
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
 		if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -147,15 +146,11 @@ public class StartUpPhase extends Phase {
 					Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
 							l_map.get(ApplicationConstants.ARGUMENTS));
 					if (l_mapToLoad.Validate()) {
-						l_flagValidate = true;
 						d_gameState.setD_loadCommand();
 						d_gameEngine.setD_gameEngineLog(
 								l_map.get(ApplicationConstants.ARGUMENTS) + " has been loaded to start the game",
 								"effect");
 					} else {
-						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
-					}
-					if (!l_flagValidate) {
 						d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
 					}
 				} else {
@@ -279,33 +274,10 @@ public class StartUpPhase extends Phase {
 		}
 	}
 
-	@Override
-	protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
-		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
-
-		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
-		} else {
-			for (Map<String, String> l_map : l_operations_list) {
-				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					d_tournament.parseTournamentCommand(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-							l_map.get(ApplicationConstants.ARGUMENTS));
-				} else {
-					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
-				}
-			}
-
-		}
-
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
-	public void initPhase() {
+	public void initPhase(boolean isTournamentMode) {
 		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
 		while (d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase) {
@@ -323,17 +295,51 @@ public class StartUpPhase extends Phase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand {
+	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode)
+			throws InvalidCommand {
+		if (p_istournamentmode) {
+			d_playerService.assignCountries(d_gameState);
+			d_playerService.assignArmies(d_gameState);
+			d_gameEngine.setIssueOrderPhase(p_istournamentmode);
+		} else {
+			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+			if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+				d_playerService.assignCountries(d_gameState);
+				d_playerService.assignColors(d_gameState);
+				d_playerService.assignArmies(d_gameState);
+				boolean isTournamentMode = false;
+				d_gameEngine.setIssueOrderPhase(isTournamentMode);
+			} else {
+				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+			}
+
+		}
+	}
+
+	@Override
+	protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-			d_playerService.assignCountries(d_gameState);
-			d_playerService.assignColors(d_gameState);
-			d_playerService.assignArmies(d_gameState);
-			d_gameEngine.setIssueOrderPhase();
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
 		} else {
-			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_tournament.parseTournamentCommand(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+				}
+			}
+			performAssignCountries(null, null, true);
+			d_gameEngine.setIssueOrderPhase(true);
+
 		}
+
 	}
 }

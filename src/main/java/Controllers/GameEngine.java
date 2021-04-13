@@ -17,35 +17,48 @@ public class GameEngine {
 	GameState d_gameState = new GameState();
 
 	/**
-	 *	It is the current game play phase as per state pattern.
+	 * It is the current game play phase as per state pattern.
 	 */
 	Phase d_currentPhase = new StartUpPhase(this, d_gameState);
+	
+	static boolean d_isTournamentMode = false;
 
 	/**
 	 * It's used to update context.
 	 *
 	 * @param p_phase new Phase to set in Game context
 	 */
-	private void setD_CurrentPhase(Phase p_phase){
+	private void setD_CurrentPhase(Phase p_phase) {
 		d_currentPhase = p_phase;
 	}
 
 	/**
-	 * this methods updates the current phase to Issue Order Phase as per State Pattern.
+	 * this methods updates the current phase to StartUp Phase as per State Pattern.
 	 */
-	public void setIssueOrderPhase(){
-		this.setD_gameEngineLog("Issue Order Phase", "phase");
-		setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
-		getD_CurrentPhase().initPhase();
+	public void setStartUpPhase(){
+		this.setD_gameEngineLog("Start Up Phase", "phase");
+		setD_CurrentPhase(new StartUpPhase(this, d_gameState));
+		getD_CurrentPhase().initPhase( d_isTournamentMode);
 	}
 
 	/**
-	 * this methods updates the current phase to Order Execution Phase as per State Pattern.
+	 * this methods updates the current phase to Issue Order Phase as per State
+	 * Pattern.
 	 */
-	public void setOrderExecutionPhase(){
+	public void setIssueOrderPhase(boolean isTournamentMode) {
+		this.setD_gameEngineLog("Issue Order Phase", "phase");
+		setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
+		getD_CurrentPhase().initPhase(isTournamentMode);
+	}
+
+	/**
+	 * this methods updates the current phase to Order Execution Phase as per State
+	 * Pattern.
+	 */
+	public void setOrderExecutionPhase() {
 		this.setD_gameEngineLog("Order Execution Phase", "phase");
 		setD_CurrentPhase(new OrderExecutionPhase(this, d_gameState));
-		getD_CurrentPhase().initPhase();
+		getD_CurrentPhase().initPhase(d_isTournamentMode);
 	}
 
 	/**
@@ -53,7 +66,7 @@ public class GameEngine {
 	 *
 	 * @return current Phase of Game Context
 	 */
-	public Phase getD_CurrentPhase(){
+	public Phase getD_CurrentPhase() {
 		return d_currentPhase;
 	}
 
@@ -61,7 +74,7 @@ public class GameEngine {
 	 * Shows and Writes GameEngine Logs.
 	 *
 	 * @param p_gameEngineLog String of Log message.
-	 * @param p_logType Type of Log.
+	 * @param p_logType       Type of Log.
 	 */
 	public void setD_gameEngineLog(String p_gameEngineLog, String p_logType) {
 		d_currentPhase.getD_gameState().updateLog(p_gameEngineLog, p_logType);
@@ -80,8 +93,9 @@ public class GameEngine {
 	public static void main(String[] p_args) {
 		GameEngine l_game = new GameEngine();
 
-		l_game.getD_CurrentPhase().getD_gameState().updateLog("Initializing the Game ......"+System.lineSeparator(), "start");
+		l_game.getD_CurrentPhase().getD_gameState().updateLog("Initializing the Game ......" + System.lineSeparator(),
+				"start");
 		l_game.setD_gameEngineLog("Game Startup Phase", "phase");
-		l_game.getD_CurrentPhase().initPhase();
+		l_game.getD_CurrentPhase().initPhase(d_isTournamentMode);
 	}
 }

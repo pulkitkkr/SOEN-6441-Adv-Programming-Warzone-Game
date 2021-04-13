@@ -37,9 +37,8 @@ public class OrderExecutionPhase extends Phase {
 	}
 
 	@Override
-	public void initPhase() {
+	public void initPhase(boolean isTournamentMode) {
 		while (d_gameEngine.getD_CurrentPhase() instanceof OrderExecutionPhase) {
-			System.out.println("inside init");
 			executeOrders();
 
 			MapView l_map_view = new MapView(d_gameState);
@@ -54,12 +53,11 @@ public class OrderExecutionPhase extends Phase {
 
 				try {
 					String l_continue = l_reader.readLine();
-
 					if (l_continue.equalsIgnoreCase("N")) {
-						break;
+						d_gameEngine.setStartUpPhase();
 					} else if (l_continue.equalsIgnoreCase("Y")) {
 						d_playerService.assignArmies(d_gameState);
-						d_gameEngine.setIssueOrderPhase();
+						d_gameEngine.setIssueOrderPhase(isTournamentMode);
 					} else {
 						System.out.println("Invalid Input");
 					}
@@ -122,7 +120,8 @@ public class OrderExecutionPhase extends Phase {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException {
+	protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode)
+			throws InvalidCommand, IOException {
 		printInvalidCommandInState();
 	}
 
@@ -214,8 +213,8 @@ public class OrderExecutionPhase extends Phase {
 
 	@Override
 	protected void tournamentGamePlay(Command p_enteredCommand) {
-		d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Tournament Mode.....", "start");
-		d_tournament.executeTournamentMode();
-		d_tournament.printTournamentModeResult();
+//		d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Tournament Mode.....", "start");
+//		d_tournament.executeTournamentMode();
+//		d_tournament.printTournamentModeResult();
 	}
 }

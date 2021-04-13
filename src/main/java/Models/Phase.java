@@ -34,6 +34,8 @@ public abstract class Phase {
 	 */
 	PlayerService d_playerService = new PlayerService();
 
+	Player d_player = new Player();
+
 	/**
 	 * it is a flag to check if map is loaded.
 	 */
@@ -149,7 +151,7 @@ public abstract class Phase {
 			break;
 		}
 		case "assigncountries": {
-			performAssignCountries(l_command, p_player);
+			performAssignCountries(l_command, p_player, false);
 			break;
 		}
 		case "showmap": {
@@ -223,7 +225,7 @@ public abstract class Phase {
 	/**
 	 * This is the main method executed on phase change.
 	 */
-	public abstract void initPhase();
+	public abstract void initPhase(boolean isTournamentMode);
 
 	/**
 	 * This method handles the deploy order in gameplay.
@@ -252,7 +254,7 @@ public abstract class Phase {
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	protected abstract void performAssignCountries(Command p_command, Player p_player)
+	protected abstract void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode)
 			throws InvalidCommand, IOException, InvalidMap;
 
 	/**

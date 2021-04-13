@@ -1,215 +1,29 @@
 Initializing the Game ......
 
 
-Command Entered: loadmap test.map
-Log: test.map has been loaded to start the game
+=======Game Startup Phase=======
 
-Command Entered: gameplayer -add a -add b
-Log: Player with name : a has been added successfully.
-Log: Player with name : b has been added successfully.
 
-Command Entered: assigncountries
+Command Entered: loadmap trynew.map
+Log: trynew.map has been loaded to start the game
+
+Command Entered: gameplayer -add avi -add priya
+Log: Player with name : avi and strategy: Aggressive has been added successfully.
+Log: Player with name : priya and strategy: Random has been added successfully.
+
+Command Entered: tournament -M trynew.map solar.map canada.map -P aggressive random -G 4 -D 15
 Log: Country/Continent Assignment:
- Player : a is assigned with country : India
- Player : a is assigned with country : France
- Player : b is assigned with country : Belgium
- Player : b is assigned with country : Pakistan
+ Player : avi is assigned with country : c2
+ Player : avi is assigned with country : c4
+ Player : priya is assigned with country : c3
+ Player : priya is assigned with country : c1
+Log: Player : avi has been assigned with 3 armies
+Log: Player : priya has been assigned with 3 armies
 
-********Starting Main Game Loop***********
+=======Issue Order Phase=======
 
-Log: Player : a has been assigned with 3 armies
-Log: Player : b has been assigned with 3 armies
 
- Order Issued: (Player: a) deploy India 3
-Log: Deploy order has been added to queue for execution. For player: a
+=======Order Execution Phase=======
 
- Order Issued: (Player: b) deploy Pakistan 3
-Log: Deploy order has been added to queue for execution. For player: b
 
- Order Issued: (Player: a) showmap
-
- Order Issued: (Player: a) advance India Pakistan 1
-Log: Advance order has been added to queue for execution. For player: a
-
- Order Issued: (Player: b) advance Pakistan India 2
-Log: Advance order has been added to queue for execution. For player: b
-
-********** Starting Execution Of Orders ***********
-Log: ----------Deploy order issued by player a----------
-Deploy 3 armies to India
-Log: 3 armies have been deployed successfully on country : India
-Log: ----------Deploy order issued by player b----------
-Deploy 3 armies to Pakistan
-Log: 3 armies have been deployed successfully on country : Pakistan
-Log: ----------Advance order issued by player a----------
-Move 1 armies from India to Pakistan
-Log: 
-Country : Pakistan is left with 3 armies and is still owned by player : b
-Country : India is left with 2 armies and is still owned by player : a
-Log: ----------Advance order issued by player b----------
-Move 2 armies from Pakistan to India
-Log: 
-Country : India is left with 2 armies and is still owned by player : a
-Country : Pakistan is left with 1 armies and is still owned by player : b
-
-********Starting Main Game Loop***********
-
-Log: Player : a has been assigned with 3 armies
-Log: Player : b has been assigned with 3 armies
-
- Order Issued: (Player: a) deploy France 3
-Log: Deploy order has been added to queue for execution. For player: a
-
- Order Issued: (Player: b) deploy Pakistan 3
-Log: Deploy order has been added to queue for execution. For player: b
-
- Order Issued: (Player: a) advance France Belgium 1
-Log: Advance order has been added to queue for execution. For player: a
-
- Order Issued: (Player: b) advance Pakistan Belgium 1
-Log: Advance order cant be issued since target country : Belgium is not adjacent to source country : Pakistan
-
-********** Starting Execution Of Orders ***********
-Log: ----------Deploy order issued by player a----------
-Deploy 3 armies to France
-Log: 3 armies have been deployed successfully on country : France
-Log: ----------Deploy order issued by player b----------
-Deploy 3 armies to Pakistan
-Log: 4 armies have been deployed successfully on country : Pakistan
-Log: ----------Advance order issued by player a----------
-Move 1 armies from France to Belgium
-Log: 
-Player : a is assigned with Country : Belgium and armies : 1
-
-********Starting Main Game Loop***********
-
-Log: Player : a has been assigned with 23 armies
-Log: Player : b has been assigned with 3 armies
-
- Order Issued: (Player: a) airlift India France 1
-Log: Card Command Added to Queue for Execution Successfully!
-
- Order Issued: (Player: b) advance Pakistan India 3
-Log: Advance order has been added to queue for execution. For player: b
-
-********** Starting Execution Of Orders ***********
-Log: ----------Airlift order issued by player a----------
-Move 1 armies from India to France
-Log: Airlift Operation from Indiato France successful!
-Log: ----------Advance order issued by player b----------
-Move 3 armies from Pakistan to India
-Log: 
-Country : India is left with 1 armies and is still owned by player : a
-Country : Pakistan is left with 3 armies and is still owned by player : b
-Log: Continent Europe added successfully!
-Log: Continent America added successfully!
-Log: Continent Europe removed successfully!
-Log: 10 armies have been deployed successfully on country : India
-Log: 15 armies have been deployed successfully on country : Canada
-Log: Country China added successfully!
-Log: Validating Map......
-Log: East_Europe has no countries, it must possess atleast 1 country
-Log: Couldn't save the changes in map file!
-Log: Continent Asia removed successfully!
-Log: testedit.map already exists and is loaded for editing
-Log: Continent Asia added successfully!
-Log: Country Maldives added successfully!
-Log: Country Singapore added successfully!
-Log: Neighbour Pair Singapore Maldives added successfully!
-Log: No Such Neighbour Exists
-Log: Continent Asia added successfully!
-Log: Country: Ukraine does not exist!
-Log: test.map already exists and is loaded for editing
-Log: Continent Northern-America added successfully!
-Log: Country Canada added successfully!
-Log: Country Alaska added successfully!
-Log: Neighbour Pair Canada Alaska added successfully!
-Log: Country/Continent Assignment:
- Player : Avneet is assigned with country : N&L-Newfoundland
- Player : Avneet is assigned with country : Prince_Edward_Island
- Player : Avneet is assigned with country : Nunavut-Continental
- Player : Avneet is assigned with country : NU-Ellesmere_Island
- Player : Avneet is assigned with country : NU-Victoria_Island-East
- Player : Avneet is assigned with country : Northwest_Territories-Continental
- Player : Avneet is assigned with country : NU-Southern_Islands
- Player : Avneet is assigned with country : British_Columbia-South
- Player : Avneet is assigned with country : N&L-Labrador
- Player : Avneet is assigned with country : NU-Northern_Islands
- Player : Avneet is assigned with country : Ontario-North
- Player : Avneet is assigned with country : Saskatchewan-South
- Player : Avneet is assigned with country : Manitoba-North
- Player : Avneet is assigned with country : Saskatchewan-North
- Player : Avneet is assigned with country : NT-Northern_Islands
- Player : Zalak is assigned with country : Nova_Scotia
- Player : Zalak is assigned with country : Quebec-Central
- Player : Zalak is assigned with country : Quebec-South
- Player : Zalak is assigned with country : NU-Baffin_Island
- Player : Zalak is assigned with country : Ontario-West
- Player : Zalak is assigned with country : Quebec-North
- Player : Zalak is assigned with country : Manitoba-South
- Player : Zalak is assigned with country : Ontario-South
- Player : Zalak is assigned with country : British_Columbia-North
- Player : Zalak is assigned with country : BC-Vancouver_Island
- Player : Zalak is assigned with country : New_Brunswick
- Player : Zalak is assigned with country : Yukon_Territory
- Player : Zalak is assigned with country : NT-Victoria_Island-West
- Player : Zalak is assigned with country : Alberta-North
- Player : Zalak is assigned with country : Alberta-South
- Player : Avneet is assigned with country : NT-Banks_Island
-Log: Continent Europe added successfully!
-Log: Continent America added successfully!
-Log: Continent Europe removed successfully!
-Log: 10 armies have been deployed successfully on country : India
-Log: 15 armies have been deployed successfully on country : Canada
-Log: Country/Continent Assignment:
- Player : Avneet is assigned with country : N&L-Newfoundland
- Player : Avneet is assigned with country : Quebec-Central
- Player : Avneet is assigned with country : Manitoba-North
- Player : Avneet is assigned with country : Northwest_Territories-Continental
- Player : Avneet is assigned with country : Saskatchewan-South
- Player : Avneet is assigned with country : Ontario-North
- Player : Avneet is assigned with country : Nova_Scotia
- Player : Avneet is assigned with country : NT-Victoria_Island-West
- Player : Avneet is assigned with country : Alberta-North
- Player : Avneet is assigned with country : Manitoba-South
- Player : Avneet is assigned with country : NU-Ellesmere_Island
- Player : Avneet is assigned with country : Ontario-West
- Player : Avneet is assigned with country : Nunavut-Continental
- Player : Avneet is assigned with country : British_Columbia-North
- Player : Avneet is assigned with country : Quebec-South
- Player : Zalak is assigned with country : Quebec-North
- Player : Zalak is assigned with country : British_Columbia-South
- Player : Zalak is assigned with country : NT-Banks_Island
- Player : Zalak is assigned with country : BC-Vancouver_Island
- Player : Zalak is assigned with country : Prince_Edward_Island
- Player : Zalak is assigned with country : N&L-Labrador
- Player : Zalak is assigned with country : NU-Northern_Islands
- Player : Zalak is assigned with country : NU-Victoria_Island-East
- Player : Zalak is assigned with country : NU-Southern_Islands
- Player : Zalak is assigned with country : Yukon_Territory
- Player : Zalak is assigned with country : NT-Northern_Islands
- Player : Zalak is assigned with country : Alberta-South
- Player : Zalak is assigned with country : NU-Baffin_Island
- Player : Zalak is assigned with country : Saskatchewan-North
- Player : Zalak is assigned with country : New_Brunswick
- Player : Avneet is assigned with country : Ontario-South
-Log: Country China added successfully!
-Log: Validating Map......
-Log: East_Europe has no countries, it must possess atleast 1 country
-Log: Couldn't save the changes in map file!
-Log: Continent Asia removed successfully!
-Log: testedit.map already exists and is loaded for editing
-Log: Continent Asia added successfully!
-Log: Country Maldives added successfully!
-Log: Country Singapore added successfully!
-Log: Neighbour Pair Singapore Maldives added successfully!
-Log: No Such Neighbour Exists
-Log: Continent Asia added successfully!
-Log: Country: Ukraine does not exist!
-Log: test.map already exists and is loaded for editing
-Log: Continent Northern-America added successfully!
-Log: Country Canada added successfully!
-Log: Country Alaska added successfully!
-Log: Neighbour Pair Canada Alaska added successfully!
-Log: 
-Player : Prime is executing Bomb card on country :  Norway with armies :  20. New armies: 10
+Starting Execution Of Orders.....

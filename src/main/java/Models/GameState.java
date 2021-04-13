@@ -1,32 +1,35 @@
 package Models;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * This class is used to test functionality of GameState class functions.
  */
 public class GameState {
-	
+
 	/**
 	 * map object.
 	 */
 	Map d_map;
 
+	List<Map> d_mapList;
+
 	/**
 	 * Log Entries for existing game state.
 	 */
 	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
-	
+
 	/**
 	 * list of players.
 	 */
 	List<Player> d_players;
-	
+
 	/**
 	 * list of unexecuted orders.
 	 */
 	List<Order> d_unexecutedOrders;
-	
+
 	/**
 	 * error message.
 	 */
@@ -37,6 +40,8 @@ public class GameState {
 	 */
 	Boolean d_loadCommand = false;
 
+	LinkedHashMap<String, Player> mappingOfPlayerStrategies = new LinkedHashMap<String, Player>();
+
 	/**
 	 * getter method to get the map.
 	 * 
@@ -45,7 +50,7 @@ public class GameState {
 	public Map getD_map() {
 		return d_map;
 	}
-	
+
 	/**
 	 * setter method to set the map.
 	 * 
@@ -53,6 +58,24 @@ public class GameState {
 	 */
 	public void setD_map(Map p_map) {
 		this.d_map = p_map;
+	}
+
+	/**
+	 * setter method to set the list of map for tournament mode.
+	 * 
+	 * @param p_mapList map object
+	 */
+	public void setD_ArrayOfMap(List<Map> p_mapList) {
+		this.d_mapList = p_mapList;
+	}
+
+	/**
+	 * getter method to get the list of map for tournament mode.
+	 * 
+	 * @return list of maps
+	 */
+	public List<Map> getD_ArrayOfMap() {
+		return d_mapList;
 	}
 
 	/**
@@ -71,6 +94,24 @@ public class GameState {
 	 */
 	public void setD_players(List<Player> p_players) {
 		this.d_players = p_players;
+	}
+
+	/**
+	 * setter method to set the players strategies
+	 * 
+	 * @param p_mappingOfPlayerStrategies mapping of players and strategies.
+	 */
+	public void setD_mappingOfPlayerStrategies(LinkedHashMap<String, Player> p_mappingOfPlayerStrategies) {
+		this.mappingOfPlayerStrategies = p_mappingOfPlayerStrategies;
+	}
+
+	/**
+	 * getter method to get player strategies
+	 * 
+	 * @return mappingOfPlayerStrategies mapping of players and strategies.
+	 */
+	public LinkedHashMap<String, Player> getD_mappingOfPlayerStrategies() {
+		return mappingOfPlayerStrategies;
 	}
 
 	/**
@@ -113,7 +154,7 @@ public class GameState {
 	 * Message to be added in the log.
 	 *
 	 * @param p_logMessage Log Message to be set in the Object
-	 * @param p_logType Type of Log Message to be Added
+	 * @param p_logType    Type of Log Message to be Added
 	 */
 	public void updateLog(String p_logMessage, String p_logType) {
 		d_logEntryBuffer.currentLog(p_logMessage, p_logType);
@@ -124,7 +165,7 @@ public class GameState {
 	 *
 	 * @return recent Log Message
 	 */
-	public String getRecentLog(){
+	public String getRecentLog() {
 		return d_logEntryBuffer.getD_logMessage();
 	}
 
@@ -140,8 +181,8 @@ public class GameState {
 	 *
 	 * @return bool value if map is loaded
 	 */
-	public boolean getD_loadCommand(){
+	public boolean getD_loadCommand() {
 		return this.d_loadCommand;
 	}
-	
+
 }
