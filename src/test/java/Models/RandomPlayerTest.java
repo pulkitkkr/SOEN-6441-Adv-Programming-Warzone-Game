@@ -66,6 +66,6 @@ public class RandomPlayerTest {
 	 */
 	@Test
 	public void testOrderCreation() throws IOException {
-		assertEquals(d_player.getPlayerOrder(d_gameState, false, d_player).split(" ")[0], "deploy");
+		assertEquals(d_player.getPlayerOrder(d_gameState).split(" ")[0], "deploy");
 	}
 }

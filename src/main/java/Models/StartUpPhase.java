@@ -247,10 +247,6 @@ public class StartUpPhase extends Phase {
 	 * {@inheritDoc}
 	 */
 	public void createPlayers(Command p_command, Player p_player) throws InvalidCommand {
-		if (!l_isMapLoaded) {
-			d_gameEngine.setD_gameEngineLog("No map found, Please `loadmap` before adding game players", "effect");
-			return;
-		}
 
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -258,18 +254,14 @@ public class StartUpPhase extends Phase {
 		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
 			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
 		} else {
-			if (d_gameState.getD_loadCommand()) {
-				for (Map<String, String> l_map : l_operations_list) {
-					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-						d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-								l_map.get(ApplicationConstants.ARGUMENTS));
-					} else {
-						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
-					}
+			for (Map<String, String> l_map : l_operations_list) {
+				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+					d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+							l_map.get(ApplicationConstants.ARGUMENTS));
+				} else {
+					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
 				}
-			} else {
-				d_gameEngine.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
 			}
 		}
 	}
@@ -297,48 +289,57 @@ public class StartUpPhase extends Phase {
 	 */
 	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode)
 			throws InvalidCommand {
-		if (p_istournamentmode) {
-			d_playerService.assignCountries(d_gameState);
-			d_playerService.assignArmies(d_gameState);
-			d_gameEngine.setIssueOrderPhase(p_istournamentmode);
-		} else {
+		if (d_gameState.getD_loadCommand()) {
 			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
-			if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+			if (CommonUtil.isCollectionEmpty(l_operations_list) || p_istournamentmode) {
 				d_playerService.assignCountries(d_gameState);
 				d_playerService.assignColors(d_gameState);
 				d_playerService.assignArmies(d_gameState);
-				boolean isTournamentMode = false;
-				d_gameEngine.setIssueOrderPhase(isTournamentMode);
+				d_gameEngine.setIssueOrderPhase(p_istournamentmode);
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 			}
-
+		} else {
+			d_gameEngine.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
 		}
 	}
 
 	@Override
 	protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
-		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+		if (d_gameState.getD_players() != null && d_gameState.getD_players().size() > 1) {
+			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+			boolean l_parsingSuccessful = false;
+			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
 
-		if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
-		} else {
-			for (Map<String, String> l_map : l_operations_list) {
-				if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-						&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-					d_tournament.parseTournamentCommand(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-							l_map.get(ApplicationConstants.ARGUMENTS));
+			if (CommonUtil.isCollectionEmpty(l_operations_list)
+					&& !d_tournament.requiredTournamentArgPresent(l_operations_list, p_command)) {
+				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+			} else {
+				for (Map<String, String> l_map : l_operations_list) {
+					if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+							&& p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+						l_parsingSuccessful = d_tournament.parseTournamentCommand(d_gameState,
+								l_map.get(ApplicationConstants.OPERATION), l_map.get(ApplicationConstants.ARGUMENTS),
+								d_gameEngine);
+						if (!l_parsingSuccessful)
+							break;
 
-				} else {
-					throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+					} else {
+						throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+					}
 				}
 			}
-			performAssignCountries(null, null, true);
-			d_gameEngine.setIssueOrderPhase(true);
+			if (l_parsingSuccessful) {
+				for (GameState l_gameState : d_tournament.getD_gameStateList()) {
+					d_gameState = l_gameState;
+					performAssignCountries(null, null, true);
+				}
+			}
 
+		} else {
+			d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");
 		}
 
 	}

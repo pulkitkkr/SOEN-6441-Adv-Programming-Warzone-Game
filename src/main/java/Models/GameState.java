@@ -40,7 +40,9 @@ public class GameState {
 	 */
 	Boolean d_loadCommand = false;
 
-	LinkedHashMap<String, Player> mappingOfPlayerStrategies = new LinkedHashMap<String, Player>();
+	int d_maxnumberofturns = 0;
+	
+	int d_numberOfTurnsLeft = 0;
 
 	/**
 	 * getter method to get the map.
@@ -61,24 +63,6 @@ public class GameState {
 	}
 
 	/**
-	 * setter method to set the list of map for tournament mode.
-	 * 
-	 * @param p_mapList map object
-	 */
-	public void setD_ArrayOfMap(List<Map> p_mapList) {
-		this.d_mapList = p_mapList;
-	}
-
-	/**
-	 * getter method to get the list of map for tournament mode.
-	 * 
-	 * @return list of maps
-	 */
-	public List<Map> getD_ArrayOfMap() {
-		return d_mapList;
-	}
-
-	/**
 	 * getter method to get the list of players.
 	 * 
 	 * @return list of players
@@ -94,24 +78,6 @@ public class GameState {
 	 */
 	public void setD_players(List<Player> p_players) {
 		this.d_players = p_players;
-	}
-
-	/**
-	 * setter method to set the players strategies
-	 * 
-	 * @param p_mappingOfPlayerStrategies mapping of players and strategies.
-	 */
-	public void setD_mappingOfPlayerStrategies(LinkedHashMap<String, Player> p_mappingOfPlayerStrategies) {
-		this.mappingOfPlayerStrategies = p_mappingOfPlayerStrategies;
-	}
-
-	/**
-	 * getter method to get player strategies
-	 * 
-	 * @return mappingOfPlayerStrategies mapping of players and strategies.
-	 */
-	public LinkedHashMap<String, Player> getD_mappingOfPlayerStrategies() {
-		return mappingOfPlayerStrategies;
 	}
 
 	/**
@@ -183,6 +149,23 @@ public class GameState {
 	 */
 	public boolean getD_loadCommand() {
 		return this.d_loadCommand;
+	}
+	
+
+	public int getD_maxnumberofturns() {
+		return d_maxnumberofturns;
+	}
+
+	public void setD_maxnumberofturns(int d_maxnumberofturns) {
+		this.d_maxnumberofturns = d_maxnumberofturns;
+	}
+
+	public int getD_numberOfTurnsLeft() {
+		return d_numberOfTurnsLeft;
+	}
+
+	public void setD_numberOfTurnsLeft(int d_numberOfTurnsLeft) {
+		this.d_numberOfTurnsLeft = d_numberOfTurnsLeft;
 	}
 
 }

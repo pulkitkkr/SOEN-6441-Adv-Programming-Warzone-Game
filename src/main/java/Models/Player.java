@@ -239,14 +239,8 @@ public class Player {
 	 * @return String representing Order
 	 * @throws IOException Exception
 	 */
-	public String getPlayerOrder(GameState p_gameState, boolean isTournamentMode, Player pl) throws IOException {
-		String l_stringOrder = "";
-		if (isTournamentMode) {
-			pl.getD_playerBehaviorStrategy().createOrder(pl, p_gameState);
-		} else {
-			l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
-		}
-
+	public String getPlayerOrder(GameState p_gameState) throws IOException {
+		String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
 		return l_stringOrder;
 	}
 
@@ -366,16 +360,25 @@ public class Player {
 	 *
 	 * @throws IOException exception in reading inputs from user
 	 */
-	void checkForMoreOrders() throws IOException {
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
-				+ " in next turn ? \nPress Y for Yes or N for No");
-		String l_nextOrderCheck = l_reader.readLine();
+	void checkForMoreOrders(boolean p_isTournamentMode) throws IOException {
+		String l_nextOrderCheck = new String();
+		if(p_isTournamentMode) {
+			String [] l_nextOrder = {"Y", "N"};
+	        Random random = new Random();
+	        int l_randomInt = random.nextInt(2);
+	        l_nextOrderCheck = l_nextOrder[l_randomInt];
+		} else {
+			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
+					+ " in next turn ? \nPress Y for Yes or N for No");
+			l_nextOrderCheck = l_reader.readLine();
+		}
+		
 		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
 			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
 		} else {
 			System.err.println("Invalid Input Passed.");
-			this.checkForMoreOrders();
+			this.checkForMoreOrders(p_isTournamentMode);
 		}
 	}
 

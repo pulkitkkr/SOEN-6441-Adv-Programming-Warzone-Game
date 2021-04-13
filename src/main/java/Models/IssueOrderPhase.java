@@ -1,11 +1,6 @@
 package Models;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
 
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
@@ -33,7 +28,6 @@ public class IssueOrderPhase extends Phase {
 		if (p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
 			p_player.handleCardCommands(p_enteredCommand, d_gameState);
 		}
-		p_player.checkForMoreOrders();
 	}
 
 	@Override
@@ -48,83 +42,57 @@ public class IssueOrderPhase extends Phase {
 	protected void performAdvance(String p_command, Player p_player) throws IOException {
 		p_player.createAdvanceOrder(p_command, d_gameState);
 		d_gameState.updateLog(p_player.getD_playerLog(), "effect");
-		p_player.checkForMoreOrders();
 	}
 
 	@Override
 	public void initPhase(boolean p_isTournamentMode) {
-		while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
-			if (!p_isTournamentMode) {
-				issueOrders();
-			} else {
-				try {
-					List<Player> l_playerList = new ArrayList<Player>();
-					d_gameState.getD_mappingOfPlayerStrategies();
-					for (Entry<String, Player> l_entry : d_gameState.getD_mappingOfPlayerStrategies().entrySet()) {
-						l_playerList.add(l_entry.getValue());
-					}
-					for (Player l_pl : l_playerList) {
-						if (l_pl.getD_noOfUnallocatedArmies() > 0) {
-							System.out.println("check if more armies left");
-							l_pl.getPlayerOrder(d_gameState, p_isTournamentMode, l_pl);
-						} else {
-							System.out.println("Player: " + l_pl + "do not have unallocated armies.");
-						}
-					}
-				} catch (Exception e) {
-
-				}
-				d_gameEngine.setOrderExecutionPhase();
-			}
-		}
+		 while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
+	            issueOrders(p_isTournamentMode);
+	        }
 	}
 
 	@Override
 	protected void performCreateDeploy(String p_command, Player p_player) throws IOException {
 		p_player.createDeployOrder(p_command);
 		d_gameState.updateLog(p_player.getD_playerLog(), "effect");
-		p_player.checkForMoreOrders();
 	}
 
 	/**
 	 * Accepts orders from players.
 	 *
 	 */
-	protected void issueOrders() {
-		// issue orders for each player
-		do {
-			for (Player l_player : d_gameState.getD_players()) {
-				if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
-					try {
-						l_player.issue_order(this);
-					} catch (InvalidCommand | IOException | InvalidMap l_exception) {
-						d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
-					}
-				}
-			}
-		} while (d_playerService.checkForMoreOrders(d_gameState.getD_players()));
+	protected void issueOrders(boolean p_isTournamentMode){
+        // issue orders for each player
+        do {
+            for (Player l_player : d_gameState.getD_players()) {
+                if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
+                    try {
+                        l_player.issue_order(this);
+                        l_player.checkForMoreOrders(p_isTournamentMode);
+                    } catch (InvalidCommand | IOException | InvalidMap l_exception) {
+                        d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
+                    }
+                }
+            }
+        } while (d_playerService.checkForMoreOrders(d_gameState.getD_players()));
 
-		d_gameEngine.setOrderExecutionPhase();
-	}
+        d_gameEngine.setOrderExecutionPhase();
+    }
 
 	/**
-	 * Asks for order commands from user.
-	 * 
-	 * @param p_player player for which commands are to be issued
-	 * @throws InvalidCommand exception if command is invalid
-	 * @throws IOException    indicates failure in I/O operation
-	 * @throws InvalidMap     indicates failure in using the invalid map
-	 */
-	public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap {
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
-				+ " or give showmap command to view current state of the game.");
-		String l_commandEntered = l_reader.readLine();
+     * Asks for order commands from user.
+     * 
+     * @param p_player player for which commands are to be issued
+     * @throws InvalidCommand exception if command is invalid
+     * @throws IOException  indicates failure in I/O operation
+     * @throws InvalidMap indicates failure in using the invalid map
+     */
+    public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
 
-		d_gameState.updateLog("(Player: " + p_player.getPlayerName() + ") " + l_commandEntered, "order");
-
-		handleCommand(l_commandEntered, p_player);
-	}
+        String l_commandEntered = p_player.getPlayerOrder(d_gameState);
+        d_gameState.updateLog("(Player: "+p_player.getPlayerName()+") "+ l_commandEntered, "order");
+        handleCommand(l_commandEntered, p_player);
+    }
 
 	/**
 	 * {@inheritDoc}

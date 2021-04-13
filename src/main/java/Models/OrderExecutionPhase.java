@@ -38,34 +38,46 @@ public class OrderExecutionPhase extends Phase {
 
 	@Override
 	public void initPhase(boolean isTournamentMode) {
-		while (d_gameEngine.getD_CurrentPhase() instanceof OrderExecutionPhase) {
-			executeOrders();
+		executeOrders();
 
-			MapView l_map_view = new MapView(d_gameState);
-			l_map_view.showMap();
+		MapView l_map_view = new MapView(d_gameState);
+		l_map_view.showMap();
 
-			if (this.checkEndOftheGame(d_gameState))
-				return;
+		if (this.checkEndOftheGame(d_gameState))
+			return;
 
-			while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-				System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-				BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+			try {
+				String l_continue = this.continueForNextTurn(isTournamentMode);
+				if (l_continue.equalsIgnoreCase("N") && isTournamentMode) {
+					d_gameEngine.setD_gameEngineLog("Start Up Phase", "phase");
+					d_gameEngine.setD_CurrentPhase(new StartUpPhase(d_gameEngine, d_gameState));
+				} else if (l_continue.equalsIgnoreCase("N") && !isTournamentMode) {
+					d_gameEngine.setStartUpPhase();
 
-				try {
-					String l_continue = l_reader.readLine();
-					if (l_continue.equalsIgnoreCase("N")) {
-						d_gameEngine.setStartUpPhase();
-					} else if (l_continue.equalsIgnoreCase("Y")) {
-						d_playerService.assignArmies(d_gameState);
-						d_gameEngine.setIssueOrderPhase(isTournamentMode);
-					} else {
-						System.out.println("Invalid Input");
-					}
-				} catch (IOException l_e) {
+				} else if (l_continue.equalsIgnoreCase("Y")) {
+					d_playerService.assignArmies(d_gameState);
+					d_gameEngine.setIssueOrderPhase(isTournamentMode);
+				} else {
 					System.out.println("Invalid Input");
 				}
+			} catch (IOException l_e) {
+				System.out.println("Invalid Input");
 			}
 		}
+	}
+
+	private String continueForNextTurn(boolean isTournamentMode) throws IOException {
+		String l_continue = new String();
+		if (isTournamentMode) {
+			d_gameState.setD_numberOfTurnsLeft(d_gameState.getD_numberOfTurnsLeft() - 1);
+			l_continue = d_gameState.getD_numberOfTurnsLeft() == 0 ? "N" : "Y";
+		} else {
+			System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			l_continue = l_reader.readLine();
+		}
+		return l_continue;
 	}
 
 	/**

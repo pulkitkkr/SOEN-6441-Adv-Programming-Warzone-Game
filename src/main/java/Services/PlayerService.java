@@ -344,11 +344,6 @@ public class PlayerService {
 	 * @param p_argument  name of player to add or remove.
 	 */
 	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
-		if (!isMapLoaded(p_gameState)) {
-			this.setD_playerLog("Kindly load the map first to add player: " + p_argument);
-			p_gameState.updateLog(this.d_playerLog, "effect");
-			return;
-		}
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
