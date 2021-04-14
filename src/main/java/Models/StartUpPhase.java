@@ -287,8 +287,8 @@ public class StartUpPhase extends Phase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode, GameState p_gameState)
-			throws InvalidCommand {
+	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode,
+			GameState p_gameState) throws InvalidCommand {
 		if (p_gameState.getD_loadCommand()) {
 			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
@@ -335,11 +335,16 @@ public class StartUpPhase extends Phase {
 			}
 			if (l_parsingSuccessful) {
 				for (GameState l_gameState : d_tournament.getD_gameStateList()) {
-					d_gameEngine.setD_gameEngineLog("\nStarting New Game.........\n", "effect");
+					d_gameEngine.setD_gameEngineLog(
+							"\nStarting New Game on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
+							"effect");
 					performAssignCountries(new Command("assigncountries"), null, true, l_gameState);
-					
-					d_gameEngine.setD_gameEngineLog("\nGame Completed.........\n", "effect");
+
+					d_gameEngine.setD_gameEngineLog(
+							"\nGame Completed on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
+							"effect");
 				}
+				d_gameEngine.setD_gameEngineLog("************ Tournament Completed ************", "effect");
 			}
 		} else {
 			d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");

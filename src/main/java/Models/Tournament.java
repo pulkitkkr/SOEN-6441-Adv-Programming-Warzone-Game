@@ -142,7 +142,8 @@ public class Tournament {
 	/**
 	 * Gets players list to add in each game state.
 	 * 
-	 * @param p_playersList list of players to be added
+	 * @param p_playersList list of players to be looked from
+	 * @return list of players to be added
 	 */
 	private List<Player> getPlayersToAdd(List<Player> p_playersList) {
 		List<Player> p_playersToCopy = new ArrayList<>();

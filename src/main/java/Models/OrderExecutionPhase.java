@@ -110,6 +110,7 @@ public class OrderExecutionPhase extends Phase {
 				.filter(l_pl -> l_pl.getPlayerName().equalsIgnoreCase("Neutral")).findFirst().orElse(null);
 		if (CommonUtil.isNull(l_player)) {
 			Player l_neutralPlayer = new Player("Neutral");
+			l_neutralPlayer.setStrategy(new HumanPlayer());
 			l_neutralPlayer.setD_moreOrders(false);
 			p_gameState.getD_players().add(l_neutralPlayer);
 		} else {
