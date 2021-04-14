@@ -1,6 +1,7 @@
 package Models;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
@@ -12,7 +13,9 @@ import Utils.Command;
 /**
  *  This Interface enforces the method requirement for Each Game Phase.
  */
-public abstract class Phase {
+public abstract class Phase implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * d_gameState stores the information about current GamePlay.
      */
@@ -158,6 +161,14 @@ public abstract class Phase {
                 performAdvance(p_enteredCommand, p_player);
                 break;
             }
+            case "savegame": {
+                performSaveGame(l_command);
+                break;
+            }
+            case "loadgame": {
+                performLoadGame(l_command);
+                break;
+            }
             case "airlift":
             case "blockade":
             case "negotiate":
@@ -178,6 +189,25 @@ public abstract class Phase {
             }
         }
     }
+
+    /**
+     * Handles Game Load Feature
+     * @param p_command command entered by user
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
+     */
+    protected abstract void performLoadGame(Command p_command) throws InvalidCommand, InvalidMap, IOException;
+
+    /**
+     * Handles Game Save Feature
+     *
+     * @param p_command command entered by user
+     * @throws InvalidCommand indicates command is invalid
+     * @throws InvalidMap indicates map is invalid
+     * @throws IOException    indicates failure in I/O operation
+     */
+    protected abstract void performSaveGame(Command p_command) throws InvalidCommand, InvalidMap, IOException;
 
     /**
      * Handles the Card Commands.

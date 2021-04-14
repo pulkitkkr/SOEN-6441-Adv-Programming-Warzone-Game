@@ -25,6 +25,23 @@ public class IssueOrderPhase extends Phase{
         super(p_gameEngine, p_gameState);
     }
 
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected void performLoadGame(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected void performSaveGame(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+
+    }
+
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
     	if(p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
