@@ -11,11 +11,14 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 
+/**
+ * The MapFileRead parses Map File.
+ */
 public class MapFileReader implements Serializable {
 	/**
-	 * @param p_gameState
-	 * @param p_map
-	 * @param p_linesOfFile
+	 * @param p_gameState instance of current gameState
+	 * @param p_map instance of current map
+	 * @param p_linesOfFile All Lines in the map document
 	 */
 	public void parseMapFile(GameState p_gameState, Map p_map, List<String> p_linesOfFile) {
 		// Parses the file and stores information in objects

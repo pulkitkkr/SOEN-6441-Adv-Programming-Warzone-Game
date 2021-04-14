@@ -18,16 +18,16 @@ public class ConquestMapFileWriter implements Serializable {
 	 * Reads conquest map, parses it and stores it in conquest type of map file.
 	 *
 	 * @param p_gameState current state of the game
-	 * @param l_writer    file writer
-	 * @param l_mapFormat format in which map file has to be saved
-	 * @throws IOException
+	 * @param p_writer    file writer
+	 * @param p_mapFormat format in which map file has to be saved
+	 * @throws IOException handles I/0
 	 */
-	public void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
+	public void parseMapToFile(GameState p_gameState, FileWriter p_writer, String p_mapFormat) throws IOException {
 		if (null != p_gameState.getD_map().getD_continents() && !p_gameState.getD_map().getD_continents().isEmpty()) {
-			writeContinentMetadata(p_gameState, l_writer);
+			writeContinentMetadata(p_gameState, p_writer);
 		}
 		if (null != p_gameState.getD_map().getD_countries() && !p_gameState.getD_map().getD_countries().isEmpty()) {
-			writeCountryAndBoarderMetaData(p_gameState, l_writer);
+			writeCountryAndBoarderMetaData(p_gameState, p_writer);
 		}
 	}
 

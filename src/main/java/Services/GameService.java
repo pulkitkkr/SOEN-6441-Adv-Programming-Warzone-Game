@@ -5,6 +5,9 @@ import Models.Phase;
 
 import java.io.*;
 
+/**
+ * The GameService class load and save game file.
+ */
 public class GameService {
 
     /**

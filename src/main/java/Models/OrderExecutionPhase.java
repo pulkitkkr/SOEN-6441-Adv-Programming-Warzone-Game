@@ -34,7 +34,7 @@ public class OrderExecutionPhase extends Phase {
 
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
@@ -42,7 +42,7 @@ public class OrderExecutionPhase extends Phase {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
