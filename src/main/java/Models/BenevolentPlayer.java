@@ -160,6 +160,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 * to this weakest country.
 	 * 
 	 * @param l_randomSourceCountry Source country
+	 * @param p_gameState GameState
 	 * @return weakest neighbor
 	 */
 	public Country getWeakestNeighbor(Country l_randomSourceCountry, GameState p_gameState) {
