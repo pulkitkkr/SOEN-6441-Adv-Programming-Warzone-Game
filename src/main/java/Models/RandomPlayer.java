@@ -68,7 +68,9 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		int l_armiesToSend;
 		Random l_random = new Random();
 		Country l_randomOwnCountry = getRandomCountry(d_deployCountries);
-		Country l_randomNeighbor = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(l_random.nextInt(l_randomOwnCountry.getD_adjacentCountryIds().size())));
+		int l_randomIndex = l_random.nextInt(l_randomOwnCountry.getD_adjacentCountryIds().size());
+		System.out.println("random adjecent country index :: " + l_randomIndex + " countries :: " + l_randomOwnCountry.getD_adjacentCountryIds());
+		Country l_randomNeighbor = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(l_randomIndex));
 
 		if (l_randomOwnCountry.getD_armies()>1) {
 			l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
@@ -100,9 +102,9 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 			case "blockade":
 				return "blockade "+ l_randomOwnCountry.getD_countryName();
 			case "airlift":
-				return "airlift "+ l_randomOwnCountry.getD_countryName()+" "+getRandomCountry(p_player.getD_coutriesOwned())+" "+l_armiesToSend;
+				return "airlift "+ l_randomOwnCountry.getD_countryName()+" "+getRandomCountry(p_player.getD_coutriesOwned()).getD_countryName()+" "+l_armiesToSend;
 			case "negotiate":
-				return "negotiate"+" "+l_randomPlayer;
+				return "negotiate"+" "+l_randomPlayer.getPlayerName();
 		}
 		return null;
 	}

@@ -46,25 +46,25 @@ public class OrderExecutionPhase extends Phase {
 		if (this.checkEndOftheGame(d_gameState))
 			return;
 
-		while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-			try {
-				String l_continue = this.continueForNextTurn(isTournamentMode);
-				if (l_continue.equalsIgnoreCase("N") && isTournamentMode) {
-					d_gameEngine.setD_gameEngineLog("Start Up Phase", "phase");
-					d_gameEngine.setD_CurrentPhase(new StartUpPhase(d_gameEngine, d_gameState));
-				} else if (l_continue.equalsIgnoreCase("N") && !isTournamentMode) {
-					d_gameEngine.setStartUpPhase();
+		try {
+			String l_continue = this.continueForNextTurn(isTournamentMode);
+			if (l_continue.equalsIgnoreCase("N") && isTournamentMode) {
+				d_gameEngine.setD_gameEngineLog("Start Up Phase", "phase");
+				d_gameEngine.setD_CurrentPhase(new StartUpPhase(d_gameEngine, d_gameState));
+			} else if (l_continue.equalsIgnoreCase("N") && !isTournamentMode) {
+				d_gameEngine.setStartUpPhase();
 
-				} else if (l_continue.equalsIgnoreCase("Y")) {
-					d_playerService.assignArmies(d_gameState);
-					d_gameEngine.setIssueOrderPhase(isTournamentMode);
-				} else {
-					System.out.println("Invalid Input");
-				}
-			} catch (IOException l_e) {
+			} else if (l_continue.equalsIgnoreCase("Y")) {
+				System.out.println("\n" + d_gameState.getD_numberOfTurnsLeft() + " Turns are left for this game. Continuing for next Turn.\n");
+				d_playerService.assignArmies(d_gameState);
+				d_gameEngine.setIssueOrderPhase(isTournamentMode);
+			} else {
 				System.out.println("Invalid Input");
 			}
+		} catch (IOException l_e) {
+			System.out.println("Invalid Input");
 		}
+
 	}
 
 	private String continueForNextTurn(boolean isTournamentMode) throws IOException {
@@ -132,8 +132,8 @@ public class OrderExecutionPhase extends Phase {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode, GameState p_gameState)
-			throws InvalidCommand, IOException {
+	protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode,
+			GameState p_gameState) throws InvalidCommand, IOException {
 		printInvalidCommandInState();
 	}
 

@@ -365,7 +365,10 @@ public class Player {
 		if(p_isTournamentMode) {
 			String [] l_nextOrder = {"Y", "N"};
 	        Random random = new Random();
-	        int l_randomInt = random.nextInt(2);
+	        int l_randomInt = random.ints(0, 2)
+	        .findFirst()
+	        .getAsInt();
+	        System.out.println("random int : "+ l_randomInt);
 	        l_nextOrderCheck = l_nextOrder[l_randomInt];
 		} else {
 			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));

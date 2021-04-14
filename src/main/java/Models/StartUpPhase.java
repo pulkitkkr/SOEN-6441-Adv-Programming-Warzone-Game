@@ -293,6 +293,8 @@ public class StartUpPhase extends Phase {
 			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
 			if (CommonUtil.isCollectionEmpty(l_operations_list) || p_istournamentmode) {
+				d_gameEngine.setD_gameState(p_gameState);
+				d_gameEngine.setD_isTournamentMode(p_istournamentmode);
 				d_playerService.assignCountries(p_gameState);
 				d_playerService.assignColors(p_gameState);
 				d_playerService.assignArmies(p_gameState);
@@ -333,7 +335,10 @@ public class StartUpPhase extends Phase {
 			}
 			if (l_parsingSuccessful) {
 				for (GameState l_gameState : d_tournament.getD_gameStateList()) {
+					d_gameEngine.setD_gameEngineLog("\nStarting New Game.........\n", "effect");
 					performAssignCountries(new Command("assigncountries"), null, true, l_gameState);
+					
+					d_gameEngine.setD_gameEngineLog("\nGame Completed.........\n", "effect");
 				}
 			}
 		} else {

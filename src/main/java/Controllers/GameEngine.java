@@ -16,12 +16,28 @@ public class GameEngine {
 	 */
 	GameState d_gameState = new GameState();
 
+	public GameState getD_gameState() {
+		return d_gameState;
+	}
+
+	public void setD_gameState(GameState p_gameState) {
+		this.d_gameState = p_gameState;
+	}
+
 	/**
 	 * It is the current game play phase as per state pattern.
 	 */
 	Phase d_currentPhase = new StartUpPhase(this, d_gameState);
 	
 	static boolean d_isTournamentMode = false;
+
+	public boolean isD_isTournamentMode() {
+		return d_isTournamentMode;
+	}
+
+	public void setD_isTournamentMode(boolean p_isTournamentMode) {
+		GameEngine.d_isTournamentMode = p_isTournamentMode;
+	}
 
 	/**
 	 * It's used to update context.
