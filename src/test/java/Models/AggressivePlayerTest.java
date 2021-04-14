@@ -23,6 +23,11 @@ public class AggressivePlayerTest {
 	Player d_player;
 	
 	/**
+	 * Country class object;
+	 */
+	Country d_country;
+	
+	/**
 	 * Object of GameState Class.
 	 */
 	GameState d_gameState;
@@ -33,34 +38,48 @@ public class AggressivePlayerTest {
 	PlayerBehaviorStrategy d_playerBehaviorStrategy;
 	
 	/**
-     * Setup For testing Aggressive Player Behavior Strategy.
+	 * Aggressive Player Object.
+	 */
+	AggressivePlayer d_aggressivePlayer = new AggressivePlayer();
+	
+	/**
+     * Setup for testing Aggressive Player Behavior Strategy.
      */
     @Before
     public void setup() {
-
-        Continent l_continent = new Continent("Europe");
-
-        Country l_country1 = new Country(1, "Portugal", 10);
-        Country l_country2 = new Country(2,"France", 5);
+        this.d_country = new Country(1, "Spain", 1);
+        Country l_country1 = new Country(1, "Portugal", 1);
+        Country l_country2 = new Country(1, "France", 1);
         
-        ArrayList<Country> l_list = new ArrayList<Country>();
-        l_list.add(l_country1);
-        l_list.add(l_country2);
+        l_country1.setD_countryId(3);
+		d_country.addNeighbour(3);
 
-        d_playerBehaviorStrategy = new AggressivePlayer();
-        d_player = new Player();
-        
-        d_player.setD_coutriesOwned(l_list);
-        d_player.setStrategy(d_playerBehaviorStrategy);
-        d_player.setD_noOfUnallocatedArmies(1);
-        
-        List<Player> l_listOfPlayer = new ArrayList<Player>();
-        l_listOfPlayer.add(d_player);
+		l_country2.setD_countryId(2);
+		d_country.addNeighbour(2);
 
-        Map l_map = new Map();
-        l_map.setD_countries(l_list);
-        d_gameState.setD_map(l_map);
-        d_gameState.setD_players(l_listOfPlayer);
+		this.d_country.setD_armies(10);
+		l_country1.setD_armies(3);
+		l_country2.setD_armies(2);
+
+		ArrayList<Country> l_list = new ArrayList<Country>();
+		l_list.add(d_country);
+		l_list.add(l_country1);
+		l_list.add(l_country2);
+
+		d_playerBehaviorStrategy = new AggressivePlayer();
+		d_player = new Player("Bhoomi");
+		d_player.setD_coutriesOwned(l_list);
+		d_player.setStrategy(d_playerBehaviorStrategy);
+		d_player.setD_noOfUnallocatedArmies(8);
+
+		List<Player> l_listOfPlayer = new ArrayList<Player>();
+		l_listOfPlayer.add(d_player);
+
+		Map l_map = new Map();
+		l_map.setD_countries(l_list);
+		d_gameState.setD_map(l_map);
+		d_gameState.setD_players(l_listOfPlayer);
+
     }
 
     /**
@@ -70,6 +89,22 @@ public class AggressivePlayerTest {
      */
     @Test
     public void testCreateOrder() throws IOException{
-        assertEquals(d_player.getPlayerOrder(d_gameState).split(" ")[0],"deploy");
+        assertEquals("deploy", d_player.getPlayerOrder(d_gameState).split(" ")[0]);
     }
+    
+    /**
+	 * Check if aggressive player deploy armies on strongest country or not.
+	 */
+	@Test
+	public void testStrongestCountry() {
+		assertEquals("Spain", d_aggressivePlayer.getStrongestCountry(d_player,d_gameState).getD_countryName());
+	}
+
+	/**
+	 * Check if aggressive player attacks to enemy territory or not.
+	 */
+	@Test
+	public void testStrongestCountryWithAdjacentCountry() {
+		assertEquals(null, d_aggressivePlayer.getStrongestCountryWithAdjacentCountry(d_player, d_gameState).getD_countryName());
+	}
 }

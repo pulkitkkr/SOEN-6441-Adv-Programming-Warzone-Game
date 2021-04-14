@@ -235,7 +235,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 * @param p_gameState GameState class object
 	 * @return l_strongestCountry the strongest country
 	 */
-	private Country getStrongestCountry(Player p_player, GameState p_gameState) {
+	public Country getStrongestCountry(Player p_player, GameState p_gameState) {
 		int l_noOfArmies = 0;
 		Country l_strongestCountry = null;
 
@@ -255,7 +255,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 * @param p_gameState GameState class object
 	 * @return l_strongestCountry the strongest country
 	 */
-	private Country getStrongestCountryWithAdjacentCountry(Player p_player, GameState p_gameState) {
+	public Country getStrongestCountryWithAdjacentCountry(Player p_player, GameState p_gameState) {
 		int l_noOfArmies = 0;
 		Country l_strongestCountry = null;
 		List<Country> l_countriesWithAdjCountries = new ArrayList<Country>();
