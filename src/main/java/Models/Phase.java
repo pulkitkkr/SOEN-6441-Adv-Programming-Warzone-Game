@@ -151,7 +151,7 @@ public abstract class Phase {
 			break;
 		}
 		case "assigncountries": {
-			performAssignCountries(l_command, p_player, false);
+			performAssignCountries(l_command, p_player, false, d_gameState);
 			break;
 		}
 		case "showmap": {
@@ -254,7 +254,7 @@ public abstract class Phase {
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws IOException    indicates failure in I/O operation
 	 */
-	protected abstract void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode)
+	protected abstract void performAssignCountries(Command p_command, Player p_player, boolean p_isTournamentMode, GameState p_gameState)
 			throws InvalidCommand, IOException, InvalidMap;
 
 	/**

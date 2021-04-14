@@ -24,7 +24,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
-		super.setObjects(p_player, p_gameState);
 		return null;
 	}
 

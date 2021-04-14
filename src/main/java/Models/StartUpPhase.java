@@ -287,15 +287,15 @@ public class StartUpPhase extends Phase {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode)
+	public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode, GameState p_gameState)
 			throws InvalidCommand {
-		if (d_gameState.getD_loadCommand()) {
+		if (p_gameState.getD_loadCommand()) {
 			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
 			if (CommonUtil.isCollectionEmpty(l_operations_list) || p_istournamentmode) {
-				d_playerService.assignCountries(d_gameState);
-				d_playerService.assignColors(d_gameState);
-				d_playerService.assignArmies(d_gameState);
+				d_playerService.assignCountries(p_gameState);
+				d_playerService.assignColors(p_gameState);
+				d_playerService.assignArmies(p_gameState);
 				d_gameEngine.setIssueOrderPhase(p_istournamentmode);
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
@@ -333,14 +333,11 @@ public class StartUpPhase extends Phase {
 			}
 			if (l_parsingSuccessful) {
 				for (GameState l_gameState : d_tournament.getD_gameStateList()) {
-					d_gameState = l_gameState;
-					performAssignCountries(null, null, true);
+					performAssignCountries(new Command("assigncountries"), null, true, l_gameState);
 				}
 			}
-
 		} else {
 			d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");
 		}
-
 	}
 }

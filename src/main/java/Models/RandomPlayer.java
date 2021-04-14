@@ -29,7 +29,6 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	public String createOrder(Player p_player, GameState p_gameState) {
 		String l_command;
 
-		super.setObjects(p_player, p_gameState);
 		if(p_player.getD_noOfUnallocatedArmies()>0) {
 			l_command = createDeployOrder(p_player);
 		}else{
