@@ -40,8 +40,14 @@ public class GameState {
 	 */
 	Boolean d_loadCommand = false;
 
+	/**
+	 * Number of turns in tournament.
+	 */
 	int d_maxnumberofturns = 0;
 	
+	/**
+	 * Number of remaining turns in tournament.
+	 */
 	int d_numberOfTurnsLeft = 0;
 
 	/**
@@ -152,18 +158,38 @@ public class GameState {
 	}
 	
 
+	/**
+	 * Returns max number of turns allowed in tournament.
+	 * 
+	 * @return int number of turns
+	 */
 	public int getD_maxnumberofturns() {
 		return d_maxnumberofturns;
 	}
 
+	/**
+	 * Sets max number of turns allowed in tournament.
+	 * 
+	 * @param d_maxnumberofturns number of turns
+	 */
 	public void setD_maxnumberofturns(int d_maxnumberofturns) {
 		this.d_maxnumberofturns = d_maxnumberofturns;
 	}
 
+	/**
+	 * Gets number of turns left at any stage of tournament.
+	 * 
+	 * @return int number of remaining turns
+	 */
 	public int getD_numberOfTurnsLeft() {
 		return d_numberOfTurnsLeft;
 	}
 
+	/**
+	 * Sets number of turns left at any stage of tournament.
+	 * 
+	 * @param d_numberOfTurnsLeft number of remaining turns
+	 */
 	public void setD_numberOfTurnsLeft(int d_numberOfTurnsLeft) {
 		this.d_numberOfTurnsLeft = d_numberOfTurnsLeft;
 	}

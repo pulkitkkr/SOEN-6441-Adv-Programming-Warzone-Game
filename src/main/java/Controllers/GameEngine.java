@@ -16,10 +16,20 @@ public class GameEngine {
 	 */
 	GameState d_gameState = new GameState();
 
+	/**
+	 * Gets current state of the game.
+	 * 
+	 * @return state of the game
+	 */
 	public GameState getD_gameState() {
 		return d_gameState;
 	}
 
+	/**
+	 * Sets state of the game.
+	 * 
+	 * @param p_gameState state of the game
+	 */
 	public void setD_gameState(GameState p_gameState) {
 		this.d_gameState = p_gameState;
 	}
@@ -29,12 +39,25 @@ public class GameEngine {
 	 */
 	Phase d_currentPhase = new StartUpPhase(this, d_gameState);
 	
+	/**
+	 * Tournament mode or single game mode.
+	 */
 	static boolean d_isTournamentMode = false;
 
+	/**
+	 * Tournament mode information.
+	 * 
+	 * @return true if tournament is being played or else false
+	 */
 	public boolean isD_isTournamentMode() {
 		return d_isTournamentMode;
 	}
 
+	/**
+	 * Sets tournament mode information.
+	 * 
+	 * @param p_isTournamentMode true if tournament is being played or else false
+	 */
 	public void setD_isTournamentMode(boolean p_isTournamentMode) {
 		GameEngine.d_isTournamentMode = p_isTournamentMode;
 	}
@@ -60,11 +83,13 @@ public class GameEngine {
 	/**
 	 * this methods updates the current phase to Issue Order Phase as per State
 	 * Pattern.
+	 * 
+	 * @param p_isTournamentMode true if tournament is being played or else false
 	 */
-	public void setIssueOrderPhase(boolean isTournamentMode) {
+	public void setIssueOrderPhase(boolean p_isTournamentMode) {
 		this.setD_gameEngineLog("Issue Order Phase", "phase");
 		setD_CurrentPhase(new IssueOrderPhase(this, d_gameState));
-		getD_CurrentPhase().initPhase(isTournamentMode);
+		getD_CurrentPhase().initPhase(p_isTournamentMode);
 	}
 
 	/**

@@ -11,20 +11,52 @@ import Exceptions.InvalidMap;
 import Services.MapService;
 import Utils.Command;
 
+/**
+ * @author admin
+ *
+ */
 public class Tournament {
 
+	/**
+	 * Map service object.
+	 */
 	MapService d_mapService = new MapService();
 
+	/**
+	 * Game states of the tournament.
+	 */
 	List<GameState> d_gameStateList = new ArrayList<GameState>();
 
+	/**
+	 * Gets list of game states.
+	 * 
+	 * @return list of game states
+	 */
 	public List<GameState> getD_gameStateList() {
 		return d_gameStateList;
 	}
 
+	/**
+	 * Sets list of game states.
+	 * 
+	 * @param d_gameStateList list of game states
+	 */
 	public void setD_gameStateList(List<GameState> d_gameStateList) {
 		this.d_gameStateList = d_gameStateList;
 	}
 
+	/**
+	 * Parses tournament command into tournament object.
+	 * 
+	 * @param p_gameState  current state of the game
+	 * @param p_operation  operation given in command
+	 * @param p_argument   argument values given in command
+	 * @param p_gameEngine game engine
+	 * @return boolean true if parsing is successful or else false
+	 * @throws InvalidMap     returned if map given in command is invalid
+	 * @throws InvalidCommand returned if command provided is syntactically or
+	 *                        logically invalid
+	 */
 	public boolean parseTournamentCommand(GameState p_gameState, String p_operation, String p_argument,
 			GameEngine p_gameEngine) throws InvalidMap, InvalidCommand {
 
@@ -35,20 +67,10 @@ public class Tournament {
 			return parseMapArguments(p_argument, p_gameEngine);
 		}
 		if (p_operation.equalsIgnoreCase("P")) {
-			try {
-				return parseStrategyArguments(p_gameState, p_argument, p_gameEngine);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				p_gameEngine.setD_gameEngineLog("Error in parsing tournament command.", "effect");
-				return false;
-			}
+			return parseStrategyArguments(p_gameState, p_argument, p_gameEngine);
 		}
 		if (p_operation.equalsIgnoreCase("G")) {
-			try {
-				return parseNoOfGameArgument(p_argument, p_gameEngine);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				p_gameEngine.setD_gameEngineLog("Error in parsing tournament command.", "effect");
-				return false;
-			}
+			return parseNoOfGameArgument(p_argument, p_gameEngine);
 		}
 		if (p_operation.equalsIgnoreCase("D")) {
 			return pasrseNoOfTurnsArguments(p_argument, p_gameEngine);
@@ -57,9 +79,11 @@ public class Tournament {
 	}
 
 	/**
-	 * @param p_argument
-	 * @param p_gameEngine
-	 * @return
+	 * Parses number of turns given in tournament command to an object.
+	 * 
+	 * @param p_argument   no of turns
+	 * @param p_gameEngine game engine
+	 * @return true if parsing is successful or else false
 	 */
 	private boolean pasrseNoOfTurnsArguments(String p_argument, GameEngine p_gameEngine) {
 		int l_maxTurns = Integer.parseInt(p_argument.split(" ")[0]);
@@ -78,15 +102,14 @@ public class Tournament {
 	}
 
 	/**
-	 * @param p_argument
-	 * @param p_gameEngine
-	 * @return
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws InvalidMap 
+	 * Parses number of games given in tournament command to an object.
+	 * 
+	 * @param p_argument   no of games
+	 * @param p_gameEngine game engine
+	 * @return true if parsing is successful or else false
+	 * @throws InvalidMap returned if map given in command is invalid
 	 */
-	private boolean parseNoOfGameArgument(String p_argument, GameEngine p_gameEngine)
-			throws IllegalAccessException, InvocationTargetException, InvalidMap {
+	private boolean parseNoOfGameArgument(String p_argument, GameEngine p_gameEngine) throws InvalidMap {
 		int l_noOfGames = Integer.parseInt(p_argument.split(" ")[0]);
 
 		if (l_noOfGames >= 1 && l_noOfGames <= 5) {
@@ -95,7 +118,8 @@ public class Tournament {
 			for (int l_gameNumber = 0; l_gameNumber < l_noOfGames - 1; l_gameNumber++) {
 				for (GameState l_gameState : d_gameStateList) {
 					GameState l_gameStateToAdd = new GameState();
-					Models.Map l_loadedMap = d_mapService.loadMap(l_gameStateToAdd, l_gameState.getD_map().getD_mapFile());
+					Models.Map l_loadedMap = d_mapService.loadMap(l_gameStateToAdd,
+							l_gameState.getD_map().getD_mapFile());
 					l_loadedMap.setD_mapFile(l_gameState.getD_map().getD_mapFile());
 
 					List<Player> l_playersToCopy = getPlayersToAdd(l_gameState.getD_players());
@@ -116,38 +140,38 @@ public class Tournament {
 	}
 
 	/**
-	 * @param p_playersList
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
+	 * Gets players list to add in each game state.
+	 * 
+	 * @param p_playersList list of players to be added
 	 */
-	private List<Player> getPlayersToAdd(List<Player> p_playersList) throws IllegalAccessException, InvocationTargetException {
+	private List<Player> getPlayersToAdd(List<Player> p_playersList) {
 		List<Player> p_playersToCopy = new ArrayList<>();
 		for (Player l_pl : p_playersList) {
 			Player l_player = new Player(l_pl.getPlayerName());
-			
-			if(l_pl.getD_playerBehaviorStrategy() instanceof AggressivePlayer)
+
+			if (l_pl.getD_playerBehaviorStrategy() instanceof AggressivePlayer)
 				l_player.setStrategy(new AggressivePlayer());
-			else if(l_pl.getD_playerBehaviorStrategy() instanceof RandomPlayer)
+			else if (l_pl.getD_playerBehaviorStrategy() instanceof RandomPlayer)
 				l_player.setStrategy(new RandomPlayer());
-			else if(l_pl.getD_playerBehaviorStrategy() instanceof BenevolentPlayer)
+			else if (l_pl.getD_playerBehaviorStrategy() instanceof BenevolentPlayer)
 				l_player.setStrategy(new BenevolentPlayer());
-			else if(l_pl.getD_playerBehaviorStrategy() instanceof CheaterPlayer)
+			else if (l_pl.getD_playerBehaviorStrategy() instanceof CheaterPlayer)
 				l_player.setStrategy(new CheaterPlayer());
-			
+
 			p_playersToCopy.add(l_player);
 		}
 		return p_playersToCopy;
 	}
 
 	/**
-	 * @param p_gameState
-	 * @param p_argument
-	 * @param p_gameEngine
-	 * @return
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
+	 * Parses strategy arguments into tournament object.
+	 * 
+	 * @param p_gameState  current state of the game
+	 * @param p_argument   strategy arguments provided in game
+	 * @param p_gameEngine game engine object
+	 * @return true if parsing of strategy information is successful or else false
 	 */
-	private boolean parseStrategyArguments(GameState p_gameState, String p_argument, GameEngine p_gameEngine) throws IllegalAccessException, InvocationTargetException {
+	private boolean parseStrategyArguments(GameState p_gameState, String p_argument, GameEngine p_gameEngine) {
 		String[] l_listofplayerstrategies = p_argument.split(" ");
 		int l_playerStrategiesSize = l_listofplayerstrategies.length;
 		List<Player> l_playersInTheGame = new ArrayList<>();
@@ -160,7 +184,6 @@ public class Tournament {
 				return false;
 			}
 		}
-
 		if (l_playerStrategiesSize >= 2 && l_playerStrategiesSize <= 4) {
 			setTournamentPlayers(p_gameEngine, l_listofplayerstrategies, p_gameState.getD_players(),
 					l_playersInTheGame);
@@ -182,10 +205,12 @@ public class Tournament {
 	}
 
 	/**
-	 * @param p_gameEngine
-	 * @param p_listofplayerstrategies
-	 * @param p_listOfPlayers
-	 * @param l_playersInTheGame
+	 * Sets information about players which are to be added for playing tournament.
+	 * 
+	 * @param p_gameEngine             game engine object
+	 * @param p_listofplayerstrategies list of player strategies given in command
+	 * @param p_listOfPlayers          list of players in game state
+	 * @param p_playersInTheGame       players of the tournament
 	 */
 	private void setTournamentPlayers(GameEngine p_gameEngine, String[] p_listofplayerstrategies,
 			List<Player> p_listOfPlayers, List<Player> p_playersInTheGame) {
@@ -201,10 +226,13 @@ public class Tournament {
 	}
 
 	/**
-	 * @param p_argument
-	 * @param p_gameEngine
-	 * @return
-	 * @throws InvalidMap
+	 * Parses map arguments given in command.
+	 * 
+	 * @param p_argument   list of maps information
+	 * @param p_gameEngine game engine object
+	 * @return true if parsing of maps to tournament object is successful or else
+	 *         false
+	 * @throws InvalidMap returned if map given in command is invalid
 	 */
 	private boolean parseMapArguments(String p_argument, GameEngine p_gameEngine) throws InvalidMap {
 		String[] l_listOfMapFiles = p_argument.split(" ");
@@ -233,6 +261,14 @@ public class Tournament {
 		return true;
 	}
 
+	/**
+	 * Validates tournament command and checks if required information is there in
+	 * command or not.
+	 * 
+	 * @param p_operations_list operations list given in command
+	 * @param p_command         tournament command
+	 * @return true if command is valid or else false
+	 */
 	public boolean requiredTournamentArgPresent(List<Map<String, String>> p_operations_list, Command p_command) {
 		String l_argumentKey = new String();
 		if (p_operations_list.size() != 4)

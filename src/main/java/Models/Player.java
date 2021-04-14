@@ -358,6 +358,7 @@ public class Player {
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
 	 *
+	 * @param p_isTournamentMode if game is being played in tournament mode
 	 * @throws IOException exception in reading inputs from user
 	 */
 	void checkForMoreOrders(boolean p_isTournamentMode) throws IOException {

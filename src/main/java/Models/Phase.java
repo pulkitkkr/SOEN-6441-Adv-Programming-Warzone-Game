@@ -224,8 +224,10 @@ public abstract class Phase {
 
 	/**
 	 * This is the main method executed on phase change.
+	 * 
+	 * @param p_isTournamentMode if game is being played in tournament mode
 	 */
-	public abstract void initPhase(boolean isTournamentMode);
+	public abstract void initPhase(boolean p_isTournamentMode);
 
 	/**
 	 * This method handles the deploy order in gameplay.
@@ -250,6 +252,8 @@ public abstract class Phase {
 	 *
 	 * @param p_command command entered by the user on CLI
 	 * @param p_player  instance of Player Object
+	 * @param p_isTournamentMode if game is being played in tournament mode
+	 * @param p_gameState current state of the game
 	 * @throws InvalidCommand indicates command is invalid
 	 * @throws InvalidMap     indicates map is invalid
 	 * @throws IOException    indicates failure in I/O operation

@@ -60,6 +60,7 @@ public class IssueOrderPhase extends Phase {
 	/**
 	 * Accepts orders from players.
 	 *
+	 * @param p_isTournamentMode if game is being played in tournament mode
 	 */
 	protected void issueOrders(boolean p_isTournamentMode){
         // issue orders for each player
