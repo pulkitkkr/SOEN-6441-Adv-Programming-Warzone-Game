@@ -1,12 +1,12 @@
 
 [continents]
 Cockpit 5
-Right Thruster 6
-Left Thruster 6
-Right Cargo 10
-Left Cargo 10
-Right Escape Pod 8
-Left Escape Pod 8
+Right_Thruster 6
+Left_Thruster 6
+Right_Cargo 10
+Left_Cargo 10
+Right_Escape_Pod 8
+Left_Escape_Pod 8
 Hyperdrive 12
 abcd 10
 
@@ -109,7 +109,7 @@ abcd 10
 96 Territory99 3
 97 Territory100 3
 98 Territory101 8
-99 Territory 99a 8
+99 Territory99a 8
 100 abcde 9
 
 [borders]
