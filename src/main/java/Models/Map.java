@@ -3,6 +3,7 @@ package Models;
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map.Entry;
 /**
  * this model class manages all the maps.
  */
-public class Map {
+public class Map implements Serializable {
 
 	/**
 	 * stores the map file name.

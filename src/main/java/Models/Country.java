@@ -2,13 +2,14 @@ package Models;
 
 import Exceptions.InvalidMap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This model class manages all the countries on the map.
  */
-public class Country {
+public class Country implements Serializable {
 
 	/**
 	 * the number of armies.

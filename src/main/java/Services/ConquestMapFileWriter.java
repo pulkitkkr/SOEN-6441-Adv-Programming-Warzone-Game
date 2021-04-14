@@ -2,6 +2,7 @@ package Services;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 import Constants.ApplicationConstants;
 import Models.Continent;
@@ -12,7 +13,7 @@ import Models.GameState;
  * Writer to read and create conquest map file.
  *
  */
-public class ConquestMapFileWriter {
+public class ConquestMapFileWriter implements Serializable {
 	/**
 	 * Reads conquest map, parses it and stores it in conquest type of map file.
 	 *

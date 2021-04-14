@@ -2,11 +2,13 @@ package Models;
 
 import Services.PlayerService;
 
+import java.io.Serializable;
+
 /**
  * Handles diplomacy command.
  *
  */
-public class Diplomacy implements Card {
+public class Diplomacy implements Card, Serializable {
 
 	/**
 	 * Player issuing the negotiate order.

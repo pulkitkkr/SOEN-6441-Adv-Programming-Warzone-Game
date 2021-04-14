@@ -2,6 +2,7 @@ package Services;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import Models.GameState;
  * Writer class to create generic map file.
  *
  */
-public class MapFileWriter {
+public class MapFileWriter implements Serializable {
 	/**
 	 * Reads map, parses it and stores it in specific type of map file.
 	 * 

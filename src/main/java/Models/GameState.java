@@ -1,11 +1,12 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * This class is used to test functionality of GameState class functions.
  */
-public class GameState {
+public class GameState implements Serializable {
 	
 	/**
 	 * map object.

@@ -2,10 +2,12 @@ package Utils;
 
 import Models.GameState;
 
+import java.io.Serializable;
+
 /**
  * Class to Add Exception to Logs that are not caught using try/catch.
  */
-public class ExceptionLogHandler implements Thread.UncaughtExceptionHandler{
+public class ExceptionLogHandler implements Thread.UncaughtExceptionHandler, Serializable {
 
     /**
      * GameState to which Exception Log Belongs to.

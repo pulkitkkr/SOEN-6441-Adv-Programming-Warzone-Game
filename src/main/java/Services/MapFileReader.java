@@ -1,5 +1,6 @@
 package Services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 
-public class MapFileReader {
+public class MapFileReader implements Serializable {
 	/**
 	 * @param p_gameState
 	 * @param p_map

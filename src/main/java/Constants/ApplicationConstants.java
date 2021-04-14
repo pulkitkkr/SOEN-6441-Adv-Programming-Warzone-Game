@@ -1,4 +1,5 @@
 package Constants;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -6,7 +7,9 @@ import java.util.List;
  * This class initializes all the constants that are going to be used throughout the application.
  *
  */
-public final class ApplicationConstants {
+public final class ApplicationConstants implements Serializable {
+	public static final String INVALID_COMMAND_ERROR_SAVEGAME = "Invalid command. Kindly provide command in Format of : savegame filename";
+	public static final String INVALID_COMMAND_ERROR_LOADGAME = "Invalid command. Kindly provide command in Format of : loadgame filename";
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 	public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";
 	public static final String INVALID_COMMAND_ERROR_EDITCOUNTRY = "Invalid command. Kindly provide command in Format of : editcountry -add countrytID continentID -remove countryID";

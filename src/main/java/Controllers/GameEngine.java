@@ -6,11 +6,13 @@ import Models.OrderExecutionPhase;
 import Models.Phase;
 import Models.StartUpPhase;
 
+import java.io.Serializable;
+
 /**
  * This is the entry point of the Game and keeps the track of current Game
  * State.
  */
-public class GameEngine {
+public class GameEngine implements Serializable {
 	/**
 	 * d_gameState stores the information about current GamePlay.
 	 */
@@ -28,6 +30,13 @@ public class GameEngine {
 	 */
 	private void setD_CurrentPhase(Phase p_phase){
 		d_currentPhase = p_phase;
+	}
+
+
+	public void loadPhase(Phase p_phase){
+		d_currentPhase = p_phase;
+		d_gameState = p_phase.getD_gameState();
+		getD_CurrentPhase().initPhase();
 	}
 
 	/**

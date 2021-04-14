@@ -1,6 +1,7 @@
 package Utils;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import Constants.ApplicationConstants;
 /**
  * Common utility class to check null/empty collections, string, and object.
  */
-public class CommonUtil {
+public class CommonUtil implements Serializable {
 
 	/**
 	 * This method checks if the string is empty or not.
