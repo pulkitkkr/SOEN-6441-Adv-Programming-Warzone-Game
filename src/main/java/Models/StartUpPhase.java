@@ -72,6 +72,7 @@ public class StartUpPhase extends Phase{
             if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
                 String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
                 GameService.saveGame(this, l_filename);
+                d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
             } else {
                 throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
             }

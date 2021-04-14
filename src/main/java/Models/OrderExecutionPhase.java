@@ -58,6 +58,7 @@ public class OrderExecutionPhase extends Phase {
 			if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
 				String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
 				GameService.saveGame(this, l_filename);
+				d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
 			}
@@ -86,11 +87,14 @@ public class OrderExecutionPhase extends Phase {
 				return;
 
             while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+                System.out.println("Press Y/y if you want to continue for next turn or else press N/n. You can also Save Game by using savegame command.");
                 BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
 				try {
 					String l_continue = l_reader.readLine();
+
+					Command l_command = new Command(l_continue);
+					String l_rootCommand = l_command.getRootCommand();
 
                     if (l_continue.equalsIgnoreCase("N")) {
                         d_gameEngine.setStartUpPhase();
@@ -98,11 +102,11 @@ public class OrderExecutionPhase extends Phase {
                         d_playerService.assignArmies(d_gameState);
                         d_gameEngine.setIssueOrderPhase();
                     } else {
-                        System.out.println("Invalid Input");
-                    }
-                } catch (IOException l_e) {
-                    System.out.println("Invalid Input");
-                }
+                    	this.handleCommand(l_continue);
+					}
+                } catch (InvalidCommand | IOException | InvalidMap l_exception) {
+					d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
+				}
             }
         }
     }
