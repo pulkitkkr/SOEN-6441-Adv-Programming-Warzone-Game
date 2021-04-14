@@ -33,6 +33,11 @@ public class GameEngine implements Serializable {
 	}
 
 
+	/**
+	 * Handle load game feature by setting phase from Object stream.
+	 *
+	 * @param p_phase new Phase to set in Game context
+	 */
 	public void loadPhase(Phase p_phase){
 		d_currentPhase = p_phase;
 		d_gameState = p_phase.getD_gameState();

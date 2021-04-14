@@ -191,7 +191,8 @@ public abstract class Phase implements Serializable {
     }
 
     /**
-     * Handles Game Load Feature
+     * Handles Game Load Feature.
+     *
      * @param p_command command entered by user
      * @param p_player player instance
      * @throws InvalidCommand indicates command is invalid
@@ -201,7 +202,7 @@ public abstract class Phase implements Serializable {
     protected abstract void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
 
     /**
-     * Handles Game Save Feature
+     * Handles Game Save Feature.
      *
      * @param p_command command entered by user
      * @param p_player player instance
