@@ -38,6 +38,11 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 		return null;
 	}
 
+	/**
+	 * @param p_gameState Current state of the game
+	 * @param p_countryId id of the country whose neighbor is to be searched
+	 * @return Owner of the Country
+	 */
 	private Player getCountryOwner(GameState p_gameState, Integer p_countryId){
 		List<Player> l_players = p_gameState.getD_players();
 		Player l_owner = null;
