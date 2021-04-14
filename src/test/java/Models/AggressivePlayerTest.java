@@ -69,7 +69,7 @@ public class AggressivePlayerTest {
      * @throws IOException Input/Output Exception
      */
     @Test
-    public void testcreateOrder() throws IOException{
+    public void testCreateOrder() throws IOException{
         assertEquals(d_player.getPlayerOrder(d_gameState).split(" ")[0],"deploy");
     }
 }

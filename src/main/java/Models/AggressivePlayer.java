@@ -16,9 +16,19 @@ import java.util.Random;
 public class AggressivePlayer extends PlayerBehaviorStrategy {
 
 	/**
-	 * List of countries.
+	 * List containing deploy order countries.
 	 */
-	ArrayList<Country> d_listOfCountries = new ArrayList<Country>();
+	ArrayList<Country> d_deployCountries = new ArrayList<Country>();
+
+	/**
+	 * List containing advance order countries.
+	 */
+	ArrayList<Country> d_advanceCountries = new ArrayList<Country>();
+	
+	/**
+	 * Boolean to check if the armies have advance from Player's one territory to another or not.
+	 */
+	Boolean d_hasArmiesMoved = false;
 
 	/**
 	 * This method creates a new order.
@@ -58,36 +68,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createDeployOrder(Player p_player) {
-		int l_noOfArmies = 0;
 		int l_armiesToDeploy = 0;
-		Country l_fromCountry = null;
-
 		Country l_strongestCountry = getStrongestCountryWithAdjacentCountry(p_player, d_gameState);
-		Country l_strongestPlayerCountry = getStrongestCountry(p_player, d_gameState);
 
-		// d_listOfCountries.add(l_randomCountry);
-
-		if (l_strongestCountry.getD_countryName().equalsIgnoreCase(l_strongestPlayerCountry.getD_countryName())) {
-			l_noOfArmies = l_strongestCountry.getD_armies();
-
-			for (Country l_country : p_player.getD_coutriesOwned()) {
-				if (l_country.getD_armies() <= l_noOfArmies && l_country.getD_armies() > 1
-						&& !l_country.getD_countryName().equalsIgnoreCase(l_strongestCountry.getD_countryName())) {
-					l_noOfArmies = l_country.getD_armies();
-					l_fromCountry = l_country;
-					l_armiesToDeploy = l_fromCountry.getD_armies() - 1;
-				}
-			}
-		} else {
-			l_noOfArmies = l_strongestCountry.getD_armies();
-			l_fromCountry = l_strongestPlayerCountry;
-			l_armiesToDeploy = l_fromCountry.getD_armies() - 1;
-		}
-
-		if (l_fromCountry != null && l_strongestCountry != null) {
-			// moveArmies-deployOrder(d_gameState, l_fromCountry, l_strongestCountry,
-			// l_armiesToDeploy);
-		}
+		d_deployCountries.add(l_strongestCountry);
+		l_armiesToDeploy = p_player.getD_noOfUnallocatedArmies() + 1;
 
 		return String.format("deploy %s %d", l_strongestCountry.getD_countryName(), l_armiesToDeploy);
 	}
@@ -97,6 +82,37 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createAdvanceOrder(Player p_player, GameState p_gameState) {
+		if (!d_hasArmiesMoved) {
+			int l_noOfArmies = 0;
+			int l_armiesToMove = 0;
+			Country l_fromCountry = null;
+
+			Country l_strongestCountry = getStrongestCountryWithAdjacentCountry(p_player, d_gameState);
+			Country l_strongestPlayerCountry = getStrongestCountry(p_player, d_gameState);
+
+			if (l_strongestCountry.getD_countryName().equalsIgnoreCase(l_strongestPlayerCountry.getD_countryName())) {
+				l_noOfArmies = l_strongestCountry.getD_armies();
+
+				for (Country l_country : p_player.getD_coutriesOwned()) {
+					if (l_country.getD_armies() <= l_noOfArmies && l_country.getD_armies() > 1
+							&& !l_country.getD_countryName().equalsIgnoreCase(l_strongestCountry.getD_countryName())) {
+						l_noOfArmies = l_country.getD_armies();
+						l_fromCountry = l_country;
+						l_armiesToMove = l_fromCountry.getD_armies() - 1;
+					}
+				}
+			} else {
+				l_noOfArmies = l_strongestCountry.getD_armies();
+				l_fromCountry = l_strongestPlayerCountry;
+				l_armiesToMove = l_fromCountry.getD_armies() - 1;
+			}
+
+			if (l_fromCountry != null && l_strongestCountry != null) {
+				d_hasArmiesMoved = true;
+				return "advance " + l_fromCountry.getD_countryName() + " " + l_strongestCountry.getD_countryName() + " "
+						+ l_armiesToMove;
+			}
+		}
 		int l_noOfArmies = 0;
 		Country l_defendingCountry = null;
 		Country l_attackingCountry = getStrongestCountryWithAdjacentCountry(p_player, p_gameState);
@@ -115,11 +131,12 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 			}
 		}
 		if (l_defendingCountry != null) {
-			// initiateAttack-advanceOrder(p_gameState, l_attackingCountry, l_defendingCountry);
+			d_hasArmiesMoved = false;
+			return "advance " + l_attackingCountry.getD_countryName() + " " + l_defendingCountry.getD_countryName()
+					+ " " + l_noOfArmies;
 		}
 
-		return "advance " + l_attackingCountry.getD_countryName() + " " + l_defendingCountry.getD_countryName() + " "
-				+ l_noOfArmies;
+		return null;
 	}
 
 	/**
@@ -150,7 +167,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 		} else {
 			l_noOfArmies = 0;
 		}
-		
+
 		if (l_defendingCountry != null) {
 			switch (p_cardName) {
 			case "bomb":
@@ -158,8 +175,8 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 			case "blockade":
 				return "blockade " + l_attackingCountry.getD_countryName();
 			case "airlift":
-				return "airlift " + l_attackingCountry.getD_countryName() + " "
-						+ l_defendingCountry + " " + l_noOfArmies;
+				return "airlift " + l_attackingCountry.getD_countryName() + " " + l_defendingCountry + " "
+						+ l_noOfArmies;
 			case "negotiate":
 				return "negotiate" + " " + l_adjPlayer;
 			}
@@ -184,7 +201,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 * @param p_countryID ID of the Country
 	 * @return l_player player object if it exists else null
 	 */
-	private Player getCountryPlayer(GameState p_gameState, Integer p_countryID) {		
+	private Player getCountryPlayer(GameState p_gameState, Integer p_countryID) {
 		for (Player l_player : p_gameState.getD_players()) {
 			for (Country l_country : l_player.getD_coutriesOwned()) {
 				if (l_country.getD_countryId() == p_countryID) {
@@ -194,12 +211,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 		}
 		return null;
 	}
-	
 
 	/**
 	 * Finds the Country owned by Player using the Country ID.
 	 * 
-	 * @param p_player Player class object
+	 * @param p_player       Player class object
 	 * @param p_adjCountryID ID of the adjacent country
 	 * @return l_country selected country object if it exists else null
 	 */
@@ -215,7 +231,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	/**
 	 * Finds the Player's strongest country.
 	 * 
-	 * @param p_player Player class object
+	 * @param p_player    Player class object
 	 * @param p_gameState GameState class object
 	 * @return l_strongestCountry the strongest country
 	 */
@@ -235,9 +251,9 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	/**
 	 * Finds the Player's strongest country who has adjacent enemy countries.
 	 * 
-	 * @param p_player Player class object
+	 * @param p_player    Player class object
 	 * @param p_gameState GameState class object
-	 * @return l_strongestCountry the strongest country 
+	 * @return l_strongestCountry the strongest country
 	 */
 	private Country getStrongestCountryWithAdjacentCountry(Player p_player, GameState p_gameState) {
 		int l_noOfArmies = 0;
@@ -246,8 +262,8 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 
 		for (Country l_country : p_player.getD_coutriesOwned()) {
 			for (int l_adjCountryID : l_country.getD_adjacentCountryIds()) {
-				Player l_adjPlayer = getCountryPlayer(p_gameState,l_adjCountryID);
-				
+				Player l_adjPlayer = getCountryPlayer(p_gameState, l_adjCountryID);
+
 				if (!p_player.getPlayerName().equalsIgnoreCase(l_adjPlayer.getPlayerName())) {
 					l_countriesWithAdjCountries.add(l_country);
 					break;
