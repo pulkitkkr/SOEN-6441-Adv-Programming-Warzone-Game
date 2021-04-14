@@ -4,6 +4,7 @@ import Constants.ApplicationConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Services.GameService;
 import Utils.Command;
 import Utils.CommonUtil;
 import Utils.ExceptionLogHandler;
@@ -32,7 +33,7 @@ public class StartUpPhase extends Phase{
      * @inheritDoc
      */
     @Override
-    protected void performLoadGame(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+    protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
@@ -44,11 +45,9 @@ public class StartUpPhase extends Phase{
                 String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
 
                 try{
-                    ObjectInputStream l_inputStream = new ObjectInputStream(new FileInputStream(ApplicationConstants.SRC_MAIN_RESOURCES + "/" + l_filename));
-                    Phase l_phase=(Phase)l_inputStream.readObject();
+                    Phase l_phase= GameService.loadGame(l_filename);
 
                     this.d_gameEngine.loadPhase(l_phase);
-                    l_inputStream.close();
                 } catch (ClassNotFoundException l_e) {
                     l_e.printStackTrace();
                 }
@@ -60,7 +59,7 @@ public class StartUpPhase extends Phase{
      * @inheritDoc
      */
     @Override
-    protected void performSaveGame(Command p_command) throws InvalidCommand, InvalidMap, IOException {
+    protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
@@ -72,16 +71,7 @@ public class StartUpPhase extends Phase{
         for (Map<String, String> l_map : l_operations_list) {
             if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
                 String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
-
-                try {
-                    FileOutputStream l_gameSaveFile =new FileOutputStream(ApplicationConstants.SRC_MAIN_RESOURCES + "/" + l_filename);
-                    ObjectOutputStream l_gameSaveFileObjectStream=new ObjectOutputStream(l_gameSaveFile);
-                    l_gameSaveFileObjectStream.writeObject(this);
-                    l_gameSaveFileObjectStream.flush();
-                    l_gameSaveFileObjectStream.close();
-                } catch (Exception l_e) {
-                    l_e.printStackTrace();
-                }
+                GameService.saveGame(this, l_filename);
             } else {
                 throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
             }
