@@ -38,9 +38,10 @@ public abstract class PlayerBehaviorStrategy {
 	 * Deploy Orders to be defined via Strategy.
 	 *
 	 * @param p_player player to give deploy orders
-	 * @return String representing Order.
+	 * @param p_gameState current Gamestate
+	 * @return String representing Order
 	 */
-	public abstract String createDeployOrder(Player p_player);
+	public abstract String createDeployOrder(Player p_player, GameState p_gameState);
 
 	/**
 	 * Advance Orders to be defined via Strategy.

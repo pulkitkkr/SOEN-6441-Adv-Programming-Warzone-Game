@@ -365,6 +365,7 @@ public class Player {
 		String l_nextOrderCheck = new String();
 		if(p_isTournamentMode || !this.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
 	        Random l_random = new Random();
+			System.out.println("Trying to execute next boolean logic");
 	        boolean l_moreOrders = l_random.nextBoolean();
 	        this.setD_moreOrders(l_moreOrders);
 		} else {
@@ -610,6 +611,7 @@ public class Player {
 						Integer.parseInt(p_commandEntered.split(" ")[3]), this);
 				if (l_newOrder.checkValidOrder(p_gameState)) {
 					this.d_orderList.add(l_newOrder);
+					l_newOrder.printOrder();
 					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 					p_gameState.updateLog(getD_playerLog(), "effect");
 				}
@@ -618,6 +620,7 @@ public class Player {
 				Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
 				if (l_blockadeOrder.checkValidOrder(p_gameState)) {
 					this.d_orderList.add(l_blockadeOrder);
+					l_blockadeOrder.printOrder();
 					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 					p_gameState.updateLog(getD_playerLog(), "effect");
 				}
@@ -626,6 +629,7 @@ public class Player {
 				Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
 				if (l_bombOrder.checkValidOrder(p_gameState)) {
 					this.d_orderList.add(l_bombOrder);
+					l_bombOrder.printOrder();
 					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 					p_gameState.updateLog(getD_playerLog(), "effect");
 				}
@@ -634,6 +638,7 @@ public class Player {
 				Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1], this);
 				if (l_negotiateOrder.checkValidOrder(p_gameState)) {
 					this.d_orderList.add(l_negotiateOrder);
+					l_negotiateOrder.printOrder();
 					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 					p_gameState.updateLog(getD_playerLog(), "effect");
 				}
