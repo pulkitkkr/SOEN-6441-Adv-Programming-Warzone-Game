@@ -119,7 +119,7 @@ public class PlayerService implements Serializable {
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
 			//String l_playerStrategy = ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1));
-			String l_playerStrategy = "Cheater";
+			String l_playerStrategy = "Aggressive";
 			switch(l_playerStrategy) {
 			case "Human":
 				l_addNewPlayer.setStrategy(new HumanPlayer());
