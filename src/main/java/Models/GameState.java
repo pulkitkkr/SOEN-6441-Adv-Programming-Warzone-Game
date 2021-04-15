@@ -235,6 +235,6 @@ public class GameState implements Serializable {
 	 * @return returns winning player
 	 */
 	public Player getD_winner(){
-		return getD_winner();
+		return d_winner;
 	}
 }

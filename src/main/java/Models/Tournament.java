@@ -1,9 +1,11 @@
 package Models;
 
-import java.lang.reflect.InvocationTargetException;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import Constants.ApplicationConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
@@ -15,7 +17,7 @@ import Utils.Command;
  * @author admin
  *
  */
-public class Tournament {
+public class Tournament implements Serializable {
 
 	/**
 	 * Map service object.

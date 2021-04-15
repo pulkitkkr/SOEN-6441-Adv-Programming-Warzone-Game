@@ -30,20 +30,50 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
 		String l_command;
-		if (p_player.getD_noOfUnallocatedArmies() > 0) {
-			l_command = createDeployOrder(p_player, p_gameState);
-		} else {
-			if (p_player.getD_cardsOwnedByPlayer().size() > 0) {
-				Random l_random = new Random();
-				int l_randomIndex = l_random.nextInt(p_player.getD_cardsOwnedByPlayer().size() + 1);
-				if (l_randomIndex == p_player.getD_cardsOwnedByPlayer().size()) {
-					l_command = createAdvanceOrder(p_player, p_gameState);
-				} else {
-					l_command = createCardOrder(p_player, p_gameState,
-							p_player.getD_cardsOwnedByPlayer().get(l_randomIndex));
-				}
-			} else {
+		if (!checkIfArmiesDepoyed(p_player)) {
+			if(p_player.getD_noOfUnallocatedArmies()>0) {
+				l_command = createDeployOrder(p_player, p_gameState);
+			}else{
 				l_command = createAdvanceOrder(p_player, p_gameState);
+			}
+		} else {
+			if(p_player.getD_cardsOwnedByPlayer().size()>0){
+				System.out.println("Enters Card Logic");
+				int l_index = (int) (Math.random() * 3) +1;
+				switch (l_index) {
+					case 1:
+						System.out.println("Deploy!");
+						l_command = createDeployOrder(p_player, p_gameState);
+						break;
+					case 2:
+						System.out.println("Advance!");
+						l_command = createAdvanceOrder(p_player, p_gameState);
+						break;
+					case 3:
+						if (p_player.getD_cardsOwnedByPlayer().size() == 1) {
+							System.out.println("Cards!");
+							l_command = createCardOrder(p_player, p_gameState, p_player.getD_cardsOwnedByPlayer().get(0));
+							break;
+						} else {
+							Random l_random = new Random();
+							int l_randomIndex = l_random.nextInt(p_player.getD_cardsOwnedByPlayer().size());
+							l_command = createCardOrder(p_player, p_gameState, p_player.getD_cardsOwnedByPlayer().get(l_randomIndex));
+							break;
+						}
+					default:
+						l_command = createAdvanceOrder(p_player, p_gameState);
+						break;
+				}
+			} else{
+				Random l_random = new Random();
+				Boolean l_randomBoolean = l_random.nextBoolean();
+				if(l_randomBoolean){
+					System.out.println("Without Card Deploy Logic");
+					l_command = createDeployOrder(p_player, p_gameState);
+				}else{
+					System.out.println("Without Card Advance Logic");
+					l_command = createAdvanceOrder(p_player, p_gameState);
+				}
 			}
 		}
 		return l_command;
@@ -54,14 +84,18 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createDeployOrder(Player p_player, GameState p_gameState) {
-		Country l_weakestCountry = getWeakestCountry(p_player);
-		d_deployCountries.add(l_weakestCountry);
+		if (p_player.getD_noOfUnallocatedArmies()>0) {
+			Country l_weakestCountry = getWeakestCountry(p_player);
+			d_deployCountries.add(l_weakestCountry);
 
-		Random l_random = new Random();
-		int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
+			Random l_random = new Random();
+			int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
 
-		System.out.println("deploy " + l_weakestCountry.getD_countryName() + " " + l_armiesToDeploy);
-		return String.format("deploy %s %d", l_weakestCountry.getD_countryName(), l_armiesToDeploy);
+			System.out.println("deploy " + l_weakestCountry.getD_countryName() + " " + l_armiesToDeploy);
+			return String.format("deploy %s %d", l_weakestCountry.getD_countryName(), l_armiesToDeploy);
+		}else{
+			return createAdvanceOrder(p_player, p_gameState);
+		}
 	}
 
 	/**
@@ -74,8 +108,9 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 		Random l_random = new Random();
 
 		Country l_randomSourceCountry = getRandomCountry(d_deployCountries);
+		System.out.println("Source country"+ l_randomSourceCountry.getD_countryName());
 		Country l_weakestTargetCountry = getWeakestNeighbor(l_randomSourceCountry, p_gameState);
-
+		System.out.println("Target Country"+l_weakestTargetCountry.getD_countryName());
 		if (l_randomSourceCountry.getD_armies() > 1) {
 			l_armiesToSend = l_random.nextInt(l_randomSourceCountry.getD_armies() - 1) + 1;
 		} else {
@@ -114,9 +149,9 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 			return "blockade " + l_randomOwnCountry.getD_countryName();
 		case "airlift":
 			return "airlift " + l_randomOwnCountry.getD_countryName() + " "
-					+ getRandomCountry(p_player.getD_coutriesOwned()) + " " + l_armiesToSend;
+					+ getRandomCountry(p_player.getD_coutriesOwned()).getD_countryName() + " " + l_armiesToSend;
 		case "negotiate":
-			return "negotiate" + p_player + " " + l_randomEnemyNeighbor;
+			return "negotiate " + p_player.getPlayerName();
 		}
 		return null;
 	}
@@ -218,4 +253,16 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 		return l_enemyNeighbors;
 	}
 
+	/**
+	 * Check if it is first turn
+	 *
+	 * @param p_player player instance
+	 * @return boolean
+	 */
+	private Boolean checkIfArmiesDepoyed(Player p_player){
+		if(p_player.getD_coutriesOwned().stream().anyMatch(l_country -> l_country.getD_armies()>0)){
+			return true;
+		}
+		return false;
+	}
 }

@@ -376,7 +376,7 @@ public class Player implements Serializable {
 			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
 					+ " in next turn ? \nPress Y for Yes or N for No");
 			l_nextOrderCheck = l_reader.readLine();
-
+			
 			if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
 				this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
 			} else {
@@ -629,17 +629,12 @@ public class Player implements Serializable {
 				}
 				break;
 			case "bomb":
-				if (p_commandEntered.split(" ")[1].equals("false")) {
-					System.err.println("Benevolent player do not hurt anyone.");
-					break;
-				} else {
-					Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
-					if (l_bombOrder.checkValidOrder(p_gameState)) {
-						this.d_orderList.add(l_bombOrder);
-						l_bombOrder.printOrder();
-						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
-						p_gameState.updateLog(getD_playerLog(), "effect");
-					}
+				Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
+				if (l_bombOrder.checkValidOrder(p_gameState)) {
+					this.d_orderList.add(l_bombOrder);
+					l_bombOrder.printOrder();
+					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+					p_gameState.updateLog(getD_playerLog(), "effect");
 				}
 				break;
 			case "negotiate":
