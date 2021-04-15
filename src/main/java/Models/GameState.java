@@ -54,6 +54,11 @@ public class GameState implements Serializable {
 	List<Player> d_playersFailed = new ArrayList<Player>();
 
 	/**
+	 * Winner Player.
+	 */
+	Player d_winner;
+
+	/**
 	 * getter method to get the map.
 	 * 
 	 * @return map object
@@ -213,5 +218,23 @@ public class GameState implements Serializable {
 	 */
 	public List<Player> getD_playersFailed() {
 		return d_playersFailed;
+	}
+
+	/**
+	 * Sets the winner player object.
+	 *
+	 * @param p_player
+	 */
+	public void setD_winner(Player p_player){
+		d_winner = p_player;
+	}
+
+	/**
+	 * Returns the winner player object.
+	 *
+	 * @return
+	 */
+	public Player getD_winner(){
+		return getD_winner();
 	}
 }

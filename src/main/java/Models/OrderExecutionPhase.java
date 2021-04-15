@@ -81,10 +81,6 @@ public class OrderExecutionPhase extends Phase {
 		MapView l_map_view = new MapView(d_gameState);
 		l_map_view.showMap();
 
-		for(Player l_player : d_gameState.getD_playersFailed()){
-			System.out.println(l_player.getPlayerName());
-		}
-
 		if (this.checkEndOftheGame(d_gameState))
 			return;
 
@@ -92,11 +88,9 @@ public class OrderExecutionPhase extends Phase {
 		try {
 			String l_continue = this.continueForNextTurn(isTournamentMode);
 			if (l_continue.equalsIgnoreCase("N") && isTournamentMode) {
-				d_playerService.updatePlayersInGame(d_gameState);
 				d_gameEngine.setD_gameEngineLog("Start Up Phase", "phase");
 				d_gameEngine.setD_CurrentPhase(new StartUpPhase(d_gameEngine, d_gameState));
 			} else if (l_continue.equalsIgnoreCase("N") && !isTournamentMode) {
-				d_playerService.updatePlayersInGame(d_gameState);
 				d_gameEngine.setStartUpPhase();
 
 			} else if (l_continue.equalsIgnoreCase("Y")) {
@@ -266,8 +260,10 @@ public class OrderExecutionPhase extends Phase {
 	 */
 	protected Boolean checkEndOftheGame(GameState p_gameState) {
 		Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
+		d_playerService.updatePlayersInGame(p_gameState);
 		for (Player l_player : p_gameState.getD_players()) {
 			if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
+				d_gameState.setD_winner(l_player);
 				d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
 						+ " has won the Game by conquering all countries. Exiting the Game .....", "end");
 				return true;
