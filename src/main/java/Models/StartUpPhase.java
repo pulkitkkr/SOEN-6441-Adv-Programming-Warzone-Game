@@ -297,8 +297,9 @@ public class StartUpPhase extends Phase {
 
 	/**
 	 * {@inheritDoc}
+	 * @throws IOException in case of failure in receiving user input
 	 */
-	public void createPlayers(Command p_command, Player p_player) throws InvalidCommand {
+	public void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException {
 
 		List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 

@@ -57,6 +57,6 @@ public final class ApplicationConstants implements Serializable {
 	public static final String CONQUEST_CONTINENTS = "[Continents]";
 	public static final String CONQUEST_TERRITORIES = "[Territories]";
 
-	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
+	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("human", "aggressive", "random", "benevolent", "cheater");
 	public static final List<String> TOURNAMENT_PLAYER_BEHAVIORS = Arrays.asList("Aggressive", "Random", "Benevolent", "Cheater");
 }

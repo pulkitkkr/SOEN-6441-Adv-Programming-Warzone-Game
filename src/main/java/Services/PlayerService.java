@@ -1,5 +1,8 @@
 package Services;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +62,9 @@ public class PlayerService implements Serializable {
 	 * @param p_operation          operation to add or remove player.
 	 * @param p_argument           name of player to add or remove.
 	 * @return return updated list of player.
+	 * @throws IOException in case of failure in receiving user input
 	 */
-	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) {
+	public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument) throws IOException {
 		List<Player> l_updatedPlayers = new ArrayList<>();
 		if (!CommonUtil.isCollectionEmpty(p_existingPlayerList))
 			l_updatedPlayers.addAll(p_existingPlayerList);
@@ -109,18 +113,17 @@ public class PlayerService implements Serializable {
 	 * @param p_updatedPlayers         updated player list with newly added player
 	 * @param p_enteredPlayerName      new player name to be added
 	 * @param p_playerNameAlreadyExist true if player to be added already exists
+	 * @throws IOException in case of failure in receiving user input
 	 */
 	private void addGamePlayer(List<Player> p_updatedPlayers, String p_enteredPlayerName,
-			boolean p_playerNameAlreadyExist) {
-		Random l_random = new Random();
+			boolean p_playerNameAlreadyExist) throws IOException {
 
 		if (p_playerNameAlreadyExist) {
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " already Exists. Changes are not made.");
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
-			String l_playerStrategy = "Benevolent";
-			//String l_playerStrategy = ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size()));
-
+			String l_playerStrategy = getL_playerStrategy(l_addNewPlayer);
+			
 			switch(l_playerStrategy) {
 			case "Human":
 				l_addNewPlayer.setStrategy(new HumanPlayer());
@@ -144,6 +147,22 @@ public class PlayerService implements Serializable {
 			p_updatedPlayers.add(l_addNewPlayer);
 			setD_playerLog("Player with name : " + p_enteredPlayerName +" and strategy: "+l_playerStrategy+ " has been added successfully.");
 		}
+	}
+	
+	/**
+	 * @param p_addNewPlayer
+	 * @return
+	 * @throws IOException in case of failure in receiving user input
+	 */
+	private String getL_playerStrategy(Player p_addNewPlayer) throws IOException {
+		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the Strategy of the Player "+ p_addNewPlayer.getPlayerName());
+		String l_playerStrategy = l_reader.readLine();
+		if(!ApplicationConstants.PLAYER_BEHAVIORS.contains(l_playerStrategy)) {
+			this.setD_playerLog("Invalid Strategy Entered!");
+			return getL_playerStrategy(p_addNewPlayer);
+		}
+		return l_playerStrategy;
 	}
 
 	/**
@@ -344,8 +363,9 @@ public class PlayerService implements Serializable {
 	 * @param p_gameState update game state with players information.
 	 * @param p_operation operation to add or remove player.
 	 * @param p_argument  name of player to add or remove.
+	 * @throws IOException in case of failure in receiving user input
 	 */
-	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
+	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) throws IOException {
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
