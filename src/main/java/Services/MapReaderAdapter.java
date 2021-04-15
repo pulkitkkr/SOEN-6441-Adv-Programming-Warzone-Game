@@ -8,7 +8,10 @@ import Models.Map;
  *
  */
 public class MapReaderAdapter extends MapFileReader{
-	
+
+	/**
+	 * FileReader Object.
+	 */
 	private ConquestMapFileReader l_conquestMapFileReader;
 	
 	/**

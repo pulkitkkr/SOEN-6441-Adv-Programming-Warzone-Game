@@ -134,6 +134,9 @@ public class IssueOrderPhase extends Phase {
     public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
 
         String l_commandEntered = p_player.getPlayerOrder(d_gameState);
+
+        if(l_commandEntered == null) return;
+
         d_gameState.updateLog("(Player: "+p_player.getPlayerName()+") "+ l_commandEntered, "order");
         handleCommand(l_commandEntered, p_player);
     }
