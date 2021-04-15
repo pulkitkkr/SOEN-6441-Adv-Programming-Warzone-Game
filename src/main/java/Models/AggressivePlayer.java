@@ -89,10 +89,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
+	 * Move armies from neighbor to maximize aggregation of forces.
 	 * 
-	 * @param p_player
-	 * @param p_randomSourceCountry
-	 * @param p_gameState
+	 * @param p_player              Player
+	 * @param p_randomSourceCountry Source country
+	 * @param p_gameState           Game state
 	 */
 	public void moveArmiesFromItsNeighbors(Player p_player, Country p_randomSourceCountry, GameState p_gameState) {
 		List<Integer> l_adjacentCountryIds = p_randomSourceCountry.getD_adjacentCountryIds();
@@ -159,10 +160,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
+	 * Get random enemy player.
 	 * 
-	 * @param p_player
-	 * @param p_gameState
-	 * @return
+	 * @param p_player    Player
+	 * @param p_gameState Game state
+	 * @return random enemy player
 	 */
 	private Player getRandomEnemyPlayer(Player p_player, GameState p_gameState) {
 		ArrayList<Player> l_playerList = new ArrayList<Player>();
@@ -186,10 +188,11 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
+	 * Get strongest country.
 	 * 
-	 * @param p_player
-	 * @param p_gameState
-	 * @return
+	 * @param p_player    Player
+	 * @param p_gameState Game state
+	 * @return Strongest country
 	 */
 	public Country getStrongestCountry(Player p_player, GameState p_gameState) {
 		List<Country> l_countriesOwnedByPlayer = p_player.getD_coutriesOwned();
@@ -198,9 +201,10 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
+	 * This method calculates strongest country.
 	 * 
-	 * @param l_listOfCountries
-	 * @return
+	 * @param l_listOfCountries List of countries
+	 * @return strongest country
 	 */
 	public Country calculateStrongestCountry(List<Country> l_listOfCountries) {
 		LinkedHashMap<Country, Integer> l_CountryWithArmies = new LinkedHashMap<Country, Integer>();
