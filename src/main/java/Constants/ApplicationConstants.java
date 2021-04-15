@@ -23,6 +23,8 @@ public final class ApplicationConstants implements Serializable {
 	public static final String INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES = "Invalid command. Kindly provide command in Format of : assigncountries";
 	public static final String INVALID_COMMAND_ERROR_DEPLOY_ORDER = "Invalid command. Kindly provide command in Format of : deploy countryID <CountryName> <num> (until all reinforcements have been placed)";
 	public static final String VALID_MAP = "The loaded map is valid!";
+	public static final String INVALID_COMMAND_TOURNAMENT_MODE = "Invalid Command. Kindly provide command in format of : tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns";
+
 
 	public static final String ARGUMENTS = "arguments";
 	public static final String OPERATION = "operation";
@@ -56,4 +58,5 @@ public final class ApplicationConstants implements Serializable {
 	public static final String CONQUEST_TERRITORIES = "[Territories]";
 
 	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
+	public static final List<String> TOURNAMENT_PLAYER_BEHAVIORS = Arrays.asList("Aggressive", "Random", "Benevolent", "Cheater");
 }

@@ -20,7 +20,7 @@ public class ConquestMapFileWriter implements Serializable {
 	 * @param p_gameState current state of the game
 	 * @param p_writer    file writer
 	 * @param p_mapFormat format in which map file has to be saved
-	 * @throws IOException handles I/0
+	 * @throws IOException IOException
 	 */
 	public void parseMapToFile(GameState p_gameState, FileWriter p_writer, String p_mapFormat) throws IOException {
 		if (null != p_gameState.getD_map().getD_continents() && !p_gameState.getD_map().getD_continents().isEmpty()) {

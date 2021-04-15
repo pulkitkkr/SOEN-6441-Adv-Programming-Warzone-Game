@@ -287,7 +287,7 @@ public class MapService implements Serializable {
 	 * @param p_fileToLoad File which couldn't be loaded
 	 */
 	public void resetMap(GameState p_gameState, String p_fileToLoad) {
-		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
+		System.err.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
 		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!", "effect");
 		p_gameState.setD_map(new Models.Map());
 	}

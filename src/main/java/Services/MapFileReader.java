@@ -16,6 +16,8 @@ import Models.Map;
  */
 public class MapFileReader implements Serializable {
 	/**
+	 * Parses map file into gamestate map object.
+	 *
 	 * @param p_gameState instance of current gameState
 	 * @param p_map instance of current map
 	 * @param p_linesOfFile All Lines in the map document

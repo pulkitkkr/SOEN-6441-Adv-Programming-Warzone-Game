@@ -345,11 +345,6 @@ public class PlayerService implements Serializable {
 	 * @param p_argument  name of player to add or remove.
 	 */
 	public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
-		if (!isMapLoaded(p_gameState)) {
-			this.setD_playerLog("Kindly load the map first to add player: " + p_argument);
-			p_gameState.updateLog(this.d_playerLog, "effect");
-			return;
-		}
 		List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
 
 		if (!CommonUtil.isNull(l_updatedPlayers)) {
@@ -399,6 +394,19 @@ public class PlayerService implements Serializable {
 		}
 	}
 
+	/**
+	 * Adds the lost player to the failed list in gamestate.
+	 *
+	 * @param p_gameState gamestate object.
+	 */
+	public void updatePlayersInGame(GameState p_gameState){
+		for(Player l_player : p_gameState.getD_players()){
+			if(l_player.getD_coutriesOwned().size()==0 && !l_player.getPlayerName().equals("Neutral")){
+				this.setD_playerLog("Player: "+l_player.getPlayerName()+" has lost the game and is left with no countries!");
+				p_gameState.removePlayer(l_player);
+			}
+		}
+	}
 	/**
 	 * Sets the Player Log in player methods.
 	 *

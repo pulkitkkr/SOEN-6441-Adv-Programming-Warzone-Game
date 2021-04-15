@@ -1,4 +1,4 @@
- package Models;
+package Models;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import Constants.ApplicationConstants;
@@ -71,11 +72,13 @@ public class Player implements Serializable {
 	 * List of players to not attack if negotiated with.
 	 */
 	List<Player> d_negotiatedWith = new ArrayList<Player>();
-	
+
 	/**
 	 * Object of Player Behavior Strategy class.
 	 */
 	PlayerBehaviorStrategy d_playerBehaviorStrategy;
+
+	Boolean d_playerFlag;
 
 	/**
 	 * This parameterized constructor is used to create player with name and default
@@ -130,7 +133,7 @@ public class Player implements Serializable {
 	 *
 	 * @return bool if player has earned one card
 	 */
-	public boolean getD_oneCardPerTurn(){
+	public boolean getD_oneCardPerTurn() {
 		return d_oneCardPerTurn;
 	}
 
@@ -249,7 +252,7 @@ public class Player implements Serializable {
 	 *
 	 * @return player strategy
 	 */
-	public PlayerBehaviorStrategy getD_playerBehaviorStrategy(){
+	public PlayerBehaviorStrategy getD_playerBehaviorStrategy() {
 		return d_playerBehaviorStrategy;
 	}
 
@@ -268,14 +271,16 @@ public class Player implements Serializable {
 	 *
 	 * @return List of Strings with cards
 	 */
-	public List<String> getD_cardsOwnedByPlayer(){ return this.d_cardsOwnedByPlayer; }
+	public List<String> getD_cardsOwnedByPlayer() {
+		return this.d_cardsOwnedByPlayer;
+	}
 
 	/**
 	 * Sets the Per Turn Card allocated bool.
 	 *
 	 * @param p_value Bool to Set.
 	 */
-	public void setD_oneCardPerTurn(Boolean p_value){
+	public void setD_oneCardPerTurn(Boolean p_value) {
 		this.d_oneCardPerTurn = p_value;
 	}
 
@@ -325,13 +330,13 @@ public class Player implements Serializable {
 	 * Prints and writes the player log.
 	 *
 	 * @param p_playerLog String as log message
-	 * @param p_typeLog Type of log : error, or log
+	 * @param p_typeLog   Type of log : error, or log
 	 */
 	public void setD_playerLog(String p_playerLog, String p_typeLog) {
 		this.d_playerLog = p_playerLog;
-		if(p_typeLog.equals("error"))
+		if (p_typeLog.equals("error"))
 			System.err.println(p_playerLog);
-		else if(p_typeLog.equals("log"))
+		else if (p_typeLog.equals("log"))
 			System.out.println(p_playerLog);
 	}
 
@@ -340,12 +345,13 @@ public class Player implements Serializable {
 	 *
 	 * @return String of log message.
 	 */
-	public String getD_playerLog(){
+	public String getD_playerLog() {
 		return this.d_playerLog;
 	}
-	
+
 	/**
 	 * Sets the strategy of the Player Behavior.
+	 * 
 	 * @param p_playerBehaviorStrategy object of PlayerBehaviorStrategy class
 	 */
 	public void setStrategy(PlayerBehaviorStrategy p_playerBehaviorStrategy) {
@@ -355,18 +361,28 @@ public class Player implements Serializable {
 	/**
 	 * Checks if there are more order to be accepted for player in next turn or not.
 	 *
+	 * @param p_isTournamentMode if game is being played in tournament mode
 	 * @throws IOException exception in reading inputs from user
 	 */
-	void checkForMoreOrders() throws IOException {
-		BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
-				+ " in next turn ? \nPress Y for Yes or N for No");
-		String l_nextOrderCheck = l_reader.readLine();
-		if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
-			this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
+	void checkForMoreOrders(boolean p_isTournamentMode) throws IOException {
+		String l_nextOrderCheck = new String();
+		if(p_isTournamentMode || !this.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
+	        Random l_random = new Random();
+			System.out.println("Trying to execute next boolean logic");
+	        boolean l_moreOrders = l_random.nextBoolean();
+	        this.setD_moreOrders(l_moreOrders);
 		} else {
-			System.err.println("Invalid Input Passed.");
-			this.checkForMoreOrders();
+			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()
+					+ " in next turn ? \nPress Y for Yes or N for No");
+			l_nextOrderCheck = l_reader.readLine();
+			
+			if (l_nextOrderCheck.equalsIgnoreCase("Y") || l_nextOrderCheck.equalsIgnoreCase("N")) {
+				this.setD_moreOrders(l_nextOrderCheck.equalsIgnoreCase("Y") ? true : false);
+			} else {
+				System.err.println("Invalid Input Passed.");
+				this.checkForMoreOrders(p_isTournamentMode);
+			}
 		}
 	}
 
@@ -375,7 +391,7 @@ public class Player implements Serializable {
 	 *
 	 * @param p_commandEntered command entered by the user
 	 */
-	public void createDeployOrder(String p_commandEntered){
+	public void createDeployOrder(String p_commandEntered) {
 		String l_targetCountry;
 		String l_noOfArmies;
 		try {
@@ -383,13 +399,15 @@ public class Player implements Serializable {
 			l_noOfArmies = p_commandEntered.split(" ")[2];
 			if (validateDeployOrderArmies(this, l_noOfArmies)) {
 				this.setD_playerLog(
-						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.", "error");
+						"Given deploy order cant be executed as armies in deploy order exceeds player's unallocated armies.",
+						"error");
 			} else {
 				this.d_orderList.add(new Deploy(this, l_targetCountry, Integer.parseInt(l_noOfArmies)));
 				Integer l_unallocatedarmies = this.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
 				this.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-				d_orderList.get(d_orderList.size()-1).printOrder();
-				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name, "log");
+				d_orderList.get(d_orderList.size() - 1).printOrder();
+				this.setD_playerLog("Deploy order has been added to queue for execution. For player: " + this.d_name,
+						"log");
 
 			}
 		} catch (Exception l_e) {
@@ -415,8 +433,8 @@ public class Player implements Serializable {
 	 *
 	 * @param p_issueOrderPhase current phase of the game
 	 * @throws InvalidCommand exception if command is invalid
-     * @throws IOException  indicates failure in I/O operation
-     * @throws InvalidMap indicates failure in using the invalid map
+	 * @throws IOException    indicates failure in I/O operation
+	 * @throws InvalidMap     indicates failure in using the invalid map
 	 */
 	public void issue_order(IssueOrderPhase p_issueOrderPhase) throws InvalidCommand, IOException, InvalidMap {
 		p_issueOrderPhase.askForOrder(this);
@@ -455,8 +473,9 @@ public class Player implements Serializable {
 						&& checkAdjacency(p_gameState, l_sourceCountry, l_targetCountry)) {
 					this.d_orderList
 							.add(new Advance(this, l_sourceCountry, l_targetCountry, Integer.parseInt(l_noOfArmies)));
-					d_orderList.get(d_orderList.size()-1).printOrder();
-					this.setD_playerLog("Advance order has been added to queue for execution. For player: " + this.d_name, "log");
+					d_orderList.get(d_orderList.size() - 1).printOrder();
+					this.setD_playerLog(
+							"Advance order has been added to queue for execution. For player: " + this.d_name, "log");
 				}
 			} else {
 				this.setD_playerLog("Invalid Arguments Passed For Advance Order", "error");
@@ -528,16 +547,16 @@ public class Player implements Serializable {
 	public void assignCard() {
 		Random l_random = new Random();
 		this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
-		this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
+		this.setD_playerLog("Player: " + this.d_name + " has earned card as reward for the successful conquest- "
+				+ this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size() - 1), "log");
 	}
-
 
 	/**
 	 * Remove the card which is used.
 	 *
 	 * @param p_cardName name of the card to remove.
 	 */
-	public void removeCard(String p_cardName){
+	public void removeCard(String p_cardName) {
 		this.d_cardsOwnedByPlayer.remove(p_cardName);
 	}
 
@@ -547,9 +566,9 @@ public class Player implements Serializable {
 	 * @param p_targetCountryName country to attack
 	 * @return bool if it can attack
 	 */
-	public boolean negotiationValidation(String p_targetCountryName){
+	public boolean negotiationValidation(String p_targetCountryName) {
 		boolean l_canAttack = true;
-		for(Player p: d_negotiatedWith){
+		for (Player p : d_negotiatedWith) {
 			if (p.getCountryNames().contains(p_targetCountryName))
 				l_canAttack = false;
 		}
@@ -559,7 +578,7 @@ public class Player implements Serializable {
 	/**
 	 * Clears all negotiation from the previous turn.
 	 */
-	public void resetNegotiation(){
+	public void resetNegotiation() {
 		d_negotiatedWith.clear();
 	}
 
@@ -569,8 +588,8 @@ public class Player implements Serializable {
 	 * @param p_commandEntered command of card
 	 * @return bool if valid
 	 */
-	public boolean checkCardArguments(String p_commandEntered){
-		if(p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
+	public boolean checkCardArguments(String p_commandEntered) {
+		if (p_commandEntered.split(" ")[0].equalsIgnoreCase("airlift")) {
 			return p_commandEntered.split(" ").length == 4;
 		} else if (p_commandEntered.split(" ")[0].equalsIgnoreCase("blockade")
 				|| p_commandEntered.split(" ")[0].equalsIgnoreCase("bomb")
@@ -585,50 +604,54 @@ public class Player implements Serializable {
 	 * Handles the Card Commands: creates order and adds them to the list.
 	 *
 	 * @param p_commandEntered command entered
-	 * @param p_gameState gamestate instance
+	 * @param p_gameState      gamestate instance
 	 */
 	public void handleCardCommands(String p_commandEntered, GameState p_gameState) {
 		if (checkCardArguments(p_commandEntered)) {
 			switch (p_commandEntered.split(" ")[0]) {
-				case "airlift":
-					Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
-							Integer.parseInt(p_commandEntered.split(" ")[3]), this);
-					if (l_newOrder.checkValidOrder(p_gameState)) {
-						this.d_orderList.add(l_newOrder);
-						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
-						p_gameState.updateLog(getD_playerLog(), "effect");
-					}
-					break;
-				case "blockade":
-					Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
-					if (l_blockadeOrder.checkValidOrder(p_gameState)) {
-						this.d_orderList.add(l_blockadeOrder);
-						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
-						p_gameState.updateLog(getD_playerLog(), "effect");
-					}
-					break;
-				case "bomb":
-					Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
-					if (l_bombOrder.checkValidOrder(p_gameState)) {
-						this.d_orderList.add(l_bombOrder);
-						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
-						p_gameState.updateLog(getD_playerLog(), "effect");
-					}
-					break;
-				case "negotiate":
-					Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1],this);
-					if (l_negotiateOrder.checkValidOrder(p_gameState)) {
-						this.d_orderList.add(l_negotiateOrder);
-						this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
-						p_gameState.updateLog(getD_playerLog(), "effect");
-					}
-					break;
-				default:
-					this.setD_playerLog("Invalid Command!", "error");
+			case "airlift":
+				Card l_newOrder = new Airlift(p_commandEntered.split(" ")[1], p_commandEntered.split(" ")[2],
+						Integer.parseInt(p_commandEntered.split(" ")[3]), this);
+				if (l_newOrder.checkValidOrder(p_gameState)) {
+					this.d_orderList.add(l_newOrder);
+					l_newOrder.printOrder();
+					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
 					p_gameState.updateLog(getD_playerLog(), "effect");
-					break;
+				}
+				break;
+			case "blockade":
+				Card l_blockadeOrder = new Blockade(this, p_commandEntered.split(" ")[1]);
+				if (l_blockadeOrder.checkValidOrder(p_gameState)) {
+					this.d_orderList.add(l_blockadeOrder);
+					l_blockadeOrder.printOrder();
+					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+					p_gameState.updateLog(getD_playerLog(), "effect");
+				}
+				break;
+			case "bomb":
+				Card l_bombOrder = new Bomb(this, p_commandEntered.split(" ")[1]);
+				if (l_bombOrder.checkValidOrder(p_gameState)) {
+					this.d_orderList.add(l_bombOrder);
+					l_bombOrder.printOrder();
+					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+					p_gameState.updateLog(getD_playerLog(), "effect");
+				}
+				break;
+			case "negotiate":
+				Card l_negotiateOrder = new Diplomacy(p_commandEntered.split(" ")[1], this);
+				if (l_negotiateOrder.checkValidOrder(p_gameState)) {
+					this.d_orderList.add(l_negotiateOrder);
+					l_negotiateOrder.printOrder();
+					this.setD_playerLog("Card Command Added to Queue for Execution Successfully!", "log");
+					p_gameState.updateLog(getD_playerLog(), "effect");
+				}
+				break;
+			default:
+				this.setD_playerLog("Invalid Command!", "error");
+				p_gameState.updateLog(getD_playerLog(), "effect");
+				break;
 			}
-		} else{
+		} else {
 			this.setD_playerLog("Invalid Card Command Passed! Check Arguments!", "error");
 		}
 	}

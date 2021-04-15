@@ -37,7 +37,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String createDeployOrder(Player p_player) {
+	public String createDeployOrder(Player p_player, GameState p_gameState) {
 		return null;
 	}
 
