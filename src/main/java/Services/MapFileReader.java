@@ -1,5 +1,6 @@
 package Services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,11 +11,16 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 
-public class MapFileReader {
+/**
+ * The MapFileRead parses Map File.
+ */
+public class MapFileReader implements Serializable {
 	/**
-	 * @param p_gameState current gamestate
-	 * @param p_map map file
-	 * @param p_linesOfFile lines of the file
+	 * Parses map file into gamestate map object.
+	 *
+	 * @param p_gameState instance of current gameState
+	 * @param p_map instance of current map
+	 * @param p_linesOfFile All Lines in the map document
 	 */
 	public void parseMapFile(GameState p_gameState, Map p_map, List<String> p_linesOfFile) {
 		// Parses the file and stores information in objects

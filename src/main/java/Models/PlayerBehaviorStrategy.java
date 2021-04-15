@@ -4,6 +4,7 @@
 package Models;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -11,7 +12,7 @@ import Exceptions.InvalidMap;
 /**
  * This is the abstract strategy class of Player Behavior.
  */
-public abstract class PlayerBehaviorStrategy {
+public abstract class PlayerBehaviorStrategy implements Serializable {
 	
 	/**
 	 * object of player class.

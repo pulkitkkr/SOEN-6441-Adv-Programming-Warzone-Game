@@ -3,6 +3,7 @@ package Models;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -16,7 +17,7 @@ import Utils.CommonUtil;
 /**
  * This class depicts player's information and services.
  */
-public class Player {
+public class Player implements Serializable {
 	/**
 	 * color to show details with on map.
 	 */

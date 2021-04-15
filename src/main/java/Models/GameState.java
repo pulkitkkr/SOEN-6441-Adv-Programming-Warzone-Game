@@ -1,20 +1,17 @@
 package Models;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * This class is used to test functionality of GameState class functions.
  */
-public class GameState {
-
+public class GameState implements Serializable {
+	
 	/**
 	 * map object.
 	 */
 	Map d_map;
-
-	List<Map> d_mapList;
 
 	/**
 	 * Log Entries for existing game state.

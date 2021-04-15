@@ -2,11 +2,13 @@ package Models;
 
 import Utils.CommonUtil;
 
+import java.io.Serializable;
+
 /**
  * Implementation of blockade order. The blockade cards change one of your
  * territories to a neutral and tripled the number of armies on that territory.
  */
-public class Blockade implements Card {
+public class Blockade implements Card, Serializable {
 
 	/**
 	 * Player owning blockade card.

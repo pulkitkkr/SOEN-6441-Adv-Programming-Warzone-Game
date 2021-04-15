@@ -1,12 +1,14 @@
 package Models;
 
 import Views.LogWriter;
+
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * The class records the corresponding logs for various stages in game.
  */
-public class LogEntryBuffer extends Observable {
+public class LogEntryBuffer extends Observable implements Serializable {
 
     /**
      * Log Message to be recorded.

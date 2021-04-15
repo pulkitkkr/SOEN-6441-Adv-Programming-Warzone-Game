@@ -1,10 +1,12 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * Concrete Command of Command pattern.
  *
  */
-public class Deploy implements Order {
+public class Deploy implements Order, Serializable {
 	/**
 	 * name of the target country.
 	 */

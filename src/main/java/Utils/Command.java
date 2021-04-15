@@ -1,11 +1,12 @@
 package Utils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * This class handles the input commands entered by the user.
  */
-public class Command {
+public class Command implements Serializable {
 	
 	/**
 	 * d_command stores the command player types in.

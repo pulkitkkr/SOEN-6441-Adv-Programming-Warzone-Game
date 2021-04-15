@@ -2,6 +2,7 @@ package Services;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 import Constants.ApplicationConstants;
 import Models.Continent;
@@ -12,7 +13,7 @@ import Models.GameState;
  * Writer to read and create conquest map file.
  *
  */
-public class ConquestMapFileWriter {
+public class ConquestMapFileWriter implements Serializable {
 	/**
 	 * Reads conquest map, parses it and stores it in conquest type of map file.
 	 *
@@ -21,12 +22,12 @@ public class ConquestMapFileWriter {
 	 * @param l_mapFormat format in which map file has to be saved
 	 * @throws IOException IOException
 	 */
-	public void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
+	public void parseMapToFile(GameState p_gameState, FileWriter p_writer, String p_mapFormat) throws IOException {
 		if (null != p_gameState.getD_map().getD_continents() && !p_gameState.getD_map().getD_continents().isEmpty()) {
-			writeContinentMetadata(p_gameState, l_writer);
+			writeContinentMetadata(p_gameState, p_writer);
 		}
 		if (null != p_gameState.getD_map().getD_countries() && !p_gameState.getD_map().getD_countries().isEmpty()) {
-			writeCountryAndBoarderMetaData(p_gameState, l_writer);
+			writeCountryAndBoarderMetaData(p_gameState, p_writer);
 		}
 	}
 

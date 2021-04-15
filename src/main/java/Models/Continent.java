@@ -3,13 +3,14 @@ package Models;
 import Exceptions.InvalidMap;
 import Utils.CommonUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This model class manages all the Continents in the map.
  */
-public class Continent {
+public class Continent implements Serializable {
 
 	/**
 	 * continent ID.
