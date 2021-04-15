@@ -154,7 +154,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 
 	/**
 	 *
-	 * returns a random country owned by player
+	 * returns a random country owned by player.
 	 *
 	 * @param p_listOfCountries list of countries owned by player
 	 * @return a random country from list
