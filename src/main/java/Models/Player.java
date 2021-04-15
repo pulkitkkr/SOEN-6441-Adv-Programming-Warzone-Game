@@ -366,10 +366,11 @@ public class Player implements Serializable {
 	 */
 	void checkForMoreOrders(boolean p_isTournamentMode) throws IOException {
 		String l_nextOrderCheck = new String();
-		if(p_isTournamentMode || !this.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
-	        Random l_random = new Random();
-	        boolean l_moreOrders = l_random.nextBoolean();
-	        this.setD_moreOrders(l_moreOrders);
+		if (p_isTournamentMode || !this.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
+			Random l_random = new Random();
+			System.out.println("Trying to execute next boolean logic");
+			boolean l_moreOrders = l_random.nextBoolean();
+			this.setD_moreOrders(l_moreOrders);
 		} else {
 			BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("\nDo you still want to give order for player : " + this.getPlayerName()

@@ -118,8 +118,9 @@ public class PlayerService implements Serializable {
 			setD_playerLog("Player with name : " + p_enteredPlayerName + " already Exists. Changes are not made.");
 		} else {
 			Player l_addNewPlayer = new Player(p_enteredPlayerName);
-			//String l_playerStrategy = ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size() - 1));
-			String l_playerStrategy = "Aggressive";
+			String l_playerStrategy = "Benevolent";
+			//String l_playerStrategy = ApplicationConstants.PLAYER_BEHAVIORS.get(l_random.nextInt(ApplicationConstants.PLAYER_BEHAVIORS.size()));
+
 			switch(l_playerStrategy) {
 			case "Human":
 				l_addNewPlayer.setStrategy(new HumanPlayer());
@@ -401,7 +402,7 @@ public class PlayerService implements Serializable {
 	 */
 	public void updatePlayersInGame(GameState p_gameState){
 		for(Player l_player : p_gameState.getD_players()){
-			if(l_player.getD_coutriesOwned().size()==0 && !l_player.getPlayerName().equals("Neutral")){
+			if(l_player.getD_coutriesOwned().size()==0 && !l_player.getPlayerName().equals("Neutral") && !p_gameState.getD_playersFailed().contains(l_player)){
 				this.setD_playerLog("Player: "+l_player.getPlayerName()+" has lost the game and is left with no countries!");
 				p_gameState.removePlayer(l_player);
 			}

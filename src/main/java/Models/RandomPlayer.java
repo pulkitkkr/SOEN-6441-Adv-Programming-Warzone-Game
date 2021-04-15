@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This is the class of Random Player, who deploys armies randomly , attacks random neighboring countries 
- * and moves armies on his own territories randomly.
+ * This is the class of Random Player, who deploys armies randomly , attacks
+ * random neighboring countries and moves armies on his own territories
+ * randomly.
  */
 public class RandomPlayer extends PlayerBehaviorStrategy {
 
@@ -17,10 +18,11 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 * List containing deploy order countries.
 	 */
 	ArrayList<Country> d_deployCountries = new ArrayList<Country>();
-	
+
 	/**
 	 * This method creates a new order.
-	 * @param p_player object of Player class
+	 *
+	 * @param p_player    object of Player class
 	 * @param p_gameState object of GameState class
 	 * 
 	 * @return Order object of order class
@@ -121,7 +123,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		int l_armiesToSend;
 		Random l_random = new Random();
 		Country l_randomOwnCountry = getRandomCountry(p_player.getD_coutriesOwned());
-		//Country l_randomEnemyNeighbor = p_gameState.getD_map().getCountry(randomEnemyNeighbor(p_player, l_randomOwnCountry).get(l_random.nextInt(randomEnemyNeighbor(p_player, l_randomOwnCountry).size())));
+
 		Country l_randomNeighbour = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(l_random.nextInt(l_randomOwnCountry.getD_adjacentCountryIds().size())));
 		Player l_randomPlayer = getRandomPlayer(p_player, p_gameState);
 
@@ -165,10 +167,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
-	 * Checks if the player is in its first turn.
+	 * Check if it is first turn.
 	 *
-	 * @param p_player player object
-	 * @return boolean if it is
+	 * @param p_player player instance
+	 * @return boolean
 	 */
 	private Boolean checkIfArmiesDepoyed(Player p_player){
 		if(p_player.getD_coutriesOwned().stream().anyMatch(l_country -> l_country.getD_armies()>0)){
