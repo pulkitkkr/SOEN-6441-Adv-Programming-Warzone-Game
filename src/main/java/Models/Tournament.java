@@ -176,8 +176,16 @@ public class Tournament {
 		String[] l_listofplayerstrategies = p_argument.split(" ");
 		int l_playerStrategiesSize = l_listofplayerstrategies.length;
 		List<Player> l_playersInTheGame = new ArrayList<>();
-
+		List<String> l_uniqueStrategies = new ArrayList<>();
+		
 		for (String l_strategy : l_listofplayerstrategies) {
+			if(l_uniqueStrategies.contains(l_strategy)) {
+				p_gameEngine.setD_gameEngineLog(
+						"Repeatative strategy : " + l_strategy + " given. Kindly provide set of unique strategies.",
+						"effect");
+				return false;
+			}
+			l_uniqueStrategies.add(l_strategy);
 			if (!ApplicationConstants.TOURNAMENT_PLAYER_BEHAVIORS.contains(l_strategy)) {
 				p_gameEngine.setD_gameEngineLog(
 						"Invalid Strategy passed in command. Only Aggressive, Benevolent, Random, Cheater strategies are allowed.",
