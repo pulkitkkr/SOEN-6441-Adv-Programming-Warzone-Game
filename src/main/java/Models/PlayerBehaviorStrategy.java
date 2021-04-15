@@ -4,6 +4,7 @@
 package Models;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -11,7 +12,7 @@ import Exceptions.InvalidMap;
 /**
  * This is the abstract strategy class of Player Behavior.
  */
-public abstract class PlayerBehaviorStrategy {
+public abstract class PlayerBehaviorStrategy implements Serializable {
 	
 	/**
 	 * object of player class.
@@ -22,16 +23,6 @@ public abstract class PlayerBehaviorStrategy {
 	 * object of GameState class.
 	 */
 	GameState d_gameState;
-
-	/**
-	 * this method sets the objects of player class and GameState class.
-	 * @param p_player object of player class
-	 * @param p_gameState object of GameState class
-	 */
-	public void setObjects(Player p_player, GameState p_gameState) {
-		d_player = p_player;
-		d_gameState = p_gameState;
-	}
 
 	/**
 	 * This method creates a new order for Random, Aggressive, Cheater and Benevolent Players.
@@ -48,9 +39,10 @@ public abstract class PlayerBehaviorStrategy {
 	 * Deploy Orders to be defined via Strategy.
 	 *
 	 * @param p_player player to give deploy orders
-	 * @return String representing Order.
+	 * @param p_gameState current Gamestate
+	 * @return String representing Order
 	 */
-	public abstract String createDeployOrder(Player p_player);
+	public abstract String createDeployOrder(Player p_player, GameState p_gameState);
 
 	/**
 	 * Advance Orders to be defined via Strategy.

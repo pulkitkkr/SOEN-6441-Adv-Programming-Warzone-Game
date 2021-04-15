@@ -1,9 +1,11 @@
 package Exceptions;
 
+import java.io.Serializable;
+
 /**
  * Command Exceptions are thrown by this class.
  */
-public class InvalidCommand extends Exception {
+public class InvalidCommand extends Exception implements Serializable {
 
 	/**
 	 * InvalidCommand constructor is used to print message when exception is caught in

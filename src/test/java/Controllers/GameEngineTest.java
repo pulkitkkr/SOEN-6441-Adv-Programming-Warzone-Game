@@ -135,6 +135,7 @@ public class GameEngineTest {
 	 */
 	@Test(expected = InvalidCommand.class)
 	public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
+		d_currentPhase.getD_gameState().setD_loadCommand();
 		d_currentPhase.handleCommand("assigncountries -add india");
 		;
 	}

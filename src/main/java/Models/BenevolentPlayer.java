@@ -24,7 +24,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
-		super.setObjects(p_player, p_gameState);
 		return null;
 	}
 
@@ -32,7 +31,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String createDeployOrder(Player p_player) {
+	public String createDeployOrder(Player p_player, GameState p_gameState) {
 		return null;
 	}
 

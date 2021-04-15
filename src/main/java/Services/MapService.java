@@ -1,11 +1,6 @@
 package Services;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,7 +18,7 @@ import Utils.CommonUtil;
 /**
  * The MapService class load, read, parse, edit, and save map file.
  */
-public class MapService {
+public class MapService implements Serializable {
 
 	/**
 	 * The loadmap method process map file.
@@ -292,7 +287,7 @@ public class MapService {
 	 * @param p_fileToLoad File which couldn't be loaded
 	 */
 	public void resetMap(GameState p_gameState, String p_fileToLoad) {
-		System.out.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
+		System.err.println("Map cannot be loaded, as it is invalid. Kindly provide valid map");
 		p_gameState.updateLog(p_fileToLoad+" map could not be loaded as it is invalid!", "effect");
 		p_gameState.setD_map(new Models.Map());
 	}

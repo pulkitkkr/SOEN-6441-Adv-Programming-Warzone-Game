@@ -1,4 +1,5 @@
 package Constants;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -6,7 +7,9 @@ import java.util.List;
  * This class initializes all the constants that are going to be used throughout the application.
  *
  */
-public final class ApplicationConstants {
+public final class ApplicationConstants implements Serializable {
+	public static final String INVALID_COMMAND_ERROR_SAVEGAME = "Invalid command. Kindly provide command in Format of : savegame filename";
+	public static final String INVALID_COMMAND_ERROR_LOADGAME = "Invalid command. Kindly provide command in Format of : loadgame filename";
 	public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 	public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Kindly provide command in Format of : editcontinent -add continentID continentvalue -remove continentID";
 	public static final String INVALID_COMMAND_ERROR_EDITCOUNTRY = "Invalid command. Kindly provide command in Format of : editcountry -add countrytID continentID -remove countryID";
@@ -20,6 +23,8 @@ public final class ApplicationConstants {
 	public static final String INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES = "Invalid command. Kindly provide command in Format of : assigncountries";
 	public static final String INVALID_COMMAND_ERROR_DEPLOY_ORDER = "Invalid command. Kindly provide command in Format of : deploy countryID <CountryName> <num> (until all reinforcements have been placed)";
 	public static final String VALID_MAP = "The loaded map is valid!";
+	public static final String INVALID_COMMAND_TOURNAMENT_MODE = "Invalid Command. Kindly provide command in format of : tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns";
+
 
 	public static final String ARGUMENTS = "arguments";
 	public static final String OPERATION = "operation";
@@ -53,4 +58,5 @@ public final class ApplicationConstants {
 	public static final String CONQUEST_TERRITORIES = "[Territories]";
 
 	public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
+	public static final List<String> TOURNAMENT_PLAYER_BEHAVIORS = Arrays.asList("Aggressive", "Random", "Benevolent", "Cheater");
 }

@@ -1,4 +1,5 @@
 package Services;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import Constants.ApplicationConstants;
@@ -11,7 +12,7 @@ import Models.Map;
  * Reader to read and parse conquest map file.
  *
  */
-public class ConquestMapFileReader {
+public class ConquestMapFileReader implements Serializable {
 	/**
 	 * Reads conquest map file, parses it and stores it in map.
 	 * 
