@@ -2,6 +2,7 @@
  * 
  */
 package Models;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,48 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 	 * @return Order object of order class
 	 */
 	@Override
-	public String createOrder(Player p_player, GameState p_gameState) {
+	public String createOrder(Player p_player, GameState p_gameState) throws IOException {
+
+		conquerNeighboringEnemies(p_player, p_gameState);
+		doubleArmyOnEnemyNeighboredCounties(p_player, p_gameState);
+
+		return null;
+	}
+
+	/**
+	 * Doubles the number of armies on country that are neighbor to enemies.
+	 *
+	 * @param p_player object of Player class
+	 * @param p_gameState object of GameState class
+	 */
+	private void doubleArmyOnEnemyNeighboredCounties(Player p_player, GameState p_gameState){
+		List<Country> l_countriesOwned = p_player.getD_coutriesOwned();
+
+		for(Country l_ownedCountry : l_countriesOwned) {
+			ArrayList<Integer> l_countryEnemies = getEnemies(p_player, l_ownedCountry);
+
+			if(l_countryEnemies.size() == 0) continue;
+
+			Integer l_arimiesInTerritory = l_ownedCountry.getD_armies();
+
+			l_ownedCountry.setD_armies(l_arimiesInTerritory*2);
+
+			String l_logMessage = "Cheater Player: " + p_player.getPlayerName() +
+					" doubled the armies ( Now: " + l_arimiesInTerritory*2 +
+					") in " + l_ownedCountry.getD_countryName();
+
+			p_gameState.updateLog(l_logMessage, "effect");
+
+		}
+	}
+
+	/**
+	 * Conquer all enemies that are neighbor to the country owned by player.
+	 *
+	 * @param p_player object of Player class
+	 * @param p_gameState object of GameState class
+	 */
+	private void conquerNeighboringEnemies(Player p_player, GameState p_gameState){
 		List<Country> l_countriesOwned = p_player.getD_coutriesOwned();
 
 		for(Country l_ownedCountry : l_countriesOwned) {
@@ -32,10 +74,14 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 				Player l_enemyCountryOwner = this.getCountryOwner(p_gameState, l_enemyId);
 				Country l_enemyCountry = l_loadedMap.getCountryByID(l_enemyId);
 				this.conquerTargetCountry(p_gameState, l_enemyCountryOwner ,p_player, l_enemyCountry);
+
+				String l_logMessage = "Cheater Player: " + p_player.getPlayerName() +
+						" Now owns " + l_enemyCountry.getD_countryName();
+
+				p_gameState.updateLog(l_logMessage, "effect");
 			}
 
 		}
-		return null;
 	}
 
 	/**
@@ -43,6 +89,7 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 	 * @param p_countryId id of the country whose neighbor is to be searched
 	 * @return Owner of the Country
 	 */
+
 	private Player getCountryOwner(GameState p_gameState, Integer p_countryId){
 		List<Player> l_players = p_gameState.getD_players();
 		Player l_owner = null;
