@@ -254,7 +254,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	}
 
 	/**
-	 * Check if it is first turn
+	 * Check if it is first turn.
 	 *
 	 * @param p_player player instance
 	 * @return boolean
