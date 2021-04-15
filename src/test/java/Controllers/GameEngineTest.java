@@ -111,7 +111,7 @@ public class GameEngineTest {
 
 	/**
 	 * Tests the {@link InvalidCommand } in savemap
-	 * 
+	 *
 	 * @throws InvalidCommand Exception
 	 * @throws InvalidMap     Exception
 	 * @throws IOException Exception
@@ -122,6 +122,23 @@ public class GameEngineTest {
 		GameState l_state = d_currentPhase.getD_gameState();
 
 		assertEquals("Log: No map found to save, Please `editmap` first" + System.lineSeparator(),
+				l_state.getRecentLog());
+
+	}
+
+	/**
+	 * Tests savegame command.
+	 *
+	 * @throws InvalidCommand Exception
+	 * @throws InvalidMap     Exception
+	 * @throws IOException Exception
+	 */
+	@Test
+	public void testPerformSaveGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
+		d_currentPhase.handleCommand("savegame hello.txt");
+		GameState l_state = d_currentPhase.getD_gameState();
+
+		assertEquals("Log: Game Saved Successfully to hello.txt" + System.lineSeparator(),
 				l_state.getRecentLog());
 
 	}
