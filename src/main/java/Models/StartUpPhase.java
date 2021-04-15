@@ -15,6 +15,7 @@ import Utils.Command;
 import Utils.CommonUtil;
 import Utils.ExceptionLogHandler;
 import Views.MapView;
+import Views.TournamentView;
 
 /**
  * Start Up Phase implementation for GamePlay using State Pattern.
@@ -396,6 +397,8 @@ public class StartUpPhase extends Phase {
 							"effect");
 				}
 				d_gameEngine.setD_gameEngineLog("************ Tournament Completed ************", "effect");
+				TournamentView l_tournamentView = new TournamentView(d_tournament);
+				l_tournamentView.viewTournament();
 			}
 		} else {
 			d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");
