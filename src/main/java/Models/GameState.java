@@ -1,11 +1,12 @@
 package Models;
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is used to test functionality of GameState class functions.
  */
-public class GameState {
+public class GameState implements Serializable {
 	
 	/**
 	 * map object.
@@ -16,17 +17,17 @@ public class GameState {
 	 * Log Entries for existing game state.
 	 */
 	LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
-	
+
 	/**
 	 * list of players.
 	 */
 	List<Player> d_players;
-	
+
 	/**
 	 * list of unexecuted orders.
 	 */
 	List<Order> d_unexecutedOrders;
-	
+
 	/**
 	 * error message.
 	 */
@@ -38,6 +39,26 @@ public class GameState {
 	Boolean d_loadCommand = false;
 
 	/**
+	 * Number of turns in tournament.
+	 */
+	int d_maxnumberofturns = 0;
+	
+	/**
+	 * Number of remaining turns in tournament.
+	 */
+	int d_numberOfTurnsLeft = 0;
+
+	/**
+	 * Maintains list of players lost in the game.
+	 */
+	List<Player> d_playersFailed = new ArrayList<Player>();
+
+	/**
+	 * Winner Player.
+	 */
+	Player d_winner;
+
+	/**
 	 * getter method to get the map.
 	 * 
 	 * @return map object
@@ -45,7 +66,7 @@ public class GameState {
 	public Map getD_map() {
 		return d_map;
 	}
-	
+
 	/**
 	 * setter method to set the map.
 	 * 
@@ -113,7 +134,7 @@ public class GameState {
 	 * Message to be added in the log.
 	 *
 	 * @param p_logMessage Log Message to be set in the Object
-	 * @param p_logType Type of Log Message to be Added
+	 * @param p_logType    Type of Log Message to be Added
 	 */
 	public void updateLog(String p_logMessage, String p_logType) {
 		d_logEntryBuffer.currentLog(p_logMessage, p_logType);
@@ -124,7 +145,7 @@ public class GameState {
 	 *
 	 * @return recent Log Message
 	 */
-	public String getRecentLog(){
+	public String getRecentLog() {
 		return d_logEntryBuffer.getD_logMessage();
 	}
 
@@ -140,8 +161,80 @@ public class GameState {
 	 *
 	 * @return bool value if map is loaded
 	 */
-	public boolean getD_loadCommand(){
+	public boolean getD_loadCommand() {
 		return this.d_loadCommand;
 	}
 	
+
+	/**
+	 * Returns max number of turns allowed in tournament.
+	 * 
+	 * @return int number of turns
+	 */
+	public int getD_maxnumberofturns() {
+		return d_maxnumberofturns;
+	}
+
+	/**
+	 * Sets max number of turns allowed in tournament.
+	 * 
+	 * @param d_maxnumberofturns number of turns
+	 */
+	public void setD_maxnumberofturns(int d_maxnumberofturns) {
+		this.d_maxnumberofturns = d_maxnumberofturns;
+	}
+
+	/**
+	 * Gets number of turns left at any stage of tournament.
+	 * 
+	 * @return int number of remaining turns
+	 */
+	public int getD_numberOfTurnsLeft() {
+		return d_numberOfTurnsLeft;
+	}
+
+	/**
+	 * Sets number of turns left at any stage of tournament.
+	 * 
+	 * @param d_numberOfTurnsLeft number of remaining turns
+	 */
+	public void setD_numberOfTurnsLeft(int d_numberOfTurnsLeft) {
+		this.d_numberOfTurnsLeft = d_numberOfTurnsLeft;
+	}
+
+	/**
+	 * Adds the Failed Player in GameState.
+	 *
+	 * @param p_player player instance to remove
+	 */
+	public void removePlayer(Player p_player){
+		d_playersFailed.add(p_player);
+	}
+
+	/**
+	 * Retrieves the list of failed players.
+	 *
+	 * @return List of Players that lost game.
+	 */
+	public List<Player> getD_playersFailed() {
+		return d_playersFailed;
+	}
+
+	/**
+	 * Sets the winner player object.
+	 *
+	 * @param p_player winner player object
+	 */
+	public void setD_winner(Player p_player){
+		d_winner = p_player;
+	}
+
+	/**
+	 * Returns the winner player object.
+	 *
+	 * @return returns winning player
+	 */
+	public Player getD_winner(){
+		return getD_winner();
+	}
 }

@@ -218,9 +218,11 @@ public class MapView {
 		renderSeparator();
 
 		for(Player p: d_players){
-			l_counter++;
-			renderPlayerInfo(l_counter, p);
-			renderCardsOwnedByPlayers(p);
+			if (!d_gameState.getD_playersFailed().contains(p)) {
+				l_counter++;
+				renderPlayerInfo(l_counter, p);
+				renderCardsOwnedByPlayers(p);
+			}
 		}
 	}
 

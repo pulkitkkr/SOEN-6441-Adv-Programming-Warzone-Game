@@ -57,6 +57,7 @@ public class OrderExecutionPhaseTest {
 		l_countryList.add(l_countryNeighbour);
 
 		d_player1.setD_coutriesOwned(l_countryList);
+		d_player2.setD_coutriesOwned(new ArrayList<Country>());
 
 		Map l_map = new Map();
 		l_map.setD_countries(l_countryList);

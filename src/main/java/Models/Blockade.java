@@ -2,11 +2,13 @@ package Models;
 
 import Utils.CommonUtil;
 
+import java.io.Serializable;
+
 /**
  * Implementation of blockade order. The blockade cards change one of your
  * territories to a neutral and tripled the number of armies on that territory.
  */
-public class Blockade implements Card {
+public class Blockade implements Card, Serializable {
 
 	/**
 	 * Player owning blockade card.
@@ -101,7 +103,7 @@ public class Blockade implements Card {
 	public void printOrder() {
 		this.d_orderExecutionLog = "----------Blockade card order issued by player "
 				+ this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
-				+ "Creating a defensive blockade with armies = " + "on country ID: " + this.d_targetCountryID;
+				+ "Creating a defensive blockade " + "on country ID: " + this.d_targetCountryID;
 		System.out.println(System.lineSeparator() + this.d_orderExecutionLog);
 
 	}
