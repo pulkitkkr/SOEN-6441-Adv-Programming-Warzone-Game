@@ -1,5 +1,6 @@
 package Services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,7 +20,7 @@ import Utils.CommonUtil;
 /**
  * This service class handles the players.
  */
-public class PlayerService {
+public class PlayerService implements Serializable {
 
 	/**
 	 * Log of Player operations in player methods.

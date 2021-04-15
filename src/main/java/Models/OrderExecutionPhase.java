@@ -1,15 +1,20 @@
 package Models;
 
+import Constants.ApplicationConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Services.GameService;
 import Utils.Command;
 import Utils.CommonUtil;
+import Utils.ExceptionLogHandler;
 import Views.MapView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Order Execution Phase implementation for GamePlay using State Pattern.
@@ -24,6 +29,40 @@ public class OrderExecutionPhase extends Phase {
 	 */
 	public OrderExecutionPhase(GameEngine p_gameEngine, GameState p_gameState) {
 		super(p_gameEngine, p_gameState);
+	}
+
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+		printInvalidCommandInState();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+		List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+
+		if (l_operations_list == null || l_operations_list.isEmpty()) {
+			throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+		}
+
+		for (Map<String, String> l_map : l_operations_list) {
+			if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+				String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
+				GameService.saveGame(this, l_filename);
+				d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
+			} else {
+				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+			}
+		}
 	}
 
 	@Override
@@ -48,11 +87,14 @@ public class OrderExecutionPhase extends Phase {
 				return;
 
             while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+                System.out.println("Press Y/y if you want to continue for next turn or else press N/n. You can also Save Game by using savegame command.");
                 BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
 				try {
 					String l_continue = l_reader.readLine();
+
+					Command l_command = new Command(l_continue);
+					String l_rootCommand = l_command.getRootCommand();
 
                     if (l_continue.equalsIgnoreCase("N")) {
                         d_gameEngine.setStartUpPhase();
@@ -60,11 +102,11 @@ public class OrderExecutionPhase extends Phase {
                         d_playerService.assignArmies(d_gameState);
                         d_gameEngine.setIssueOrderPhase();
                     } else {
-                        System.out.println("Invalid Input");
-                    }
-                } catch (IOException l_e) {
-                    System.out.println("Invalid Input");
-                }
+                    	this.handleCommand(l_continue);
+					}
+                } catch (InvalidCommand | IOException | InvalidMap l_exception) {
+					d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
+				}
             }
         }
     }

@@ -1,13 +1,16 @@
 package Models;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
+import Constants.ApplicationConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Services.GameService;
 import Utils.Command;
+import Utils.ExceptionLogHandler;
 import Views.MapView;
 
 /**
@@ -23,6 +26,41 @@ public class IssueOrderPhase extends Phase{
      */
     public IssueOrderPhase(GameEngine p_gameEngine, GameState p_gameState) {
         super(p_gameEngine, p_gameState);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        printInvalidCommandInState();
+        askForOrder(p_player);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+        }
+
+        for (Map<String, String> l_map : l_operations_list) {
+            if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
+                GameService.saveGame(this, l_filename);
+                d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
+
+            } else {
+                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+            }
+        }
     }
 
     @Override
