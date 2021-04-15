@@ -120,7 +120,6 @@ public class TournamentTest {
 		
 		assertEquals(l_tournament.getD_gameStateList().get(0).getD_players().size(), 2);
 		assertEquals(l_tournament.getD_gameStateList().get(0).getD_maxnumberofturns(), 11);
-		
-		l_startUpPhase.tournamentGamePlay(new Command("tournament -M canada.map conquest.map -P Benevolent Random -G 2 -D 10"));
+
 	}
 }
