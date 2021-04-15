@@ -164,6 +164,12 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return p_listOfCountries.get(l_random.nextInt(p_listOfCountries.size()));
 	}
 
+	/**
+	 * Checks if the player is in its first turn.
+	 *
+	 * @param p_player player object
+	 * @return boolean if it is
+	 */
 	private Boolean checkIfArmiesDepoyed(Player p_player){
 		if(p_player.getD_coutriesOwned().stream().anyMatch(l_country -> l_country.getD_armies()>0)){
 			return true;
@@ -171,6 +177,13 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return false;
 	}
 
+	/**
+	 * Chooses a random player to negotaiate.
+	 *
+	 * @param p_player player object
+	 * @param p_gameState current gamestate.
+	 * @return player object
+	 */
 	private Player getRandomPlayer(Player p_player, GameState p_gameState){
 		ArrayList<Player> l_playerList = new ArrayList<Player>();
 		Random l_random = new Random();

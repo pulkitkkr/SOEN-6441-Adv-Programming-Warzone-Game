@@ -368,7 +368,6 @@ public class Player implements Serializable {
 		String l_nextOrderCheck = new String();
 		if(p_isTournamentMode || !this.getD_playerBehaviorStrategy().getPlayerBehavior().equalsIgnoreCase("Human")) {
 	        Random l_random = new Random();
-			System.out.println("Trying to execute next boolean logic");
 	        boolean l_moreOrders = l_random.nextBoolean();
 	        this.setD_moreOrders(l_moreOrders);
 		} else {

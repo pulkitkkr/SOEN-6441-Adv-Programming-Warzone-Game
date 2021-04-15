@@ -266,10 +266,12 @@ public class MapService implements Serializable {
 	}
 
 	/**
-	 * @param p_gameState
-	 * @param l_writer
-	 * @param l_mapFormat 
-	 * @throws IOException
+	 * Parses the Map Object to File.
+	 *
+	 * @param p_gameState current gamestate
+	 * @param l_writer file writer object.
+	 * @param l_mapFormat  Map Format
+	 * @throws IOException Exception
 	 */
 	private void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
 		if(l_mapFormat.equalsIgnoreCase("ConquestMap")) {
