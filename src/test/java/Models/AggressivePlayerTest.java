@@ -38,7 +38,7 @@ public class AggressivePlayerTest {
 	GameState d_gameState = new GameState();
 
 	/**
-	 * Country India.
+	 * Country.
 	 */
 	Country d_country1;
 
@@ -47,9 +47,9 @@ public class AggressivePlayerTest {
 	 */
 	@Before
 	public void setup() {
-		this.d_country1 = new Country(1, "India", 1);
-		Country l_country2 = new Country(1, "China", 1);
-		Country l_country3 = new Country(1, "Pakistan", 1);
+		this.d_country1 = new Country(1, "Spain", 1);
+		Country l_country2 = new Country(1, "France", 1);
+		Country l_country3 = new Country(1, "Portugal", 1);
 
 		l_country2.setD_countryId(3);
 		d_country1.addNeighbour(3);
@@ -67,10 +67,10 @@ public class AggressivePlayerTest {
 		l_list.add(l_country3);
 
 		d_playerBehaviorStrategy = new AggressivePlayer();
-		d_player = new Player("Avneet");
+		d_player = new Player("Bhoomi");
 		d_player.setD_coutriesOwned(l_list);
 		d_player.setStrategy(d_playerBehaviorStrategy);
-		d_player.setD_noOfUnallocatedArmies(5);
+		d_player.setD_noOfUnallocatedArmies(8);
 
 		List<Player> l_listOfPlayer = new ArrayList<Player>();
 		l_listOfPlayer.add(d_player);
@@ -98,7 +98,7 @@ public class AggressivePlayerTest {
 	 */
 	@Test
 	public void testStrongestCountry() {
-		assertEquals("India", d_aggressivePlayer.getStrongestCountry(d_player, d_gameState).getD_countryName());
+		assertEquals("Spain", d_aggressivePlayer.getStrongestCountry(d_player, d_gameState).getD_countryName());
 	}
 
 }

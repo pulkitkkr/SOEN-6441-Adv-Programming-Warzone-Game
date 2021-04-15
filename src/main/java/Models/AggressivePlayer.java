@@ -32,10 +32,8 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	public String createOrder(Player p_player, GameState p_gameState) {
 		String l_command;
 
-		super.setObjects(p_player, p_gameState);
-
 		if (p_player.getD_noOfUnallocatedArmies() > 0) {
-			l_command = createDeployOrder(p_player);
+			l_command = createDeployOrder(p_player, p_gameState);
 		} else {
 			if (p_player.getD_cardsOwnedByPlayer().size() > 0) {
 				Random l_random = new Random();
@@ -57,7 +55,7 @@ public class AggressivePlayer extends PlayerBehaviorStrategy {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String createDeployOrder(Player p_player) {
+	public String createDeployOrder(Player p_player, GameState p_gameState) {
 		Random l_Random = new Random();
 		// get strongest country then deploy
 		Country l_strongestCountry = getStrongestCountry(p_player, d_gameState);
