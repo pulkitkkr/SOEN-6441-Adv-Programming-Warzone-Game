@@ -66,7 +66,11 @@ public class IssueOrderPhase extends Phase {
         // issue orders for each player
         do {
             for (Player l_player : d_gameState.getD_players()) {
-                if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral") && l_player.getD_coutriesOwned().size()>0) {
+				//System.out.println("l_player :" + l_player.getPlayerName());
+				if(l_player.getD_coutriesOwned().size()==0){
+					l_player.setD_moreOrders(false);
+				}
+                if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
                     try {
                         l_player.issue_order(this);
                         l_player.checkForMoreOrders(p_isTournamentMode);

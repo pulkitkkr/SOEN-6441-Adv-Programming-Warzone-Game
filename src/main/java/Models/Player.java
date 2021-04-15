@@ -77,6 +77,8 @@ public class Player {
 	 */
 	PlayerBehaviorStrategy d_playerBehaviorStrategy;
 
+	Boolean d_playerFlag;
+
 	/**
 	 * This parameterized constructor is used to create player with name and default
 	 * armies.

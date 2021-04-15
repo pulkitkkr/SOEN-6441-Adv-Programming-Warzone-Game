@@ -12,9 +12,9 @@ import Models.Map;
 
 public class MapFileReader {
 	/**
-	 * @param p_gameState
-	 * @param p_map
-	 * @param p_linesOfFile
+	 * @param p_gameState current gamestate
+	 * @param p_map map file
+	 * @param p_linesOfFile lines of the file
 	 */
 	public void parseMapFile(GameState p_gameState, Map p_map, List<String> p_linesOfFile) {
 		// Parses the file and stores information in objects

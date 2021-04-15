@@ -28,10 +28,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
 		String l_command;
-		System.out.println("Armies Deployed Function: "+ checkIfArmiesDepoyed(p_player));
-		System.out.println("Trying to Take Order for player: "+p_player.getPlayerName());
 		if (!checkIfArmiesDepoyed(p_player)) {
-			System.out.println("Entered in First Turn Setup!");
 			if(p_player.getD_noOfUnallocatedArmies()>0) {
 				l_command = createDeployOrder(p_player, p_gameState);
 			}else{
@@ -39,10 +36,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 			}
 		} else {
 			if(p_player.getD_cardsOwnedByPlayer().size()>0){
-				System.out.println("Entered in Card Setup");
 				int l_index = (int) (Math.random() * 3) +1;
-				System.out.println("Inside Switch Case");
-				System.out.println("Random Index Generated:"+l_index);
 				switch (l_index) {
 					case 1:
 						l_command = createDeployOrder(p_player, p_gameState);
@@ -51,13 +45,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 						l_command = createAdvanceOrder(p_player, p_gameState);
 						break;
 					case 3:
-						System.out.println("trying to pick a card!");
 						if (p_player.getD_cardsOwnedByPlayer().size() == 1) {
-							System.out.println("Player Card Size turned 1");
 							l_command = createCardOrder(p_player, p_gameState, p_player.getD_cardsOwnedByPlayer().get(0));
 							break;
 						} else {
-							System.out.println("Player card size more than 1");
 							Random l_random = new Random();
 							int l_randomIndex = l_random.nextInt(p_player.getD_cardsOwnedByPlayer().size());
 							l_command = createCardOrder(p_player, p_gameState, p_player.getD_cardsOwnedByPlayer().get(l_randomIndex));
@@ -68,14 +59,11 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 						break;
 				    }
 				} else{
-				System.out.println("Entered in without card setup!");
 				Random l_random = new Random();
 				Boolean l_randomBoolean = l_random.nextBoolean();
 				if(l_randomBoolean){
-					System.out.println("Entered in Deploy!");
 					l_command = createDeployOrder(p_player, p_gameState);
 				}else{
-					System.out.println("Entered in Advance!");
 					l_command = createAdvanceOrder(p_player, p_gameState);
 				}
 		    }
@@ -90,6 +78,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	public String createDeployOrder(Player p_player, GameState p_gameState){
 		if (p_player.getD_noOfUnallocatedArmies()>0) {
 			Random l_random = new Random();
+			System.out.println(p_player.getD_coutriesOwned().size());
 			Country l_randomCountry = getRandomCountry(p_player.getD_coutriesOwned());
 			d_deployCountries.add(l_randomCountry);
 			int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
@@ -108,15 +97,11 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		int l_armiesToSend;
 		Random l_random = new Random();
 		Country l_randomOwnCountry = getRandomCountry(d_deployCountries);
-		System.out.println("Entered in Advance!");
 		int l_randomIndex = l_random.nextInt(l_randomOwnCountry.getD_adjacentCountryIds().size());
-		System.out.println("random adjecent country index :: " + l_randomIndex + " countries :: " + l_randomOwnCountry.getD_adjacentCountryIds());
 		Country l_randomNeighbor;
 		if (l_randomOwnCountry.getD_adjacentCountryIds().size()>1) {
-			System.out.println("In Advance neighbor size > 1");
 			l_randomNeighbor = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(l_randomIndex));
 		} else {
-			System.out.println("Neighbor less than 1");
 			l_randomNeighbor = p_gameState.getD_map().getCountry(l_randomOwnCountry.getD_adjacentCountryIds().get(0));
 		}
 

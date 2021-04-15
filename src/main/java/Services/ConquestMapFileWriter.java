@@ -19,7 +19,7 @@ public class ConquestMapFileWriter {
 	 * @param p_gameState current state of the game
 	 * @param l_writer    file writer
 	 * @param l_mapFormat format in which map file has to be saved
-	 * @throws IOException
+	 * @throws IOException IOException
 	 */
 	public void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
 		if (null != p_gameState.getD_map().getD_continents() && !p_gameState.getD_map().getD_continents().isEmpty()) {

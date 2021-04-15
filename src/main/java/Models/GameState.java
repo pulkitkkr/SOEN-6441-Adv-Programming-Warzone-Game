@@ -1,5 +1,6 @@
 package Models;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -49,6 +50,11 @@ public class GameState {
 	 * Number of remaining turns in tournament.
 	 */
 	int d_numberOfTurnsLeft = 0;
+
+	/**
+	 * Maintains list of players lost in the game.
+	 */
+	List<Player> d_playersFailed = new ArrayList<Player>();
 
 	/**
 	 * getter method to get the map.
@@ -194,4 +200,21 @@ public class GameState {
 		this.d_numberOfTurnsLeft = d_numberOfTurnsLeft;
 	}
 
+	/**
+	 * Adds the Failed Player in GameState.
+	 *
+	 * @param p_player player instance to remove
+	 */
+	public void removePlayer(Player p_player){
+		d_playersFailed.add(p_player);
+	}
+
+	/**
+	 * Retrieves the list of failed players.
+	 *
+	 * @return List of Players that lost game.
+	 */
+	public List<Player> getD_playersFailed() {
+		return d_playersFailed;
+	}
 }

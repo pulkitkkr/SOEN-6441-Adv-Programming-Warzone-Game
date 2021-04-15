@@ -43,15 +43,22 @@ public class OrderExecutionPhase extends Phase {
 		MapView l_map_view = new MapView(d_gameState);
 		l_map_view.showMap();
 
+		for(Player l_player : d_gameState.getD_playersFailed()){
+			System.out.println(l_player.getPlayerName());
+		}
+
 		if (this.checkEndOftheGame(d_gameState))
 			return;
+
 
 		try {
 			String l_continue = this.continueForNextTurn(isTournamentMode);
 			if (l_continue.equalsIgnoreCase("N") && isTournamentMode) {
+				d_playerService.updatePlayersInGame(d_gameState);
 				d_gameEngine.setD_gameEngineLog("Start Up Phase", "phase");
 				d_gameEngine.setD_CurrentPhase(new StartUpPhase(d_gameEngine, d_gameState));
 			} else if (l_continue.equalsIgnoreCase("N") && !isTournamentMode) {
+				d_playerService.updatePlayersInGame(d_gameState);
 				d_gameEngine.setStartUpPhase();
 
 			} else if (l_continue.equalsIgnoreCase("Y")) {

@@ -29,7 +29,7 @@ public class MapWriterAdapter extends MapFileWriter{
 	 * @param p_gameState current state of the game
 	 * @param l_writer file writer
 	 * @param l_mapFormat format in which map file has to be saved
-	 * @throws IOException
+	 * @throws IOException Io exception
 	 */
 	public void parseMapToFile(GameState p_gameState, FileWriter l_writer, String l_mapFormat) throws IOException {
 		l_conquestMapFileWriter.parseMapToFile(p_gameState, l_writer, l_mapFormat);
