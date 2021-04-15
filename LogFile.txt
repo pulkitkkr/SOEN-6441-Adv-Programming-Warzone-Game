@@ -15,7 +15,7 @@ Log: conquest.map has been loaded to start the game
 Log: Player:  zalak with strategy: Random has been added in tournament.
 Log: Player:  piyush with strategy: Random has been added in tournament.
 Log: Player:  josh with strategy: Random has been added in tournament.
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -106,48 +106,48 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to NT-Victoria_Island-West
 Log: 3 armies have been deployed successfully on country : NT-Victoria_Island-West
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to NT-Northern_Islands
 Log: 3 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to NU-Northern_Islands
 Log: 3 armies have been deployed successfully on country : NU-Northern_Islands
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from NT-Victoria_Island-West to NT-Banks_Island
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from NU-Northern_Islands to Nunavut-Continental
 Log: Player : josh is assigned with Country : Nunavut-Continental and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from NT-Victoria_Island-West to NU-Victoria_Island-East
 Log: Player : zalak is assigned with Country : NU-Victoria_Island-East and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from NU-Northern_Islands to NT-Northern_Islands
 Log: Country : NT-Northern_Islands is left with 3 armies and is still owned by player : piyush
 Country : NU-Northern_Islands is left with 1 armies and is still owned by player : josh
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from NT-Victoria_Island-West to Northwest_Territories-Continental
 Log: Advance Order : advance NT-Victoria_Island-West Northwest_Territories-Continental 1 is not executed as source country : NT-Victoria_Island-West has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance NT-Victoria_Island-West Northwest_Territories-Continental 1 is not executed as source country : NT-Victoria_Island-West has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from NT-Victoria_Island-West to NU-Victoria_Island-East
@@ -195,31 +195,31 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to British_Columbia-North
 Log: 2 armies have been deployed successfully on country : British_Columbia-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Quebec-Central
 Log: 3 armies have been deployed successfully on country : Quebec-Central
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Alberta-South
 Log: 1 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NU-Southern_Islands
 Log: 1 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Quebec-Central to N&L-Labrador
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Manitoba-South
@@ -251,17 +251,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to BC-Vancouver_Island
 Log: 3 armies have been deployed successfully on country : BC-Vancouver_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Quebec-Central
 Log: 4 armies have been deployed successfully on country : Quebec-Central
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Ontario-West
@@ -298,22 +298,22 @@ Log: Deploy order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Prince_Edward_Island
 Log: 1 armies have been deployed successfully on country : Prince_Edward_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to New_Brunswick
 Log: 3 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Alberta-North
 Log: 4 armies have been deployed successfully on country : Alberta-North
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to BC-Vancouver_Island
@@ -345,17 +345,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Nova_Scotia
 Log: 3 armies have been deployed successfully on country : Nova_Scotia
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Yukon_Territory
 Log: 4 armies have been deployed successfully on country : Yukon_Territory
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Manitoba-South
@@ -392,22 +392,22 @@ Log: Deploy order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Northwest_Territories-Continental
 Log: 1 armies have been deployed successfully on country : Northwest_Territories-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Saskatchewan-South
 Log: 1 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Manitoba-South
 Log: 4 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NU-Baffin_Island
@@ -444,22 +444,22 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NU-Southern_Islands
 Log: 2 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to New_Brunswick
 Log: 6 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Manitoba-South
 Log: 7 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Ontario-South
@@ -526,46 +526,46 @@ Log: Card Command Added to Queue for Execution Successfully!
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Northwest_Territories-Continental
 Log: 3 armies have been deployed successfully on country : Northwest_Territories-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Yukon_Territory
 Log: 8 armies have been deployed successfully on country : Yukon_Territory
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Manitoba-North
 Log: 5 armies have been deployed successfully on country : Manitoba-North
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to NT-Banks_Island
 Log: 4 armies have been deployed successfully on country : NT-Banks_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Quebec-Central
 Log: 5 armies have been deployed successfully on country : Quebec-Central
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Alberta-South
 Log: 2 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to BC-Vancouver_Island
 Log: 5 armies have been deployed successfully on country : BC-Vancouver_Island
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 3 armies from Alberta-North to Alberta-South
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from NT-Banks_Island to Northwest_Territories-Continental
@@ -619,38 +619,38 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Prince_Edward_Island
 Log: 3 armies have been deployed successfully on country : Prince_Edward_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Saskatchewan-South
 Log: 4 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Nunavut-Continental
 Log: 2 armies have been deployed successfully on country : Nunavut-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Nova_Scotia
 Log: 4 armies have been deployed successfully on country : Nova_Scotia
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Alberta-North
 Log: 2 armies have been deployed successfully on country : Alberta-North
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Nova_Scotia to New_Brunswick
 Log: Country : New_Brunswick is left with 6 armies and is still owned by player : piyush
 Country : Nova_Scotia is left with 3 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Ontario-South
@@ -712,56 +712,56 @@ Log: Advance order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NT-Banks_Island
 Log: 4 armies have been deployed successfully on country : NT-Banks_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Yukon_Territory
 Log: 9 armies have been deployed successfully on country : Yukon_Territory
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Ontario-West
 Log: 3 armies have been deployed successfully on country : Ontario-West
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to BC-Vancouver_Island
 Log: 6 armies have been deployed successfully on country : BC-Vancouver_Island
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Manitoba-North
 Log: 7 armies have been deployed successfully on country : Manitoba-North
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NU-Victoria_Island-East
 Log: 2 armies have been deployed successfully on country : NU-Victoria_Island-East
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Ontario-South to Ontario-West
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 4 armies from Manitoba-North to Ontario-North
 Log: Player : josh is assigned with Country : Ontario-North and armies : 4
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 4 armies from Manitoba-South to Ontario-West
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
 
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -938,32 +938,32 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to abcde
 Log: 3 armies have been deployed successfully on country : abcde
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory56
 Log: 4 armies have been deployed successfully on country : Territory56
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Territory20
 Log: 5 armies have been deployed successfully on country : Territory20
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory41
 Log: 1 armies have been deployed successfully on country : Territory41
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory87
 Log: 1 armies have been deployed successfully on country : Territory87
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory45
@@ -1005,27 +1005,27 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 11 armies to Territory55
 Log: 11 armies have been deployed successfully on country : Territory55
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 8 armies to Territory37
 Log: 8 armies have been deployed successfully on country : Territory37
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 10 armies to Territory60
 Log: 10 armies have been deployed successfully on country : Territory60
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 23 armies to Territory71
 Log: 23 armies have been deployed successfully on country : Territory71
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory35
@@ -1072,32 +1072,32 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 26 armies to Territory21
 Log: 26 armies have been deployed successfully on country : Territory21
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory19
 Log: 7 armies have been deployed successfully on country : Territory19
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 10 armies to Territory50
 Log: 10 armies have been deployed successfully on country : Territory50
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 5 armies to Territory31
 Log: 5 armies have been deployed successfully on country : Territory31
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory77
 Log: 1 armies have been deployed successfully on country : Territory77
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory77
@@ -1154,42 +1154,42 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 7 armies to Territory94
 Log: 7 armies have been deployed successfully on country : Territory94
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Territory10
 Log: 3 armies have been deployed successfully on country : Territory10
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 12 armies to Territory54
 Log: 12 armies have been deployed successfully on country : Territory54
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 10 armies to Territory66
 Log: 10 armies have been deployed successfully on country : Territory66
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 8 armies to Territory30
 Log: 8 armies have been deployed successfully on country : Territory30
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Territory15
 Log: 3 armies have been deployed successfully on country : Territory15
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory48
 Log: 1 armies have been deployed successfully on country : Territory48
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory37
@@ -1236,32 +1236,32 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 8 armies to Territory13
 Log: 8 armies have been deployed successfully on country : Territory13
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 10 armies to Territory04
 Log: 10 armies have been deployed successfully on country : Territory04
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Territory07
 Log: 4 armies have been deployed successfully on country : Territory07
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 6 armies to Territory22
 Log: 6 armies have been deployed successfully on country : Territory22
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Territory62
 Log: 3 armies have been deployed successfully on country : Territory62
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory69
@@ -1328,53 +1328,53 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 7 armies to abcde
 Log: 10 armies have been deployed successfully on country : abcde
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory101
 Log: 4 armies have been deployed successfully on country : Territory101
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 14 armies to Territory72
 Log: 14 armies have been deployed successfully on country : Territory72
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 15 armies to Territory21
 Log: 41 armies have been deployed successfully on country : Territory21
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 8 armies to Territory30
 Log: 16 armies have been deployed successfully on country : Territory30
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory50
 Log: 11 armies have been deployed successfully on country : Territory50
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 5 armies to Cockpit03
 Log: 5 armies have been deployed successfully on country : Cockpit03
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 7 armies from Territory37 to Territory72
 Log: Country : Territory72 is left with 13 armies and is still owned by player : josh
 Country : Territory37 is left with 3 armies and is still owned by player : piyush
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 9 armies from Territory54 to Territory100
 Log: Player : josh is assigned with Country : Territory100 and armies : 9
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory19 to Territory20
@@ -1412,22 +1412,22 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 15 armies to Territory49
 Log: 15 armies have been deployed successfully on country : Territory49
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory11
 Log: 4 armies have been deployed successfully on country : Territory11
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 6 armies to Territory76
 Log: 6 armies have been deployed successfully on country : Territory76
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory52
@@ -1479,37 +1479,37 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 19 armies to Territory15
 Log: 22 armies have been deployed successfully on country : Territory15
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory53
 Log: 7 armies have been deployed successfully on country : Territory53
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory68
 Log: 1 armies have been deployed successfully on country : Territory68
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory31
 Log: 7 armies have been deployed successfully on country : Territory31
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory88
 Log: 4 armies have been deployed successfully on country : Territory88
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory19
 Log: 7 armies have been deployed successfully on country : Territory19
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 9 armies from Territory30 to Territory29
@@ -1566,43 +1566,43 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 28 armies to 47
 Log: 28 armies have been deployed successfully on country : 47
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory44
 Log: 7 armies have been deployed successfully on country : Territory44
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 12 armies to Cockpit02
 Log: 12 armies have been deployed successfully on country : Cockpit02
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Territory96
 Log: 3 armies have been deployed successfully on country : Territory96
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Territory73
 Log: 3 armies have been deployed successfully on country : Territory73
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 4 armies from abcde to Territory101
 Log: Country : Territory101 is left with 2 armies and is still owned by player : piyush
 Country : abcde is left with 8 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory37
 Log: 4 armies have been deployed successfully on country : Territory37
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 14 armies from Territory15 to Territory16
@@ -1639,22 +1639,22 @@ Log: Deploy order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 14 armies to Territory49
 Log: 29 armies have been deployed successfully on country : Territory49
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 9 armies to Territory93
 Log: 9 armies have been deployed successfully on country : Territory93
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 18 armies to Territory07
 Log: 22 armies have been deployed successfully on country : Territory07
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Territory96
@@ -1662,10 +1662,10 @@ Log: 6 armies have been deployed successfully on country : Territory96
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
 
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -1858,17 +1858,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to N&L-Labrador
 Log: 2 armies have been deployed successfully on country : N&L-Labrador
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to New_Brunswick
 Log: 3 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Ontario-North
@@ -1925,42 +1925,42 @@ Log: Advance order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 4 armies to Saskatchewan-North
 Log: 4 armies have been deployed successfully on country : Saskatchewan-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to British_Columbia-North
 Log: 1 armies have been deployed successfully on country : British_Columbia-North
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to NU-Victoria_Island-East
 Log: 4 armies have been deployed successfully on country : NU-Victoria_Island-East
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Saskatchewan-North to Northwest_Territories-Continental
 Log: Player : zalak is assigned with Country : Northwest_Territories-Continental and armies : 1
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Northwest_Territories-Continental
 Log: Deploy Order = deploy Northwest_Territories-Continental 2 is not executed since Target country: Northwest_Territories-Continental given in deploy command does not belongs to the player : piyush
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from NU-Victoria_Island-East to NU-Northern_Islands
 Log: Player : josh is assigned with Country : NU-Northern_Islands and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Ontario-North to Quebec-Central
 Log: Player : josh is assigned with Country : Quebec-Central and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Ontario-North to NU-Southern_Islands
@@ -2003,27 +2003,27 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Northwest_Territories-Continental
 Log: 3 armies have been deployed successfully on country : Northwest_Territories-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to NT-Northern_Islands
 Log: 3 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Saskatchewan-South
 Log: 2 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Ontario-North
 Log: 2 armies have been deployed successfully on country : Ontario-North
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to N&L-Newfoundland
@@ -2060,22 +2060,22 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 4 armies to Quebec-South
 Log: 4 armies have been deployed successfully on country : Quebec-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Yukon_Territory
 Log: 1 armies have been deployed successfully on country : Yukon_Territory
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Manitoba-South
 Log: 3 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to British_Columbia-North
@@ -2117,27 +2117,27 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to BC-Vancouver_Island
 Log: 3 armies have been deployed successfully on country : BC-Vancouver_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to New_Brunswick
 Log: 4 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to British_Columbia-South
 Log: 3 armies have been deployed successfully on country : British_Columbia-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to NU-Southern_Islands
 Log: 1 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Ontario-North
@@ -2174,22 +2174,22 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Quebec-North
 Log: 3 armies have been deployed successfully on country : Quebec-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 5 armies to NT-Banks_Island
 Log: 5 armies have been deployed successfully on country : NT-Banks_Island
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Nova_Scotia
 Log: 1 armies have been deployed successfully on country : Nova_Scotia
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 2 armies from Saskatchewan-North to Saskatchewan-South
@@ -2237,33 +2237,33 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Ontario-West
 Log: 3 armies have been deployed successfully on country : Ontario-West
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to New_Brunswick
 Log: 7 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to British_Columbia-South
 Log: 4 armies have been deployed successfully on country : British_Columbia-South
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 2 armies from British_Columbia-North to British_Columbia-South
 Log: Country : British_Columbia-South is left with 2 armies and is still owned by player : josh
 Country : British_Columbia-North is left with 4 armies and is still owned by player : piyush
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Nova_Scotia
 Log: 2 armies have been deployed successfully on country : Nova_Scotia
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to British_Columbia-South
@@ -2310,32 +2310,32 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Alberta-North
 Log: 1 armies have been deployed successfully on country : Alberta-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Prince_Edward_Island
 Log: 1 armies have been deployed successfully on country : Prince_Edward_Island
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Quebec-Central
 Log: 6 armies have been deployed successfully on country : Quebec-Central
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Manitoba-North
 Log: 2 armies have been deployed successfully on country : Manitoba-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Nunavut-Continental
 Log: 2 armies have been deployed successfully on country : Nunavut-Continental
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Prince_Edward_Island to Nova_Scotia
@@ -2398,49 +2398,49 @@ Log: Advance order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NU-Baffin_Island
 Log: 2 armies have been deployed successfully on country : NU-Baffin_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to NT-Northern_Islands
 Log: 4 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 6 armies to Saskatchewan-South
 Log: 8 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Ontario-West
 Log: 4 armies have been deployed successfully on country : Ontario-West
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to British_Columbia-North
 Log: 6 armies have been deployed successfully on country : British_Columbia-North
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Saskatchewan-South
 Log: 9 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Ontario-West to Manitoba-South
 Log: Country : Manitoba-South is left with 3 armies and is still owned by player : josh
 Country : Ontario-West is left with 3 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from NU-Southern_Islands to Quebec-North
 Log: Advance Order : advance NU-Southern_Islands Quebec-North 1 is not executed as source country : NU-Southern_Islands has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance NU-Southern_Islands Quebec-North 1 is not executed as source country : NU-Southern_Islands has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Nova_Scotia to New_Brunswick
@@ -2513,45 +2513,45 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to NU-Baffin_Island
 Log: 5 armies have been deployed successfully on country : NU-Baffin_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to NT-Banks_Island
 Log: 8 armies have been deployed successfully on country : NT-Banks_Island
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Alberta-South
 Log: 3 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from BC-Vancouver_Island to British_Columbia-South
 Log: Country : British_Columbia-South is left with 2 armies and is still owned by player : josh
 Country : BC-Vancouver_Island is left with 3 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Prince_Edward_Island to Nova_Scotia
 Log: Advance Order : advance Prince_Edward_Island Nova_Scotia 1 is not executed as source country : Prince_Edward_Island has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance Prince_Edward_Island Nova_Scotia 1 is not executed as source country : Prince_Edward_Island has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Nova_Scotia
 Log: 2 armies have been deployed successfully on country : Nova_Scotia
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from N&L-Labrador to Quebec-Central
 Log: Country : Quebec-Central is left with 6 armies and is still owned by player : josh
 Country : N&L-Labrador is left with 1 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Nova_Scotia to New_Brunswick
@@ -2562,9 +2562,9 @@ Move 1 armies from NU-Baffin_Island to N&L-Labrador
 Log: Airlift Operation from NU-Baffin_Island to N&L-Labrador successful!
 Log: ----------Bomb card order issued by player josh----------
 Creating a bomb order = on country ID. N&L-Labrador
-Log: 
+Log:
 Player : josh is executing Bomb card on country :  N&L-Labrador with armies :  2. New armies: 1
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Quebec-South to New_Brunswick
@@ -2573,10 +2573,10 @@ Country : Quebec-South is left with 3 armies and is still owned by player : zala
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
 
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -2890,37 +2890,37 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 6 armies to Territory92
 Log: 6 armies have been deployed successfully on country : Territory92
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 10 armies to Territory77
 Log: 10 armies have been deployed successfully on country : Territory77
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Territory16
 Log: 3 armies have been deployed successfully on country : Territory16
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory71
 Log: 1 armies have been deployed successfully on country : Territory71
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 8 armies to Territory12
 Log: 8 armies have been deployed successfully on country : Territory12
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory77 to Territory93
 Log: Player : piyush is assigned with Country : Territory93 and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory77 to Territory76
@@ -2962,27 +2962,27 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 22 armies to Territory82
 Log: 22 armies have been deployed successfully on country : Territory82
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 11 armies to Territory51
 Log: 11 armies have been deployed successfully on country : Territory51
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Cockpit03
 Log: 2 armies have been deployed successfully on country : Cockpit03
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Territory49
 Log: 5 armies have been deployed successfully on country : Territory49
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory49
@@ -3034,37 +3034,37 @@ Log: Deploy order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 26 armies to Territory59
 Log: 26 armies have been deployed successfully on country : Territory59
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 6 armies to Territory45
 Log: 6 armies have been deployed successfully on country : Territory45
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Cockpit03
 Log: 7 armies have been deployed successfully on country : Cockpit03
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 5 armies to Territory47
 Log: 5 armies have been deployed successfully on country : Territory47
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory57
 Log: 4 armies have been deployed successfully on country : Territory57
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Territory73
 Log: 3 armies have been deployed successfully on country : Territory73
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Territory58
@@ -3106,27 +3106,27 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 10 armies to Cockpit01
 Log: 10 armies have been deployed successfully on country : Cockpit01
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory48
 Log: 2 armies have been deployed successfully on country : Territory48
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 11 armies to Territory40
 Log: 11 armies have been deployed successfully on country : Territory40
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 6 armies to Territory15
 Log: 6 armies have been deployed successfully on country : Territory15
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory20
@@ -3173,32 +3173,32 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 7 armies to Territory82
 Log: 29 armies have been deployed successfully on country : Territory82
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory23
 Log: 1 armies have been deployed successfully on country : Territory23
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 14 armies to Territory18
 Log: 14 armies have been deployed successfully on country : Territory18
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 23 armies to Territory92
 Log: 29 armies have been deployed successfully on country : Territory92
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Cockpit02
 Log: 2 armies have been deployed successfully on country : Cockpit02
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory18
@@ -3230,17 +3230,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 14 armies to Territory65
 Log: 14 armies have been deployed successfully on country : Territory65
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 16 armies to Territory15
 Log: 22 armies have been deployed successfully on country : Territory15
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 6 armies to Cockpit02
@@ -3322,69 +3322,69 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 27 armies to Territory36
 Log: 27 armies have been deployed successfully on country : Territory36
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 8 armies to Territory54
 Log: 8 armies have been deployed successfully on country : Territory54
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 6 armies to Territory16
 Log: 9 armies have been deployed successfully on country : Territory16
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 10 armies from Territory92 to Territory101
 Log: Player : zalak is assigned with Country : Territory101 and armies : 10
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory33
 Log: 2 armies have been deployed successfully on country : Territory33
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 4 armies from Territory47 to Territory51
 Log: Country : Territory51 is left with 10 armies and is still owned by player : piyush
 Country : Territory47 is left with 2 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory08
 Log: 2 armies have been deployed successfully on country : Territory08
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 12 armies from Territory82 to Territory81
 Log: Player : zalak is assigned with Country : Territory81 and armies : 12
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Territory33
 Log: 6 armies have been deployed successfully on country : Territory33
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 3 armies from Cockpit01 to Territory33
 Log: Country : Territory33 is left with 4 armies and is still owned by player : josh
 Country : Cockpit01 is left with 9 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 15 armies from Territory92 to Territory72
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 6 armies from Cockpit01 to Cockpit02
 Log: Country : Cockpit02 is left with 6 armies and is still owned by player : josh
 Country : Cockpit01 is left with 5 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 20 armies from Territory59 to Territory60
@@ -3446,47 +3446,47 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 11 armies to Territory58
 Log: 12 armies have been deployed successfully on country : Territory58
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory76
 Log: 2 armies have been deployed successfully on country : Territory76
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 9 armies to Territory13
 Log: 9 armies have been deployed successfully on country : Territory13
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Cockpit01
 Log: 8 armies have been deployed successfully on country : Cockpit01
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 17 armies to Territory28
 Log: 17 armies have been deployed successfully on country : Territory28
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory32
 Log: 1 armies have been deployed successfully on country : Territory32
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 7 armies to Territory21
 Log: 7 armies have been deployed successfully on country : Territory21
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory28
 Log: 21 armies have been deployed successfully on country : Territory28
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory96
@@ -3518,17 +3518,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Cockpit01
 Log: 11 armies have been deployed successfully on country : Cockpit01
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory15
 Log: 24 armies have been deployed successfully on country : Territory15
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Territory22
@@ -3575,32 +3575,32 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 34 armies to Territory21
 Log: 41 armies have been deployed successfully on country : Territory21
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 14 armies to Territory86
 Log: 14 armies have been deployed successfully on country : Territory86
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Territory06
 Log: 5 armies have been deployed successfully on country : Territory06
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Territory72
 Log: 16 armies have been deployed successfully on country : Territory72
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory93
 Log: 2 armies have been deployed successfully on country : Territory93
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Territory71
@@ -3608,10 +3608,10 @@ Log: 4 armies have been deployed successfully on country : Territory71
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
 
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -3976,60 +3976,60 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NU-Baffin_Island
 Log: 2 armies have been deployed successfully on country : NU-Baffin_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to N&L-Labrador
 Log: 2 armies have been deployed successfully on country : N&L-Labrador
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Saskatchewan-North
 Log: 3 armies have been deployed successfully on country : Saskatchewan-North
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Yukon_Territory
 Log: 1 armies have been deployed successfully on country : Yukon_Territory
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to British_Columbia-North
 Log: 1 armies have been deployed successfully on country : British_Columbia-North
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Saskatchewan-North to Manitoba-North
 Log: Player : josh is assigned with Country : Manitoba-North and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from N&L-Labrador to Quebec-Central
 Log: Player : piyush is assigned with Country : Quebec-Central and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from N&L-Labrador to Quebec-North
 Log: Advance Order : advance N&L-Labrador Quebec-North 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance N&L-Labrador Quebec-North 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from N&L-Labrador to Quebec-Central
 Log: Advance Order : advance N&L-Labrador Quebec-Central 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance N&L-Labrador Quebec-Central 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from N&L-Labrador to Quebec-North
 Log: Advance Order : advance N&L-Labrador Quebec-North 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance N&L-Labrador Quebec-North 1 is not executed as source country : N&L-Labrador has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from British_Columbia-North to Yukon_Territory
@@ -4077,32 +4077,32 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Quebec-North
 Log: 1 armies have been deployed successfully on country : Quebec-North
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to N&L-Labrador
 Log: 3 armies have been deployed successfully on country : N&L-Labrador
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Northwest_Territories-Continental
 Log: 1 armies have been deployed successfully on country : Northwest_Territories-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NU-Northern_Islands
 Log: 2 armies have been deployed successfully on country : NU-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Manitoba-South
 Log: 2 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Yukon_Territory to Northwest_Territories-Continental
@@ -4155,27 +4155,27 @@ Log: Card Command Added to Queue for Execution Successfully!
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NT-Northern_Islands
 Log: 1 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to New_Brunswick
 Log: 1 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Manitoba-South
 Log: 5 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Prince_Edward_Island
 Log: 1 armies have been deployed successfully on country : Prince_Edward_Island
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to NU-Victoria_Island-East
@@ -4238,41 +4238,41 @@ Log: Advance order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to NT-Northern_Islands
 Log: 2 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to British_Columbia-North
 Log: 4 armies have been deployed successfully on country : British_Columbia-North
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Manitoba-South
 Log: 6 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Ontario-North
 Log: 1 armies have been deployed successfully on country : Ontario-North
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Manitoba-South
 Log: 8 armies have been deployed successfully on country : Manitoba-South
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 3 armies from Manitoba-South to Saskatchewan-South
 Log: Player : josh is assigned with Country : Saskatchewan-South and armies : 3
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Manitoba-South to Ontario-West
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from Northwest_Territories-Continental to Alberta-North
@@ -4325,22 +4325,22 @@ Log: Card Command Added to Queue for Execution Successfully!
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NU-Northern_Islands
 Log: 4 armies have been deployed successfully on country : NU-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 5 armies to BC-Vancouver_Island
 Log: 5 armies have been deployed successfully on country : BC-Vancouver_Island
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Ontario-South
 Log: 3 armies have been deployed successfully on country : Ontario-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Prince_Edward_Island
@@ -4349,7 +4349,7 @@ Log: ----------Airlift order issued by player piyush----------
 Move 1 armies from NU-Southern_Islands to Quebec-Central
 Log: Airlift Order : airlift NU-Southern_Islands Quebec-Central 1 is not executed as armies given in card order exceeds armies of source country : NU-Southern_Islands
 Log: Cannot Complete Execution of given Airlift Command!
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from New_Brunswick to Nova_Scotia
@@ -4386,17 +4386,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 4 armies to NT-Northern_Islands
 Log: 6 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Nunavut-Continental
 Log: 2 armies have been deployed successfully on country : Nunavut-Continental
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Saskatchewan-South
@@ -4428,17 +4428,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Alberta-South
 Log: 1 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Quebec-Central
 Log: 3 armies have been deployed successfully on country : Quebec-Central
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Saskatchewan-North
@@ -4475,22 +4475,22 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 4 armies to NT-Northern_Islands
 Log: 10 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 5 armies to NU-Southern_Islands
 Log: 5 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Saskatchewan-South
 Log: 6 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from New_Brunswick to Nova_Scotia
@@ -4533,27 +4533,27 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to NU-Northern_Islands
 Log: 7 armies have been deployed successfully on country : NU-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to New_Brunswick
 Log: 2 armies have been deployed successfully on country : New_Brunswick
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 6 armies to Saskatchewan-South
 Log: 12 armies have been deployed successfully on country : Saskatchewan-South
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Alberta-South
 Log: 2 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to British_Columbia-North
@@ -4615,49 +4615,49 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to NT-Northern_Islands
 Log: 12 armies have been deployed successfully on country : NT-Northern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to NU-Southern_Islands
 Log: 7 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to NU-Ellesmere_Island
 Log: 1 armies have been deployed successfully on country : NU-Ellesmere_Island
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Alberta-South
 Log: 3 armies have been deployed successfully on country : Alberta-South
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to NU-Southern_Islands
 Log: 8 armies have been deployed successfully on country : NU-Southern_Islands
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 3 armies to Saskatchewan-North
 Log: 7 armies have been deployed successfully on country : Saskatchewan-North
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Prince_Edward_Island to New_Brunswick
 Log: Country : New_Brunswick is left with 2 armies and is still owned by player : piyush
 Country : Prince_Edward_Island is left with 2 armies and is still owned by player : zalak
-Log: 
+Log:
 ---------- Advance order issued by player josh ----------
 
 Move 1 armies from NU-Ellesmere_Island to NU-Baffin_Island
 Log: Advance Order : advance NU-Ellesmere_Island NU-Baffin_Island 1 is not executed as source country : NU-Ellesmere_Island has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
 Log: Advance Order : advance NU-Ellesmere_Island NU-Baffin_Island 1 is not executed as source country : NU-Ellesmere_Island has 1 army units and all of those cannot be given advance order, atleast one army unit has to retain the territory.
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 9 armies from NT-Northern_Islands to NT-Victoria_Island-West
@@ -4665,10 +4665,10 @@ Log: Player : zalak is assigned with Country : NT-Victoria_Island-West and armie
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
 
-Log: 
+Log:
 Starting New Game.........
 
 Log: Country/Continent Assignment:
@@ -5094,17 +5094,17 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 10 armies to Territory79
 Log: 10 armies have been deployed successfully on country : Territory79
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 11 armies to Territory17
 Log: 11 armies have been deployed successfully on country : Territory17
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Territory72
@@ -5201,83 +5201,83 @@ Log: Advance order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 21 armies to Territory94
 Log: 21 armies have been deployed successfully on country : Territory94
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 11 armies to Territory68
 Log: 11 armies have been deployed successfully on country : Territory68
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 15 armies to Territory30
 Log: 15 armies have been deployed successfully on country : Territory30
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 5 armies to Territory12
 Log: 5 armies have been deployed successfully on country : Territory12
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 9 armies from Territory17 to Territory79
 Log: Country : Territory79 is left with 8 armies and is still owned by player : zalak
 Country : Territory17 is left with 4 armies and is still owned by player : piyush
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory71
 Log: 2 armies have been deployed successfully on country : Territory71
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Territory60
 Log: 3 armies have been deployed successfully on country : Territory60
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 9 armies from Territory17 to Territory18
 Log: Advance Order : advance Territory17 Territory18 9 is not executed as armies given in advance order exceeds armies of source country : Territory17
 Log: Advance Order : advance Territory17 Territory18 9 is not executed as armies given in advance order exceeds armies of source country : Territory17
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory18
 Log: 1 armies have been deployed successfully on country : Territory18
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Territory85
 Log: 2 armies have been deployed successfully on country : Territory85
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory68 to Territory69
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to Territory91
 Log: 1 armies have been deployed successfully on country : Territory91
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 7 armies from Territory17 to Territory18
 Log: Advance Order : advance Territory17 Territory18 7 is not executed as armies given in advance order exceeds armies of source country : Territory17
 Log: Advance Order : advance Territory17 Territory18 7 is not executed as armies given in advance order exceeds armies of source country : Territory17
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Territory94 to Territory99a
 Log: Player : zalak is assigned with Country : Territory99a and armies : 1
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory68 to Territory69
-Log: 
+Log:
 ---------- Advance order issued by player zalak ----------
 
 Move 1 armies from Territory85 to Cockpit02
@@ -5334,42 +5334,42 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 20 armies to Territory88
 Log: 20 armies have been deployed successfully on country : Territory88
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 6 armies to Territory17
 Log: 10 armies have been deployed successfully on country : Territory17
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory97
 Log: 2 armies have been deployed successfully on country : Territory97
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory54
 Log: 1 armies have been deployed successfully on country : Territory54
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory65
 Log: 1 armies have been deployed successfully on country : Territory65
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory101
 Log: 1 armies have been deployed successfully on country : Territory101
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory66
 Log: 1 armies have been deployed successfully on country : Territory66
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory101 to Territory45
@@ -5422,37 +5422,37 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 5 armies to Territory39
 Log: 5 armies have been deployed successfully on country : Territory39
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory54
 Log: 3 armies have been deployed successfully on country : Territory54
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 2 armies to Territory100
 Log: 2 armies have been deployed successfully on country : Territory100
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 4 armies to Territory57
 Log: 4 armies have been deployed successfully on country : Territory57
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 7 armies to Territory21
 Log: 7 armies have been deployed successfully on country : Territory21
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 2 armies to Territory84
 Log: 2 armies have been deployed successfully on country : Territory84
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory68
@@ -5514,48 +5514,48 @@ Log: Advance order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 33 armies to Territory39
 Log: 38 armies have been deployed successfully on country : Territory39
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 10 armies to Territory62
 Log: 10 armies have been deployed successfully on country : Territory62
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 10 armies to Territory87
 Log: 10 armies have been deployed successfully on country : Territory87
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Territory04
 Log: 2 armies have been deployed successfully on country : Territory04
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory37
 Log: 1 armies have been deployed successfully on country : Territory37
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 1 armies to abcde
 Log: 1 armies have been deployed successfully on country : abcde
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory54 to Territory100
 Log: Country : Territory100 is left with 2 armies and is still owned by player : josh
 Country : Territory54 is left with 2 armies and is still owned by player : piyush
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 3 armies to Territory60
 Log: 6 armies have been deployed successfully on country : Territory60
-Log: 
+Log:
 ---------- Advance order issued by player piyush ----------
 
 Move 1 armies from Territory84 to Territory82
@@ -5592,22 +5592,22 @@ Log: Deploy order has been added to queue for execution. For player: zalak
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 2 armies to Territory81
 Log: 2 armies have been deployed successfully on country : Territory81
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory55
 Log: 1 armies have been deployed successfully on country : Territory55
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 13 armies to Territory47
 Log: 13 armies have been deployed successfully on country : Territory47
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 12 armies to Territory22
@@ -5649,27 +5649,27 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 26 armies to Territory75
 Log: 26 armies have been deployed successfully on country : Territory75
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 18 armies to Territory57
 Log: 22 armies have been deployed successfully on country : Territory57
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 15 armies to Territory72
 Log: 19 armies have been deployed successfully on country : Territory72
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Territory82
 Log: 4 armies have been deployed successfully on country : Territory82
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory23
@@ -5706,22 +5706,22 @@ Log: Deploy order has been added to queue for execution. For player: josh
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 17 armies to Territory63
 Log: 17 armies have been deployed successfully on country : Territory63
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory44
 Log: 1 armies have been deployed successfully on country : Territory44
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory97
 Log: 3 armies have been deployed successfully on country : Territory97
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 1 armies to Territory18
@@ -5773,37 +5773,37 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 11 armies to Territory99a
 Log: 12 armies have been deployed successfully on country : Territory99a
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 13 armies to Territory65
 Log: 14 armies have been deployed successfully on country : Territory65
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 9 armies to Territory87
 Log: 19 armies have been deployed successfully on country : Territory87
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 5 armies to Territory58
 Log: 5 armies have been deployed successfully on country : Territory58
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory33
 Log: 7 armies have been deployed successfully on country : Territory33
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 8 armies to Territory42
 Log: 8 armies have been deployed successfully on country : Territory42
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory67
@@ -5860,42 +5860,42 @@ Log: Deploy order has been added to queue for execution. For player: piyush
 
 
 Starting Execution Of Orders.....
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 11 armies to Territory12
 Log: 16 armies have been deployed successfully on country : Territory12
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 3 armies to Territory45
 Log: 3 armies have been deployed successfully on country : Territory45
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 4 armies to Territory100
 Log: 6 armies have been deployed successfully on country : Territory100
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 11 armies to Territory91
 Log: 12 armies have been deployed successfully on country : Territory91
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 7 armies to Territory07
 Log: 7 armies have been deployed successfully on country : Territory07
-Log: 
+Log:
 ---------- Deploy order issued by player josh ----------
 
 Deploy 5 armies to Territory06
 Log: 5 armies have been deployed successfully on country : Territory06
-Log: 
+Log:
 ---------- Deploy order issued by player zalak ----------
 
 Deploy 8 armies to Territory36
 Log: 8 armies have been deployed successfully on country : Territory36
-Log: 
+Log:
 ---------- Deploy order issued by player piyush ----------
 
 Deploy 1 armies to Territory55
@@ -5903,6 +5903,5 @@ Log: 2 armies have been deployed successfully on country : Territory55
 
 =======Start Up Phase=======
 
-Log: 
+Log:
 Game Completed.........
-

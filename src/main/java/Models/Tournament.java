@@ -1,5 +1,7 @@
 package Models;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ import Utils.Command;
  * @author admin
  *
  */
-public class Tournament {
+public class Tournament implements Serializable {
 
 	/**
 	 * Map service object.

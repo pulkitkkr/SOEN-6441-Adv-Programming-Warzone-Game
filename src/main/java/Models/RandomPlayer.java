@@ -152,6 +152,13 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 		return "Random";
 	}
 
+	/**
+	 *
+	 * returns a random country owned by player.
+	 *
+	 * @param p_listOfCountries list of countries owned by player
+	 * @return a random country from list
+	 */
 	private Country getRandomCountry(List<Country> p_listOfCountries){
 		Random l_random = new Random();
 		return p_listOfCountries.get(l_random.nextInt(p_listOfCountries.size()));
