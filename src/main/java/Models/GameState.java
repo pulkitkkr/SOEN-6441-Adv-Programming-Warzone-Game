@@ -223,7 +223,7 @@ public class GameState implements Serializable {
 	/**
 	 * Sets the winner player object.
 	 *
-	 * @param p_player
+	 * @param p_player winner player object
 	 */
 	public void setD_winner(Player p_player){
 		d_winner = p_player;
@@ -232,7 +232,7 @@ public class GameState implements Serializable {
 	/**
 	 * Returns the winner player object.
 	 *
-	 * @return
+	 * @return returns winning player
 	 */
 	public Player getD_winner(){
 		return getD_winner();
