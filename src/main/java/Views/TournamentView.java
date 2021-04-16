@@ -100,14 +100,14 @@ public class TournamentView {
             l_conclusion = "Draw!";
         } else{
             System.out.println("Entered Here");
-            l_winner = p_gameState.getD_winner().getPlayerName();
-            l_conclusion = "Winning Player Strategy: "+ p_gameState.getD_winner().getD_playerBehaviorStrategy();
+            l_winner = getColorizedString(p_gameState.getD_winner().getD_color(), p_gameState.getD_winner().getPlayerName()); 
+            l_conclusion = "Winning Player Strategy: "+ p_gameState.getD_winner().getD_playerBehaviorStrategy().getPlayerBehavior();
         }
         String l_winnerString = String.format("%s %s", "Winner -> ", l_winner);
         StringBuilder l_commaSeparatedPlayers = new StringBuilder();
 
         for(int i=0; i<p_gameState.getD_playersFailed().size(); i++) {
-            l_commaSeparatedPlayers.append(p_gameState.getD_playersFailed().get(i).getPlayerName());
+        	l_commaSeparatedPlayers.append(getColorizedString(p_gameState.getD_playersFailed().get(i).getD_color(), p_gameState.getD_playersFailed().get(i).getPlayerName()));
             if(i<p_gameState.getD_playersFailed().size()-1)
                 l_commaSeparatedPlayers.append(", ");
         }

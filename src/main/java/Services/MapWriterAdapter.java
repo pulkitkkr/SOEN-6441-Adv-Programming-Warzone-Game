@@ -11,6 +11,9 @@ import Models.Map;
  */
 public class MapWriterAdapter extends MapFileWriter{
 	
+	/**
+	 * Conquest map writer.
+	 */
 	private ConquestMapFileWriter l_conquestMapFileWriter;
 	
 	/**

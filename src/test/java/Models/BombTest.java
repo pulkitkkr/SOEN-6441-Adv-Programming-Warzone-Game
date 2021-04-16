@@ -43,6 +43,9 @@ public class BombTest {
 	 */
 	Bomb d_bombOrder4;
 
+	/**
+	 * Deploy type of order.
+	 */
 	Order deployOrder;
 
 	/**

@@ -17,8 +17,17 @@ import Services.MapService;
  */
 public class MapTest {
 
+    /**
+     * Map object.
+     */
     Map d_map;
+    /**
+     * Map service.
+     */
     MapService d_ms;
+    /**
+     * Current state of the game.
+     */
     GameState d_gameState;
 
     /**

@@ -17,10 +17,25 @@ import Utils.CommonUtil;
  * This is the MapView Class.
  */
 public class MapView {
+	/**
+	 * Players of the map.
+	 */
 	List<Player> d_players;
+	/**
+	 * Current state of the game.
+	 */
 	GameState d_gameState;
+	/**
+	 * Map file content.
+	 */
 	Map d_map;
+	/**
+	 * Countries of the map.
+	 */
 	List<Country> d_countries;
+	/**
+	 * Continents of the map.
+	 */
 	List<Continent> d_continents;
 
     /**

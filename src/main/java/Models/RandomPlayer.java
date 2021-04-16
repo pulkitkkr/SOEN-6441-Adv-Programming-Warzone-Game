@@ -29,6 +29,7 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
+		System.out.println("Creating order for : " + p_player.getPlayerName());
 		String l_command;
 		if (!checkIfArmiesDepoyed(p_player)) {
 			if(p_player.getD_noOfUnallocatedArmies()>0) {
@@ -83,8 +84,10 @@ public class RandomPlayer extends PlayerBehaviorStrategy {
 			System.out.println(p_player.getD_coutriesOwned().size());
 			Country l_randomCountry = getRandomCountry(p_player.getD_coutriesOwned());
 			d_deployCountries.add(l_randomCountry);
-			int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
-
+			int l_armiesToDeploy = 1;
+			if (p_player.getD_noOfUnallocatedArmies()>1) {
+				l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies() - 1) + 1;
+			}
 			return String.format("deploy %s %d", l_randomCountry.getD_countryName(), l_armiesToDeploy);
 		} else {
 			return createAdvanceOrder(p_player,p_gameState);

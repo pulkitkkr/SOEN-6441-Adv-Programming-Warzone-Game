@@ -13,6 +13,10 @@ import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Utils.Command;
 
+/**
+ * Tournament game test.
+ *
+ */
 public class TournamentTest {
 	/**
 	 * First Player.

@@ -348,10 +348,11 @@ public class StartUpPhase extends Phase {
 			if (CommonUtil.isCollectionEmpty(l_operations_list) || p_istournamentmode) {
 				d_gameEngine.setD_gameState(p_gameState);
 				d_gameEngine.setD_isTournamentMode(p_istournamentmode);
-				d_playerService.assignCountries(p_gameState);
-				d_playerService.assignColors(p_gameState);
-				d_playerService.assignArmies(p_gameState);
-				d_gameEngine.setIssueOrderPhase(p_istournamentmode);
+				if(d_playerService.assignCountries(p_gameState)) {
+					d_playerService.assignColors(p_gameState);
+					d_playerService.assignArmies(p_gameState);
+					d_gameEngine.setIssueOrderPhase(p_istournamentmode);
+				}		
 			} else {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
 			}
@@ -367,7 +368,6 @@ public class StartUpPhase extends Phase {
 			List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 			boolean l_parsingSuccessful = false;
 			Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
-
 			if (CommonUtil.isCollectionEmpty(l_operations_list)
 					&& !d_tournament.requiredTournamentArgPresent(l_operations_list, p_command)) {
 				throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
@@ -400,6 +400,7 @@ public class StartUpPhase extends Phase {
 				d_gameEngine.setD_gameEngineLog("************ Tournament Completed ************", "effect");
 				TournamentView l_tournamentView = new TournamentView(d_tournament);
 				l_tournamentView.viewTournament();
+				d_tournament = new Tournament();
 			}
 		} else {
 			d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");

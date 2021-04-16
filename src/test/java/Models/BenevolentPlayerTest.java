@@ -93,7 +93,7 @@ public class BenevolentPlayerTest {
 	 */
 	@Test
 	public void testWeakestNeighbor() {
-		assertEquals("Pakistan", d_benevolentPlayer.getWeakestNeighbor(d_country1, d_gameState).getD_countryName());
+		assertEquals("Pakistan", d_benevolentPlayer.getWeakestNeighbor(d_country1, d_gameState, d_player).getD_countryName());
 	}
 
 }

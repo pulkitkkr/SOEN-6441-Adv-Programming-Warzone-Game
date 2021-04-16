@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import Utils.CommonUtil;
+
 /**
  * This is the class of Benevolent Player who focuses only on defending his own
  * countries and will never attack.
@@ -29,6 +31,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 */
 	@Override
 	public String createOrder(Player p_player, GameState p_gameState) {
+		System.out.println("Creating order for : " + p_player.getPlayerName());
 		String l_command;
 		if (!checkIfArmiesDepoyed(p_player)) {
 			if(p_player.getD_noOfUnallocatedArmies()>0) {
@@ -89,8 +92,10 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 			d_deployCountries.add(l_weakestCountry);
 
 			Random l_random = new Random();
-			int l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies()) + 1;
-
+			int l_armiesToDeploy = 1;
+			if (p_player.getD_noOfUnallocatedArmies()>1) {
+				l_armiesToDeploy = l_random.nextInt(p_player.getD_noOfUnallocatedArmies() - 1) + 1;
+			}
 			System.out.println("deploy " + l_weakestCountry.getD_countryName() + " " + l_armiesToDeploy);
 			return String.format("deploy %s %d", l_weakestCountry.getD_countryName(), l_armiesToDeploy);
 		}else{
@@ -108,9 +113,13 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 		Random l_random = new Random();
 
 		Country l_randomSourceCountry = getRandomCountry(d_deployCountries);
-		System.out.println("Source country"+ l_randomSourceCountry.getD_countryName());
-		Country l_weakestTargetCountry = getWeakestNeighbor(l_randomSourceCountry, p_gameState);
-		System.out.println("Target Country"+l_weakestTargetCountry.getD_countryName());
+		System.out.println("Source country : "+ l_randomSourceCountry.getD_countryName());
+		
+		Country l_weakestTargetCountry = getWeakestNeighbor(l_randomSourceCountry, p_gameState, p_player);
+		if(l_weakestTargetCountry == null)
+			return null;
+		
+		System.out.println("Target Country : "+l_weakestTargetCountry.getD_countryName());
 		if (l_randomSourceCountry.getD_armies() > 1) {
 			l_armiesToSend = l_random.nextInt(l_randomSourceCountry.getD_armies() - 1) + 1;
 		} else {
@@ -131,9 +140,6 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 		int l_armiesToSend;
 		Random l_random = new Random();
 		Country l_randomOwnCountry = getRandomCountry(p_player.getD_coutriesOwned());
-		Country l_randomEnemyNeighbor = p_gameState.getD_map()
-				.getCountry(randomEnemyNeighbor(p_player, l_randomOwnCountry)
-						.get(l_random.nextInt(randomEnemyNeighbor(p_player, l_randomOwnCountry).size())));
 
 		if (l_randomOwnCountry.getD_armies() > 1) {
 			l_armiesToSend = l_random.nextInt(l_randomOwnCountry.getD_armies() - 1) + 1;
@@ -151,7 +157,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 			return "airlift " + l_randomOwnCountry.getD_countryName() + " "
 					+ getRandomCountry(p_player.getD_coutriesOwned()).getD_countryName() + " " + l_armiesToSend;
 		case "negotiate":
-			return "negotiate " + p_player.getPlayerName();
+			return "negotiate " + getRandomEnemyPlayer(p_player, p_gameState).getPlayerName();
 		}
 		return null;
 	}
@@ -195,19 +201,22 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	 * 
 	 * @param l_randomSourceCountry Source country
 	 * @param p_gameState           GameState
+	 * @param p_player benevolent player
 	 * @return weakest neighbor
 	 */
-	public Country getWeakestNeighbor(Country l_randomSourceCountry, GameState p_gameState) {
+	public Country getWeakestNeighbor(Country l_randomSourceCountry, GameState p_gameState, Player p_player) {
 		List<Integer> l_adjacentCountryIds = l_randomSourceCountry.getD_adjacentCountryIds();
 		List<Country> l_listOfNeighbors = new ArrayList<Country>();
 		for (int l_index = 0; l_index < l_adjacentCountryIds.size(); l_index++) {
 			Country l_country = p_gameState.getD_map()
 					.getCountry(l_randomSourceCountry.getD_adjacentCountryIds().get(l_index));
-			l_listOfNeighbors.add(l_country);
+			if(p_player.getD_coutriesOwned().contains(l_country))
+				l_listOfNeighbors.add(l_country);
 		}
-		Country l_Country = calculateWeakestCountry(l_listOfNeighbors);
+		if(!CommonUtil.isCollectionEmpty(l_listOfNeighbors))
+			return calculateWeakestCountry(l_listOfNeighbors);
 
-		return l_Country;
+		return null;
 	}
 
 	/**
@@ -235,22 +244,23 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 		return l_Country;
 
 	}
-
+	
 	/**
-	 * This method return List of Country Ids of random enemy neighbors.
+	 * Get random enemy player
 	 * 
-	 * @param p_player  Player
-	 * @param p_country Country
-	 * @return List of Ids.
+	 * @param p_player    Player
+	 * @param p_gameState Gamestate
+	 * @return Player
 	 */
-	private ArrayList<Integer> randomEnemyNeighbor(Player p_player, Country p_country) {
-		ArrayList<Integer> l_enemyNeighbors = new ArrayList<Integer>();
+	private Player getRandomEnemyPlayer(Player p_player, GameState p_gameState) {
+		ArrayList<Player> l_playerList = new ArrayList<Player>();
+		Random l_random = new Random();
 
-		for (Integer l_countryID : p_country.getD_adjacentCountryIds()) {
-			if (!p_player.getCountryIDs().contains(l_countryID))
-				l_enemyNeighbors.add(l_countryID);
+		for (Player l_player : p_gameState.getD_players()) {
+			if (!l_player.equals(p_player))
+				l_playerList.add(p_player);
 		}
-		return l_enemyNeighbors;
+		return l_playerList.get(l_random.nextInt(l_playerList.size()));
 	}
 
 	/**

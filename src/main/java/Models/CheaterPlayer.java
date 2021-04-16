@@ -4,6 +4,7 @@
 package Models;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
 
@@ -42,7 +43,11 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 			}
 		}
 
-		conquerNeighboringEnemies(p_player, p_gameState);
+		try {
+			conquerNeighboringEnemies(p_player, p_gameState);
+		} catch (ConcurrentModificationException l_e){
+		}
+
 		doubleArmyOnEnemyNeighboredCounties(p_player, p_gameState);
 
 		p_player.checkForMoreOrders(true);
@@ -148,7 +153,7 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 	 */
 	private void conquerTargetCountry(GameState p_gameState, Player p_targetCPlayer, Player p_cheaterPlayer, Country p_targetCountry) {
 		p_targetCPlayer.getD_coutriesOwned().remove(p_targetCountry);
-		p_targetCPlayer.getD_coutriesOwned().add(p_targetCountry);
+		p_cheaterPlayer.getD_coutriesOwned().add(p_targetCountry);
 		// Add Log Here
 		this.updateContinents(p_cheaterPlayer, p_targetCPlayer, p_gameState);
 	}
@@ -172,6 +177,13 @@ public class CheaterPlayer extends PlayerBehaviorStrategy {
 		l_playerService.performContinentAssignment(l_playesList, p_gameState.getD_map().getD_continents());
 	}
 
+	/**
+	 * Gets enemies of the player.
+	 * 
+	 * @param p_player cheater player
+	 * @param p_country player country
+	 * @return list of enemy neighbors
+	 */
 	private ArrayList<Integer> getEnemies(Player p_player, Country p_country){
 		ArrayList<Integer> l_enemyNeighbors = new ArrayList<Integer>();
 

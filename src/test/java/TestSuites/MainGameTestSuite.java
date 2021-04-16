@@ -14,6 +14,6 @@ import Services.PlayerServiceTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ DeployTest.class, PlayerTest.class, PlayerServiceTest.class, AdvanceTest.class, AirliftTest.class,
-		BlockadeTest.class, BombTest.class, DiplomacyTest.class, RandomPlayerTest.class, BenevolentPlayerTest.class, AggressivePlayerTest.class, TournamentTest.class})
+		BlockadeTest.class, BombTest.class, DiplomacyTest.class, RandomPlayerTest.class, BenevolentPlayerTest.class, AggressivePlayerTest.class, CheaterPlayerTest.class, TournamentTest.class})
 public class MainGameTestSuite {
 }

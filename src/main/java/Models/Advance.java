@@ -3,6 +3,7 @@ package Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Services.PlayerService;
 import Utils.CommonUtil;
@@ -76,7 +77,12 @@ public class Advance implements Order, Serializable {
 				conquerTargetCountry(p_gameState, l_playerOfTargetCountry, l_targetCountry);
 				this.d_playerInitiator.setD_oneCardPerTurn(true);
 			} else {
-				produceOrderResult(p_gameState, l_playerOfTargetCountry, l_targetCountry, l_sourceCountry);
+				Random l_random = new Random();		
+				if(l_random.nextBoolean()) {
+					produceOrderResult(p_gameState, l_playerOfTargetCountry, l_targetCountry, l_sourceCountry);
+				} else {
+					produceAdvanceResult(p_gameState, l_playerOfTargetCountry, l_targetCountry, l_sourceCountry);
+				}
 			}
 		} else {
 			p_gameState.updateLog(orderExecutionLog(), "effect");
@@ -360,5 +366,44 @@ public class Advance implements Order, Serializable {
 	@Override
 	public String getOrderName() {
 		return "advance";
+	}
+	/**
+	 * Produces advance order result.
+	 *
+	 * @param p_gameState             current state of the game
+	 * @param p_playerOfTargetCountry player of the target country
+	 * @param p_targetCountry         target country given in order
+	 * @param p_sourceCountry         source country given in order
+	 */
+	private void produceAdvanceResult(GameState p_gameState, Player p_playerOfTargetCountry, Country p_targetCountry,
+			Country p_sourceCountry) {
+		Integer l_armiesInAttack = (int) Math.round(d_numberOfArmiesToPlace * 0.6);
+		Integer l_armiesToDefend = (int) Math.round(p_targetCountry.getD_armies() * 0.7);
+		
+		if(l_armiesInAttack > l_armiesToDefend) {
+			Integer l_attackersArmiesLeft = l_armiesInAttack - l_armiesToDefend;
+			p_targetCountry.setD_armies(l_attackersArmiesLeft);
+			p_playerOfTargetCountry.getD_coutriesOwned().remove(p_targetCountry);
+			d_playerInitiator.getD_coutriesOwned().add(p_targetCountry);
+			this.d_playerInitiator.setD_oneCardPerTurn(true);
+			this.setD_orderExecutionLog(
+					"Player : " + this.d_playerInitiator.getPlayerName() + " is assigned with Country : "
+							+ p_targetCountry.getD_countryName() + " and armies : " + p_targetCountry.getD_armies(),
+					"default");
+		}
+		else if (l_armiesInAttack <= l_armiesToDefend) {
+			Integer l_defendersArmiesLeft = l_armiesToDefend - l_armiesInAttack;
+			p_targetCountry.setD_armies(l_defendersArmiesLeft);
+			
+			String l_country1 = "Country : " + p_targetCountry.getD_countryName() + " is left with "
+					+ p_targetCountry.getD_armies() + " armies and is still owned by player : "
+					+ p_playerOfTargetCountry.getPlayerName();
+			String l_country2 = "Country : " + p_sourceCountry.getD_countryName() + " is left with "
+					+ p_sourceCountry.getD_armies() + " armies and is still owned by player : "
+					+ this.d_playerInitiator.getPlayerName();
+			this.setD_orderExecutionLog(l_country1 + System.lineSeparator() + l_country2, "default");
+		}
+		p_gameState.updateLog(orderExecutionLog(), "effect");
+		this.updateContinents(this.d_playerInitiator, p_playerOfTargetCountry, p_gameState);
 	}
 }

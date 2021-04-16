@@ -78,6 +78,9 @@ public class Player implements Serializable {
 	 */
 	PlayerBehaviorStrategy d_playerBehaviorStrategy;
 
+	/**
+	 * Player flag.
+	 */
 	Boolean d_playerFlag;
 
 	/**

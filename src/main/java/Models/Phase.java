@@ -14,6 +14,9 @@ import Utils.Command;
  * This Interface enforces the method requirement for Each Game Phase.
  */
 public abstract class Phase implements Serializable {
+    /**
+     * Serial version id.
+     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -37,6 +40,9 @@ public abstract class Phase implements Serializable {
 	 */
 	PlayerService d_playerService = new PlayerService();
 
+	/**
+	 * Player of the game.
+	 */
 	Player d_player = new Player();
 
 	/**
@@ -44,6 +50,9 @@ public abstract class Phase implements Serializable {
 	 */
 	boolean l_isMapLoaded;
 
+	/**
+	 * Tournament containing multiple game states.
+	 */
 	Tournament d_tournament = new Tournament();
 
 	/**
@@ -252,6 +261,13 @@ public abstract class Phase implements Serializable {
 	 */
 	protected abstract void performAdvance(String p_command, Player p_player) throws IOException;
 
+	/**
+	 * Tournament playing logic.
+	 * 
+	 * @param p_command tournament command
+	 * @throws InvalidCommand invalid command exception
+	 * @throws InvalidMap invalid map
+	 */
 	protected abstract void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap;
 
 	/**

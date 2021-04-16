@@ -150,8 +150,8 @@ public class PlayerService implements Serializable {
 	}
 	
 	/**
-	 * @param p_addNewPlayer
-	 * @return
+	 * @param p_addNewPlayer player to be added
+	 * @return strategy of player
 	 * @throws IOException in case of failure in receiving user input
 	 */
 	private String getL_playerStrategy(Player p_addNewPlayer) throws IOException {
@@ -173,6 +173,7 @@ public class PlayerService implements Serializable {
 	 */
 	public boolean checkPlayersAvailability(GameState p_gameState) {
 		if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
+			System.err.println("Kindly add players before assigning countries");
 			return false;
 		}
 		return true;
@@ -198,11 +199,12 @@ public class PlayerService implements Serializable {
 	 * This method is used to assign countries randomly among players.
 	 *
 	 * @param p_gameState current game state with map and player information
+	 * @return boolean true if country assignment is done or not
 	 */
-	public void assignCountries(GameState p_gameState) {
+	public boolean assignCountries(GameState p_gameState) {
 		if (!checkPlayersAvailability(p_gameState)){
 			p_gameState.updateLog("Kindly add players before assigning countries",  "effect");
-			return;
+			return false;
 		}
 
 		List<Country> l_countries = p_gameState.getD_map().getD_countries();
@@ -217,6 +219,7 @@ public class PlayerService implements Serializable {
 		this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
 		p_gameState.updateLog(d_assignmentLog, "effect");
 		System.out.println("Countries have been assigned to Players.");
+		return true;
 
 	}
 

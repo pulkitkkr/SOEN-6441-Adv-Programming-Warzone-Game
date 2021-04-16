@@ -84,16 +84,6 @@ public class AggressivePlayerTest {
 	}
 
 	/**
-	 * Checks if it creates an Order String and first order is deploy.
-	 *
-	 * @throws IOException Exception
-	 */
-	@Test
-	public void testOrderCreation() throws IOException {
-		assertEquals("deploy", d_player.getPlayerOrder(d_gameState).split(" ")[0]);
-	}
-
-	/**
 	 * Check if aggressive player deploy armies on weakest country or not.
 	 */
 	@Test
