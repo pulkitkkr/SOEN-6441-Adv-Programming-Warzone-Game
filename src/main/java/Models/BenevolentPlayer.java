@@ -246,7 +246,7 @@ public class BenevolentPlayer extends PlayerBehaviorStrategy {
 	}
 	
 	/**
-	 * Get random enemy player
+	 * Get random enemy player.
 	 * 
 	 * @param p_player    Player
 	 * @param p_gameState Gamestate
