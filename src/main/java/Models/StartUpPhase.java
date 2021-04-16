@@ -49,7 +49,7 @@ public class StartUpPhase extends Phase {
 
                 try{
                     Phase l_phase= GameService.loadGame(l_filename);
-
+                    this.d_gameEngine.setD_gameEngineLog("Map has been loaded to play the game.", "effect");
                     this.d_gameEngine.loadPhase(l_phase);
                 } catch (ClassNotFoundException l_e) {
                     l_e.printStackTrace();
