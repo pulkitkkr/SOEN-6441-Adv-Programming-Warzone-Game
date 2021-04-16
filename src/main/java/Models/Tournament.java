@@ -14,7 +14,7 @@ import Services.MapService;
 import Utils.Command;
 
 /**
- * @author admin
+ * Tournament game play handling.
  *
  */
 public class Tournament implements Serializable {
