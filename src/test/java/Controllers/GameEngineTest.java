@@ -3,6 +3,7 @@ package Controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -141,6 +142,18 @@ public class GameEngineTest {
 		assertEquals("Log: Game Saved Successfully to hello.txt" + System.lineSeparator(),
 				l_state.getRecentLog());
 
+	}
+	
+	/**
+	 * Tests loadgame command.
+	 *
+	 * @throws InvalidCommand Exception
+	 * @throws InvalidMap     Exception
+	 * @throws IOException Exception
+	 */
+	@Test(expected = FileNotFoundException.class)
+	public void testPerformLoadGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
+		d_currentPhase.handleCommand("loadgame abc.txt");
 	}
 
 	/**
