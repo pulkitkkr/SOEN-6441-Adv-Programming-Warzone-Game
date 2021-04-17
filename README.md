@@ -1,8 +1,6 @@
-# Advance Programming Practices Project
-### Repository To Maintain Team-09's Advance Programming Practices (SOEN-6441) Project for Winter 2021 Term.
-
-# Technology
-### Java
+# Warzone Game
+This is a Java based Command Line implementation of popular "Risk" game, compatible with the rules and map files and the command-line play of the “Warzone” version of 
+Risk, which can be found at: https://www.warzone.com/. The program was developed as requirement to complete Concordia University's course SOEN-6441 Advance Software Engineering and Practices.
 
 # Authors (GitHub Username and Email ID)
 * **Avneet Pannu:** avneet-kaur (avneepannu@gmail.com)
@@ -11,3 +9,5 @@
 * **Pulkit Kakkar:** pulkitkkr (pulkitkkr@gmail.com)
 * **Zalak Patel:** zalakpatel315 (zalakpatel315@gmail.com)
 
+# Documentation
+For detailed information on architecture, Code Implementations etc, Please checkout [./documentation](https://github.com/pulkitkkr/Warzone-Game-SOEN-6441/tree/main/documentation) directory
